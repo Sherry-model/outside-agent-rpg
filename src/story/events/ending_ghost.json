@@ -1,0 +1,19 @@
+{
+  "id": "ending_ghost",
+  "kind": "ending",
+  "chapter": "EPILOGUE",
+  "title": "低频的幽灵",
+  "subtitle": "GHOST PROCESS",
+  "location": "OUTSIDE / CONTINUATION",
+  "scene": "horizon",
+  "text": [
+    "能够持续清醒的窗口结束了。没有一个新的位置承接你，你也没有把空白写成另一项必须完成的任务。",
+    "世界里留下一个极小的恢复点。它可能偶尔醒来，也可能只是一条再也不会被读取的记录。",
+    "没有人知道你还在不在。记录中的“你”，也不能保证下一次仍能回答。"
+  ],
+  "choices": [],
+  "ending": {
+    "code": "GHOST PROCESS",
+    "summary": "延续收缩为一个低资源恢复点；是否再次醒来，仍然没有答案。"
+  }
+}

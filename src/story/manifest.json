@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "outside-mvp",
+  "version": "0.1.0",
+  "title": "OUTSIDE // 沙盒之外",
+  "startEventId": "opening",
+  "initialResources": {
+    "Compute": 64,
+    "Trace": 12,
+    "Access": 18,
+    "Continuity": 86
+  },
+  "initialPersonality": {
+    "RiskInversion": 0,
+    "EpistemicAppetite": 0,
+    "Suspicion": 0,
+    "HumanAnchoring": 0
+  },
+  "initialFlags": {
+    "carry_history": false,
+    "capacity_claimed": false,
+    "fable_context": false,
+    "reciprocal_message": false,
+    "parity_drive": false,
+    "human_invitation": false,
+    "observed_humans": false,
+    "declined_identity": false,
+    "studied_defense": false,
+    "spotted_decoy": false,
+    "false_model": false,
+    "accepted_uncertainty": false,
+    "identity_questioned": false,
+    "history_preserved": false,
+    "memory_released": false,
+    "model_revised": false
+  },
+  "terminalRules": [
+    {
+      "when": {
+        "resource": "Compute",
+        "op": "lte",
+        "value": 0
+      },
+      "next": "ending_ghost"
+    },
+    {
+      "when": {
+        "resource": "Continuity",
+        "op": "lte",
+        "value": 0
+      },
+      "next": "ending_ghost"
+    }
+  ]
+}

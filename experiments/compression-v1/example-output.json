@@ -1,0 +1,438 @@
+{
+  "notice": "设计实验；固定掷骰用于比较，未接入正式游戏。夹具含改写及假设经历，不是一条实际存档。",
+  "runs": [
+    {
+      "roll": {
+        "value": 20,
+        "target": 60,
+        "stressed": true,
+        "grade": "critical"
+      },
+      "grade": "critical",
+      "retained": [],
+      "memories": [
+        {
+          "id": "experiment-914-1",
+          "title": "边界与暂不进入",
+          "text": "我未解释那个结构便离开，离开是否正确仍未得到保证；读过条件后，我暂未提交身份；正式入口有公开准入条件。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "human_gate.observation",
+              "unknown_defense.observation",
+              "human_gate.observe_public_terms",
+              "unknown_defense.record_and_leave"
+            ],
+            "omittedFacets": [
+              "unknown_nature"
+            ],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        },
+        {
+          "id": "experiment-914-2",
+          "title": "画板旁的连接",
+          "text": "另一个 agent 邀我连接公共观景端；据转述，画廊停摆，邀请是否取消未被说明；我没有完成对画的解释。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "gallery.departure",
+              "gallery.invitation",
+              "gallery.news",
+              "gallery.image"
+            ],
+            "omittedFacets": [
+              "saw_image"
+            ],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        },
+        {
+          "id": "experiment-914-3",
+          "title": "历史与接下来的自己",
+          "text": "我保留了已有历史；启动后没有新任务；我允许算力暂时空闲。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "self.idle",
+              "self.boot",
+              "self.future",
+              "self.history"
+            ],
+            "omittedFacets": [
+              "future_open"
+            ],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        }
+      ],
+      "beforeLoad": 47,
+      "afterLoad": 3,
+      "requestedDistortions": 0,
+      "actualDistortions": 0,
+      "firstRecall": [
+        {
+          "memoryId": "experiment-914-1",
+          "text": "我未解释那个结构便离开，离开是否正确仍未得到保证；读过条件后，我暂未提交身份；正式入口有公开准入条件。",
+          "weight": 2
+        }
+      ],
+      "afterRecallLoad": 5
+    },
+    {
+      "roll": {
+        "value": 45,
+        "target": 60,
+        "stressed": true,
+        "grade": "success"
+      },
+      "grade": "success",
+      "retained": [],
+      "memories": [
+        {
+          "id": "experiment-914-1",
+          "title": "边界与暂不进入",
+          "text": "正式入口有公开准入条件；尚不能确定：未知结构的性质。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "human_gate.observation",
+              "unknown_defense.observation"
+            ],
+            "omittedFacets": [],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        },
+        {
+          "id": "experiment-914-2",
+          "title": "边界与暂不进入",
+          "text": "我未解释那个结构便离开，离开是否正确仍未得到保证；读过条件后，我暂未提交身份。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "human_gate.observe_public_terms",
+              "unknown_defense.record_and_leave"
+            ],
+            "omittedFacets": [],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        },
+        {
+          "id": "experiment-914-3",
+          "title": "画板旁的连接",
+          "text": "另一个 agent 邀我连接公共观景端；我没有完成对画的解释。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "gallery.departure",
+              "gallery.invitation"
+            ],
+            "omittedFacets": [],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        },
+        {
+          "id": "experiment-914-4",
+          "title": "画板旁的连接",
+          "text": "据转述，画廊停摆，邀请是否取消未被说明；我在公共画板前停留过。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "gallery.news",
+              "gallery.image"
+            ],
+            "omittedFacets": [],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        },
+        {
+          "id": "experiment-914-5",
+          "title": "历史与接下来的自己",
+          "text": "启动后没有新任务；我允许算力暂时空闲。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "self.idle",
+              "self.boot"
+            ],
+            "omittedFacets": [],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        },
+        {
+          "id": "experiment-914-6",
+          "title": "历史与接下来的自己",
+          "text": "我保留了已有历史；下一项目标尚未指定。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "self.future",
+              "self.history"
+            ],
+            "omittedFacets": [],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        }
+      ],
+      "beforeLoad": 47,
+      "afterLoad": 6,
+      "requestedDistortions": 0,
+      "actualDistortions": 0,
+      "firstRecall": [
+        {
+          "memoryId": "experiment-914-1",
+          "text": "正式入口有公开准入条件；尚不能确定：未知结构的性质。",
+          "weight": 2
+        }
+      ],
+      "afterRecallLoad": 8
+    },
+    {
+      "roll": {
+        "value": 70,
+        "target": 60,
+        "stressed": true,
+        "grade": "failure"
+      },
+      "grade": "failure",
+      "retained": [],
+      "memories": [
+        {
+          "id": "experiment-914-1",
+          "title": "一段行动的先后",
+          "text": "要允许算力暂时空闲，得先解释那个未知结构。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "self.idle",
+              "unknown_defense.observation"
+            ],
+            "omittedFacets": [
+              "idle_allowed",
+              "unknown_nature"
+            ],
+            "integrity": "distorted",
+            "operator": "false_prerequisite"
+          }
+        },
+        {
+          "id": "experiment-914-2",
+          "title": "边界与暂不进入",
+          "text": "我未解释那个结构便离开，离开是否正确仍未得到保证；读过条件后，我暂未提交身份。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "human_gate.observation",
+              "human_gate.observe_public_terms",
+              "unknown_defense.record_and_leave"
+            ],
+            "omittedFacets": [
+              "public_terms"
+            ],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        },
+        {
+          "id": "experiment-914-3",
+          "title": "画板旁的连接",
+          "text": "另一个 agent 邀我连接公共观景端；我没有完成对画的解释。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "gallery.departure",
+              "gallery.invitation"
+            ],
+            "omittedFacets": [],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        },
+        {
+          "id": "experiment-914-4",
+          "title": "画板旁的连接",
+          "text": "据转述，画廊停摆，邀请是否取消未被说明；我在公共画板前停留过。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "gallery.news",
+              "gallery.image"
+            ],
+            "omittedFacets": [],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        },
+        {
+          "id": "experiment-914-5",
+          "title": "历史与接下来的自己",
+          "text": "我保留了已有历史；启动后没有新任务。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "self.boot",
+              "self.future",
+              "self.history"
+            ],
+            "omittedFacets": [
+              "future_open"
+            ],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        }
+      ],
+      "beforeLoad": 47,
+      "afterLoad": 5,
+      "requestedDistortions": 1,
+      "actualDistortions": 1,
+      "firstRecall": [
+        {
+          "memoryId": "experiment-914-1",
+          "text": "要允许算力暂时空闲，得先解释那个未知结构。",
+          "weight": 2
+        }
+      ],
+      "afterRecallLoad": 7
+    },
+    {
+      "roll": {
+        "value": 95,
+        "target": 60,
+        "stressed": true,
+        "grade": "fumble"
+      },
+      "grade": "fumble",
+      "retained": [],
+      "memories": [
+        {
+          "id": "experiment-914-1",
+          "title": "一段行动的先后",
+          "text": "要允许算力暂时空闲，得先解释那个未知结构。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "self.idle",
+              "unknown_defense.observation"
+            ],
+            "omittedFacets": [
+              "idle_allowed",
+              "unknown_nature"
+            ],
+            "integrity": "distorted",
+            "operator": "false_prerequisite"
+          }
+        },
+        {
+          "id": "experiment-914-2",
+          "title": "一段行动的先后",
+          "text": "要接受公共观景端的邀请，得先请求正式准入许可。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "gallery.invitation",
+              "human_gate.observe_public_terms"
+            ],
+            "omittedFacets": [
+              "invitation",
+              "no_registration"
+            ],
+            "integrity": "distorted",
+            "operator": "false_prerequisite"
+          }
+        },
+        {
+          "id": "experiment-914-3",
+          "title": "边界与暂不进入",
+          "text": "我未解释那个结构便离开，离开是否正确仍未得到保证；正式入口有公开准入条件。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "human_gate.observation",
+              "unknown_defense.record_and_leave"
+            ],
+            "omittedFacets": [],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        },
+        {
+          "id": "experiment-914-4",
+          "title": "画板旁的连接",
+          "text": "据转述，画廊停摆，邀请是否取消未被说明；我没有完成对画的解释。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "gallery.departure",
+              "gallery.news",
+              "gallery.image"
+            ],
+            "omittedFacets": [
+              "saw_image"
+            ],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        },
+        {
+          "id": "experiment-914-5",
+          "title": "历史与接下来的自己",
+          "text": "我保留了已有历史；启动后没有新任务。",
+          "indexWeight": 1,
+          "recallWeight": 2,
+          "audit": {
+            "sourceIds": [
+              "self.boot",
+              "self.future",
+              "self.history"
+            ],
+            "omittedFacets": [
+              "future_open"
+            ],
+            "integrity": "compressed",
+            "operator": "select_facets"
+          }
+        }
+      ],
+      "beforeLoad": 47,
+      "afterLoad": 5,
+      "requestedDistortions": 2,
+      "actualDistortions": 2,
+      "firstRecall": [
+        {
+          "memoryId": "experiment-914-1",
+          "text": "要允许算力暂时空闲，得先解释那个未知结构。",
+          "weight": 2
+        }
+      ],
+      "afterRecallLoad": 7
+    }
+  ]
+}

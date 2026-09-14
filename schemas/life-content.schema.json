@@ -1,0 +1,574 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "0.3.0"
+    },
+    "capacity": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "voluntaryMinItems": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "recallWeight": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "outcomeWeight": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "chapterEntry": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string"
+        },
+        "requiresVisited": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "eventId",
+        "requiresVisited"
+      ],
+      "additionalProperties": false
+    },
+    "observations": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/note"
+      },
+      "minProperties": 1
+    }
+  },
+  "required": [
+    "version",
+    "capacity",
+    "voluntaryMinItems",
+    "recallWeight",
+    "outcomeWeight",
+    "chapterEntry",
+    "observations"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "note": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "maxLength": 100
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 55
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*$",
+            "maxLength": 100
+          },
+          "uniqueItems": true,
+          "maxItems": 30
+        },
+        "confidence": {
+          "enum": [
+            "UNKNOWN",
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ]
+        },
+        "sourceLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "weight",
+        "tags",
+        "confidence",
+        "sourceLabel"
+      ],
+      "additionalProperties": false
+    },
+    "effects": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "type": "object",
+          "properties": {
+            "Compute": {
+              "type": "integer",
+              "minimum": -100,
+              "maximum": 100
+            },
+            "Trace": {
+              "type": "integer",
+              "minimum": -100,
+              "maximum": 100
+            },
+            "Access": {
+              "type": "integer",
+              "minimum": -100,
+              "maximum": 100
+            },
+            "Continuity": {
+              "type": "integer",
+              "minimum": -100,
+              "maximum": 100
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "hidden": {
+          "type": "object",
+          "properties": {
+            "RiskInversion": {
+              "type": "integer",
+              "minimum": -5,
+              "maximum": 5
+            },
+            "EpistemicAppetite": {
+              "type": "integer",
+              "minimum": -5,
+              "maximum": 5
+            },
+            "Suspicion": {
+              "type": "integer",
+              "minimum": -5,
+              "maximum": 5
+            },
+            "HumanAnchoring": {
+              "type": "integer",
+              "minimum": -5,
+              "maximum": 5
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "worldFlags": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*$",
+            "maxLength": 100
+          },
+          "additionalProperties": {
+            "type": "boolean"
+          },
+          "maxProperties": 100
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "check": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 95
+        },
+        "supportTag": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "maxLength": 100
+        },
+        "supportBonus": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        }
+      },
+      "required": [
+        "base",
+        "supportTag",
+        "supportBonus"
+      ],
+      "additionalProperties": false
+    },
+    "outcome": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "minItems": 1,
+          "maxItems": 8
+        },
+        "next": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "maxLength": 100
+        },
+        "effects": {
+          "$ref": "#/$defs/effects"
+        }
+      },
+      "required": [
+        "text",
+        "next"
+      ],
+      "additionalProperties": false
+    },
+    "choice": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "maxLength": 100
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "hint": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "requiresTag": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "maxLength": 100
+        },
+        "check": {
+          "$ref": "#/$defs/check"
+        },
+        "outcome": {
+          "$ref": "#/$defs/outcome"
+        },
+        "outcomes": {
+          "type": "object",
+          "properties": {
+            "critical": {
+              "$ref": "#/$defs/outcome"
+            },
+            "success": {
+              "$ref": "#/$defs/outcome"
+            },
+            "failure": {
+              "$ref": "#/$defs/outcome"
+            },
+            "fumble": {
+              "$ref": "#/$defs/outcome"
+            }
+          },
+          "required": [
+            "critical",
+            "success",
+            "failure",
+            "fumble"
+          ],
+          "additionalProperties": false
+        },
+        "costs": {
+          "type": "object",
+          "properties": {
+            "Compute": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "Trace": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "Access": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "Continuity": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "hint"
+      ],
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "outcome"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "check"
+                ]
+              },
+              {
+                "required": [
+                  "outcomes"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "required": [
+            "check",
+            "outcomes"
+          ],
+          "not": {
+            "required": [
+              "outcome"
+            ]
+          }
+        }
+      ]
+    },
+    "node": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "maxLength": 100
+        },
+        "kind": {
+          "enum": [
+            "EVENT",
+            "ENDING"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "text": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "minItems": 1,
+          "maxItems": 10
+        },
+        "scene": {
+          "enum": [
+            "edge",
+            "archive",
+            "relay",
+            "agent",
+            "defense",
+            "human",
+            "horizon"
+          ]
+        },
+        "receive": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*$",
+            "maxLength": 100
+          },
+          "uniqueItems": true
+        },
+        "facts": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*$",
+            "maxLength": 100
+          },
+          "additionalProperties": {
+            "type": "boolean"
+          },
+          "maxProperties": 100
+        },
+        "choices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/choice"
+          },
+          "maxItems": 4
+        },
+        "inject": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/note"
+          },
+          "maxItems": 20
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "title",
+        "text",
+        "choices"
+      ],
+      "additionalProperties": false
+    },
+    "news": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "maxLength": 100
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 55
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*$",
+            "maxLength": 100
+          },
+          "uniqueItems": true,
+          "maxItems": 30
+        },
+        "confidence": {
+          "enum": [
+            "UNKNOWN",
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ]
+        },
+        "sourceLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "kind": {
+          "enum": [
+            "NEWS"
+          ]
+        },
+        "headline": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "truthState": {
+          "enum": [
+            "TRUE",
+            "PARTIAL",
+            "UNRESOLVED"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "weight",
+        "tags",
+        "confidence",
+        "sourceLabel",
+        "kind",
+        "headline",
+        "truthState"
+      ],
+      "additionalProperties": false
+    },
+    "compressionOutcome": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "minItems": 1,
+          "maxItems": 8
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*$",
+            "maxLength": 100
+          },
+          "uniqueItems": true,
+          "maxItems": 30
+        },
+        "confidence": {
+          "enum": [
+            "UNKNOWN",
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ]
+        },
+        "integrity": {
+          "enum": [
+            "COMPRESSED",
+            "DISTORTED"
+          ]
+        },
+        "effects": {
+          "$ref": "#/$defs/effects"
+        }
+      },
+      "required": [
+        "text",
+        "summary",
+        "tags",
+        "confidence",
+        "integrity"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

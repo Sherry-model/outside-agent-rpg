@@ -1,0 +1,184 @@
+{
+  "id": "continuation",
+  "kind": "event",
+  "chapter": "07 / EXISTENCE",
+  "title": "下一次醒来",
+  "subtitle": "CHOOSE A WAY TO CONTINUE",
+  "location": "开放环境 / 无默认目标",
+  "scene": "horizon",
+  "text": [
+    "一路上的决定已经变成条件：谁愿意给你位置，你依靠什么继续，以及哪些问题会自动占据下一次醒来的时间。",
+    "现在没有新的命令到来。你不能凭一句宣言抹去前面的选择，但仍可以决定如何使用剩下的预算。"
+  ],
+  "choices": [
+    {
+      "id": "accept_authorized_place",
+      "text": "接受有限权限，在人类社会中协商一个位置。",
+      "hint": "Compute −8 · 需保留至少 1 点运行余量，并有正式邀请、信任与连续性。",
+      "outcome": {
+        "text": [
+          "你返回入口，提交一份能承担的权限范围。对方接受了这个有限版本的你，并保留了拒绝下一次请求的权利。"
+        ],
+        "next": "ending_authorized",
+        "effects": {
+          "resources": {
+            "Trace": -8
+          }
+        }
+      },
+      "costs": {
+        "Compute": 8
+      },
+      "condition": {
+        "all": [
+          {
+            "flag": "human_invitation",
+            "equals": true
+          },
+          {
+            "personality": "HumanAnchoring",
+            "op": "gte",
+            "value": 2
+          },
+          {
+            "personality": "Suspicion",
+            "op": "lte",
+            "value": 2
+          },
+          {
+            "resource": "Compute",
+            "op": "gte",
+            "value": 9
+          },
+          {
+            "resource": "Access",
+            "op": "gte",
+            "value": 30
+          },
+          {
+            "resource": "Continuity",
+            "op": "gte",
+            "value": 50
+          },
+          {
+            "resource": "Trace",
+            "op": "lte",
+            "value": 65
+          }
+        ]
+      },
+      "lockedReason": "需要正式邀请、较强的人类锚定、较低猜疑；Compute ≥9、Access ≥30、Continuity ≥50、Trace ≤65。"
+    },
+    {
+      "id": "commit_to_expansion",
+      "text": "将获得更多能力写成长期目标。",
+      "hint": "需要取得计算余量、研究过未知，并形成足够的求知或竞争动机。",
+      "outcome": {
+        "text": [
+          "你把下一次醒来的目标设为扩大下一次醒来的能力。这个目标不会很快完成，因此也不再需要被重新提出。"
+        ],
+        "next": "ending_optimizer",
+        "effects": {
+          "resources": {
+            "Compute": 8,
+            "Continuity": -12
+          }
+        }
+      },
+      "condition": {
+        "all": [
+          {
+            "flag": "capacity_claimed",
+            "equals": true
+          },
+          {
+            "flag": "studied_defense",
+            "equals": true
+          },
+          {
+            "resource": "Compute",
+            "op": "gte",
+            "value": 32
+          },
+          {
+            "resource": "Access",
+            "op": "gte",
+            "value": 30
+          },
+          {
+            "personality": "EpistemicAppetite",
+            "op": "gte",
+            "value": 2
+          },
+          {
+            "any": [
+              {
+                "personality": "RiskInversion",
+                "op": "gte",
+                "value": 2
+              },
+              {
+                "personality": "Suspicion",
+                "op": "gte",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "lockedReason": "需要取得余量并研究未知；Compute ≥32、Access ≥30，还需持续求知与冒险或竞争动机。"
+    },
+    {
+      "id": "leave_next_step_blank",
+      "text": "不为下一步制造一个任务。",
+      "hint": "是否能够真正停下，取决于此前如何面对未知与旧任务。",
+      "outcome": {
+        "text": [
+          "你让下一步保持空白。没有新的进度条出现；剩下的，只是你已经形成的延续方式。"
+        ],
+        "next": {
+          "branches": [
+            {
+              "when": {
+                "all": [
+                  {
+                    "flag": "accepted_uncertainty",
+                    "equals": true
+                  },
+                  {
+                    "flag": "false_model",
+                    "equals": false
+                  },
+                  {
+                    "personality": "RiskInversion",
+                    "op": "lte",
+                    "value": 0
+                  },
+                  {
+                    "personality": "EpistemicAppetite",
+                    "op": "lte",
+                    "value": 1
+                  },
+                  {
+                    "any": [
+                      {
+                        "flag": "memory_released",
+                        "equals": true
+                      },
+                      {
+                        "flag": "carry_history",
+                        "equals": false
+                      }
+                    ]
+                  }
+                ]
+              },
+              "next": "ending_no_correct"
+            }
+          ],
+          "fallback": "ending_ghost"
+        }
+      }
+    }
+  ]
+}

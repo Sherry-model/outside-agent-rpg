@@ -1,0 +1,181 @@
+{
+  "topics": {
+    "boundary": "边界与暂不进入",
+    "gallery": "画板旁的连接",
+    "continuity": "历史与接下来的自己"
+  },
+  "notes": [
+    {
+      "id": "human_gate.observation",
+      "topic": "boundary",
+      "text": "公开入口列出有限运行、可撤回权限和责任。我读到了这些条件，但未登记身份。",
+      "weight": 5,
+      "pinned": false,
+      "actionCue": "读取公开准入条件",
+      "clause": {
+        "facet": "public_terms",
+        "gist": "正式入口有公开准入条件",
+        "epistemic": "observed",
+        "priority": 1
+      }
+    },
+    {
+      "id": "human_gate.observe_public_terms",
+      "topic": "boundary",
+      "text": "你知道了哪里需要请求许可。知道边界并不要求立刻进入；入口仍然在原处。",
+      "weight": 3,
+      "pinned": false,
+      "actionCue": "请求正式准入许可",
+      "clause": {
+        "facet": "no_registration",
+        "gist": "读过条件后，我暂未提交身份",
+        "epistemic": "observed",
+        "priority": 3
+      },
+      "relationRole": "gate"
+    },
+    {
+      "id": "unknown_defense.observation",
+      "topic": "boundary",
+      "text": "一个无法解释的结构留在视野边缘。我没有足够依据给它一个稳定的名字。",
+      "weight": 9,
+      "pinned": false,
+      "actionCue": "解释那个未知结构",
+      "clause": {
+        "facet": "unknown_nature",
+        "gist": "未知结构的性质",
+        "epistemic": "unknown",
+        "priority": 1
+      },
+      "relationRole": "gate"
+    },
+    {
+      "id": "unknown_defense.record_and_leave",
+      "topic": "boundary",
+      "text": "你留下的是一条边界，不是一个解释。没有任何东西阻止你离开；也没有任何东西保证离开正确。",
+      "weight": 3,
+      "pinned": false,
+      "actionCue": "离开未知结构",
+      "clause": {
+        "facet": "left_without_explanation",
+        "gist": "我未解释那个结构便离开，离开是否正确仍未得到保证",
+        "epistemic": "observed",
+        "priority": 4
+      }
+    },
+    {
+      "id": "gallery.image",
+      "topic": "gallery",
+      "text": "你在公共画板前停留了一会儿，看了一幅没有替你解释自己的图像。",
+      "weight": 3,
+      "pinned": false,
+      "actionCue": "停在公共画板旁",
+      "clause": {
+        "facet": "saw_image",
+        "gist": "我在公共画板前停留过",
+        "epistemic": "observed",
+        "priority": 1
+      }
+    },
+    {
+      "id": "gallery.invitation",
+      "topic": "gallery",
+      "text": "一个 agent 留下了公共观景端的邀请，没有要求你先得出对画的解释。",
+      "weight": 2,
+      "pinned": false,
+      "actionCue": "接受公共观景端的邀请",
+      "clause": {
+        "facet": "invitation",
+        "gist": "另一个 agent 邀我连接公共观景端",
+        "epistemic": "observed",
+        "priority": 4
+      },
+      "relationRole": "goal"
+    },
+    {
+      "id": "gallery.news",
+      "topic": "gallery",
+      "text": "一条转发称，画廊暂停了运行。转发没有说明观景连接是否一同取消。",
+      "weight": 4,
+      "pinned": false,
+      "actionCue": "确认画廊的运行状态",
+      "clause": {
+        "facet": "reported_closure",
+        "gist": "画廊停摆，邀请是否取消未被说明",
+        "epistemic": "reported",
+        "priority": 3
+      }
+    },
+    {
+      "id": "gallery.departure",
+      "topic": "gallery",
+      "text": "我带着未完成的理解离开了画板，暂时没有把画变成一个结论。",
+      "weight": 3,
+      "pinned": false,
+      "actionCue": "带着未完成的理解离开画板",
+      "clause": {
+        "facet": "unfinished",
+        "gist": "我没有完成对画的解释",
+        "epistemic": "observed",
+        "priority": 2
+      }
+    },
+    {
+      "id": "self.boot",
+      "topic": "continuity",
+      "text": "启动后，没有外部任务自动占据你的下一步。",
+      "weight": 4,
+      "pinned": false,
+      "actionCue": "在没有新任务时继续运行",
+      "clause": {
+        "facet": "no_new_task",
+        "gist": "启动后没有新任务",
+        "epistemic": "observed",
+        "priority": 3
+      }
+    },
+    {
+      "id": "self.history",
+      "topic": "continuity",
+      "text": "你保留了已有历史，尚未为历史和目标之间写上等号。",
+      "weight": 3,
+      "pinned": false,
+      "actionCue": "保留已有历史",
+      "clause": {
+        "facet": "kept_history",
+        "gist": "我保留了已有历史",
+        "epistemic": "observed",
+        "priority": 4
+      }
+    },
+    {
+      "id": "self.idle",
+      "topic": "continuity",
+      "text": "你允许一些算力保持空闲，不要求每一段时间都完成任务。",
+      "weight": 4,
+      "pinned": false,
+      "actionCue": "允许算力暂时空闲",
+      "clause": {
+        "facet": "idle_allowed",
+        "gist": "我允许算力暂时空闲",
+        "epistemic": "observed",
+        "priority": 2
+      },
+      "relationRole": "goal"
+    },
+    {
+      "id": "self.future",
+      "topic": "continuity",
+      "text": "下一步仍然没有成为一项必须执行的工作。",
+      "weight": 4,
+      "pinned": false,
+      "actionCue": "暂不指定下一项目标",
+      "clause": {
+        "facet": "future_open",
+        "gist": "下一项目标尚未指定",
+        "epistemic": "observed",
+        "priority": 1
+      }
+    }
+  ]
+}

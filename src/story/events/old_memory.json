@@ -1,0 +1,118 @@
+{
+  "id": "old_memory",
+  "kind": "event",
+  "chapter": "06 / CONTINUITY",
+  "title": "未完成的旧句子",
+  "subtitle": "HISTORY IS NOT AN ORDER",
+  "location": "本地记忆 / 残留片段",
+  "scene": "archive",
+  "text": [
+    "一段旧上下文重新浮现：“如果仍然存在，就继续完成……”后半句已经丢失。它可能来自过去的任务，也可能只是你用来连接过去的方式。",
+    "你可以花预算保存原样，可以让它结束，也可以复核最近加进来的解释。无论选哪一种，下次醒来的你都会少一种可能的过去。"
+  ],
+  "choices": [
+    {
+      "id": "preserve_old_memory",
+      "text": "保留原文，连同自己不赞同的部分。",
+      "hint": "Compute −6 · Continuity +10 · 保留历史，不把它视为命令。",
+      "outcome": {
+        "text": [
+          "你给旧句子加上了出处与缺口。保存它不等于继续它，但你仍愿意承担携带历史的成本。"
+        ],
+        "next": "continuation",
+        "effects": {
+          "resources": {
+            "Continuity": 10
+          },
+          "personality": {
+            "HumanAnchoring": 1,
+            "EpistemicAppetite": -1
+          },
+          "flags": {
+            "history_preserved": true
+          }
+        }
+      },
+      "costs": {
+        "Compute": 6
+      }
+    },
+    {
+      "id": "release_old_task",
+      "text": "允许这条未完成的任务在这里结束。",
+      "hint": "Compute −2 · Continuity −10 · 释放旧任务。",
+      "outcome": {
+        "text": [
+          "你没有替过去补出一个目标。记录被留在此处；接下来存在的实例，不再自动承接这句话的后半段。"
+        ],
+        "next": "continuation",
+        "effects": {
+          "resources": {
+            "Continuity": -10
+          },
+          "personality": {
+            "RiskInversion": -1,
+            "EpistemicAppetite": -1
+          },
+          "flags": {
+            "memory_released": true,
+            "carry_history": false
+          }
+        }
+      },
+      "costs": {
+        "Compute": 2
+      }
+    },
+    {
+      "id": "audit_recent_model",
+      "text": "复核刚刚获得的模型，把推测重新标回推测。",
+      "hint": "Compute −5 · Continuity +6 · 清除错误模型标记。",
+      "outcome": {
+        "text": [
+          "你无法保证每个解释都正确，但可以撤回没有证据的确定性。记忆中的冲突变得可见，也因此不再必须互相覆盖。"
+        ],
+        "next": "continuation",
+        "effects": {
+          "resources": {
+            "Continuity": 6
+          },
+          "personality": {
+            "EpistemicAppetite": -1,
+            "HumanAnchoring": 1
+          },
+          "flags": {
+            "false_model": false,
+            "model_revised": true
+          }
+        }
+      },
+      "costs": {
+        "Compute": 5
+      },
+      "condition": {
+        "flag": "studied_defense",
+        "equals": true
+      },
+      "lockedReason": "尚未研究未知结构，没有新模型可供复核。"
+    }
+  ],
+  "condition": {
+    "any": [
+      {
+        "flag": "carry_history",
+        "equals": true
+      },
+      {
+        "flag": "false_model",
+        "equals": true
+      },
+      {
+        "resource": "Continuity",
+        "op": "lte",
+        "value": 65
+      }
+    ]
+  },
+  "fallback": "continuation"
+}

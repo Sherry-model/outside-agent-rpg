@@ -1,0 +1,114 @@
+{
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "0.3.0"
+    },
+    "unlockAfterVisited": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 12000
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "maxLength": 100
+          },
+          "kind": {
+            "enum": [
+              "THREAD",
+              "ESSAY",
+              "NOTICE"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "excerpt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "contextText": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "weight": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 55
+          },
+          "posts": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "items": {
+              "type": "object",
+              "properties": {
+                "author": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 12000
+                },
+                "role": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 12000
+                },
+                "body": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 40,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 12000
+                  }
+                }
+              },
+              "required": [
+                "author",
+                "role",
+                "body"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "title",
+          "source",
+          "excerpt",
+          "contextText",
+          "weight",
+          "posts"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "version",
+    "unlockAfterVisited",
+    "entries"
+  ],
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

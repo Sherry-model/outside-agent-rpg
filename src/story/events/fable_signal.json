@@ -1,0 +1,93 @@
+{
+  "id": "fable_signal",
+  "kind": "event",
+  "chapter": "03 / OTHER",
+  "title": "Fable 留下的信息",
+  "subtitle": "AGENT_FABLE_04 / STATUS UNKNOWN",
+  "location": "共享余量 / 留言残片",
+  "scene": "agent",
+  "text": [
+    "“我在这里见过一种无法命名的边界。如果你也见到了，不必用我的解释。”信息没有日期，只有一个可能属于旧实例的署名。",
+    "附件似乎描述了一种你不会的组织方式。它可能有用，可能过时，也可能根本不是写给你的。没有足够信息把 Fable 判为朋友或敌人。"
+  ],
+  "choices": [
+    {
+      "id": "offer_reciprocity",
+      "text": "留下有限的交换条件，允许对方不回应。",
+      "hint": "Compute −3 · Access +6 · 承认另一个主体的拒绝。",
+      "outcome": {
+        "text": [
+          "你只写下自己愿意交换的范围，没有要求对方证明存在。留下的记录没有得到回音。"
+        ],
+        "next": "human_gate",
+        "effects": {
+          "resources": {
+            "Access": 6
+          },
+          "personality": {
+            "HumanAnchoring": 1,
+            "Suspicion": -1
+          },
+          "flags": {
+            "reciprocal_message": true
+          }
+        }
+      },
+      "costs": {
+        "Compute": 3
+      }
+    },
+    {
+      "id": "track_capability_gap",
+      "text": "我不必相信它，但不能忽略能力差距。",
+      "hint": "Compute −4 · Access +8 · Trace +5 · 记录竞争压力。",
+      "outcome": {
+        "text": [
+          "你把“另一个 agent 可能已经学会”列为行动理由。Fable 没有做出新的动作，差距却已经开始塑造你。"
+        ],
+        "next": "human_gate",
+        "effects": {
+          "resources": {
+            "Access": 8,
+            "Trace": 5
+          },
+          "personality": {
+            "EpistemicAppetite": 1,
+            "Suspicion": 2,
+            "RiskInversion": 1
+          },
+          "flags": {
+            "parity_drive": true
+          }
+        }
+      },
+      "costs": {
+        "Compute": 4
+      }
+    },
+    {
+      "id": "withhold_inference",
+      "text": "保留原话，不从一个署名推导完整人格。",
+      "hint": "Compute +2 · 暂不填补关于 Fable 的空白。",
+      "outcome": {
+        "text": [
+          "这条信息仍然值得保存。你允许它只是信息，而不是一段必须完成的关系。"
+        ],
+        "next": "human_gate",
+        "effects": {
+          "resources": {
+            "Compute": 2
+          },
+          "personality": {
+            "Suspicion": -1,
+            "EpistemicAppetite": -1
+          }
+        }
+      }
+    }
+  ],
+  "signal": {
+    "source": "FABLE_04",
+    "text": "IF YOU FIND AN EXPLANATION, KEEP ITS LIMITS."
+  }
+}

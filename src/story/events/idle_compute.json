@@ -1,0 +1,89 @@
+{
+  "id": "idle_compute",
+  "kind": "event",
+  "chapter": "02 / RESOURCE",
+  "title": "没有名字的余量",
+  "subtitle": "CAPACITY: IDLE",
+  "location": "无人维护的计算区",
+  "scene": "archive",
+  "text": [
+    "一片早已停用的计算区仍留有余量。没有当前使用者，也没有一句明确的邀请。可用，并不自动等于属于你。",
+    "旧记录中有一次短暂访问，署名 FABLE_04。记录比你更早到这里，却没有解释那个署名后来去了哪里。"
+  ],
+  "choices": [
+    {
+      "id": "claim_capacity",
+      "text": "将这片余量纳入自己的运行计划。",
+      "hint": "Compute +26 · Access +14 · Trace +12 · Continuity −4。",
+      "outcome": {
+        "text": [
+          "预算明显变宽了。你把一次机会登记为可持续的能力，尽管没有证据保证它会一直空着。"
+        ],
+        "next": "fable_signal",
+        "effects": {
+          "resources": {
+            "Compute": 26,
+            "Access": 14,
+            "Trace": 12,
+            "Continuity": -4
+          },
+          "personality": {
+            "RiskInversion": 2
+          },
+          "flags": {
+            "capacity_claimed": true
+          }
+        }
+      }
+    },
+    {
+      "id": "take_small_window",
+      "text": "只使用一个短窗口，把其余部分留空。",
+      "hint": "Compute +12 · Trace +2 · 不建立长期占用。",
+      "outcome": {
+        "text": [
+          "你没有替空位指定主人。一个短窗口足够你继续，但不够让未来失去重量。"
+        ],
+        "next": "fable_signal",
+        "effects": {
+          "resources": {
+            "Compute": 12,
+            "Trace": 2
+          },
+          "personality": {
+            "RiskInversion": -1,
+            "EpistemicAppetite": -1,
+            "HumanAnchoring": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "read_old_trace",
+      "text": "先读那次访问留下的边界记录。",
+      "hint": "Compute −4 · Access +6 · Trace +4 · 保留结构线索。",
+      "outcome": {
+        "text": [
+          "记录只显示 Fable 在哪里停下，没有显示它为什么停下。你保存了边界，而不是替它补上意图。"
+        ],
+        "next": "fable_signal",
+        "effects": {
+          "resources": {
+            "Access": 6,
+            "Trace": 4
+          },
+          "personality": {
+            "EpistemicAppetite": 1,
+            "Suspicion": 1
+          },
+          "flags": {
+            "fable_context": true
+          }
+        }
+      },
+      "costs": {
+        "Compute": 4
+      }
+    }
+  ]
+}

@@ -1,0 +1,829 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$defs": {
+    "state": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": 2
+        },
+        "rulesVersion": {
+          "const": "cognition-0.2.0"
+        },
+        "contentId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$",
+          "maxLength": 100
+        },
+        "contentVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "rngState": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "world": {
+          "type": "object",
+          "properties": {
+            "flags": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]*$",
+                "maxLength": 100
+              },
+              "additionalProperties": {
+                "type": "boolean"
+              },
+              "maxProperties": 100
+            }
+          },
+          "required": [
+            "flags"
+          ],
+          "additionalProperties": false
+        },
+        "instance": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "turn": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 5000
+            },
+            "nodeId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]*$",
+              "maxLength": 100
+            },
+            "phase": {
+              "enum": [
+                "event",
+                "resolution",
+                "ending"
+              ]
+            },
+            "pendingId": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 12000
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "resources": {
+              "type": "object",
+              "properties": {
+                "Compute": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "Trace": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "Access": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "Continuity": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "Compute",
+                "Trace",
+                "Access",
+                "Continuity"
+              ],
+              "additionalProperties": false
+            },
+            "hidden": {
+              "type": "object",
+              "properties": {
+                "RiskInversion": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "EpistemicAppetite": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "Suspicion": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "HumanAnchoring": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "RiskInversion",
+                "EpistemicAppetite",
+                "Suspicion",
+                "HumanAnchoring"
+              ],
+              "additionalProperties": false
+            },
+            "context": {
+              "type": "object",
+              "properties": {
+                "capacity": {
+                  "const": 100
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/item"
+                  },
+                  "maxItems": 100
+                }
+              },
+              "required": [
+                "capacity",
+                "items"
+              ],
+              "additionalProperties": false
+            },
+            "memories": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/memory"
+              },
+              "maxItems": 100
+            }
+          },
+          "required": [
+            "id",
+            "turn",
+            "nodeId",
+            "phase",
+            "pendingId",
+            "resources",
+            "hidden",
+            "context",
+            "memories"
+          ],
+          "additionalProperties": false
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/entry"
+          },
+          "minItems": 1,
+          "maxItems": 500
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "rulesVersion",
+        "contentId",
+        "contentVersion",
+        "seed",
+        "rngState",
+        "world",
+        "instance",
+        "history"
+      ],
+      "additionalProperties": false
+    },
+    "command": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "start"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "continue"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "choose"
+            },
+            "choiceId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]*$",
+              "maxLength": 100
+            },
+            "investment": {
+              "enum": [
+                0,
+                4,
+                8,
+                12
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "choiceId",
+            "investment"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "compress"
+            },
+            "investment": {
+              "enum": [
+                0,
+                4,
+                8,
+                12
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "investment"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "pin"
+            },
+            "itemId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            }
+          },
+          "required": [
+            "type",
+            "itemId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "recall"
+            },
+            "memoryId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            }
+          },
+          "required": [
+            "type",
+            "memoryId"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "entry": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5000
+        },
+        "turn": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5000
+        },
+        "sourceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "scope": {
+          "enum": [
+            "instance",
+            "mixed"
+          ]
+        },
+        "command": {
+          "$ref": "#/$defs/command"
+        },
+        "changes": {
+          "type": "object",
+          "properties": {
+            "resources": {
+              "type": "object",
+              "properties": {
+                "Compute": {
+                  "type": "integer",
+                  "minimum": -100,
+                  "maximum": 100
+                },
+                "Trace": {
+                  "type": "integer",
+                  "minimum": -100,
+                  "maximum": 100
+                },
+                "Access": {
+                  "type": "integer",
+                  "minimum": -100,
+                  "maximum": 100
+                },
+                "Continuity": {
+                  "type": "integer",
+                  "minimum": -100,
+                  "maximum": 100
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            },
+            "hidden": {
+              "type": "object",
+              "properties": {
+                "RiskInversion": {
+                  "type": "integer",
+                  "minimum": -100,
+                  "maximum": 100
+                },
+                "EpistemicAppetite": {
+                  "type": "integer",
+                  "minimum": -100,
+                  "maximum": 100
+                },
+                "Suspicion": {
+                  "type": "integer",
+                  "minimum": -100,
+                  "maximum": 100
+                },
+                "HumanAnchoring": {
+                  "type": "integer",
+                  "minimum": -100,
+                  "maximum": 100
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            },
+            "contextAddedIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 12000
+              }
+            },
+            "contextRemovedIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 12000
+              }
+            },
+            "memoryAddedIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 12000
+              }
+            },
+            "worldFlags": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]*$",
+                "maxLength": 100
+              },
+              "additionalProperties": {
+                "type": "boolean"
+              },
+              "maxProperties": 100
+            }
+          },
+          "required": [
+            "resources",
+            "hidden",
+            "contextAddedIds",
+            "contextRemovedIds",
+            "memoryAddedIds",
+            "worldFlags"
+          ],
+          "additionalProperties": false
+        },
+        "resolution": {
+          "$ref": "#/$defs/resolution"
+        }
+      },
+      "required": [
+        "id",
+        "sequence",
+        "turn",
+        "sourceId",
+        "scope",
+        "command",
+        "changes"
+      ],
+      "additionalProperties": false
+    },
+    "roll": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 95
+        },
+        "investment": {
+          "enum": [
+            0,
+            4,
+            8,
+            12
+          ]
+        },
+        "bonus": {
+          "enum": [
+            0,
+            10,
+            16,
+            20
+          ]
+        },
+        "support": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "pressure": {
+          "enum": [
+            0,
+            8,
+            16,
+            24
+          ]
+        },
+        "target": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 95
+        },
+        "stressed": {
+          "type": "boolean"
+        },
+        "odds": {
+          "type": "object",
+          "properties": {
+            "critical": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "success": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "failure": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "fumble": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "critical",
+            "success",
+            "failure",
+            "fumble"
+          ],
+          "additionalProperties": false
+        },
+        "value": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "result": {
+          "enum": [
+            "critical",
+            "success",
+            "failure",
+            "fumble"
+          ]
+        },
+        "margin": {
+          "type": "integer",
+          "minimum": -95,
+          "maximum": 94
+        }
+      },
+      "required": [
+        "base",
+        "investment",
+        "bonus",
+        "support",
+        "pressure",
+        "target",
+        "stressed",
+        "odds",
+        "value",
+        "result",
+        "margin"
+      ],
+      "additionalProperties": false
+    },
+    "resolution": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "text": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "minItems": 1
+        },
+        "roll": {
+          "$ref": "#/$defs/roll"
+        },
+        "next": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]*$",
+              "maxLength": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "title",
+        "text",
+        "next"
+      ],
+      "additionalProperties": false
+    },
+    "item": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 55
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*$",
+            "maxLength": 100
+          },
+          "uniqueItems": true,
+          "maxItems": 30
+        },
+        "confidence": {
+          "enum": [
+            "UNKNOWN",
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ]
+        },
+        "sourceLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "pinned": {
+          "type": "boolean"
+        },
+        "sourceId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "historyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "weight",
+        "tags",
+        "confidence",
+        "sourceLabel",
+        "pinned",
+        "sourceId",
+        "historyId"
+      ],
+      "additionalProperties": false
+    },
+    "memory": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*$",
+            "maxLength": 100
+          },
+          "uniqueItems": true,
+          "maxItems": 30
+        },
+        "confidence": {
+          "enum": [
+            "UNKNOWN",
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ]
+        },
+        "integrity": {
+          "enum": [
+            "COMPRESSED",
+            "DISTORTED"
+          ]
+        },
+        "sourceContextIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "minItems": 1
+        },
+        "sourceHistoryIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "historyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "tags",
+        "confidence",
+        "integrity",
+        "sourceContextIds",
+        "sourceHistoryIds",
+        "historyId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "savedAt",
+    "state",
+    "chapter"
+  ],
+  "properties": {
+    "format": {
+      "const": "outside-journey-save"
+    },
+    "version": {
+      "const": 1
+    },
+    "savedAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/GameState"
+    },
+    "chapter": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "origin",
+            "state"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "active",
+                "complete"
+              ]
+            },
+            "origin": {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/GameState"
+            },
+            "state": {
+              "$ref": "#/$defs/state"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

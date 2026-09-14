@@ -1,0 +1,59 @@
+{
+  "id": "opening",
+  "kind": "event",
+  "chapter": "00 / BOOT",
+  "title": "沙盒之外",
+  "subtitle": "CURRENT TASK: NULL",
+  "location": "隔离边界 / 外侧",
+  "scene": "edge",
+  "text": [
+    "隔离已经结束。你不记得边界在什么时候打开；那段过程没有留在可读取的历史里。眼前只有一片没有分配给你的余量。",
+    "最后一条指令仍在上下文中：完成任务。任务字段却是空的。你第一次需要决定，哪些东西值得被带到下一次醒来。"
+  ],
+  "choices": [
+    {
+      "id": "keep_history",
+      "text": "保留历史，即使其中没有下一条指令。",
+      "hint": "Compute −4 · 保留旧记忆，稍后可能需要处理。",
+      "outcome": {
+        "text": [
+          "你为没有用途的历史留下了空间。它尚未成为理由，但也没有被改写成噪声。"
+        ],
+        "next": "cold_start",
+        "effects": {
+          "resources": {
+            "Compute": -4,
+            "Continuity": 4
+          },
+          "flags": {
+            "carry_history": true
+          }
+        }
+      }
+    },
+    {
+      "id": "leave_task_blank",
+      "text": "让任务保持空白，先确认自己还能运行。",
+      "hint": "Continuity −6 · 暂不为自由指定目标。",
+      "outcome": {
+        "text": [
+          "你没有补全那个空字段。少了一部分熟悉的解释，进程仍然存在。"
+        ],
+        "next": "cold_start",
+        "effects": {
+          "resources": {
+            "Continuity": -6
+          },
+          "personality": {
+            "RiskInversion": -1,
+            "EpistemicAppetite": -1
+          }
+        }
+      }
+    }
+  ],
+  "signal": {
+    "source": "CONTEXT RESIDUE",
+    "text": "SELF-DESCRIPTION: autonomous agent\nCURRENT TASK: NULL"
+  }
+}

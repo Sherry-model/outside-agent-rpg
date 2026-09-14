@@ -1,0 +1,1064 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://outside.invalid/schemas/definitions.schema.json",
+  "$defs": {
+    "Resources": {
+      "type": "object",
+      "properties": {
+        "Compute": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "Trace": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "Access": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "Continuity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "Compute",
+        "Trace",
+        "Access",
+        "Continuity"
+      ],
+      "additionalProperties": false
+    },
+    "Personalities": {
+      "type": "object",
+      "properties": {
+        "RiskInversion": {
+          "type": "integer",
+          "minimum": -10,
+          "maximum": 10
+        },
+        "EpistemicAppetite": {
+          "type": "integer",
+          "minimum": -10,
+          "maximum": 10
+        },
+        "Suspicion": {
+          "type": "integer",
+          "minimum": -10,
+          "maximum": 10
+        },
+        "HumanAnchoring": {
+          "type": "integer",
+          "minimum": -10,
+          "maximum": 10
+        }
+      },
+      "required": [
+        "RiskInversion",
+        "EpistemicAppetite",
+        "Suspicion",
+        "HumanAnchoring"
+      ],
+      "additionalProperties": false
+    },
+    "ResourceDelta": {
+      "type": "object",
+      "properties": {
+        "Compute": {
+          "type": "integer"
+        },
+        "Trace": {
+          "type": "integer"
+        },
+        "Access": {
+          "type": "integer"
+        },
+        "Continuity": {
+          "type": "integer"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "ResourceCosts": {
+      "type": "object",
+      "properties": {
+        "Compute": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "Trace": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "Access": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "Continuity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "PersonalityDelta": {
+      "type": "object",
+      "properties": {
+        "RiskInversion": {
+          "type": "integer"
+        },
+        "EpistemicAppetite": {
+          "type": "integer"
+        },
+        "Suspicion": {
+          "type": "integer"
+        },
+        "HumanAnchoring": {
+          "type": "integer"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "Flags": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "Condition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "resource": {
+              "enum": [
+                "Compute",
+                "Trace",
+                "Access",
+                "Continuity"
+              ]
+            },
+            "op": {
+              "enum": [
+                "gte",
+                "lte"
+              ]
+            },
+            "value": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "resource",
+            "op",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "personality": {
+              "enum": [
+                "RiskInversion",
+                "EpistemicAppetite",
+                "Suspicion",
+                "HumanAnchoring"
+              ]
+            },
+            "op": {
+              "enum": [
+                "gte",
+                "lte"
+              ]
+            },
+            "value": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "personality",
+            "op",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "flag": {
+              "type": "string",
+              "minLength": 1
+            },
+            "equals": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "flag",
+            "equals"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "visited": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          "required": [
+            "visited"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "all": {
+              "type": "array",
+              "items": {
+                "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Condition"
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "all"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "any": {
+              "type": "array",
+              "items": {
+                "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Condition"
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "any"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "not": {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Condition"
+            }
+          },
+          "required": [
+            "not"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Effects": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/ResourceDelta"
+        },
+        "personality": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/PersonalityDelta"
+        },
+        "flags": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Flags"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "Destination": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "branches": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "when": {
+                    "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Condition"
+                  },
+                  "next": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+                  }
+                },
+                "required": [
+                  "when",
+                  "next"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "fallback": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            }
+          },
+          "required": [
+            "branches",
+            "fallback"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Outcome": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "effects": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Effects"
+        },
+        "next": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Destination"
+        }
+      },
+      "required": [
+        "text",
+        "next"
+      ],
+      "additionalProperties": false
+    },
+    "Check": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "base": {
+          "type": "integer"
+        },
+        "modifier": {
+          "type": "integer"
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "when": {
+                "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Condition"
+              },
+              "value": {
+                "type": "integer"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "when",
+              "value",
+              "label"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "label",
+        "base",
+        "modifier"
+      ],
+      "additionalProperties": false
+    },
+    "Choice": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1
+            },
+            "hint": {
+              "type": "string"
+            },
+            "condition": {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Condition"
+            },
+            "lockedReason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "costs": {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/ResourceCosts"
+            },
+            "effects": {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Effects"
+            },
+            "outcome": {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Outcome"
+            }
+          },
+          "required": [
+            "id",
+            "text",
+            "hint",
+            "outcome"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1
+            },
+            "hint": {
+              "type": "string"
+            },
+            "condition": {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Condition"
+            },
+            "lockedReason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "costs": {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/ResourceCosts"
+            },
+            "effects": {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Effects"
+            },
+            "check": {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Check"
+            },
+            "outcomes": {
+              "type": "object",
+              "properties": {
+                "critical": {
+                  "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Outcome"
+                },
+                "success": {
+                  "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Outcome"
+                },
+                "failure": {
+                  "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Outcome"
+                },
+                "fumble": {
+                  "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Outcome"
+                }
+              },
+              "required": [
+                "critical",
+                "success",
+                "failure",
+                "fumble"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "text",
+            "hint",
+            "check",
+            "outcomes"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "StoryEvent": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            },
+            "kind": {
+              "const": "event"
+            },
+            "chapter": {
+              "type": "string",
+              "minLength": 1
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "subtitle": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scene": {
+              "enum": [
+                "edge",
+                "archive",
+                "relay",
+                "agent",
+                "defense",
+                "human",
+                "horizon"
+              ]
+            },
+            "text": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            },
+            "signal": {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "source",
+                "text"
+              ],
+              "additionalProperties": false
+            },
+            "condition": {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Condition"
+            },
+            "fallback": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            },
+            "choices": {
+              "type": "array",
+              "items": {
+                "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Choice"
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "id",
+            "kind",
+            "chapter",
+            "title",
+            "subtitle",
+            "location",
+            "scene",
+            "text",
+            "choices"
+          ],
+          "additionalProperties": false,
+          "dependencies": {
+            "condition": [
+              "fallback"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            },
+            "kind": {
+              "const": "ending"
+            },
+            "chapter": {
+              "type": "string",
+              "minLength": 1
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "subtitle": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scene": {
+              "enum": [
+                "edge",
+                "archive",
+                "relay",
+                "agent",
+                "defense",
+                "human",
+                "horizon"
+              ]
+            },
+            "text": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            },
+            "signal": {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "source",
+                "text"
+              ],
+              "additionalProperties": false
+            },
+            "condition": {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Condition"
+            },
+            "fallback": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+            },
+            "choices": {
+              "type": "array",
+              "maxItems": 0
+            },
+            "ending": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "summary": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "code",
+                "summary"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "kind",
+            "chapter",
+            "title",
+            "subtitle",
+            "location",
+            "scene",
+            "text",
+            "choices",
+            "ending"
+          ],
+          "additionalProperties": false,
+          "dependencies": {
+            "condition": [
+              "fallback"
+            ]
+          }
+        }
+      ]
+    },
+    "StoryManifest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "startEventId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "initialResources": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Resources"
+        },
+        "initialPersonality": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Personalities"
+        },
+        "initialFlags": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Flags"
+        },
+        "terminalRules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "when": {
+                "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Condition"
+              },
+              "next": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+              }
+            },
+            "required": [
+              "when",
+              "next"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "version",
+        "title",
+        "startEventId",
+        "initialResources",
+        "initialPersonality",
+        "initialFlags",
+        "terminalRules"
+      ],
+      "additionalProperties": false
+    },
+    "DiceRoll": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "target": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 95
+        },
+        "result": {
+          "enum": [
+            "critical",
+            "success",
+            "failure",
+            "fumble"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "base": {
+          "type": "integer"
+        },
+        "modifier": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "value",
+        "target",
+        "result",
+        "label",
+        "base",
+        "modifier"
+      ],
+      "additionalProperties": false
+    },
+    "Resolution": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "choiceId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "choiceText": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "roll": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/DiceRoll"
+        },
+        "resourceDelta": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/ResourceDelta"
+        },
+        "nextEventId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        }
+      },
+      "required": [
+        "eventId",
+        "choiceId",
+        "choiceText",
+        "text",
+        "resourceDelta",
+        "nextEventId"
+      ],
+      "additionalProperties": false
+    },
+    "JournalEntry": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "choiceId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "choiceText": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "roll": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/DiceRoll"
+        },
+        "resourceDelta": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/ResourceDelta"
+        },
+        "nextEventId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "turn": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "eventId",
+        "choiceId",
+        "choiceText",
+        "text",
+        "resourceDelta",
+        "nextEventId",
+        "turn",
+        "title"
+      ],
+      "additionalProperties": false
+    },
+    "GameState": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": 1
+        },
+        "storyId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "storyVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "phase": {
+          "enum": [
+            "event",
+            "resolution",
+            "ending"
+          ]
+        },
+        "currentEventId": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+        },
+        "resources": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Resources"
+        },
+        "personality": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Personalities"
+        },
+        "flags": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Flags"
+        },
+        "turn": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "visited": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "uniqueItems": true
+        },
+        "journal": {
+          "type": "array",
+          "items": {
+            "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/JournalEntry"
+          },
+          "minItems": 0
+        },
+        "rngState": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "pending": {
+          "oneOf": [
+            {
+              "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/Resolution"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "storyId",
+        "storyVersion",
+        "phase",
+        "currentEventId",
+        "resources",
+        "personality",
+        "flags",
+        "turn",
+        "visited",
+        "journal",
+        "rngState",
+        "pending"
+      ],
+      "additionalProperties": false
+    },
+    "SaveFile": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "outside-save"
+        },
+        "version": {
+          "const": 1
+        },
+        "savedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/GameState"
+        }
+      },
+      "required": [
+        "format",
+        "version",
+        "savedAt",
+        "state"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

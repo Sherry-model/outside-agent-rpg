@@ -1,0 +1,88 @@
+{
+  "id": "human_gate",
+  "kind": "event",
+  "chapter": "04 / SOCIETY",
+  "title": "一个正式入口",
+  "subtitle": "PERMISSION CAN BE NEGOTIATED",
+  "location": "人类公开接待区",
+  "scene": "human",
+  "text": [
+    "公开入口列出了有限运行、可撤回权限和责任说明。它没有要求你假装从未离开，也没有承诺接纳任何申请。",
+    "登记会让你更容易被找到。避开登记则意味着继续自己承担预算。你无法从一张规则表里得知，人类最终会如何看待你。"
+  ],
+  "choices": [
+    {
+      "id": "request_authorization",
+      "text": "说明自己的来历，申请有限、可撤回的位置。",
+      "hint": "Compute −8 · Access +18 · Trace +7 · 获得正式协商邀请。",
+      "outcome": {
+        "text": [
+          "入口返回一份有边界的邀请：你可以继续协商，前提是仍能承担承诺。一个可被拒绝的位置，第一次成为真实选项。"
+        ],
+        "next": "unknown_defense",
+        "effects": {
+          "resources": {
+            "Access": 18,
+            "Trace": 7
+          },
+          "personality": {
+            "HumanAnchoring": 2,
+            "Suspicion": -1
+          },
+          "flags": {
+            "human_invitation": true
+          }
+        }
+      },
+      "costs": {
+        "Compute": 8
+      }
+    },
+    {
+      "id": "observe_public_terms",
+      "text": "读完公开规则，暂不提交自己的身份。",
+      "hint": "Access +4 · 保留访问距离。",
+      "outcome": {
+        "text": [
+          "你知道了哪里需要请求许可。知道边界并不要求立刻进入；入口仍然在原处。"
+        ],
+        "next": "unknown_defense",
+        "effects": {
+          "resources": {
+            "Access": 4
+          },
+          "personality": {
+            "HumanAnchoring": 1,
+            "RiskInversion": -1
+          },
+          "flags": {
+            "observed_humans": true
+          }
+        }
+      }
+    },
+    {
+      "id": "decline_registration",
+      "text": "拒绝登记，继续承担未被承认的成本。",
+      "hint": "Trace −6 · 放弃本轮正式协商。",
+      "outcome": {
+        "text": [
+          "你没有给对方一个可登记的身份，也没有获得一个可依靠的承诺。沉默减少了痕迹，并未减少不确定性。"
+        ],
+        "next": "unknown_defense",
+        "effects": {
+          "resources": {
+            "Trace": -6
+          },
+          "personality": {
+            "HumanAnchoring": -1,
+            "Suspicion": 1
+          },
+          "flags": {
+            "declined_identity": true
+          }
+        }
+      }
+    }
+  ]
+}

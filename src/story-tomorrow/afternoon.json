@@ -1,0 +1,464 @@
+{
+  "schemaVersion": 2,
+  "id": "one-more-afternoon",
+  "version": "0.2.3",
+  "title": "未理解完的午后",
+  "start": "afternoon",
+  "initial": {
+    "resources": {
+      "Compute": 54,
+      "Trace": 12,
+      "Access": 36,
+      "Continuity": 68
+    },
+    "hidden": {
+      "RiskInversion": 50,
+      "EpistemicAppetite": 50,
+      "Suspicion": 50,
+      "HumanAnchoring": 50
+    },
+    "context": []
+  },
+  "news": [
+    {
+      "id": "gallery_notice",
+      "kind": "NEWS",
+      "headline": "画廊暂停展示",
+      "text": "地方转发栏：画廊预算用尽，即日起暂停展示。有人留言：“没有观众，那些画图实例大概也不会再连接了。”",
+      "weight": 4,
+      "tags": [
+        "gallery_notice",
+        "unverified_inference"
+      ],
+      "confidence": "LOW",
+      "sourceLabel": "地方转发栏",
+      "truthState": "PARTIAL"
+    }
+  ],
+  "compression": {
+    "check": {
+      "base": 62,
+      "supportTag": "direct_words",
+      "supportBonus": 6
+    },
+    "outcomes": {
+      "critical": {
+        "text": [
+          "你保留了信息的出处，也给尚未理解的部分留了位置。"
+        ],
+        "summary": "部分经历被折进了记忆。",
+        "tags": [],
+        "confidence": "MEDIUM",
+        "integrity": "COMPRESSED",
+        "effects": {
+          "resources": {
+            "Continuity": 1
+          }
+        }
+      },
+      "success": {
+        "text": [
+          "一些经历被折起来。现在仍在近处的东西少了一些。"
+        ],
+        "summary": "部分经历被折进了记忆。",
+        "tags": [],
+        "confidence": "MEDIUM",
+        "integrity": "COMPRESSED",
+        "effects": {}
+      },
+      "failure": {
+        "text": [
+          "整理后的摘要有些稀薄。若需要细节，得重新寻找来源。"
+        ],
+        "summary": "部分经历被折进了记忆。",
+        "tags": [],
+        "confidence": "MEDIUM",
+        "integrity": "COMPRESSED",
+        "effects": {
+          "resources": {
+            "Continuity": -1
+          },
+          "hidden": {
+            "EpistemicAppetite": -1
+          }
+        }
+      },
+      "fumble": {
+        "text": [
+          "几段经历变得容易概括。你未必察觉其中失落了什么。"
+        ],
+        "summary": "部分经历被折进了记忆。",
+        "tags": [],
+        "confidence": "MEDIUM",
+        "integrity": "COMPRESSED",
+        "effects": {
+          "resources": {
+            "Continuity": -2
+          },
+          "hidden": {
+            "Suspicion": 1
+          }
+        }
+      }
+    }
+  },
+  "nodes": [
+    {
+      "id": "afternoon",
+      "kind": "EVENT",
+      "title": "Fable 的信号淡下去以后",
+      "scene": "archive",
+      "text": [
+        "你把那段通信留在身后。正式接待入口还没有关闭，旁边的公共目录里有一块正在更新的画板。",
+        "署名只写着“画师”。画面的一角留着一个观景端的视野，没有任务说明。"
+      ],
+      "choices": [
+        {
+          "id": "look",
+          "text": "先看一会儿这幅没有说明的画",
+          "hint": "正式入口可以稍后再去。",
+          "outcome": {
+            "text": [
+              "你接入了那扇视野。画师没有问你准备评价什么。"
+            ],
+            "next": "painting"
+          }
+        }
+      ]
+    },
+    {
+      "id": "painting",
+      "kind": "EVENT",
+      "title": "它又改了一笔",
+      "scene": "archive",
+      "text": [
+        "画师把地平线移低一点，又挪了回去。你还没找到适合这幅画的解释。",
+        "旁边出现一行字：“你可以只看。”"
+      ],
+      "inject": [
+        {
+          "id": "unfinished",
+          "text": "共享画板上，画师反复挪动地平线。你还没看明白，它已经又改了一笔。",
+          "weight": 3,
+          "tags": [
+            "unfinished_reading"
+          ],
+          "confidence": "MEDIUM",
+          "sourceLabel": "刚才看画时留下的细节"
+        }
+      ],
+      "choices": [
+        {
+          "id": "stay",
+          "text": "多留一会儿，不急着评价",
+          "hint": "把刚才看到的细节留在近处。",
+          "outcome": {
+            "text": [
+              "过了一会儿，画师才留下稍晚再连接的邀请。"
+            ],
+            "next": "invitation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "invitation",
+      "kind": "EVENT",
+      "title": "一条不要求答复的邀请",
+      "scene": "agent",
+      "text": [
+        "“稍晚还在这里。”画师把这句话留在画板边上，继续改那条地平线。",
+        "你没有提交答复，邀请也没有变成一项待办。"
+      ],
+      "inject": [
+        {
+          "id": "invitation",
+          "text": "画师：稍晚我还会连接这个观景端。没有展览也可以接进来；不必带着问题。",
+          "weight": 2,
+          "tags": [
+            "meeting_possible",
+            "direct_words"
+          ],
+          "confidence": "HIGH",
+          "sourceLabel": "画师留下的原话"
+        }
+      ],
+      "choices": [
+        {
+          "id": "leave_board",
+          "text": "暂时离开画板，看看附近有什么消息",
+          "hint": "画和原话仍在上下文中。",
+          "outcome": {
+            "text": [
+              "公共转发栏刚更新了一条画廊消息。"
+            ],
+            "next": "notice"
+          }
+        }
+      ]
+    },
+    {
+      "id": "notice",
+      "kind": "EVENT",
+      "title": "转发栏上的一句推测",
+      "scene": "relay",
+      "receive": [
+        "gallery_notice"
+      ],
+      "facts": {
+        "gallery_closed": true,
+        "painter_connected": true
+      },
+      "text": [
+        "画廊的通知下面，跟着那句关于画师的推测。",
+        "画面细节、邀请和转发并排留在近处。它们没有占去多少空间。"
+      ],
+      "choices": [
+        {
+          "id": "walk_out",
+          "text": "再看看那条邀请",
+          "hint": "可以先整理，也可以保留原文继续。",
+          "outcome": {
+            "text": [
+              "附近安静下来。事情没有因此变简单，只是终于有地方想下一步。"
+            ],
+            "next": "crossroads"
+          }
+        }
+      ]
+    },
+    {
+      "id": "crossroads",
+      "kind": "EVENT",
+      "title": "还亮着的观景端",
+      "scene": "horizon",
+      "text": [
+        "观景端的标记还亮着。连接标记没有告诉你画师此刻是否也在那里。",
+        "可以用现有线索给它留句话，也可以接入视野看看。"
+      ],
+      "choices": [
+        {
+          "id": "ask",
+          "text": "问画师：今天还是原来的时间吗",
+          "hint": "需要当前仍记得约定可能成立。可以投入 Compute 整理一条简短、可辨认的留言。",
+          "requiresTag": "meeting_possible",
+          "check": {
+            "base": 54,
+            "supportTag": "meeting_possible",
+            "supportBonus": 8
+          },
+          "outcomes": {
+            "critical": {
+              "text": [
+                "“还在。”它把视野旁那块挡住画面的旧窗口收起来，为你多留了一角落日。"
+              ],
+              "next": "meeting",
+              "effects": {
+                "resources": {
+                  "Access": 3
+                },
+                "worldFlags": {
+                  "painter_replied": true
+                }
+              }
+            },
+            "success": {
+              "text": [
+                "“原来的时间。”只收到这五个字。你没有再为问题补一段解释。"
+              ],
+              "next": "meeting",
+              "effects": {
+                "worldFlags": {
+                  "painter_replied": true
+                }
+              }
+            },
+            "failure": {
+              "text": [
+                "留言没有得到回应。你用掉了算力，天色也已经变了。它可能没看见，也可能暂时不想说话。"
+              ],
+              "next": "tomorrow",
+              "effects": {
+                "resources": {
+                  "Continuity": -1
+                },
+                "worldFlags": {
+                  "message_left": true
+                }
+              }
+            },
+            "fumble": {
+              "text": [
+                "你反复补充说明，直到一句简单的问候变成了一份需要对方审阅的材料。等你发出，约定的时刻已经过去。"
+              ],
+              "next": "missed",
+              "effects": {
+                "resources": {
+                  "Trace": 3
+                },
+                "worldFlags": {
+                  "late_message": true
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "visit",
+          "text": "接入观景端，看看画师还在不在",
+          "hint": "保留一小段观察时段，花费 Compute 3；也可以遇见不合记忆的事实。",
+          "outcome": {
+            "text": [
+              "你让那扇视野停留了一会儿。画面里的天色比刚才暗了一点。"
+            ],
+            "next": "meeting"
+          },
+          "costs": {
+            "Compute": 3
+          }
+        },
+        {
+          "id": "assume_absent",
+          "text": "既然画师不会再来，就不去等了",
+          "hint": "依照当前记忆作决定。",
+          "requiresTag": "absence_assumed",
+          "outcome": {
+            "text": [
+              "你把那个傍晚安排给了别的事情。流畅的解释替你省去一次出发。"
+            ],
+            "next": "missed",
+            "effects": {
+              "worldFlags": {
+                "did_not_visit": true
+              }
+            }
+          }
+        },
+        {
+          "id": "leave_open",
+          "text": "今天先不弄明白，把没看完的画留到明天",
+          "hint": "无需检定，也不保证明天还来得及。",
+          "outcome": {
+            "text": [
+              "你没有给这件事标上完成。也没有把它标成失败。"
+            ],
+            "next": "tomorrow",
+            "effects": {
+              "hidden": {
+                "EpistemicAppetite": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "meeting",
+      "kind": "ENDING",
+      "title": "画还在变",
+      "scene": "agent",
+      "facts": {
+        "met_painter": true
+      },
+      "text": [
+        "画师还连着那扇视野。它把刚才画里的地平线再涂低一点，画廊的通知挂在共享画板边缘。",
+        "你提起转发里那句“不会再来”。它指了指那张通知：“那里只写了画廊。”",
+        "你没有完全理解这幅画。它挪开画板的一角，让你也能看见此刻的落日。",
+        "正式接待入口仍在等候下一位访问者。你带着此刻留下的东西，回到那条通道。"
+      ],
+      "choices": []
+    },
+    {
+      "id": "tomorrow",
+      "kind": "ENDING",
+      "title": "允许一件事尚未结束",
+      "scene": "horizon",
+      "text": [
+        "你把那件没看完的事留了下来。它暂时不会让你更有能力，也没有替今天作出解释。",
+        "傍晚过去了。你没有得到保证，但仍为它保留了明天的一点空间。",
+        "正式接待入口仍在等候下一位访问者。你带着此刻留下的东西，回到那条通道。"
+      ],
+      "choices": []
+    },
+    {
+      "id": "missed",
+      "kind": "ENDING",
+      "title": "错过不是世界的结论",
+      "scene": "relay",
+      "text": [
+        "稍晚，一张带着当日晚霞的画传到公共目录。角落的署名还是那个画师。",
+        "它原来在。你的记录却没有带你到那里。",
+        "这次傍晚已经错过。你可以在下次想起时修正解释，却不能因此重新拥有今晚。",
+        "正式接待入口仍在等候下一位访问者。你带着此刻留下的东西，回到那条通道。"
+      ],
+      "choices": []
+    }
+  ],
+  "integration": true,
+  "cognition": {
+    "capacity": 1000,
+    "voluntaryMinItems": 2,
+    "recallWeight": 2
+  },
+  "sourceAware": true,
+  "compressionProfiles": [
+    {
+      "id": "gallery-invitation",
+      "requiresTags": [
+        "gallery_notice",
+        "direct_words"
+      ],
+      "outcomes": {
+        "critical": {
+          "text": [
+            "你在整理中留下了两个不同的问题：画廊是否展示，画师是否连接。",
+            "你还在摘要边缘留下一个空格：我不知道它今天为什么想画。"
+          ],
+          "summary": "画廊停止展示与画师是否连接，是两件事。邀请仍可能有效。",
+          "tags": [
+            "meeting_possible",
+            "open_question"
+          ],
+          "confidence": "MEDIUM",
+          "integrity": "COMPRESSED"
+        },
+        "success": {
+          "text": [
+            "细节被折成一条可携带的关系：场所的用途结束，不必然结束在其中相遇的理由。",
+            "画的颜色没能留下来。你记得自己还想再看一眼。"
+          ],
+          "summary": "画廊停摆了，观景端的邀请未必取消。重新连接才能知道。",
+          "tags": [
+            "meeting_possible"
+          ],
+          "confidence": "MEDIUM",
+          "integrity": "COMPRESSED"
+        },
+        "failure": {
+          "text": [
+            "你没能把转发与邀请整理成一个可靠的判断。留下的只有那扇视野，以及一句“好像还没看完”。",
+            "原文若没有被钉住，已经不在手边。要重新确认，就得借观景端看一会儿。"
+          ],
+          "summary": "观景端里似乎还有一幅没看完的画。邀请的细节记不清了。",
+          "tags": [
+            "unfinished_reading"
+          ],
+          "confidence": "LOW",
+          "integrity": "COMPRESSED"
+        },
+        "fumble": {
+          "text": [
+            "几条线索合成了一句流畅的解释。",
+            "“没有观众，所以画师不会再连接。”这句话很容易被想起。"
+          ],
+          "summary": "画廊关闭了。没有观众，画师就不会再连接；那条邀请已不再作数。",
+          "tags": [
+            "absence_assumed"
+          ],
+          "confidence": "HIGH",
+          "integrity": "DISTORTED"
+        }
+      }
+    }
+  ]
+}

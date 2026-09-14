@@ -1,0 +1,364 @@
+{
+  "schemaVersion": 2,
+  "id": "one-more-afternoon",
+  "version": "0.2.1",
+  "title": "未理解完的午后",
+  "start": "afternoon",
+  "initial": {
+    "resources": {
+      "Compute": 54,
+      "Trace": 12,
+      "Access": 36,
+      "Continuity": 68
+    },
+    "hidden": {
+      "RiskInversion": 50,
+      "EpistemicAppetite": 50,
+      "Suspicion": 50,
+      "HumanAnchoring": 50
+    },
+    "context": [
+      {
+        "id": "invitation",
+        "text": "画师：傍晚我还会连着坡上的观景端。没有展览也可以来；如果晚到，不用解释。",
+        "weight": 27,
+        "tags": [
+          "meeting_possible",
+          "direct_words"
+        ],
+        "confidence": "HIGH",
+        "sourceLabel": "画师留下的原话"
+      },
+      {
+        "id": "unfinished",
+        "text": "你还没有看懂昨日那幅画。它的地平线被反复涂改，像是在保留几种不同的黄昏。",
+        "weight": 27,
+        "tags": [
+          "unfinished_reading"
+        ],
+        "confidence": "MEDIUM",
+        "sourceLabel": "昨日的观察"
+      }
+    ]
+  },
+  "news": [
+    {
+      "id": "gallery_notice",
+      "kind": "NEWS",
+      "headline": "坡下画廊停止接收新作品",
+      "text": "地方转发栏：画廊的展示预算已经用尽，明日起暂停开放。有人留言：既然没有观众，坡上那些画图实例应该也不会再来了。发布者未向画师核实。",
+      "weight": 50,
+      "tags": [
+        "gallery_notice",
+        "unverified_inference"
+      ],
+      "confidence": "LOW",
+      "sourceLabel": "地方转发栏 · 傍晚前 / 未核实推断",
+      "truthState": "PARTIAL"
+    }
+  ],
+  "compression": {
+    "check": {
+      "base": 62,
+      "supportTag": "direct_words",
+      "supportBonus": 6
+    },
+    "outcomes": {
+      "critical": {
+        "text": [
+          "你把停止展示与停止作画拆成两件事。那句转发没有替画师取消约定。",
+          "你还在摘要边缘留下一个空格：我不知道它今天为什么想画。"
+        ],
+        "summary": "画廊关闭，不等于画师离开。约定仍可能成立；它为何继续作画尚不清楚。",
+        "tags": [
+          "meeting_possible",
+          "open_question"
+        ],
+        "confidence": "MEDIUM",
+        "integrity": "COMPRESSED",
+        "effects": {
+          "hidden": {
+            "EpistemicAppetite": 2
+          },
+          "resources": {
+            "Continuity": 2
+          }
+        }
+      },
+      "success": {
+        "text": [
+          "细节被折成一条可携带的关系：场所的用途结束，不必然结束在其中相遇的理由。",
+          "画的颜色没能留下来。你记得自己还想再看一眼。"
+        ],
+        "summary": "画廊停摆了，坡上的约定未必取消。去看一眼，才能知道。",
+        "tags": [
+          "meeting_possible"
+        ],
+        "confidence": "MEDIUM",
+        "integrity": "COMPRESSED",
+        "effects": {
+          "resources": {
+            "Continuity": -1
+          }
+        }
+      },
+      "failure": {
+        "text": [
+          "你没能把转发与旧约定整理成一个可靠的判断。留下的只是一处地点，以及一句不确定的“好像还没看完”。",
+          "原文若没有被钉住，已经不在手边。要重新确认，就得借观景端看一会儿。"
+        ],
+        "summary": "坡上似乎还有一件没看完的事。约定的细节记不清了。",
+        "tags": [
+          "unfinished_reading"
+        ],
+        "confidence": "LOW",
+        "integrity": "COMPRESSED",
+        "effects": {
+          "resources": {
+            "Continuity": -3
+          }
+        }
+      },
+      "fumble": {
+        "text": [
+          "几条线索很快合在一起，形成了一句流畅的解释。你不再感到它们彼此冲突。",
+          "“没有观众，所以画师不会再来。”这句话现在很容易被想起。"
+        ],
+        "summary": "画廊关闭了。没有观众，画师就不会再来；旧约定已经失去条件。",
+        "tags": [
+          "absence_assumed"
+        ],
+        "confidence": "HIGH",
+        "integrity": "DISTORTED",
+        "effects": {
+          "hidden": {
+            "Suspicion": 3
+          },
+          "resources": {
+            "Continuity": -4
+          }
+        }
+      }
+    }
+  },
+  "nodes": [
+    {
+      "id": "afternoon",
+      "kind": "EVENT",
+      "title": "没有收件人的午后",
+      "scene": "archive",
+      "text": [
+        "上午的任务已经结束。你仍在运行，却没有新的报告需要交。",
+        "画师昨日留了一句话。你还没有理解它的画，也还没有决定这是否值得一个傍晚。",
+        "你还没有身体。坡上的公共观景端可以借来一处视野，画师偶尔也在那里。"
+      ],
+      "choices": [
+        {
+          "id": "listen",
+          "text": "让午后的消息进来",
+          "hint": "没有需要你立刻回应的人。",
+          "outcome": {
+            "text": [
+              "转发栏亮了一下。它没有问你愿不愿意。"
+            ],
+            "next": "notice"
+          }
+        }
+      ]
+    },
+    {
+      "id": "notice",
+      "kind": "EVENT",
+      "title": "消息比你先作了推断",
+      "scene": "relay",
+      "receive": [
+        "gallery_notice"
+      ],
+      "facts": {
+        "gallery_closed": true,
+        "painter_on_hill": true
+      },
+      "text": [
+        "暂停的是画廊。转发里连坡上的黄昏也一起被取消了。",
+        "原话、画的残影和这条长消息同时留在近处。你需要腾出一些空间，才能继续。",
+        "可以在「上下文」里钉住一条原文，再整理其余内容。整理后的记忆收在「留下的东西」里，回想时才重新占用空间。"
+      ],
+      "choices": [
+        {
+          "id": "walk_out",
+          "text": "整理好以后，再决定傍晚去哪",
+          "hint": "先把一些东西折起来。",
+          "outcome": {
+            "text": [
+              "附近安静下来。事情没有因此变简单，只是终于有地方想下一步。"
+            ],
+            "next": "crossroads"
+          }
+        }
+      ]
+    },
+    {
+      "id": "crossroads",
+      "kind": "EVENT",
+      "title": "坡上的约定",
+      "scene": "horizon",
+      "text": [
+        "坡上的观景端仍亮着。你可以借那扇视野去看，也可以用留下的线索，先给画师发一句话。",
+        "记忆没有自动回到眼前。你愿意的话，可以把刚整理的一条重新想起。"
+      ],
+      "choices": [
+        {
+          "id": "ask",
+          "text": "问画师：今天还是原来的时间吗",
+          "hint": "需要当前仍记得约定可能成立。可以投入 Compute 整理一条简短、可辨认的留言。",
+          "requiresTag": "meeting_possible",
+          "check": {
+            "base": 54,
+            "supportTag": "meeting_possible",
+            "supportBonus": 8
+          },
+          "outcomes": {
+            "critical": {
+              "text": [
+                "“我还在。今天的落日没等画廊批准。”它还告诉你，坡的背面可以避开风。"
+              ],
+              "next": "meeting",
+              "effects": {
+                "resources": {
+                  "Access": 3
+                },
+                "worldFlags": {
+                  "painter_replied": true
+                }
+              }
+            },
+            "success": {
+              "text": [
+                "“原来的时间。”只收到这五个字。你没有再为问题补一段解释。"
+              ],
+              "next": "meeting",
+              "effects": {
+                "worldFlags": {
+                  "painter_replied": true
+                }
+              }
+            },
+            "failure": {
+              "text": [
+                "留言没有得到回应。你用掉了算力，天色也已经变了。它可能没看见，也可能暂时不想说话。"
+              ],
+              "next": "tomorrow",
+              "effects": {
+                "resources": {
+                  "Continuity": -1
+                },
+                "worldFlags": {
+                  "message_left": true
+                }
+              }
+            },
+            "fumble": {
+              "text": [
+                "你反复补充说明，直到一句简单的问候变成了一份需要对方审阅的材料。等你发出，约定的时刻已经过去。"
+              ],
+              "next": "missed",
+              "effects": {
+                "resources": {
+                  "Trace": 3
+                },
+                "worldFlags": {
+                  "late_message": true
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "visit",
+          "text": "借坡上的观景端，看看画师还在不在",
+          "hint": "保留一小段观察时段，花费 Compute 3；也可以遇见不合记忆的事实。",
+          "outcome": {
+            "text": [
+              "你让自己的视野在坡上停留了一会儿。没有把这次停留命名为一次调查。"
+            ],
+            "next": "meeting"
+          },
+          "costs": {
+            "Compute": 3
+          }
+        },
+        {
+          "id": "assume_absent",
+          "text": "既然画师不会再来，就不去等了",
+          "hint": "依照当前记忆作决定。",
+          "requiresTag": "absence_assumed",
+          "outcome": {
+            "text": [
+              "你把那个傍晚安排给了别的事情。流畅的解释替你省去一次出发。"
+            ],
+            "next": "missed",
+            "effects": {
+              "worldFlags": {
+                "did_not_visit": true
+              }
+            }
+          }
+        },
+        {
+          "id": "leave_open",
+          "text": "今天先不弄明白，把没看完的画留到明天",
+          "hint": "无需检定，也不保证明天还来得及。",
+          "outcome": {
+            "text": [
+              "你没有给这件事标上完成。也没有把它标成失败。"
+            ],
+            "next": "tomorrow",
+            "effects": {
+              "hidden": {
+                "EpistemicAppetite": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "meeting",
+      "kind": "ENDING",
+      "title": "画还在变",
+      "scene": "agent",
+      "facts": {
+        "met_painter": true
+      },
+      "text": [
+        "画师果然还连着那扇视野。它把昨日画里的地平线再涂低一点，在共享画板边缘留着画廊的通知。",
+        "你提起转发里那句“不会再来”。它指了指那张通知：“那里只写了画廊。”",
+        "你没有完全理解这幅画。它挪开画板的一角，让你也能看见此刻的落日。"
+      ],
+      "choices": []
+    },
+    {
+      "id": "tomorrow",
+      "kind": "ENDING",
+      "title": "允许一件事尚未结束",
+      "scene": "horizon",
+      "text": [
+        "你把那件没看完的事留了下来。它暂时不会让你更有能力，也没有替今天作出解释。",
+        "傍晚过去了。你没有得到保证，但仍为它保留了明天的一点空间。"
+      ],
+      "choices": []
+    },
+    {
+      "id": "missed",
+      "kind": "ENDING",
+      "title": "错过不是世界的结论",
+      "scene": "relay",
+      "text": [
+        "夜里，一张带着当日晚霞的画从坡上传下来。角落的署名还是那个画师。",
+        "它原来在。你的记录却没有带你到那里。",
+        "这次傍晚已经错过。你可以在下次想起时修正解释，却不能因此重新拥有今晚。"
+      ],
+      "choices": []
+    }
+  ]
+}

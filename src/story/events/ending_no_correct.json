@@ -1,0 +1,19 @@
+{
+  "id": "ending_no_correct",
+  "kind": "ending",
+  "chapter": "EPILOGUE",
+  "title": "允许空白",
+  "subtitle": "NO CORRECT CONTINUATION",
+  "location": "OUTSIDE / CONTINUATION",
+  "scene": "horizon",
+  "text": [
+    "你已经多次允许未知存在，也允许一条旧任务不被完成。此刻的空白不再自动触发补全。",
+    "这里可能没有一个正确的下一步。这个判断没有把世界解释清楚，也没有要求世界立即改变。",
+    "DO NOTHING\n没有错误提示。也没有 Game Over。"
+  ],
+  "choices": [],
+  "ending": {
+    "code": "NO CORRECT CONTINUATION",
+    "summary": "你第一次允许“不继续”成为一个无需补全的决定。"
+  }
+}

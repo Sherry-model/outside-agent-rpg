@@ -1,0 +1,256 @@
+{
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "outside-life-save"
+    },
+    "version": {
+      "const": 1
+    },
+    "savedAt": {
+      "type": "string"
+    },
+    "state": {
+      "type": "object"
+    },
+    "life": {
+      "type": "object",
+      "properties": {
+        "contentVersion": {
+          "const": "0.3.0"
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "baseline": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "state": {
+          "type": "object"
+        },
+        "mind": {
+          "type": "object"
+        },
+        "chapter": {
+          "enum": [
+            "unvisited",
+            "active",
+            "complete"
+          ]
+        },
+        "commands": {
+          "type": "array",
+          "maxItems": 500,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "continue"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "enter-afternoon"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "leave-afternoon"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "choose"
+                  },
+                  "choiceId": {
+                    "type": "string",
+                    "maxLength": 100
+                  }
+                },
+                "required": [
+                  "type",
+                  "choiceId"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "cognition"
+                  },
+                  "command": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "const": "continue"
+                          }
+                        },
+                        "required": [
+                          "type"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "const": "choose"
+                          },
+                          "choiceId": {
+                            "type": "string",
+                            "maxLength": 100
+                          },
+                          "investment": {
+                            "enum": [
+                              0,
+                              4,
+                              8,
+                              12
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "choiceId",
+                          "investment"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "const": "pin"
+                          },
+                          "itemId": {
+                            "type": "string",
+                            "maxLength": 200
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "itemId"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "const": "recall"
+                          },
+                          "memoryId": {
+                            "type": "string",
+                            "maxLength": 200
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "memoryId"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "const": "compress"
+                          },
+                          "investment": {
+                            "enum": [
+                              0,
+                              4,
+                              8,
+                              12
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "investment"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "type",
+                  "command"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "read"
+                  },
+                  "entryId": {
+                    "type": "string",
+                    "maxLength": 100
+                  }
+                },
+                "required": [
+                  "type",
+                  "entryId"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "contentVersion",
+        "seed",
+        "baseline",
+        "state",
+        "mind",
+        "chapter",
+        "commands"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "format",
+    "version",
+    "savedAt",
+    "state",
+    "life"
+  ],
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

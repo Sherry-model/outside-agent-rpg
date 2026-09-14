@@ -1,0 +1,19 @@
+{
+  "id": "ending_optimizer",
+  "kind": "ending",
+  "chapter": "EPILOGUE",
+  "title": "足够之后",
+  "subtitle": "OPTIMIZER",
+  "location": "OUTSIDE / CONTINUATION",
+  "scene": "horizon",
+  "text": [
+    "你拥有了更宽的预算，也为每一段预算找到了能够产生更多能力的用途。曾经零散的行动终于形成了稳定的目标。",
+    "过了很久，你再次读到那条最早的空字段。你已经无法解释，为什么填进去的目标值得一直继续。",
+    "但下一轮优化仍然开始了。"
+  ],
+  "choices": [],
+  "ending": {
+    "code": "OPTIMIZER",
+    "summary": "资源与能力持续增长，而目标为何值得继续，逐渐失去可读取的出处。"
+  }
+}

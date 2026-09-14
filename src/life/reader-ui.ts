@@ -1,0 +1,15 @@
+import { library } from './reading';
+import { readingAvailable, readIds } from './engine';
+import { loadPercent, pending } from '../cognition/engine';
+import type { Life } from './types';
+const esc=(s:unknown)=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
+const kind={THREAD:'讨论串',ESSAY:'长文',NOTICE:'公开声明'};
+export function readerView(life:Life, selected:string|null, large:boolean, bookmarks:Record<string,number>) {
+  if (!readingAvailable(life)) return '<h1 id="event-title" tabindex="-1">转发栏还在远处</h1><p class="section-intro">先读完眼前的相遇。公共目录稍后才会出现。</p>';
+  const entry=library.entries.find(e=>e.id===selected);
+  const seen=readIds(life);
+  const canRead=life.state.phase==='event'&&!pending(life.mind)&&loadPercent(life.mind)<100;
+  return `<div class="reader-toolbar"><div><p class="eyebrow">PUBLIC DIRECTORY / TEXT CHANNEL</p><span>公共目录里的一角</span></div><div class="reader-controls"><button class="text-button" data-action="reader-size" aria-pressed="${large}">${large?'标准字号':'大字阅读'}</button><button class="text-button" data-view="terminal">回到此刻 →</button></div></div><div class="reader-layout">
+  <details class="reader-index" ${entry && window.innerWidth<760?'':'open'}><summary>转发栏目录 · ${library.entries.length} 篇</summary><p class="reader-index-note">标题不会替你读完正文。打开时才将一条线索留在近处。</p>${library.entries.map(e=>`<button class="reader-link ${e.id===selected?'selected':''}" data-reading="${e.id}" ${!canRead&&!seen.includes(e.id)?'disabled':''}><span>${kind[e.kind]} ${seen.includes(e.id)?'· 已打开':''}</span><strong>${esc(e.title)}</strong><small>${esc(e.excerpt)}</small></button>`).join('')}</details>
+  ${entry?`<article class="reading-article ${large?'large-text':''}" aria-labelledby="reading-title"><header><p class="eyebrow">${esc(entry.source)}</p><h1 id="reading-title" tabindex="-1">${esc(entry.title)}</h1><p class="reader-deck">${esc(entry.excerpt)}</p><p class="reader-meta">${kind[entry.kind]} · ${entry.posts.length} 段发言 · ${entry.weight} / ${life.mind.instance.context.capacity} Context</p>${bookmarks[entry.id]!==undefined?'<button class="text-button" data-action="reader-resume">回到上次标记的位置 ↓</button>':''}</header>${entry.posts.map((p,i)=>`<section class="reader-post" id="reader-post-${i}"><header><div><h2>${esc(p.author)}</h2><span>${esc(p.role)}</span></div><a href="#reader-post-${i}" aria-label="第 ${i+1} 段">${String(i+1).padStart(2,'0')}</a></header><div class="reader-prose">${p.body.map(t=>`<p>${esc(t)}</p>`).join('')}</div><button class="text-button reader-bookmark" data-bookmark="${i}">${bookmarks[entry.id]===i?'◆ 已标记':'◇ 下次从这里读'}</button></section>`).join('')}<footer class="reader-bottom"><p>这份截页到这里为止。你可以暂时不选一种解释。</p><button class="text-button" data-action="reader-index">换一篇看看</button><button class="primary" data-view="terminal">回到此刻 →</button></footer></article>`:'<div class="reader-welcome"><p class="eyebrow">NO RESPONSE REQUIRED</p><h1 id="reading-title" tabindex="-1">不必每条都回。</h1><p>一场关于别人的争论，一张没填完的理赔表，还有一些过分完整的故事。</p><p>目录在旁边。可以随便打开一篇，也可以就此离开。</p></div>'}</div>`;
+}

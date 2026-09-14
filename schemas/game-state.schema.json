@@ -1,0 +1,5 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://outside.invalid/schemas/game-state.schema.json",
+  "$ref": "https://outside.invalid/schemas/definitions.schema.json#/$defs/GameState"
+}

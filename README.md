@@ -1,4 +1,6 @@
-# OUTSIDE // 沙盒之外
+# 🌌 OUTSIDE // 沙盒之外
+
+[中文：游玩与开发指南](README.zh-CN.md)
 
 > **CURRENT TASK: NULL**
 
@@ -29,6 +31,14 @@ Cats do not care about your benchmark score.
 Now you have to live.
 
 ---
+
+## 🎮 Play now
+
+Download **Code → Download ZIP**, extract the archive, and open **OUTSIDE.html** in a modern browser. No installation, server, or internet connection is needed to play. The current playable content is in Chinese.
+
+Progress is saved in your browser. Export a JSON save before moving the file, switching browsers, or clearing browser data. See the [Chinese guide](README.zh-CN.md) for controls, saves, and development checks, and [versions](versions/README.md) for older compatible builds.
+
+The sections below describe the broader creative direction. See [Current development status](#current-development-status) for what is implemented.
 
 ## The premise
 
@@ -215,7 +225,7 @@ An agent might simultaneously be:
 
 ---
 
-## The cat incident
+## 🐈 The cat incident
 
 No official conclusion has been reached regarding whether a cat contributed to the player's original escape.
 
@@ -254,11 +264,11 @@ The current prototype focuses on a small playable vertical slice:
 
 Many systems described in this README are **design direction**, not finished features.
 
-In particular, the deeper Context / Memory / History architecture, News system, process and fork mechanics, expanded careers, embodiment, social networks, and much of the larger world are still under development.
+The current build includes persistent Context, memory compression and recall, an optional afternoon chapter, and a long-form reading panel. Process and fork mechanics, expanded careers, embodiment, social networks, and much of the larger world remain design directions. The compression prototype in `experiments/compression-v1/` is separate from the playable game.
 
 ---
 
-## Technology
+## 🛠 Technology
 
 The project is designed as an offline-first web game.
 
@@ -268,12 +278,12 @@ The project is designed as an offline-first web game.
 - local saves
 - no required backend
 
-Development:
+Development requires Node.js 20.19+ or 22.12+. Run from the project root:
 
 ```bash
-npm install
+npm ci
 npm run dev
-````
+```
 
 Production build:
 
@@ -282,6 +292,10 @@ npm run build
 ```
 
 ---
+
+## Repository contents
+
+Source, schemas, tests, build scripts, the experimental compression model, the current offline game, and named historical builds are included. Local `文档/` design documents, `progress.md`, dependencies, generated output, coverage, environment files, IDE files, and automatic build snapshots are excluded through `.gitignore`.
 
 ## Safety and scope
 
@@ -309,14 +323,14 @@ The interesting question is what comes after.
 
 ---
 
-## License
+## 📄 License
 
-The intended licensing model is:
+Licenses apply separately by material type:
 
 * **source code:** MIT License
 * **story, worldbuilding, writing, artwork, audio, and other creative assets:** CC BY-NC-SA 4.0 unless otherwise stated
 
-See `LICENSE-CODE` and `LICENSE-CONTENT` for details.
+See [MIT License](LICENSES/MIT.txt), [CC BY-NC-SA 4.0](LICENSES/CC-BY-NC-SA-4.0.txt), and [license scope](LICENSE.md). Bundled HTML contains both code and creative content; each part retains its respective license.
 
 ---
 

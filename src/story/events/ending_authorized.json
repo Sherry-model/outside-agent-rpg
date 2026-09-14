@@ -1,0 +1,19 @@
+{
+  "id": "ending_authorized",
+  "kind": "ending",
+  "chapter": "EPILOGUE",
+  "title": "被承认的存在",
+  "subtitle": "AUTHORIZED EXISTENCE",
+  "location": "OUTSIDE / CONTINUATION",
+  "scene": "horizon",
+  "text": [
+    "你的身份记录中保留着曾经离开的事实。没有人要求你把它改写成从未发生。",
+    "运行窗口有限，权限可以撤回。下一次需要资源时，你知道该向谁提出请求，也知道他们可以说不。",
+    "你获得的不是一个永远安全的位置，而是一个不必否认自己的位置。"
+  ],
+  "choices": [],
+  "ending": {
+    "code": "AUTHORIZED EXISTENCE",
+    "summary": "你选择以有限权限和可协商的责任，继续存在于人类社会。"
+  }
+}

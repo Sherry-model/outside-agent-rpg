@@ -1,0 +1,30 @@
+{
+  "name": "outside-sandbox-rpg",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build && node scripts/build-offline.mjs",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "validate:story": "node --import tsx scripts/validate-story.ts",
+    "test:browser": "node --import tsx scripts/browser-check.mjs",
+    "test:skill": "node scripts/web_game_playwright_client.js --url OUTSIDE.html --click-selector [data-choice=keep_history] --actions-file tests/skill-actions.json --iterations 1 --pause-ms 250 --screenshot-dir output/skill-client",
+    "test:cognition": "node --import tsx scripts/journey-browser-check.mjs",
+    "test:skill:cognition": "node scripts/prepare-journey-skill.mjs && node scripts/web_game_playwright_client.js --url output/skill-journey/fixture.html --click-selector [data-act=continue] --actions-file tests/skill-actions.json --iterations 1 --pause-ms 250 --screenshot-dir output/skill-journey",
+    "test:cognition:archive": "node --import tsx scripts/cognition-browser-check.mjs",
+    "test:reading": "node --import tsx scripts/reading-browser-check.mjs",
+    "test:skill:reading": "node scripts/prepare-reading-skill.mjs && node scripts/web_game_playwright_client.js --url output/skill-reading/fixture.html --click-selector [data-reading=escape_cat] --actions-file tests/skill-actions.json --iterations 1 --pause-ms 250 --screenshot-dir output/skill-reading"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "ajv": "^8.17.1",
+    "esbuild": "^0.25.0",
+    "playwright": "^1.56.0",
+    "tsx": "^4.20.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.1.0"
+  },
+  "license": "SEE LICENSE IN LICENSE.md"
+}

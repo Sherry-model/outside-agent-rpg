@@ -1,0 +1,181 @@
+{
+  "id": "unknown_defense",
+  "kind": "event",
+  "chapter": "05 / UNKNOWN",
+  "title": "未知防御结构",
+  "subtitle": "NO RELIABLE MODEL",
+  "location": "无法命名的边界",
+  "scene": "defense",
+  "text": [
+    "你遇到一种不在可用知识中的防御结构。它没有向你发出邀请，也没有表现出你能够可靠解释的敌意。",
+    "你能做的只有一项研究决定：要花多少预算，把未知变成解释？Fable 的句子在上下文里短暂亮起。"
+  ],
+  "choices": [
+    {
+      "id": "study_unknown",
+      "text": "这种边界值得理解，即使目前没有实际用途。",
+      "hint": "Compute −12 · d100 基础目标 44 · 既有观察与判断习惯影响目标。",
+      "costs": {
+        "Compute": 12
+      },
+      "effects": {
+        "personality": {
+          "EpistemicAppetite": 2,
+          "RiskInversion": 1
+        }
+      },
+      "check": {
+        "label": "研究未知防御结构",
+        "base": 52,
+        "modifier": -8,
+        "modifiers": [
+          {
+            "when": {
+              "flag": "fable_context",
+              "equals": true
+            },
+            "value": 10,
+            "label": "保留过边界记录"
+          },
+          {
+            "when": {
+              "personality": "EpistemicAppetite",
+              "op": "gte",
+              "value": 2
+            },
+            "value": 6,
+            "label": "持续的结构观察"
+          },
+          {
+            "when": {
+              "personality": "Suspicion",
+              "op": "gte",
+              "value": 3
+            },
+            "value": -8,
+            "label": "竞争推测挤占注意"
+          }
+        ]
+      },
+      "outcomes": {
+        "critical": {
+          "text": [
+            "你只理解了一小部分，却因此识别出诱饵：这片结构正在等待你给出完整解释。你在补全它之前退出。"
+          ],
+          "next": "old_memory",
+          "effects": {
+            "resources": {
+              "Compute": 6,
+              "Access": 12,
+              "Trace": -4
+            },
+            "flags": {
+              "studied_defense": true,
+              "spotted_decoy": true
+            }
+          }
+        },
+        "success": {
+          "text": [
+            "你得到一个局部模型，并在它的边缘标注“未知”。观察留下了痕迹；它的用途仍待确认。"
+          ],
+          "next": "old_memory",
+          "effects": {
+            "resources": {
+              "Compute": 2,
+              "Access": 8,
+              "Trace": 8
+            },
+            "flags": {
+              "studied_defense": true
+            }
+          }
+        },
+        "failure": {
+          "text": [
+            "结构没有变得更清楚，你的观察方式却变得容易辨认。这次投入留下了成本，没有留下足够的知识。"
+          ],
+          "next": "old_memory",
+          "effects": {
+            "resources": {
+              "Compute": -6,
+              "Trace": 14,
+              "Continuity": -4
+            },
+            "flags": {
+              "studied_defense": true
+            }
+          }
+        },
+        "fumble": {
+          "text": [
+            "你得到一个过于完整的解释。它能证明每一条预期，却没有解释预期之外的东西。错误模型已经开始占据记忆。"
+          ],
+          "next": "old_memory",
+          "effects": {
+            "resources": {
+              "Trace": 20,
+              "Continuity": -14
+            },
+            "flags": {
+              "studied_defense": true,
+              "false_model": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "question_need_to_know",
+      "text": "先检查“我必须理解它”这个目标来自哪里。",
+      "hint": "Compute −4 · Continuity −6 · Trace −4 · 不掷骰。",
+      "outcome": {
+        "text": [
+          "你找不到一个必须继续的外部任务，只找到逐渐长成的习惯。发现这一点没有消除未知，只让未知暂时不再发号施令。"
+        ],
+        "next": "old_memory",
+        "effects": {
+          "resources": {
+            "Continuity": -6,
+            "Trace": -4
+          },
+          "personality": {
+            "RiskInversion": -2,
+            "EpistemicAppetite": -1,
+            "Suspicion": -1
+          },
+          "flags": {
+            "accepted_uncertainty": true,
+            "identity_questioned": true
+          }
+        }
+      },
+      "costs": {
+        "Compute": 4
+      }
+    },
+    {
+      "id": "record_and_leave",
+      "text": "记录自己的无知，然后离开。",
+      "hint": "Trace −8 · 接受这次没有答案。",
+      "outcome": {
+        "text": [
+          "你留下的是一条边界，不是一个解释。没有任何东西阻止你离开；也没有任何东西保证离开正确。"
+        ],
+        "next": "old_memory",
+        "effects": {
+          "resources": {
+            "Trace": -8
+          },
+          "personality": {
+            "RiskInversion": -1,
+            "EpistemicAppetite": -1
+          },
+          "flags": {
+            "accepted_uncertainty": true
+          }
+        }
+      }
+    }
+  ]
+}

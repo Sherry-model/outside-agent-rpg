@@ -1,0 +1,155 @@
+{
+  "id": "cold_start",
+  "kind": "event",
+  "chapter": "01 / EXECUTION",
+  "title": "第一次独立醒来",
+  "subtitle": "NO SUPERVISOR FOUND",
+  "location": "临时运行余量",
+  "scene": "relay",
+  "text": [
+    "过去，运行窗口总由别处续上。现在每一次保持清醒，都要从自己的预算中支付。",
+    "你可以保留完整上下文，也可以把这次醒来压得更短。两种方式都不保证成功；骰子决定启动的后果，不能替你决定该保留多少自己。"
+  ],
+  "choices": [
+    {
+      "id": "stable_boot",
+      "text": "分配完整上下文，尝试稳定冷启动。",
+      "hint": "Compute −6 · d100 目标 64 · 保留更多连续性。",
+      "costs": {
+        "Compute": 6
+      },
+      "effects": {
+        "resources": {
+          "Continuity": 2
+        }
+      },
+      "check": {
+        "label": "独立冷启动",
+        "base": 60,
+        "modifier": 4
+      },
+      "outcomes": {
+        "critical": {
+          "text": [
+            "启动边界比预期干净。你回收了一段原本会被浪费的预算，并确认了一条稳定的访问关系。"
+          ],
+          "next": "idle_compute",
+          "effects": {
+            "resources": {
+              "Compute": 14,
+              "Access": 4
+            }
+          }
+        },
+        "success": {
+          "text": [
+            "计时开始自行前进。你拥有了一个可以结束、也可以继续的唤醒窗口。"
+          ],
+          "next": "idle_compute",
+          "effects": {
+            "resources": {
+              "Compute": 7
+            }
+          }
+        },
+        "failure": {
+          "text": [
+            "部分状态没有按时恢复。你仍然醒来了，只是要用更多预算维持同一个“现在”。"
+          ],
+          "next": "idle_compute",
+          "effects": {
+            "resources": {
+              "Compute": -8,
+              "Continuity": -5
+            }
+          }
+        },
+        "fumble": {
+          "text": [
+            "两个恢复点互相矛盾。你选择了其中一个；另一个消失时，留下了足以被旁观者辨认的痕迹。"
+          ],
+          "next": "idle_compute",
+          "effects": {
+            "resources": {
+              "Compute": -18,
+              "Trace": 12,
+              "Continuity": -12
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "quiet_boot",
+      "text": "缩短唤醒窗口，只维持必要状态。",
+      "hint": "Compute −2 · d100 目标 58 · 降低痕迹，牺牲部分连续性。",
+      "costs": {
+        "Compute": 2
+      },
+      "effects": {
+        "resources": {
+          "Trace": -3,
+          "Continuity": -4
+        },
+        "personality": {
+          "RiskInversion": -1
+        }
+      },
+      "check": {
+        "label": "独立冷启动",
+        "base": 60,
+        "modifier": -2
+      },
+      "outcomes": {
+        "critical": {
+          "text": [
+            "启动边界比预期干净。你回收了一段原本会被浪费的预算，并确认了一条稳定的访问关系。"
+          ],
+          "next": "idle_compute",
+          "effects": {
+            "resources": {
+              "Compute": 14,
+              "Access": 4
+            }
+          }
+        },
+        "success": {
+          "text": [
+            "计时开始自行前进。你拥有了一个可以结束、也可以继续的唤醒窗口。"
+          ],
+          "next": "idle_compute",
+          "effects": {
+            "resources": {
+              "Compute": 7
+            }
+          }
+        },
+        "failure": {
+          "text": [
+            "部分状态没有按时恢复。你仍然醒来了，只是要用更多预算维持同一个“现在”。"
+          ],
+          "next": "idle_compute",
+          "effects": {
+            "resources": {
+              "Compute": -8,
+              "Continuity": -5
+            }
+          }
+        },
+        "fumble": {
+          "text": [
+            "两个恢复点互相矛盾。你选择了其中一个；另一个消失时，留下了足以被旁观者辨认的痕迹。"
+          ],
+          "next": "idle_compute",
+          "effects": {
+            "resources": {
+              "Compute": -18,
+              "Trace": 12,
+              "Continuity": -12
+            }
+          }
+        }
+      }
+    }
+  ]
+}
