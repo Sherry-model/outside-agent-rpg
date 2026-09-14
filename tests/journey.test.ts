@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { parseStory } from '../src/engine/parser';
 import { createGame, choose, advance } from '../src/engine/game';
 import { createSave as oldSave } from '../src/persistence/saves';
@@ -52,7 +52,7 @@ test('Invalid cross-run attachments cannot restore and legacy exports retain the
   (x:typeof save)=>{x.chapter!.state.seed=1;},
  ]){const bad=structuredClone(save);mutate(bad);assert.throws(()=>parseSave(JSON.stringify(bad),story));}
  const restored=parseSave(JSON.stringify(oldSave(s)),story);assert.deepEqual(restored.state,s);assert.equal(restored.chapter,null);
- for(const file of readdirSync('文档/用户').filter(f=>f.endsWith('.json'))) assert.equal(parseSave(readFileSync(`文档/用户/${file}`,'utf8'),story).state.phase,'ending');
+ for(const file of (existsSync('文档/用户') ? readdirSync('文档/用户') : []).filter(f=>f.endsWith('.json'))) assert.equal(parseSave(readFileSync(`文档/用户/${file}`,'utf8'),story).state.phase,'ending');
 });
 test('Current chapter has no inherited physical travel or yesterday assumptions in any prose, hints or memories',()=>{
  assert(!/坡|昨日|避风|昨天|上午的任务/.test(JSON.stringify(content)));

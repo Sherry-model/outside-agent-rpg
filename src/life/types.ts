@@ -10,7 +10,7 @@ export type LifeCommand =
   | { type: 'read'; entryId: string }
   | { type: 'cognition'; command: Exclude<Command, { type: 'start' }> };
 export interface Life {
-  contentVersion: '0.3.0'; seed: number;
+  contentVersion: '0.3.0' | '0.4.0'; seed: number;
   baseline: JourneySave | null;
   state: GameState;
   mind: State;

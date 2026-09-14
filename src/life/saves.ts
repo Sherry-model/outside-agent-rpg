@@ -1,5 +1,6 @@
 import Ajv from 'ajv';
 import schema from '../../schemas/life-save.schema.json';
+import mindSchema from '../../schemas/cognition/save-0.4.schema.json';
 import type { Story } from '../engine/types';
 import type { StorageLike, SaveSlot } from '../persistence/saves';
 import { parseSave as parseJourney, JOURNEY_KEYS } from '../persistence/journey';
@@ -9,6 +10,7 @@ import type { Life, LifeSave } from './types';
 export type { StorageLike };
 export const LIFE_KEYS = {auto:'outside.life.v1.auto',manual:'outside.life.v1.manual'} as const;
 const validate = new Ajv({strict:true,allErrors:true}).compile<LifeSave>(schema);
+const validateMind = new Ajv({strict:true,allErrors:true}).compile(mindSchema);
 const stable = (value: unknown) => JSON.stringify(value,(_key,v:unknown) => v && typeof v==='object' && !Array.isArray(v) ? Object.fromEntries(Object.entries(v).sort(([a],[b])=>a.localeCompare(b))) : v);
 export function createSave(life: Life, now = new Date()): LifeSave {
   return {format:'outside-life-save',version:1,savedAt:now.toISOString(),state:structuredClone(life.state),life:structuredClone(life)};
@@ -22,8 +24,9 @@ export function parseSave(raw: string, story: Story): LifeSave {
     return createSave(createLife(story,baseline.state.rngState,baseline),new Date(baseline.savedAt));
   }
   if (!validate(data) || !Number.isFinite(Date.parse(data.savedAt))) throw new Error('生活存档格式或版本不兼容。');
+  if (data.life.contentVersion === '0.4.0' && !validateMind({format:'outside-cognition-save',version:2,savedAt:data.savedAt,state:data.life.mind})) throw new Error('认知目录或摘要格式不兼容。');
   const baseline = data.life.baseline === null ? null : parseJourney(JSON.stringify(data.life.baseline),story);
-  let replay = createLife(story,data.life.seed,baseline);
+  let replay = createLife(story,data.life.seed,baseline,data.life.contentVersion);
   for (const command of data.life.commands) replay = step(story,replay,command);
   if (stable(replay) !== stable(data.life) || stable(replay.state) !== stable(data.state)) throw new Error('存档快照与本局经历不一致。');
   return data;

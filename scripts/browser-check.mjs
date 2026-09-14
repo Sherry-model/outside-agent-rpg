@@ -121,7 +121,7 @@ try {
     await page.click('[data-view="memory"]');
     assert.equal((await stateOf(page)).memoryCount,0);
     assert((await stateOf(page)).context.weight>0);
-    assert.match(await page.locator('.content').innerText(),/还没有折起来的记忆/);
+    assert.match(await page.locator('.content').innerText(),/还没有整理出来的记忆入口/);
     await page.click('[data-view="protocol"]');
     assert(await page.getByText('判定行动，不判定你').isVisible());
     await page.click('[data-view="terminal"]');

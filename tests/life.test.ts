@@ -1,14 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { parseStory } from '../src/engine/parser';
-import { createLife, step, available, totalTurn } from '../src/life/engine';
+import { createLife as createVersionedLife, step, available, totalTurn } from '../src/life/engine';
 import { createSave, parseSave, readSave, writeSave, LIFE_KEYS } from '../src/life/saves';
-import { cognitionContent, config, parseLifeContent } from '../src/life/content';
+import { contentFor, legacyConfig as config, parseLifeContent } from '../src/life/content';
 import { create, reduce, weight, pressureBand, pending, canChoose, preview } from '../src/cognition/engine';
 import { createSave as legacySave } from '../src/persistence/saves';
 import { createGame } from '../src/engine/game';
 import type { Life } from '../src/life/types';
+const cognitionContent=contentFor('0.3.0');
+const createLife: typeof createVersionedLife=(story,seed,baseline=null)=>createVersionedLife(story,seed,baseline,'0.3.0');
 const story=parseStory(JSON.parse(readFileSync('src/story/manifest.json','utf8')),readdirSync('src/story/events').filter(f=>f.endsWith('.json')).map(source=>({source,data:JSON.parse(readFileSync(`src/story/events/${source}`,'utf8'))})));
 const main=(l:Life,id:string)=>step(story,step(story,l,{type:'choose',choiceId:id}),{type:'continue'});
 const chapter=(l:Life,id:string)=>step(story,step(story,l,{type:'cognition',command:{type:'choose',choiceId:id,investment:0}}),{type:'cognition',command:{type:'continue'}});
@@ -68,7 +70,7 @@ test('Legacy import explicitly preserves old records without inventing past cont
  writeSave(storage,'auto',main(l,'observe_public_terms'));assert.equal(data.get(LIFE_KEYS.manual),old);
  data.set(LIFE_KEYS.auto,'broken');assert.throws(()=>readSave(storage,'auto',story));assert.equal(data.get(LIFE_KEYS.auto),'broken');
  const fail={getItem:()=>null,setItem:()=>{throw new Error('denied');}};const before=structuredClone(l);assert.throws(()=>writeSave(fail,'auto',l));assert.deepEqual(l,before);
- for(const file of readdirSync('文档/用户').filter(f=>f.endsWith('.json')))assert.equal(parseSave(readFileSync(`文档/用户/${file}`,'utf8'),story).state.phase,'ending');
+ for(const file of (existsSync('文档/用户') ? readdirSync('文档/用户') : []).filter(f=>f.endsWith('.json')))assert.equal(parseSave(readFileSync(`文档/用户/${file}`,'utf8'),story).state.phase,'ending');
  assert.equal(parseSave(JSON.stringify(legacySave(createGame(story,1))),story).life.baseline!.state.turn,0);
 });
 test('All ordinary observations have validated content references; malformed commands cannot execute',()=>{

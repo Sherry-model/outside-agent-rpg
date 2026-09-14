@@ -264,7 +264,7 @@ The current prototype focuses on a small playable vertical slice:
 
 Many systems described in this README are **design direction**, not finished features.
 
-The current build includes persistent Context, memory compression and recall, an optional afternoon chapter, and a long-form reading panel. Process and fork mechanics, expanded careers, embodiment, social networks, and much of the larger world remain design directions. The compression prototype in `experiments/compression-v1/` is separate from the playable game.
+Version 0.4.0 includes a shared 100-unit Context, lossy grouping of experiences, memory indexes that consume Context, recall of summaries only, and irreversible merging or forgetting of memory handles. Compression can misapply a condition from one explicit scope to another; a recalled belief can influence a choice without changing world facts. The optional afternoon and long-form reading panel remain available. Process and fork mechanics, expanded careers, embodiment, social networks, and much of the larger world remain design directions. Existing 0.3.0 saves continue under their original rules; start a new run to use the new cognition system. The earlier experiment in `experiments/compression-v1/` remains a historical design prototype; production rules live in `src/cognition/semantic.ts`, with authored annotations in `src/life/semantic.json`.
 
 ---
 

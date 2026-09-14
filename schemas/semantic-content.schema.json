@@ -1,0 +1,173 @@
+{
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "0.4.0"
+    },
+    "topics": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300
+      },
+      "minProperties": 1
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "clauses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "facet": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "gist": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "abstract": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "epistemic": {
+                  "enum": [
+                    "observed",
+                    "reported",
+                    "unknown"
+                  ]
+                },
+                "priority": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 5
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 300
+                  },
+                  "uniqueItems": true,
+                  "maxItems": 20
+                },
+                "relation": {
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "enum": [
+                        "goal",
+                        "gate"
+                      ]
+                    },
+                    "scope": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 300
+                    },
+                    "action": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 300
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "scope",
+                    "action"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "facet",
+                "gist",
+                "abstract",
+                "epistemic",
+                "priority",
+                "tags"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 5
+          },
+          "depth": {
+            "const": 0
+          }
+        },
+        "required": [
+          "topic",
+          "clauses",
+          "depth"
+        ],
+        "additionalProperties": false
+      },
+      "minProperties": 1
+    },
+    "driftRules": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "fromScope": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "toScope": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "quality": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "tag": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "id",
+          "fromScope",
+          "toScope",
+          "quality",
+          "tag"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "version",
+    "topics",
+    "sources",
+    "driftRules"
+  ],
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

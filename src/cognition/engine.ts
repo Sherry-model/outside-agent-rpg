@@ -1,10 +1,11 @@
+import { directoryWeight, compressionReason, compressNear, loadMemory, dropContext, forgetMemory, mergeReason, mergeMemories } from './semantic';
 import { PERSONALITY_KEYS, RESOURCE_KEYS } from '../engine/types';
 import type { CheckResult } from '../engine/types';
 import { RULES_VERSION, type CheckSpec, type CheckPreview, type Command, type Content, type Effects, type HistoryEntry, type NoteTemplate, type Resolution, type Roll, type State } from './types';
 
 const clamp = (n: number) => Math.max(0, Math.min(100, n));
 export const INVESTMENTS = [0, 4, 8, 12] as const;
-export const weight = (s: State) => s.instance.context.items.reduce((sum, item) => sum + item.weight, 0);
+export const weight = (s: State) => s.instance.context.items.reduce((sum, item) => sum + item.weight, 0) + directoryWeight(s.instance);
 export const loadPercent = (s: State) => weight(s) / s.instance.context.capacity * 100;
 export const pressureBand = (s: State) => loadPercent(s) >= 100 ? 'CRITICAL' : loadPercent(s) >= 85 ? 'HIGH' : loadPercent(s) >= 70 ? 'ELEVATED' : 'NORMAL';
 export const currentNode = (content: Content, s: State) => content.nodes.find(n => n.id === s.instance.nodeId)!;
@@ -38,6 +39,7 @@ export function canChoose(content: Content, s: State, id: string): string {
 }
 export function canCompress(s: State, content?: Content): string {
   if (s.instance.phase !== 'event') return '先读完当前结果。';
+  if (content?.semantic) return compressionReason(s.instance);
   if (content?.cognition) return s.instance.context.items.filter(i => !i.pinned).length < content.cognition.voluntaryMinItems && loadPercent(s) < 100 ? '再经历一些事情，也可以一直保留原文。' : '';
   if (content?.compressionAt && !content.compressionAt.includes(s.instance.nodeId)) return '先把眼前这段经历读完。';
   return weight(s) < 60 ? '上下文还很轻，达到 60 后可整理。' : '';
@@ -59,7 +61,7 @@ function effects(s: State, fx?: Effects) {
 }
 function inject(s: State, note: NoteTemplate, sourceId: string, historyId: string) {
   const { id, text, weight, tags, confidence, sourceLabel } = note;
-  s.instance.context.items.push({ id, text, weight, tags: [...tags], confidence, sourceLabel, pinned: false, sourceId, historyId });
+  s.instance.context.items.push({ id, text, weight, tags: [...tags], confidence, sourceLabel, ...(note.meaning ? {meaning:structuredClone(note.meaning)} : {}), pinned: false, sourceId, historyId });
 }
 function enter(content: Content, s: State, id: string, historyId: string) {
   const node = content.nodes.find(n => n.id === id);
@@ -87,13 +89,14 @@ function record(before: State | null, s: State, command: Command, sourceId: stri
   changes.contextRemovedIds = oldIds.filter(id => !newIds.includes(id));
   changes.memoryAddedIds = s.instance.memories.filter(m => !before?.instance.memories.some(b => b.id === m.id)).map(m => m.id);
   for (const [key, value] of Object.entries(s.world.flags)) if (before?.world.flags[key] !== value) changes.worldFlags[key] = value;
+  if (s.rulesVersion === 'cognition-0.4.0') changes.memoryRemovedIds = before?.instance.memories.filter(m=>!s.instance.memories.some(n=>n.id===m.id)).map(m=>m.id) ?? [];
   const sequence = s.history.length + 1;
   s.history.push({ id: `h${sequence}`, sequence, turn: s.instance.turn, sourceId, scope: Object.keys(changes.worldFlags).length ? 'mixed' : 'instance', command: structuredClone(command), changes, ...(resolution ? { resolution } : {}) });
 }
 export function create(content: Content, seed: number): State {
   if (!Number.isInteger(seed) || seed < 1 || seed > 0xffffffff) throw new Error('无效的种子。');
   const s: State = {
-    schemaVersion: 2, rulesVersion: RULES_VERSION, contentId: content.id, contentVersion: content.version, seed, rngState: seed,
+    schemaVersion: 2, rulesVersion: content.semantic ? 'cognition-0.4.0' : RULES_VERSION, contentId: content.id, contentVersion: content.version, seed, rngState: seed,
     world: { flags: {} }, instance: { id: 'main', turn: 0, nodeId: content.start, phase: 'event', pendingId: null,
       resources: { ...content.initial.resources }, hidden: { ...content.initial.hidden }, context: { capacity: content.cognition?.capacity ?? 100, items: [] }, memories: [] }, history: [],
   };
@@ -114,7 +117,7 @@ export function reduce(content: Content, state: State, command: Exclude<Command,
     if (result.next !== null) enter(content, s, result.next, id);
     else { instance.phase = 'event'; instance.pendingId = null; }
   } else {
-    if (instance.phase !== 'event') throw new Error('当前不能执行此行动。');
+    if (instance.phase !== 'event' && !(content.semantic && instance.phase==='ending' && ['recall','pin','drop','forget'].includes(command.type))) throw new Error('当前不能执行此行动。');
     if (command.type === 'choose') {
       const reason = canChoose(content, s, command.choiceId);
       if (reason) throw new Error(reason);
@@ -133,6 +136,19 @@ export function reduce(content: Content, state: State, command: Exclude<Command,
       if (!item) throw new Error('原文已不在上下文中。');
       if (!item.pinned && instance.context.items.some(i => i.pinned)) throw new Error('暂时只能钉住一条原文；可先放下另一条。');
       item.pinned = !item.pinned; sourceId = item.sourceId;
+    } else if (command.type === 'drop' || command.type === 'forget') {
+      if (!content.semantic) throw new Error('旧版规则不支持此操作，请开始新局体验。');
+      if (command.type === 'drop') dropContext(instance,command.itemId);
+      else forgetMemory(instance,command.memoryId);
+    } else if (command.type === 'merge') {
+      if (!content.semantic) throw new Error('旧版规则不支持目录合并。');
+      const reason = mergeReason(instance,command.memoryIds); if(reason) throw new Error(reason);
+      const roll = draw(s,content.compression.check,command.investment);
+      mergeMemories(instance,content.semantic,command.memoryIds,roll.result,id);
+      resolution = {title:'更远的一段日子',text:['几段旧摘要变成了一段更粗的回顾。人名、具体条件和旧入口没有被藏在里面；它们已经不再能由这段记忆展开。'],roll,next:null};
+      sourceId = 'memory-merge'; instance.turn++;
+    } else if (command.type === 'recall' && content.semantic) {
+      loadMemory(instance,command.memoryId,id); sourceId = command.memoryId;
     } else if (command.type === 'recall') {
       const memory = instance.memories.find(m => m.id === command.memoryId);
       if (!memory) throw new Error('找不到这条记忆。');
@@ -140,6 +156,12 @@ export function reduce(content: Content, state: State, command: Exclude<Command,
       if (loadPercent(s) >= 100) throw new Error('上下文已满，先整理一次。');
       inject(s, { id: `recall-${memory.id}`, text: memory.text, tags: memory.tags, weight: content.cognition?.recallWeight ?? 8, confidence: memory.confidence, sourceLabel: '自己的整理' }, memory.id, id);
       sourceId = memory.id;
+    } else if (command.type === 'compress' && content.semantic) {
+      const reason = canCompress(s,content); if(reason) throw new Error(reason);
+      const roll = draw(s,content.compression.check,command.investment);
+      const count = compressNear(instance,content.semantic,roll.result,s.rngState,id);
+      resolution = {title:'把一些东西折起来',text:[`留下了 ${count} 段摘要。目录仍占据一点近处，回想时再装入正文。`, '原文的某些区分已经不在了。零散或钉住的信息仍留在近处。'],roll,next:null};
+      sourceId = 'compression'; instance.turn++;
     } else if (command.type === 'compress') {
       const reason = canCompress(s, content); if (reason) throw new Error(reason);
       const inputs = instance.context.items.filter(i => !i.pinned);

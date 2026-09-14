@@ -54,7 +54,7 @@ try {
    await page.locator('#pilot-import').setInputFiles(backup);await page.waitForFunction(()=>!document.querySelector('#pilot-modal').open);
    await page.click('[data-act="continue"]');await page.click('[data-view="memory"]');
    assert(!/坡|昨日|避风/.test(await page.locator('.content').innerText()));
-   await page.locator('[data-recall]').first().click();await page.click('[data-view="terminal"]');
+   await page.locator('[data-cog-recall]').first().click();await page.click('[data-view="terminal"]');
   }
   await chapterChoice(page,'walk_out');await chapterChoice(page,useCompression?'visit':'leave_open');
   const beforeReturn=await stateOf(page);assert.equal(beforeReturn.phase,'ending');
@@ -65,7 +65,7 @@ try {
   const after=await stateOf(page);assert.equal(after.event.id,'human_gate');assert.equal(after.chapter,'complete');assert.equal(after.turn,beforeReturn.turn);assert.deepEqual(after.resources,beforeReturn.resources);
   assert.equal(await page.locator('[data-action="tomorrow"]').count(),0);
   await page.reload();assert.deepEqual((await stateOf(page)).resources,after.resources);assert.equal((await stateOf(page)).chapter,'complete');
-  await page.click('[data-view="memory"]');assert.equal((await stateOf(page)).context.capacity,1000);
+  await page.click('[data-view="memory"]');assert.equal((await stateOf(page)).context.capacity,100);
   if(useCompression)assert((await stateOf(page)).memoryCount>0);else assert.equal((await stateOf(page)).memoryCount,0);
   await page.screenshot({path:`${out}/returned-memory-${useCompression}.png`,fullPage:true});await page.click('[data-view="terminal"]');
   await mainChoice(page,'observe_public_terms');assert.equal((await stateOf(page)).event.id,'unknown_defense');
@@ -77,6 +77,6 @@ try {
   await context.close();
  }
  assert.deepEqual(errors,[]);assert.deepEqual(requests,[]);
- await writeFile(`${out}/report.json`,JSON.stringify({errors,requests,checks:['no global entry','timeline gate','resource and RNG inheritance','inherited context plus 3-2-4 of 1000','optional compression','pending reload','whole journey import/export','one return application','mainline continues','old saves import','mobile','no body-language residue']},null,2));
+ await writeFile(`${out}/report.json`,JSON.stringify({errors,requests,checks:['no global entry','timeline gate','resource and RNG inheritance','inherited context plus 3-2-4 of 100','optional compression','pending reload','whole journey import/export','one return application','mainline continues','old saves import','mobile','no body-language residue']},null,2));
  console.log('Journey integration passed: timeline, gradual context, full saves, resource return and offline UI.');
 } finally {await browser.close();}

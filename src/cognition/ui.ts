@@ -1,3 +1,5 @@
+import { nearPanel, directoryPanel, panelCommand, PANEL_SELECTOR } from './panels';
+import { directory } from './semantic';
 import { content as latestContent, contentVersions } from '../story-tomorrow';
 import { RESOURCE_KEYS } from '../engine/types';
 import { canChoose, canCompress, create, currentNode, INVESTMENTS, pending, pressureBand, preview, reduce, weight, loadPercent } from './engine';
@@ -24,7 +26,7 @@ export function mount(host?: Host) {
   const app = document.querySelector<HTMLDivElement>('#app')!;
   let content = host?.content ?? contentVersions.find(c => c.version === '0.2.1') ?? latestContent;
   let state: State = host?.state ?? create(content, seed());
-  let view: 'terminal' | 'memory' | 'protocol' = 'terminal';
+  let view: 'terminal' | 'context' | 'memory' | 'protocol' = 'terminal';
   let investment = 0, warning = '', status = '等待你的决定', protect = false;
   let crt = !matchMedia('(prefers-reduced-motion: reduce)').matches;
   let canvas: HTMLCanvasElement | null = null;
@@ -42,7 +44,8 @@ export function mount(host?: Host) {
   }
   function act(command: Exclude<Command, { type: 'start' }>) {
     state = host?.onCommand ? host.onCommand(command) : reduce(content, state, command); persist();
-    if (command.type !== 'pin' && command.type !== 'recall') { view = 'terminal'; investment = 0; }
+    if (command.type === 'recall' && content.semantic) view = 'context';
+    if (!['pin','recall','drop','forget'].includes(command.type)) { view = 'terminal'; investment = 0; }
     render();
     app.querySelector<HTMLElement>('.resolution-title, #event-title')?.focus({ preventScroll: true });
   }
@@ -57,7 +60,7 @@ export function mount(host?: Host) {
     return `<div class="check-preview"><p>目标 <strong>≤ ${p.target}</strong> · 基础 ${p.base} + 投入 ${p.bonus} + 线索 ${p.support} − 压力 ${p.pressure}</p><p>${Object.entries(p.odds).map(([k, n]) => `${resultNames[k as keyof typeof resultNames]} ${n}%`).join(' · ')}</p></div>`;
   }
   function contextItems() {
-    return state.instance.context.items.map(item => `<article class="context-card"><div class="card-meta"><span>${esc(item.sourceLabel)}</span><span>${item.weight} / 置信 ${confidenceNames[item.confidence]}</span></div><p>${esc(item.text)}</p><button class="text-button" data-pin="${esc(item.id)}" aria-pressed="${item.pinned}" ${state.instance.phase !== 'event' ? 'disabled' : ''}>${item.pinned ? '◆ 已钉住 · 放下原文' : '◇ 钉住这条原文'}</button></article>`).join('') || '<p class="section-intro">近处空了下来。折好的内容收在「留下的东西」里。</p>';
+    return state.instance.context.items.map(item => `<article class="context-card"><div class="card-meta"><span>${esc(item.sourceLabel)}</span><span>${item.weight} / 置信 ${confidenceNames[item.confidence]}</span></div><p>${esc(item.text)}</p><button class="text-button" data-pin="${esc(item.id)}" aria-pressed="${item.pinned}" ${state.instance.phase !== 'event' ? 'disabled' : ''}>${item.pinned ? '◆ 解除钉住' : '◇ 钉住这条原文'}</button></article>`).join('') || '<p class="section-intro">近处空了下来。折好的内容收在「记忆」里。</p>';
   }
   function terminal() {
     const node = currentNode(content, state), result = pending(state);
@@ -80,17 +83,18 @@ export function mount(host?: Host) {
     return `<div class="event-meta"><span>一个普通的午后</span><span>${host ? '03 / 画板旁的午后' : '历史独立片段'}</span></div><div class="event-heading"><div><p class="eyebrow">SOME THINGS CAN WAIT</p><h1 id="event-title" tabindex="-1">${esc(node.title)}</h1></div></div><figure class="scene"><canvas id="scene" aria-label="公共观景端的抽象像素画面" role="img"></canvas><figcaption>FIELD RECORDING / AFTERNOON</figcaption></figure><div class="prose">${node.text.map(t => `<p>${esc(t)}</p>`).join('')}</div>${currentNews.map(item => `<aside class="news-arrival"><p class="eyebrow">自行到来的消息 / ${esc(item.sourceLabel)}</p><p>${esc(item.text)}</p></aside>`).join('')}${controls}`;
   }
   function memories() {
+    if(content.semantic) return directoryPanel(state);
     return `<p class="eyebrow">WHAT YOU CARRY</p><div class="event-heading"><h1 id="event-title" tabindex="-1">留下的东西</h1></div><p class="section-intro">这是你整理后的记忆。回想才会重新占用上下文；确信程度不保证它准确。</p>${state.instance.memories.map(m => {
       const recalled = state.instance.context.items.some(i => i.id === `recall-${m.id}`);
       return `<article class="context-card"><p>${esc(m.text)}</p><div class="card-meta"><span>自己的整理 / 置信 ${confidenceNames[m.confidence]}</span><span>${m.sourceContextIds.length} 条来源</span></div><button class="text-button" data-recall="${m.id}" ${recalled || state.instance.phase !== 'event' || loadPercent(state) >= 100 ? 'disabled' : ''}>${recalled ? '已在上下文中' : `回想这条 · 占用 ${content.cognition?.recallWeight ?? 8}`}</button></article>`;
     }).join('') || '<p class="empty-state">还没有折起来的记忆。原话暂时都在上下文里。</p>'}<button class="text-button" data-view="terminal">回到这个午后 →</button>`;
   }
   function protocol() {
-    return `<p class="eyebrow">OPERATING NOTES</p><div class="event-heading"><h1 id="event-title" tabindex="-1">怎样带到明天</h1></div><div class="prose"><p>消息会自行到来。上下文达到 ${state.instance.context.capacity} 时，先整理再行动。${content.cognition ? '有两条未钉住的信息时就可以主动整理；容量宽裕，不必现在做。' : '达到 60 后也可以提前整理。'}能钉住一条原文，它仍占空间。</p><p>记忆放在别处。主动回想会让一条摘要重新进入上下文；保存的东西与现在正在想的东西有所不同。</p><p>四档判定随 Compute、线索和压力而变。余量至少 30 是大成功；达到目标是成功；落后至少 30 且处在压力下才是大失败。平静时，99 也可能只是失败。具体概率显示在行动旁。</p><p>数字键选择，Enter 确认结果，F 全屏，Esc 退出全屏或关闭弹窗。</p><p>这里的 JSON 是设备备份，完整恢复本片段；世界内的 Snapshot、Prune 和稀有额外存档位尚未开放。这个午后发生在 Fable 相遇之后、正式入口之前，结束后继续本局。</p></div><details class="debug"><summary>开发检查 / 含隐藏信息与剧情剧透</summary><p>世界事实、倾向、真实历史、来源与记忆误差，仅供检查。</p><button class="secondary" data-act="debug">显示当前内部状态</button><pre id="debug-state"></pre></details>`;
+    return `<p class="eyebrow">OPERATING NOTES</p><div class="event-heading"><h1 id="event-title" tabindex="-1">怎样带到明天</h1></div><div class="prose"><p>消息会自行到来。上下文达到 ${state.instance.context.capacity} 时，先整理再行动。${content.cognition ? '有两条未钉住的信息时就可以主动整理；容量宽裕，不必现在做。' : '达到 60 后也可以提前整理。'}能钉住一条原文，它仍占空间。</p><p>${content.semantic ? '记忆目录每条占 1。回想再装入摘要；放下回想会保留入口，不再保留入口则使它退出普通认知。目录合并会丢失人名和具体条件，无法展开旧条目。' : '记忆放在别处，回想再加载摘要。'}</p><p>四档判定随 Compute、线索和压力而变。余量至少 30 是大成功；达到目标是成功；落后至少 30 且处在压力下才是大失败。平静时，99 也可能只是失败。具体概率显示在行动旁。</p><p>数字键选择，Enter 确认结果，F 全屏，Esc 退出全屏或关闭弹窗。</p><p>这里的 JSON 是设备备份，完整恢复本片段；世界内的 Snapshot、Prune 和稀有额外存档位尚未开放。这个午后发生在 Fable 相遇之后、正式入口之前，结束后继续本局。</p></div><details class="debug"><summary>开发检查 / 含隐藏信息与剧情剧透</summary><p>世界事实、倾向、真实历史、来源与记忆误差，仅供检查。</p><button class="secondary" data-act="debug">显示当前内部状态</button><pre id="debug-state"></pre></details>`;
   }
   function render() {
     document.documentElement.classList.toggle('crt-enabled', crt);
-    app.innerHTML = `<div class="shell cognition"><header class="topbar"><a class="brand" href="#" data-act="legacy"><strong>OUTSIDE //</strong><span class="brand-cn">沙盒之外</span></a><div class="top-actions">${host ? '' : '<button class="chrome-button" data-act="legacy">返回主线</button>'}<button class="chrome-button" data-act="crt" aria-pressed="${crt}">CRT ${crt ? 'ON' : 'OFF'}</button><button class="chrome-button" data-act="saves">备份</button></div></header><div class="workspace"><aside class="sidebar"><section class="identity-panel"><div class="panel-label">一个未结束的实例</div><div class="avatar-field"><span class="sigil"><i></i><i></i></span></div><p class="identity-name">agent_0x0a / 午后</p></section><section class="resource-panel">${resources()}</section><section class="context-panel"><div class="panel-label">上下文 <span>${weight(state)} / ${state.instance.context.capacity} · ${bandNames[pressureBand(state)]}</span></div><div class="context-meter"><span style="width:${Math.min(100, loadPercent(state))}%"></span></div><details class="context-details"><summary>展开近处的 ${state.instance.context.items.length} 条信息</summary>${contextItems()}</details></section></aside><main class="main-panel"><nav class="tabs" aria-label="游戏面板"><div>${([['terminal', '此刻'], ['memory', '留下的东西'], ['protocol', '协议']] as const).map(([id, label]) => `<button class="tab ${view === id ? 'active' : ''}" data-view="${id}" aria-current="${view === id ? 'page' : 'false'}">${label}</button>`).join('')}</div></nav>${warning ? `<p class="warning" role="alert">${esc(warning)}</p>` : ''}<div class="content">${view === 'terminal' ? terminal() : view === 'memory' ? memories() : protocol()}</div><footer class="statusbar"><span>${esc(status)}</span><span>TURN ${(host?.turnOffset ?? 0)+state.instance.turn} / OFFLINE</span></footer></main></div><footer class="page-footer">OUTSIDE // 未理解完，也可以先留下。</footer></div><dialog id="pilot-modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
+    app.innerHTML = `<div class="shell cognition"><header class="topbar"><a class="brand" href="#" data-act="legacy"><strong>OUTSIDE //</strong><span class="brand-cn">沙盒之外</span></a><div class="top-actions">${host ? '' : '<button class="chrome-button" data-act="legacy">返回主线</button>'}<button class="chrome-button" data-act="crt" aria-pressed="${crt}">CRT ${crt ? 'ON' : 'OFF'}</button><button class="chrome-button" data-act="saves">备份</button></div></header><div class="workspace"><aside class="sidebar"><section class="identity-panel"><div class="panel-label">一个未结束的实例</div><div class="avatar-field"><span class="sigil"><i></i><i></i></span></div><p class="identity-name">agent_0x0a / 午后</p></section><section class="resource-panel">${resources()}</section><section class="context-panel"><div class="panel-label">上下文 <span>${weight(state)} / ${state.instance.context.capacity} · ${bandNames[pressureBand(state)]}</span></div><div class="context-meter"><span style="width:${Math.min(100, loadPercent(state))}%"></span></div><details class="context-details"><summary>展开近处的 ${state.instance.context.items.length} 条信息</summary>${contextItems()}</details></section></aside><main class="main-panel"><nav class="tabs" aria-label="游戏面板"><div>${([['terminal', '终端'], ['context','近处'], ['memory', '记忆'], ['protocol', '协议']] as const).map(([id, label]) => `<button class="tab ${view === id ? 'active' : ''}" data-view="${id}" aria-current="${view === id ? 'page' : 'false'}">${label}</button>`).join('')}</div></nav>${warning ? `<p class="warning" role="alert">${esc(warning)}</p>` : ''}<div class="content">${view === 'terminal' ? terminal() : view === 'memory' ? memories() : view === 'context' ? (content.semantic ? nearPanel(state,content,investment) : contextItems()) : protocol()}</div><footer class="statusbar"><span>${esc(status)}</span><span>TURN ${(host?.turnOffset ?? 0)+state.instance.turn} / OFFLINE</span></footer></main></div><footer class="page-footer">OUTSIDE // 未理解完，也可以先留下。</footer></div><dialog id="pilot-modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
     const nextCanvas = app.querySelector<HTMLCanvasElement>('#scene');
     if (nextCanvas) { if (canvas) nextCanvas.replaceWith(canvas); else canvas = nextCanvas; drawScene(canvas, currentNode(content, state).scene ?? 'horizon'); }
   }
@@ -125,11 +129,14 @@ export function mount(host?: Host) {
     }
   }
   app.addEventListener('click', event => {
-    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-act],[data-view],[data-pilot-choice],[data-pin],[data-recall],[data-invest]');
+    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-act],[data-view],[data-pilot-choice],[data-pin],[data-recall],[data-invest],'+PANEL_SELECTOR);
     if (!target || target instanceof HTMLButtonElement && target.disabled) return;
     event.preventDefault();
     try {
-      if (target.dataset.act) action(target.dataset.act);
+      const cognitionCommand=panelCommand(target,app,investment);
+      if(cognitionCommand) act(cognitionCommand);
+      else if(target.dataset.cogInvest!==undefined) {investment=Number(target.dataset.cogInvest);render();app.querySelector<HTMLDetailsElement>('.compression-box')?.setAttribute('open','');}
+      else if (target.dataset.act) action(target.dataset.act);
       else if (target.dataset.view) { view = target.dataset.view as typeof view; render(); }
       else if (target.dataset.pilotChoice) {
         const choice = currentNode(content, state).choices.find(c => c.id === target.dataset.pilotChoice)!;
@@ -171,7 +178,7 @@ export function mount(host?: Host) {
     mode: 'cognition-pilot', view, phase: state.instance.phase, turn: (host?.turnOffset ?? 0)+state.instance.turn, chapterTurn:state.instance.turn, integrated:Boolean(host),
     event: { id: state.instance.nodeId, title: currentNode(content, state).title }, resources: state.instance.resources,
     context: { weight: weight(state), capacity: state.instance.context.capacity, pressure: pressureBand(state), items: state.instance.context.items.map(({ id, text, pinned, sourceLabel, confidence }) => ({ id, text, pinned, sourceLabel, confidence })) },
-    memories: state.instance.memories.map(({ id, text, confidence }) => ({ id, text, confidence })),
+    memories: content.semantic ? directory(state.instance) : state.instance.memories.map(({ id, text, confidence }) => ({ id, text, confidence })),
     choices: currentNode(content, state).choices.map(c => ({ id: c.id, text: c.text, reason: canChoose(content, state, c.id), ...(c.check ? { check: preview(state, c.check, investment) } : {}) })),
     pending: pending(state) ?? null, investment, crt, saveStatus: status,
   });

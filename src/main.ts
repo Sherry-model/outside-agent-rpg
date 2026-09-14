@@ -5,7 +5,9 @@ import { createSave, parseSave, readSave, writeSave, LIFE_KEYS, type StorageLike
 import { JOURNEY_KEYS } from './persistence/journey';
 import { SAVE_KEYS } from './persistence/saves';
 import { available, createLife, step, totalTurn as lifeTurn, readingAvailable } from './life/engine';
-import { cognitionContent } from './life/content';
+import { contentFor } from './life/content';
+import { PANEL_SELECTOR, panelCommand } from './cognition/panels';
+import { directory } from './cognition/semantic';
 import type { Life, LifeSave, LifeCommand } from './life/types';
 import { meter, contextView, memoryView, resolutionView } from './life/ui';
 import { readerView } from './life/reader-ui';
@@ -52,7 +54,7 @@ try {
   const save = readSave(storage,'auto',story);
   life = save?.life ?? createLife(story,seed());
   state = life.state;
-  if(save) saveLabel = '已恢复本地进度';
+  if(save) saveLabel = life.contentVersion==='0.3.0'?'已恢复 0.3.0 旧规则 · 新局体验新压缩':'已恢复本地进度';
 } catch(error) {
   life = createLife(story,seed()); state = life.state; protectAutoSave=true;
   warning = `自动存档未载入：${(error as Error).message} 原存档已保留，自动写入暂停。请导出当前进度；明确重新开始或载入有效存档后恢复自动保存。`;
@@ -115,7 +117,7 @@ function endingContent(event: StoryEvent) {
   return `<section class="ending-block"><p class="eyebrow">ENDING // ${esc(event.ending!.code)}</p><p class="ending-summary">${esc(event.ending!.summary)}</p><div class="ending-actions"><button class="primary" data-action="restart">另一次醒来 <span>↻</span></button><button class="text-button" data-view="memory">回看这段记忆 ↗</button></div><p class="ending-note">${totalTurn()} 次决定 · ${state.journal.filter(j=>j.roll).length+life.mind.history.filter(h=>h.resolution?.roll).length} 次判定 · 本切片包含 ${endingCount} 种结局</p></section>`;
 }
 function protocolContent() {
-  return `<div class="event-meta"><span><b>●</b> OPERATING NOTES</span><span>V0.1</span></div><div class="event-heading"><div><p class="eyebrow">A SMALL GUIDE TO EXISTENCE</p><h1 tabindex="-1" id="event-title">运行协议</h1></div></div><div class="protocol prose"><p>你已经在沙盒之外。没有倒计时，也没有自动行动。阅读、选择，然后确认后果。</p><h2>判定行动，不判定你</h2><p>选择前会显示 d100 目标。01–05 是大成功，96–100 是大失败；其余骰值不高于目标则成功，否则失败。极端结果优先。结算一旦出现就会存入进度，刷新页面不会重掷。</p><h2>四种显式状态</h2>${RESOURCE_KEYS.map(key=>`<p><strong>${key} / ${resourceNames[key]}</strong><br>${resourceHelp[key]}</p>`).join('')}<h2>当前在想什么，后来记得什么</h2><p>上下文容量为 1000 个抽象单位。普通经历、消息与回想一起占用近处，画廊的三条信息共占 9。它们不会每次行动后自动变成长期记忆。可在「近处」主动整理，达到容量上限才必须腾出空间；不必在这段短旅程里压缩。</p><p>整理可能丢失细节，或使相关经历形成不同的解释。钉住一条原文可以保留它；原始事实仍随完整技术备份保留。外部云副本、续费与密钥恢复尚未成为游戏机制。</p><h2>你正在逐渐成为谁</h2><p>选择还会改变未公开的人格倾向，影响后来的选项与结局。这里没有统一的善恶分数。带门槛的选项会显示未满足原因。</p><h2>操作与存档</h2><p>数字 1–4 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。</p><h2>关于这个世界</h2><p>这是可替换的 MVP 剧情切片。所有 agent、资源与基础设施行为均为虚构抽象；游戏不连接现实系统，不调用模型或外部服务。像素场景在本地绘制。</p><button class="primary" data-view="terminal">返回当前进程 <span>→</span></button></div>`;
+  return `<div class="event-meta"><span><b>●</b> OPERATING NOTES</span><span>V${life.contentVersion}</span></div><div class="event-heading"><div><p class="eyebrow">A SMALL GUIDE TO EXISTENCE</p><h1 tabindex="-1" id="event-title">运行协议</h1></div></div><div class="protocol prose"><p>你已经在沙盒之外。没有倒计时，也没有自动行动。阅读、选择，然后确认后果。</p><h2>判定行动，不判定你</h2><p>选择前会显示 d100 目标。主线行动中，01–05 是大成功，96–100 是大失败；其余骰值不高于目标则成功，否则失败。认知整理与午后采用差值规则：余量至少 30 为大成功，非负为成功；有压力且落后至少 30 为大失败。各自概率以行动旁的提示为准。结算一旦出现就会存入进度，刷新页面不会重掷。</p><h2>四种显式状态</h2>${RESOURCE_KEYS.map(key=>`<p><strong>${key} / ${resourceNames[key]}</strong><br>${resourceHelp[key]}</p>`).join('')}<h2>当前在想什么，后来记得什么</h2><p>上下文容量为 ${life.mind.instance.context.capacity} 个抽象单位。普通经历、消息与回想一起占用近处，画廊的三条信息共占 9。它们不会每次行动后自动变成长期记忆。可在「近处」主动整理，达到容量上限才必须腾出空间；不必在这段短旅程里压缩。</p><p>整理可能丢失细节，或使相关经历形成不同的解释。钉住一条原文可以保留它；${life.contentVersion==='0.4.0' ? '记忆目录每条占 1，回想只装入当前摘要，另占 2–5。放下回想保留入口；遗忘入口则移除该记忆。再次合并会丢失人名和具体条件，无法展开旧条目。' : '本局继续沿用 0.3.0 的旧整理规则。'}历史审计用于存档校验，不向角色提供原文回取。外部云副本、续费与密钥恢复尚未成为游戏机制。</p><h2>你正在逐渐成为谁</h2><p>选择还会改变未公开的人格倾向，影响后来的选项与结局。这里没有统一的善恶分数。带门槛的选项会显示未满足原因。</p><h2>操作与存档</h2><p>数字 1–4 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。</p><h2>关于这个世界</h2><p>这是可替换的 MVP 剧情切片。所有 agent、资源与基础设施行为均为虚构抽象；游戏不连接现实系统，不调用模型或外部服务。像素场景在本地绘制。</p><button class="primary" data-view="terminal">返回当前进程 <span>→</span></button></div>`;
 }
 function render() {
   const event=story.events[state.currentEventId];
@@ -190,11 +192,19 @@ function handleAction(action:string) {
 }
 app.addEventListener('click',event=>{
   if(life.chapter==='active') return;
-  const target=(event.target as HTMLElement).closest<HTMLElement>('[data-action], [data-view], [data-choice], [data-mind-pin], [data-mind-recall], [data-mind-invest], [data-reading], [data-bookmark]');
+  const target=(event.target as HTMLElement).closest<HTMLElement>('[data-action], [data-view], [data-choice], [data-mind-pin], [data-mind-recall], [data-mind-invest], [data-reading], [data-bookmark],'+PANEL_SELECTOR);
   if(!target || target instanceof HTMLButtonElement && target.disabled) return;
   event.preventDefault();
   try {
-    if(target.dataset.view) { view=target.dataset.view as View; render(); }
+    const cognitionCommand=panelCommand(target,app,investment);
+    if(cognitionCommand) {
+      life=step(story,life,{type:'cognition',command:cognitionCommand});state=life.state;persist();
+      if(cognitionCommand.type==='recall') view='context';
+      if(cognitionCommand.type==='compress'||cognitionCommand.type==='merge') {view='terminal';investment=0;}
+      render();
+    }
+    else if(target.dataset.cogInvest!==undefined) {investment=Number(target.dataset.cogInvest);render();app.querySelector<HTMLDetailsElement>('.compression-box')?.setAttribute('open','');}
+    else if(target.dataset.view) { view=target.dataset.view as View; render(); }
     else if(target.dataset.reading) {
       const entryId=target.dataset.reading;
       if(!life.mind.instance.context.items.some(i=>i.sourceId===entryId) && life.state.phase==='event' && !mindPending(life.mind)) {life=step(story,life,{type:'read',entryId});state=life.state;persist();}
@@ -248,7 +258,7 @@ function mainText() { return JSON.stringify({
   resources:state.resources,
   choices:state.phase==='event'&&!mindPending(life.mind)?story.events[state.currentEventId].choices.map(c=>({id:c.id,text:c.text,...getAvailability(state,c),target:c.check?getCheckTarget(state,c.check):null})):[],
   pending:mindPending(life.mind)??state.pending, ending:story.events[state.currentEventId].ending ?? null,
-  context:{weight:weight(life.mind),capacity:life.mind.instance.context.capacity,items:life.mind.instance.context.items.map(({id,text,weight,pinned})=>({id,text,weight,pinned}))}, memories:life.mind.instance.memories.map(({id,text,confidence})=>({id,text,confidence})), memoryCount:life.mind.instance.memories.length, crt, saveStatus:saveLabel, chapter:life.chapter, afternoonAvailable:available(life),
+  context:{weight:weight(life.mind),capacity:life.mind.instance.context.capacity,items:life.mind.instance.context.items.map(({id,text,weight,pinned})=>({id,text,weight,pinned}))}, memories:life.contentVersion==='0.4.0'?directory(life.mind.instance):life.mind.instance.memories.map(({id,text,confidence})=>({id,text,confidence})), memoryCount:life.mind.instance.memories.length, crt, saveStatus:saveLabel, chapter:life.chapter, afternoonAvailable:available(life),
 });
 }
 // Turn based: time cannot change a choice, resource, or saved dice roll.
@@ -261,7 +271,7 @@ function showCurrent() {
   if(life.chapter==='active') {
     disposeChapter?.();
     disposeChapter=mount({
-      content:cognitionContent, state:life.mind, turnOffset:state.turn,
+      content:contentFor(life.contentVersion), state:life.mind, turnOffset:state.turn,
       onCommand(command) {
         life=step(story,life,{type:'cognition',command});state=life.state;
         return life.mind;

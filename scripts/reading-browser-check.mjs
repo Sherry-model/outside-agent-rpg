@@ -35,13 +35,13 @@ try {
   await page.click('.reader-toolbar [data-view="terminal"]');assert.equal((await stateOf(page)).event.id,'human_gate');assert.equal((await stateOf(page)).turn,base.turn);
   // The mainline can now manage cognition without visiting the afternoon.
   await page.click('.tab[data-view="context"]');assert((await page.locator('.content').innerText()).includes('Fable'));
-  await page.locator('[data-mind-pin]').first().click();await page.locator('.compression-box>summary').click();await page.click('[data-mind-invest="8"]');await page.click('[data-action="compress"]');
+  await page.locator('[data-cog-pin]').first().click();await page.locator('.compression-box>summary').click();await page.click('[data-cog-invest="8"]');await page.click('[data-cog-compress]');
   const resolved=await stateOf(page);assert.equal(resolved.phase,'resolution');assert.equal(resolved.resources.Compute,base.resources.Compute-8);assert(resolved.memoryCount>0);assert(!JSON.stringify(resolved.memories).includes('画廊'));
   const raw=await page.evaluate(()=>localStorage.getItem('outside.life.v1.auto'));parseSave(raw,story);await writeFile(`${out}/after-reading-${mobile}.json`,raw);
   await page.reload();assert.deepEqual((await stateOf(page)).pending,resolved.pending);await page.click('[data-action="continue-mind"]');
-  await page.click('.tab[data-view="memory"]');await page.locator('[data-mind-recall]').first().click();assert.equal((await stateOf(page)).context.weight,6);
+  await page.click('.tab[data-view="memory"]');const beforeRecall=await stateOf(page);const cost=beforeRecall.memories[0].recallWeight;await page.locator('[data-cog-recall]').first().click();assert.equal((await stateOf(page)).context.weight,beforeRecall.context.weight+cost);const recalledWeight=(await stateOf(page)).context.weight;
   await page.screenshot({path:`${out}/${mobile?'mobile':'desktop'}-main-memory.png`,fullPage:true});
-  await page.click('.tab[data-view="terminal"]');await page.click('[data-action="tomorrow"]');assert.equal((await stateOf(page)).context.weight,6);
+  await page.click('.tab[data-view="terminal"]');await page.click('[data-action="tomorrow"]');assert.equal((await stateOf(page)).context.weight,recalledWeight);
   await context.close();
  }
  // An old in-progress chapter remains recoverable byte-for-byte instead of being reinterpreted.

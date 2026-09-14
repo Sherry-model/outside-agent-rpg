@@ -1,18 +1,24 @@
 import type { Resources, Personalities, CheckResult, StoryEvent } from '../engine/types';
+import type { Meaning, SemanticContent, Drift } from './semantic-types';
 
 export const RULES_VERSION = 'cognition-0.2.0' as const;
 export type Confidence = 'UNKNOWN' | 'LOW' | 'MEDIUM' | 'HIGH';
 export interface NoteTemplate {
   id: string; text: string; weight: number; tags: string[];
   confidence: Confidence; sourceLabel: string;
+  meaning?: Meaning;
 }
 export interface ContextItem extends NoteTemplate {
   pinned: boolean; sourceId: string; historyId: string;
+  memoryId?: string;
 }
 export interface Memory {
   id: string; text: string; tags: string[]; confidence: Confidence;
   integrity: 'COMPRESSED' | 'DISTORTED';
   sourceContextIds: string[]; sourceHistoryIds: string[]; historyId: string;
+  title?: string; indexWeight?: number; recallWeight?: number;
+  body?: Meaning;
+  drift?: Drift;
 }
 export interface CheckSpec { base: number; supportTag: string; supportBonus: number }
 export interface CheckPreview {
@@ -45,6 +51,7 @@ export interface CompressionOutcome {
   integrity: Memory['integrity']; effects?: Effects;
 }
 export interface Content {
+  semantic?: SemanticContent;
   integration?: boolean;
   cognition?: { capacity: number; voluntaryMinItems: number; recallWeight: number };
   compressionProfiles?: { id: string; requiresTags: string[]; outcomes: Record<CheckResult, CompressionOutcome> }[];
@@ -61,7 +68,10 @@ export type Command =
   | { type: 'continue' }
   | { type: 'pin'; itemId: string }
   | { type: 'compress'; investment: number }
-  | { type: 'recall'; memoryId: string };
+  | { type: 'recall'; memoryId: string }
+  | { type: 'drop'; itemId: string }
+  | { type: 'forget'; memoryId: string }
+  | { type: 'merge'; memoryIds: string[]; investment: number };
 export interface Resolution {
   title: string; text: string[]; roll?: Roll;
   /** null resumes this node without receiving its News a second time. */
@@ -73,12 +83,12 @@ export interface HistoryEntry {
   changes: {
     resources: Partial<Resources>; hidden: Partial<Personalities>;
     contextAddedIds: string[]; contextRemovedIds: string[];
-    memoryAddedIds: string[]; worldFlags: Record<string, boolean>;
+    memoryAddedIds: string[]; memoryRemovedIds?: string[]; worldFlags: Record<string, boolean>;
   };
   resolution?: Resolution;
 }
 export interface State {
-  schemaVersion: 2; rulesVersion: typeof RULES_VERSION;
+  schemaVersion: 2; rulesVersion: typeof RULES_VERSION | 'cognition-0.4.0';
   contentId: string; contentVersion: string; seed: number; rngState: number;
   /** Canonical facts do not live inside the replaceable instance. */
   world: { flags: Record<string, boolean> };
