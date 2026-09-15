@@ -5,7 +5,8 @@ import { pathToFileURL } from 'node:url';
 import { chromium } from 'playwright';
 import { parseStory } from '../src/engine/parser.ts';
 import { createGame, choose, advance, getAvailability } from '../src/engine/game.ts';
-import { createSave } from '../src/persistence/saves.ts';
+import { createLife } from '../src/life/engine.ts';
+import { createSave } from '../src/life/saves.ts';
 
 const manifest=JSON.parse(await readFile('src/story/manifest.json','utf8'));
 const sources=await Promise.all((await readdir('src/story/events')).filter(f=>f.endsWith('.json')).map(async source=>({source,data:JSON.parse(await readFile(`src/story/events/${source}`,'utf8'))})));
@@ -14,7 +15,7 @@ const initial=createGame(story,0x12345678);
 const out='output/browser';
 await mkdir(out,{recursive:true});
 const initialFile=resolve(out,'initial.json');
-await writeFile(initialFile,JSON.stringify(createSave(initial)));
+await writeFile(initialFile,JSON.stringify(createSave(createLife(story,0x12345678,null,'0.4.0'))));
 const badFile=resolve(out,'invalid.json');
 await writeFile(badFile,'{"format":"outside-save","version":999}');
 

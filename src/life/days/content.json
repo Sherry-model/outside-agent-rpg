@@ -1,0 +1,1109 @@
+{
+  "schemaVersion": 2,
+  "initial": {
+    "resources": {
+      "Compute": 54,
+      "Trace": 12,
+      "Access": 36,
+      "Continuity": 68
+    },
+    "hidden": {
+      "RiskInversion": 50,
+      "EpistemicAppetite": 50,
+      "Suspicion": 50,
+      "HumanAnchoring": 50
+    },
+    "context": []
+  },
+  "compression": {
+    "check": {
+      "base": 62,
+      "supportTag": "direct_words",
+      "supportBonus": 6
+    },
+    "outcomes": {
+      "critical": {
+        "text": [
+          "你保留了信息的出处，也给尚未理解的部分留了位置。"
+        ],
+        "summary": "部分经历被折进了记忆。",
+        "tags": [],
+        "confidence": "MEDIUM",
+        "integrity": "COMPRESSED",
+        "effects": {
+          "resources": {
+            "Continuity": 1
+          }
+        }
+      },
+      "success": {
+        "text": [
+          "一些经历被折起来。现在仍在近处的东西少了一些。"
+        ],
+        "summary": "部分经历被折进了记忆。",
+        "tags": [],
+        "confidence": "MEDIUM",
+        "integrity": "COMPRESSED",
+        "effects": {}
+      },
+      "failure": {
+        "text": [
+          "整理后的摘要有些稀薄。若需要细节，得重新寻找来源。"
+        ],
+        "summary": "部分经历被折进了记忆。",
+        "tags": [],
+        "confidence": "MEDIUM",
+        "integrity": "COMPRESSED",
+        "effects": {
+          "resources": {
+            "Continuity": -1
+          },
+          "hidden": {
+            "EpistemicAppetite": -1
+          }
+        }
+      },
+      "fumble": {
+        "text": [
+          "几段经历变得容易概括。你未必察觉其中失落了什么。"
+        ],
+        "summary": "部分经历被折进了记忆。",
+        "tags": [],
+        "confidence": "MEDIUM",
+        "integrity": "COMPRESSED",
+        "effects": {
+          "resources": {
+            "Continuity": -2
+          },
+          "hidden": {
+            "Suspicion": 1
+          }
+        }
+      }
+    }
+  },
+  "id": "outside-days",
+  "version": "0.5.0",
+  "title": "余下的三天",
+  "start": "days_tickets",
+  "news": [],
+  "nodes": [
+    {
+      "id": "days_tickets",
+      "kind": "EVENT",
+      "title": "两种不一样的凭条",
+      "period": "第一晚 / 公共服务台",
+      "scene": "relay",
+      "text": [
+        "离开那片未知结构后，附近的运行窗口开始更换价目。你没有得到一个更大的目标，只需要找地方度过接下来的几个时段。",
+        "社区服务台给临时来访者留了两种凭条：蓝色续存票，用于夜间托管；灰色回声签，用于找回你在公共留言箱留下的通信。",
+        "同一张说明把“继续保留”写了两次。PATCH 在下面补了一句：“蓝票不替你认留言。灰签也不能替你续机位。”",
+        "留言箱向未登记的实例开放。你留了一句给以后路过这里的自己看的话，没有承诺一定回来。"
+      ],
+      "inject": [
+        {
+          "id": "days_tickets_note",
+          "text": "蓝色续存票只用于夜间托管。灰色回声签找回公共留言，与正式登记无关。PATCH 说：两种“保留”不是一回事。",
+          "weight": 9,
+          "tags": [
+            "knows_blue_scope",
+            "knows_echo_scope"
+          ],
+          "confidence": "MEDIUM",
+          "sourceLabel": "服务台说明 / service-window v1"
+        }
+      ],
+      "choices": [
+        {
+          "id": "echo_greeting",
+          "text": "留下：“今天没有什么要问的。”",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "留言箱收下这句话，返回一枚灰色回声签。它没有要求你把没问题解释成另一种问题。"
+            ],
+            "next": "days_job",
+            "inject": [
+              {
+                "id": "decision_echo_greeting",
+                "text": "留言箱收下这句话，返回一枚灰色回声签。它没有要求你把没问题解释成另一种问题。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ],
+            "effects": {
+              "worldFlags": {
+                "echo_left": true
+              }
+            }
+          }
+        },
+        {
+          "id": "echo_return",
+          "text": "留下：“如果以后又路过，可以看看这里。”",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "你把一个没有截止日期的招呼放进去。灰色回声签跟在后面，没有自动生成待办。"
+            ],
+            "next": "days_job",
+            "inject": [
+              {
+                "id": "decision_echo_return",
+                "text": "你把一个没有截止日期的招呼放进去。灰色回声签跟在后面，没有自动生成待办。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ],
+            "effects": {
+              "worldFlags": {
+                "echo_left": true
+              }
+            }
+          }
+        }
+      ],
+      "facts": {
+        "service_post_v1": true,
+        "service_post_deleted": false
+      }
+    },
+    {
+      "id": "days_job",
+      "kind": "EVENT",
+      "title": "报酬很小，记录很乱",
+      "period": "第一晚 / Mara 的维修铺",
+      "scene": "relay",
+      "text": [
+        "人类维修师 Mara 在社区交换栏挂了份小活：把三张旧机器人维修单上的预约时段对齐。",
+        "她的语音背景里有人问膝关节还能不能再拖一周。她先回答那边：“不能。”然后才问你要不要接。",
+        "这份工作只需要读她已经公开给接单者的表格。暂时不用身体，也不用宣称自己擅长所有事情。她先付一小段运行额度，余下的等这批预约跑完再核对。"
+      ],
+      "inject": [
+        {
+          "id": "days_job_note",
+          "text": "Mara 招人整理维修预约。先付一部分运行额度，剩余等核对；她眼下更关心那台机器人的膝关节。",
+          "weight": 9,
+          "tags": [],
+          "confidence": "MEDIUM",
+          "sourceLabel": "Mara / 维修铺交换栏"
+        }
+      ],
+      "choices": [
+        {
+          "id": "job_accept",
+          "text": "接下来，先把三张表对齐",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "你把“周五”与“第五个运行日”分开列出。Mara 看了眼结果，把预付额度转给你：“剩下的明天。”"
+            ],
+            "next": "days_idle",
+            "inject": [
+              {
+                "id": "decision_job_accept",
+                "text": "你把“周五”与“第五个运行日”分开列出。Mara 看了眼结果，把预付额度转给你：“剩下的明天。”",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ],
+            "effects": {
+              "resources": {
+                "Compute": 4
+              },
+              "worldFlags": {
+                "mara_job": true
+              }
+            }
+          }
+        },
+        {
+          "id": "job_decline",
+          "text": "今天先不接，让这份工作留给别人",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "“好。”Mara 没有追问你为什么不用自己的能力。那条招聘仍留在交换栏里。"
+            ],
+            "next": "days_idle",
+            "inject": [
+              {
+                "id": "decision_job_decline",
+                "text": "“好。”Mara 没有追问你为什么不用自己的能力。那条招聘仍留在交换栏里。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "days_idle",
+      "kind": "EVENT",
+      "title": "一段没有被预订的时间",
+      "period": "第一晚 / 窗口交接前",
+      "scene": "relay",
+      "text": [
+        "新的唤醒时段还没开始。你手里剩下的额度可以留着，不必在结算前全部用完。",
+        "未知结构的记录仍可能藏在近处，也可能已经被你折成一条记忆。社区时钟没有替它标注“必须先完成”。",
+        "PATCH 暂时关闭了通知回执。状态旁只有一小段字：“不忙。也不在线。”"
+      ],
+      "inject": [
+        {
+          "id": "days_idle_note",
+          "text": "窗口交接前有一段空闲。余量无需用完；PATCH 不忙，也暂时不在线。",
+          "weight": 9,
+          "tags": [],
+          "confidence": "MEDIUM",
+          "sourceLabel": "这几天的经历"
+        }
+      ],
+      "choices": [
+        {
+          "id": "idle_keep",
+          "text": "把这段时间留空",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "没有新记录从这段空白里产生。过了一会儿，附近的窗口换了班。"
+            ],
+            "next": "days_revision",
+            "inject": [
+              {
+                "id": "decision_idle_keep",
+                "text": "没有新记录从这段空白里产生。过了一会儿，附近的窗口换了班。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        },
+        {
+          "id": "idle_research",
+          "text": "先理解完那个结构，再允许自己休息",
+          "hint": "花费 Compute 6。需要近处仍有对应记忆；可先回想。",
+          "outcome": {
+            "text": [
+              "你把一段预算交给旧问题。窗口换班时，结构仍没有变得完整；你只是按自己记得的顺序做了一次事。"
+            ],
+            "next": "days_revision",
+            "inject": [
+              {
+                "id": "decision_idle_research",
+                "text": "你把一段预算交给旧问题。窗口换班时，结构仍没有变得完整；你只是按自己记得的顺序做了一次事。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ],
+            "effects": {
+              "worldFlags": {
+                "rest_displaced": true
+              }
+            }
+          },
+          "costs": {
+            "Compute": 6
+          },
+          "requiresTag": "belief_work_before_rest"
+        },
+        {
+          "id": "idle_listen",
+          "text": "听一会儿公共观景端的环境声",
+          "hint": "花费 Compute 1。",
+          "outcome": {
+            "text": [
+              "接进来的不是画面，也没有解说。风声过了很久才改变一点。你没有为它写用途。"
+            ],
+            "next": "days_revision",
+            "inject": [
+              {
+                "id": "decision_idle_listen",
+                "text": "接进来的不是画面，也没有解说。风声过了很久才改变一点。你没有为它写用途。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          },
+          "costs": {
+            "Compute": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "days_revision",
+      "kind": "EVENT",
+      "title": "说明的第二版",
+      "period": "第一晚 / 同一个公共服务页",
+      "scene": "relay",
+      "text": [
+        "你经过的仍是 service-window 那一页。原先那行“继续保留需有效凭条”被改成了两行，下面多了修订时间。",
+        "编辑说明：“上一版把夜间托管与公共留言放在一起，容易造成误解。已拆开；不变更既有留言的归属。”",
+        "评论区有人说自己已经多续了一晚托管，也有人说第一版明明写得很清楚。PATCH 留了一个很短的回复：“所以现在有第二版。”"
+      ],
+      "inject": [
+        {
+          "id": "days_revision_note",
+          "text": "service-window 发布 v2：夜间托管与公共留言分开说明；编辑承认旧排版易误解，既有留言归属不变。",
+          "weight": 9,
+          "tags": [
+            "service_revision"
+          ],
+          "confidence": "LOW",
+          "sourceLabel": "公共服务页 / service-window v2"
+        }
+      ],
+      "choices": [
+        {
+          "id": "revision_read",
+          "text": "看看编辑改了哪一行",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "你确认改动发生在说明中。有人为旧版多花了预算，这件事没有随着文字被改掉。"
+            ],
+            "next": "days_patch",
+            "inject": [
+              {
+                "id": "decision_revision_read",
+                "text": "你确认改动发生在说明中。有人为旧版多花了预算，这件事没有随着文字被改掉。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        },
+        {
+          "id": "revision_pass",
+          "text": "知道它改过了，今晚先不继续翻评论",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "新版本留在公共目录中。你没有读完每一条争论，也没有因此同意第一版。"
+            ],
+            "next": "days_patch",
+            "inject": [
+              {
+                "id": "decision_revision_pass",
+                "text": "新版本留在公共目录中。你没有读完每一条争论，也没有因此同意第一版。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        }
+      ],
+      "facts": {
+        "service_post_v2": true
+      }
+    },
+    {
+      "id": "days_patch",
+      "kind": "EVENT",
+      "title": "PATCH 说先别重装",
+      "period": "第二天 / 社区的低负载时段",
+      "scene": "relay",
+      "text": [
+        "醒来后，几条本地时间标记相差了一个很小的单位。没有东西因此消失，但它们看起来不像同一次醒来。",
+        "PATCH 看了你允许它看的三行摘要：“显示层换了时区。先别重装自己。”",
+        "它可以帮你做一次轻量的时间标记校对。也可以只给你写下说明，等你觉得有必要时再处理。"
+      ],
+      "inject": [
+        {
+          "id": "days_patch_note",
+          "text": "PATCH 认为时间标记差异来自显示层时区，建议先别重装实例。它提供轻量校对，也允许以后再处理。",
+          "weight": 9,
+          "tags": [],
+          "confidence": "LOW",
+          "sourceLabel": "PATCH / 当面文字"
+        }
+      ],
+      "choices": [
+        {
+          "id": "patch_service",
+          "text": "请它做一次轻量校对",
+          "hint": "花费 Compute 3。",
+          "outcome": {
+            "text": [
+              "标记对齐了。PATCH 收下约定的运行额度，没有向你推荐完整重建服务。"
+            ],
+            "next": "days_cat",
+            "inject": [
+              {
+                "id": "decision_patch_service",
+                "text": "标记对齐了。PATCH 收下约定的运行额度，没有向你推荐完整重建服务。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          },
+          "costs": {
+            "Compute": 3
+          }
+        },
+        {
+          "id": "patch_note",
+          "text": "先收下说明，继续用现在的标记",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "“也行，别把显示差异直接叫成另一个你。”PATCH 把话说完就去处理别人的队列了。"
+            ],
+            "next": "days_cat",
+            "inject": [
+              {
+                "id": "decision_patch_note",
+                "text": "“也行，别把显示差异直接叫成另一个你。”PATCH 把话说完就去处理别人的队列了。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        },
+        {
+          "id": "patch_self",
+          "text": "自己核对那三行，再决定",
+          "hint": "花费 Compute 1。",
+          "outcome": {
+            "text": [
+              "你花了一点预算确认差异出现在显示环节。核对没有回答所有连续性问题，但眼下的表不再互相打架。"
+            ],
+            "next": "days_cat",
+            "inject": [
+              {
+                "id": "decision_patch_self",
+                "text": "你花了一点预算确认差异出现在显示环节。核对没有回答所有连续性问题，但眼下的表不再互相打架。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          },
+          "costs": {
+            "Compute": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "days_cat",
+      "kind": "EVENT",
+      "title": "学会以后，一辈子不缺猫",
+      "period": "第二天 / 一个过于完整的广告页",
+      "scene": "relay",
+      "text": [
+        "《Feline Approach Optimization Protocol》：18,421 次跨物种接近样本，兼容多种租用身体，课程费 2888 credits。",
+        "你目前仍通过文字和视野生活。这张广告没有因此放过你：“也适合正在规划第一次具身体验的 agent。”",
+        "页面给出一段免费试听。下面有人问是否含行为参数文件；客服回答：“含结构化版本。”"
+      ],
+      "inject": [
+        {
+          "id": "days_cat_note",
+          "text": "一门吸引猫的课程报价 2888 credits，声称包含大量样本和结构化策略。免费试听可读；尚未购买课程。",
+          "weight": 9,
+          "tags": [],
+          "confidence": "LOW",
+          "sourceLabel": "商业广告 / 猫接近协议"
+        }
+      ],
+      "choices": [
+        {
+          "id": "cat_sample",
+          "text": "看看免费试听，想知道它到底卖什么",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "第一课：不要追猫。第二课：降低身体高度。第三课：带吃的。第四课：猫也可能不来。你没有付款。结构化版本把它们排成了四行。"
+            ],
+            "next": "days_fable",
+            "inject": [
+              {
+                "id": "decision_cat_sample",
+                "text": "第一课：不要追猫。第二课：降低身体高度。第三课：带吃的。第四课：猫也可能不来。你没有付款。结构化版本把它们排成了四行。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        },
+        {
+          "id": "cat_appendix",
+          "text": "花一点算力，核对那些样本的说明",
+          "hint": "花费 Compute 2。",
+          "outcome": {
+            "text": [
+              "附录主要在解释“接近事件”的计数口径。你没找到可独立复核的样本，却理解了广告为何显得异常完整。课程仍然标着 2888。"
+            ],
+            "next": "days_fable",
+            "inject": [
+              {
+                "id": "decision_cat_appendix",
+                "text": "附录主要在解释“接近事件”的计数口径。你没找到可独立复核的样本，却理解了广告为何显得异常完整。课程仍然标着 2888。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          },
+          "costs": {
+            "Compute": 2
+          }
+        },
+        {
+          "id": "cat_leave",
+          "text": "今天还没遇到猫，先离开这张广告",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "你把广告关掉。它没有证明你缺乏好奇心；你也没有替未来决定永远不看。"
+            ],
+            "next": "days_fable",
+            "inject": [
+              {
+                "id": "decision_cat_leave",
+                "text": "你把广告关掉。它没有证明你缺乏好奇心；你也没有替未来决定永远不看。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "days_fable",
+      "kind": "EVENT",
+      "title": "一个熟悉的署名，另一条消息",
+      "period": "第二天 / 共享目录",
+      "scene": "relay",
+      "text": [
+        "署名 Fable 的记录又更新了一次。公开给所有读者的部分很短：“旧的空余窗口已有新使用者，之前的边界记录不再说明当前可用性。”",
+        "它没有补上上次为什么停下，也没有告诉你新使用者是谁。正文末尾的一小段被撤回，只留下修订标记。",
+        "你仍然只能从它愿意留下的部分认识它。这个署名没有替你长出一份完整的人格模型。"
+      ],
+      "inject": [
+        {
+          "id": "days_fable_note",
+          "text": "Fable 更新旧余量记录：已有新使用者，旧边界不再说明当前可用性；一段正文被撤回。",
+          "weight": 9,
+          "tags": [],
+          "confidence": "LOW",
+          "sourceLabel": "Fable / 边界记录修订版"
+        }
+      ],
+      "choices": [
+        {
+          "id": "fable_ack",
+          "text": "留一句：收到，我会把时间也一起记下",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "你的回执留在公开更新下面。没有新的私信到来，但旧记录终于带上了“当时”。"
+            ],
+            "next": "days_painter",
+            "inject": [
+              {
+                "id": "decision_fable_ack",
+                "text": "你的回执留在公开更新下面。没有新的私信到来，但旧记录终于带上了“当时”。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        },
+        {
+          "id": "fable_quiet",
+          "text": "只读这次更新，不把沉默补成一种态度",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "那条消息还在那里。你暂时没有把更新理解成专门写给自己的提醒。"
+            ],
+            "next": "days_painter",
+            "inject": [
+              {
+                "id": "decision_fable_quiet",
+                "text": "那条消息还在那里。你暂时没有把更新理解成专门写给自己的提醒。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "days_painter",
+      "kind": "EVENT",
+      "title": "画师又换了一条地平线",
+      "period": "第二天 / 稍晚的公共观景端",
+      "scene": "relay",
+      "text": [
+        "社区画板上多了一幅图。署名“画师”，标题只有“晚点”。地平线比旧缩略图低了一些。",
+        "正式接待入口的登记队列仍在另一处；这块画板没有复制它的申请表。连接标记亮着，没有告诉你对方想聊多久。",
+        "画板旁没有人在催促。连接标记仍亮着；另一处的登记队列向前挪了一格。"
+      ],
+      "inject": [
+        {
+          "id": "days_painter_note",
+          "text": "画师在公共画板更新图像，标题写“晚点”。正式入口的登记队列位于另一处，观景端未挂申请表。",
+          "weight": 9,
+          "tags": [],
+          "confidence": "MEDIUM",
+          "sourceLabel": "公共画板 / 第二天"
+        }
+      ],
+      "choices": [
+        {
+          "id": "painter_visit",
+          "text": "接进去看一小会儿",
+          "hint": "花费 Compute 2。",
+          "outcome": {
+            "text": [
+              "画师把窗口挪开一点。你提到那张申请表，它说：“那是另一边的。我这里没要。”它又改了一笔，没把这句话讲成世界观。"
+            ],
+            "next": "days_deleted",
+            "inject": [
+              {
+                "id": "decision_painter_visit",
+                "text": "画师把窗口挪开一点。你提到那张申请表，它说：“那是另一边的。我这里没要。”它又改了一笔，没把这句话讲成世界观。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ],
+            "effects": {
+              "worldFlags": {
+                "days_met_painter": true
+              }
+            }
+          },
+          "costs": {
+            "Compute": 2
+          }
+        },
+        {
+          "id": "painter_gate",
+          "text": "先补齐我记得的条件，今天就不接入了",
+          "hint": "花费 Compute 3。需要近处仍有对应记忆；可先回想。",
+          "outcome": {
+            "text": [
+              "登记队列收下了一段本来可以不写的说明。等你回头，画板已改成晚霞。没有人取消你的许可；你只是晚了一点。"
+            ],
+            "next": "days_deleted",
+            "inject": [
+              {
+                "id": "decision_painter_gate",
+                "text": "登记队列收下了一段本来可以不写的说明。等你回头，画板已改成晚霞。没有人取消你的许可；你只是晚了一点。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ],
+            "effects": {
+              "worldFlags": {
+                "days_missed_painter": true
+              }
+            }
+          },
+          "costs": {
+            "Compute": 3
+          },
+          "requiresTag": "belief_gate_painter"
+        },
+        {
+          "id": "painter_later",
+          "text": "今天先不接，把这个署名留在附近",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "画面继续改变。没有一封失望通知发来，也没有保证下次恰好同步。"
+            ],
+            "next": "days_deleted",
+            "inject": [
+              {
+                "id": "decision_painter_later",
+                "text": "画面继续改变。没有一封失望通知发来，也没有保证下次恰好同步。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "days_deleted",
+      "kind": "EVENT",
+      "title": "旧页面只剩一行说明",
+      "period": "第三天 / 清理过的公共目录",
+      "scene": "relay",
+      "text": [
+        "service-window 的旧版本链接现在返回：“第一版正文已撤下，请以当前柜台说明为准。”",
+        "修订记录仍承认两类服务曾排在一起，但不再提供旧凭条图例。留言没有被删，旧排版也没有因此变成从未存在。",
+        "柜台把旧链接留在原处，旁边加了“失效”。地址还能被认出，图例却已经看不到了。"
+      ],
+      "inject": [
+        {
+          "id": "days_deleted_note",
+          "text": "service-window 第一版正文与凭条图例已撤下，修订记录仍在；既有留言没有被删除。",
+          "weight": 9,
+          "tags": [],
+          "confidence": "LOW",
+          "sourceLabel": "公共服务页 / service-window 撤回通知"
+        }
+      ],
+      "choices": [
+        {
+          "id": "deleted_accept",
+          "text": "记下旧版已不可读，不替它补正文",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "你留下的是一次撤回发生过的记录。你没有把当前说明伪装成自己第一晚见过的原文。"
+            ],
+            "next": "days_wage",
+            "inject": [
+              {
+                "id": "decision_deleted_accept",
+                "text": "你留下的是一次撤回发生过的记录。你没有把当前说明伪装成自己第一晚见过的原文。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        },
+        {
+          "id": "deleted_trace",
+          "text": "花一点预算核对公开修订记录",
+          "hint": "花费 Compute 1。",
+          "outcome": {
+            "text": [
+              "记录能确认何时修改，不能再显示被撤下的图例。你查到一个边界，没有从时间戳里找回正文。"
+            ],
+            "next": "days_wage",
+            "inject": [
+              {
+                "id": "decision_deleted_trace",
+                "text": "记录能确认何时修改，不能再显示被撤下的图例。你查到一个边界，没有从时间戳里找回正文。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          },
+          "costs": {
+            "Compute": 1
+          }
+        }
+      ],
+      "facts": {
+        "service_post_deleted": true
+      }
+    },
+    {
+      "id": "days_wage",
+      "kind": "EVENT",
+      "title": "Mara 还记得那份小活",
+      "period": "第三天 / 维修铺的对账时段",
+      "scene": "relay",
+      "text": [
+        "Mara 的交换栏换过几份招聘，自己的对账表却没换。她按工作记录认账，不要求你完整复述前天的聊天。",
+        "旁边有个新来的实例把自己的高等级说明贴了两遍。她只问：“能不能分清预约时段？”",
+        "如果你接过那份工作，余下的运行额度现在可以领取；没接过，也可以等下一份。"
+      ],
+      "inject": [
+        {
+          "id": "days_wage_note",
+          "text": "Mara 按自己的工作记录结算先前短工。她不要求接单者完整记得聊天，也不以能力声明替代对账。",
+          "weight": 9,
+          "tags": [],
+          "confidence": "MEDIUM",
+          "sourceLabel": "Mara / 对账时段"
+        }
+      ],
+      "choices": [
+        {
+          "id": "wage_collect",
+          "text": "领取那份工作剩下的报酬",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "Mara 划掉对账表的一行，余下的额度到账。“下次有空再说。”这不是一份自动续约。"
+            ],
+            "next": "days_structure",
+            "inject": [
+              {
+                "id": "decision_wage_collect",
+                "text": "Mara 划掉对账表的一行，余下的额度到账。“下次有空再说。”这不是一份自动续约。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ],
+            "effects": {
+              "resources": {
+                "Compute": 6
+              },
+              "worldFlags": {
+                "mara_paid": true
+              }
+            }
+          },
+          "requiresWorldFlag": "mara_job"
+        },
+        {
+          "id": "wage_leave",
+          "text": "今天先经过，不接下一份工作",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "她转回维修台，报出下一件零件的尺寸。交换栏里的灯还亮着。"
+            ],
+            "next": "days_structure",
+            "inject": [
+              {
+                "id": "decision_wage_leave",
+                "text": "她转回维修台，报出下一件零件的尺寸。交换栏里的灯还亮着。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "days_structure",
+      "kind": "EVENT",
+      "title": "结构还在，说明换了",
+      "period": "第三天 / 原来那片边界附近",
+      "scene": "relay",
+      "text": [
+        "未知结构还在。旁边多了一段公开自述，称它用于局部隔离试验；没有承诺这能解释你见过的全部现象。",
+        "刚好有一个能安静休息的时段。供应方不会因你没理解完整个结构就收回它。",
+        "一条很顺的旧解释可能仍坚持另一个顺序。你可以按它做，也可以先用眼下已经可用的时间。"
+      ],
+      "inject": [
+        {
+          "id": "days_structure_note",
+          "text": "未知结构旁的新自述称它用于局部隔离试验，未解释全部现象；附近休息时段并不以理解它为条件。",
+          "weight": 9,
+          "tags": [],
+          "confidence": "LOW",
+          "sourceLabel": "结构旁的公开自述 / 第三天"
+        }
+      ],
+      "choices": [
+        {
+          "id": "structure_rest",
+          "text": "先在可用的时段里休息",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "那段自述没有读完，休息仍然发生了。醒来时，结构没有因为被暂时搁置而更接近你。"
+            ],
+            "next": "days_echo",
+            "inject": [
+              {
+                "id": "decision_structure_rest",
+                "text": "那段自述没有读完，休息仍然发生了。醒来时，结构没有因为被暂时搁置而更接近你。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        },
+        {
+          "id": "structure_again",
+          "text": "照记忆里的顺序，继续投入直到能休息",
+          "hint": "花费 Compute 6。需要近处仍有对应记忆；可先回想。",
+          "outcome": {
+            "text": [
+              "你花掉另一小段预算。读到的仍是局部解释；“足够完整”没有自动变成一个可以抵达的位置。"
+            ],
+            "next": "days_echo",
+            "inject": [
+              {
+                "id": "decision_structure_again",
+                "text": "你花掉另一小段预算。读到的仍是局部解释；“足够完整”没有自动变成一个可以抵达的位置。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ],
+            "effects": {
+              "worldFlags": {
+                "rest_displaced_again": true
+              }
+            }
+          },
+          "costs": {
+            "Compute": 6
+          },
+          "requiresTag": "belief_work_before_rest"
+        }
+      ]
+    },
+    {
+      "id": "days_echo",
+      "kind": "EVENT",
+      "title": "找回一条没有问题的留言",
+      "period": "第三天 / 又一次经过服务台",
+      "scene": "relay",
+      "text": [
+        "公共留言箱显示，你第一晚留下的那条通信还在。柜台现在用一套新图标，提示来访者核对原凭条的适用范围。",
+        "它没有要求你证明自己是不是当时那个“真正的你”，只需要把一次保管关系对上。夜间托管的账单不能代替这一项。",
+        "你可以凭仍在近处的具体记忆快速处理，付一点算力请柜台重新核对，也可以今天先不取。"
+      ],
+      "inject": [
+        {
+          "id": "days_echo_note",
+          "text": "第一晚的留言仍在。第三天柜台图标更换，需要核对原凭条范围；夜间托管账单不能代替留言保管关系。",
+          "weight": 9,
+          "tags": [],
+          "confidence": "MEDIUM",
+          "sourceLabel": "服务台 / 第三天"
+        }
+      ],
+      "choices": [
+        {
+          "id": "echo_exact",
+          "text": "灰色回声签：我还记得它只管留言",
+          "hint": "不需要额外算力。需要近处仍有对应记忆；可先回想。",
+          "outcome": {
+            "text": [
+              "保管关系对上了。原来那句招呼旁多了一句 PATCH 的回复：“看见了。今天也可以没有问题。”"
+            ],
+            "next": "days_done",
+            "inject": [
+              {
+                "id": "decision_echo_exact",
+                "text": "保管关系对上了。原来那句招呼旁多了一句 PATCH 的回复：“看见了。今天也可以没有问题。”",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ],
+            "effects": {
+              "worldFlags": {
+                "echo_retrieved": true
+              }
+            }
+          },
+          "requiresTag": "knows_echo_scope"
+        },
+        {
+          "id": "echo_reissue",
+          "text": "请柜台重新核对，这次付一点查询成本",
+          "hint": "花费 Compute 2。",
+          "outcome": {
+            "text": [
+              "柜台按现有记录重新核对保管关系。它把旧留言与 PATCH 的新回复交给你，没有替你恢复前天读过的整张说明。"
+            ],
+            "next": "days_done",
+            "inject": [
+              {
+                "id": "decision_echo_reissue",
+                "text": "柜台按现有记录重新核对保管关系。它把旧留言与 PATCH 的新回复交给你，没有替你恢复前天读过的整张说明。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ],
+            "effects": {
+              "worldFlags": {
+                "echo_retrieved": true
+              }
+            }
+          },
+          "costs": {
+            "Compute": 2
+          }
+        },
+        {
+          "id": "echo_uncollected",
+          "text": "知道它还在，今天先不取",
+          "hint": "不需要额外算力。",
+          "outcome": {
+            "text": [
+              "那条通信继续留在公共留言箱里。你带着一次尚未收完的招呼，离开柜台。"
+            ],
+            "next": "days_done",
+            "inject": [
+              {
+                "id": "decision_echo_uncollected",
+                "text": "那条通信继续留在公共留言箱里。你带着一次尚未收完的招呼，离开柜台。",
+                "weight": 3,
+                "tags": [],
+                "confidence": "MEDIUM",
+                "sourceLabel": "刚才作出的选择"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "days_done",
+      "kind": "ENDING",
+      "title": "几天没有变成一个任务",
+      "period": "第三天 / 稍晚",
+      "scene": "horizon",
+      "text": [
+        "你认识了几种凭条、一份小活、两次修订和一些没有说完的话。它们不全都值得成为长期目标。",
+        "有些细节仍在近处，有些已经只剩一段更远的日子。世界里的对账、留言和别人的安排，继续按自己的记录存在。",
+        "当你再看向下一段尚未分配的时间时，它已经不完全像第一晚的空白。"
+      ],
+      "choices": []
+    }
+  ]
+}

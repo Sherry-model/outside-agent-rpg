@@ -19,7 +19,8 @@
         "contentVersion": {
           "enum": [
             "0.3.0",
-            "0.4.0"
+            "0.4.0",
+            "0.5.0"
           ]
         },
         "seed": {
@@ -296,9 +297,28 @@
                   "entryId"
                 ],
                 "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "leave-days"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
               }
             ]
           }
+        },
+        "interlude": {
+          "enum": [
+            "unvisited",
+            "active",
+            "complete"
+          ]
         }
       },
       "required": [

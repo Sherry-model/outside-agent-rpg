@@ -17,7 +17,9 @@
     "test:reading": "node --import tsx scripts/reading-browser-check.mjs",
     "test:skill:reading": "node scripts/prepare-reading-skill.mjs && node scripts/web_game_playwright_client.js --url output/skill-reading/fixture.html --click-selector [data-reading=escape_cat] --actions-file tests/skill-actions.json --iterations 1 --pause-ms 250 --screenshot-dir output/skill-reading",
     "test:semantic": "node --import tsx scripts/semantic-browser-check.mjs",
-    "test:skill:semantic": "node scripts/prepare-semantic-skill.mjs && node scripts/web_game_playwright_client.js --url output/skill-semantic/fixture.html --click-selector [data-cog-compress] --actions-file tests/skill-actions.json --iterations 1 --pause-ms 250 --screenshot-dir output/skill-semantic"
+    "test:skill:semantic": "node scripts/prepare-semantic-skill.mjs && node scripts/web_game_playwright_client.js --url output/skill-semantic/fixture.html --click-selector [data-cog-compress] --actions-file tests/skill-actions.json --iterations 1 --pause-ms 250 --screenshot-dir output/skill-semantic",
+    "test:days": "node --import tsx scripts/days-browser-check.mjs",
+    "test:skill:days": "node scripts/prepare-days-skill.mjs && node scripts/web_game_playwright_client.js --url output/skill-days/fixture.html --click-selector [data-pilot-choice=cat_sample] --actions-file tests/skill-actions.json --iterations 1 --pause-ms 250 --screenshot-dir output/skill-days"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

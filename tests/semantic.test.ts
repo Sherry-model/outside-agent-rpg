@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { parseStory } from '../src/engine/parser';
-import { createLife, step } from '../src/life/engine';
+import { createLife as createVersionedLife, step } from '../src/life/engine';
 import { createSave, parseSave } from '../src/life/saves';
 import { contentFor } from '../src/life/content';
 import { semantic, parseSemantic } from '../src/life/semantic-content';
@@ -12,6 +12,7 @@ import type { ContextItem } from '../src/cognition/types';
 import type { Life } from '../src/life/types';
 const story=parseStory(JSON.parse(readFileSync('src/story/manifest.json','utf8')),readdirSync('src/story/events').filter(f=>f.endsWith('.json')).map(source=>({source,data:JSON.parse(readFileSync(`src/story/events/${source}`,'utf8'))})));
 const content=contentFor('0.4.0');
+const createLife:typeof createVersionedLife=(story,seed,baseline=null,version='0.4.0')=>createVersionedLife(story,seed,baseline,version);
 const main=(l:Life,id:string)=>step(story,step(story,l,{type:'choose',choiceId:id}),{type:'continue'});
 const chapter=(l:Life,id:string)=>step(story,step(story,l,{type:'cognition',command:{type:'choose',choiceId:id,investment:0}}),{type:'cognition',command:{type:'continue'}});
 function gate(seed=1234) {let l=createLife(story,seed);for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference'])l=main(l,id);return l;}

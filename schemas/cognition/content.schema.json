@@ -435,6 +435,13 @@
         },
         "effects": {
           "$ref": "#/$defs/effects"
+        },
+        "inject": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/note"
+          },
+          "maxItems": 5
         }
       },
       "required": [
@@ -521,6 +528,9 @@
             }
           },
           "additionalProperties": false
+        },
+        "requiresWorldFlag": {
+          "type": "string"
         }
       },
       "required": [
@@ -636,6 +646,10 @@
             "$ref": "#/$defs/note"
           },
           "maxItems": 20
+        },
+        "period": {
+          "type": "string",
+          "maxLength": 100
         }
       },
       "required": [

@@ -24,7 +24,7 @@ export function parseSave(raw: string, story: Story): LifeSave {
     return createSave(createLife(story,baseline.state.rngState,baseline),new Date(baseline.savedAt));
   }
   if (!validate(data) || !Number.isFinite(Date.parse(data.savedAt))) throw new Error('生活存档格式或版本不兼容。');
-  if (data.life.contentVersion === '0.4.0' && !validateMind({format:'outside-cognition-save',version:2,savedAt:data.savedAt,state:data.life.mind})) throw new Error('认知目录或摘要格式不兼容。');
+  if (data.life.contentVersion !== '0.3.0' && !validateMind({format:'outside-cognition-save',version:2,savedAt:data.savedAt,state:data.life.mind})) throw new Error('认知目录或摘要格式不兼容。');
   const baseline = data.life.baseline === null ? null : parseJourney(JSON.stringify(data.life.baseline),story);
   let replay = createLife(story,data.life.seed,baseline,data.life.contentVersion);
   for (const command of data.life.commands) replay = step(story,replay,command);

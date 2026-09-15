@@ -10,7 +10,7 @@ export function parseContent(data: unknown): Content {
     if (new Set(ids).size !== ids.length) throw new Error(`${label} ID 重复。`);
   };
   unique(data.nodes.map(n => n.id), '事件');
-  unique([...data.initial.context, ...data.news, ...data.nodes.flatMap(n=>n.inject ?? [])].map(n => n.id), '认知来源');
+  unique([...data.initial.context, ...data.news, ...data.nodes.flatMap(n=>[...(n.inject ?? []),...n.choices.flatMap(c=>(c.outcomes?Object.values(c.outcomes):[c.outcome!]).flatMap(o=>o.inject ?? []))])].map(n => n.id), '认知来源');
   const ids = new Set(data.nodes.map(n => n.id));
   if(data.compressionAt?.some(id=>!ids.has(id))) throw new Error('压缩时机引用未知事件。');
   if (!ids.has(data.start)) throw new Error('起始事件不存在。');

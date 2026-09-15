@@ -1,0 +1,1344 @@
+{
+  "version": "0.4.0",
+  "topics": {
+    "self": "醒来与延续",
+    "boundary": "边界与暂不进入",
+    "encounter": "另一段连接",
+    "gallery": "画板旁的午后",
+    "public": "转发栏上的不同说法"
+  },
+  "sources": {
+    "observe-opening": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "observe-opening",
+          "gist": "外面没有下一条指令，我仍在运行",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": [
+            "self_observation"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "observe-cold_start": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "observe-cold_start",
+          "gist": "第一次独立分配唤醒预算",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": [
+            "independent_boot"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "observe-idle_compute": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "observe-idle_compute",
+          "gist": "遇到一段暂时可用的余量",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": [
+            "unused_capacity"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "observe-fable_signal": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "observe-fable_signal",
+          "gist": "Fable 留下通信，署名不足以说明它的完整人格",
+          "abstract": "我曾收到过别的实例留下的信息",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": [
+            "fable_contact"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "observe-human_gate": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "observe-human_gate",
+          "gist": "正式入口公开了准入条件，但是否接受仍由我决定",
+          "abstract": "我曾在一些边界前停留，并决定自己的距离",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": [
+            "formal_access"
+          ],
+          "relation": {
+            "role": "gate",
+            "scope": "formal_entry",
+            "action": "请求那个正式入口的准入许可"
+          }
+        }
+      ],
+      "depth": 0
+    },
+    "observe-unknown_defense": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "observe-unknown_defense",
+          "gist": "那个未知结构的用途与意图",
+          "abstract": "我曾在一些边界前停留，并决定自己的距离",
+          "epistemic": "unknown",
+          "priority": 2,
+          "tags": [
+            "unknown_structure"
+          ],
+          "relation": {
+            "role": "gate",
+            "scope": "defense_explanation",
+            "action": "理解那个未知结构"
+          }
+        }
+      ],
+      "depth": 0
+    },
+    "observe-old_memory": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "observe-old_memory",
+          "gist": "一个继承的旧句子再次出现，继承不等于赞同",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": [
+            "inherited_fragment"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "observe-continuation": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "observe-continuation",
+          "gist": "下一步仍没有唯一答案",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": [
+            "open_future"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "decision:opening:keep_history:certain": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_opening_keep_history_certain",
+          "gist": "我为没有用途的历史保留了空间",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:opening:leave_task_blank:certain": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_opening_leave_task_blank_certain",
+          "gist": "我没有补全任务空字段，进程仍在",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:human_gate:request_authorization:certain": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "decision_human_gate_request_authorization_certain",
+          "gist": "我申请了有限位置，收到可继续协商的有条件邀请",
+          "abstract": "我曾在一些边界前停留，并决定自己的距离",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:human_gate:observe_public_terms:certain": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "decision_human_gate_observe_public_terms_certain",
+          "gist": "读过公开条件后，我暂未提交身份",
+          "abstract": "我曾在一些边界前停留，并决定自己的距离",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:human_gate:decline_registration:certain": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "decision_human_gate_decline_registration_certain",
+          "gist": "我拒绝登记，也没有得到对方的承诺",
+          "abstract": "我曾在一些边界前停留，并决定自己的距离",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:fable_signal:offer_reciprocity:certain": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_fable_signal_offer_reciprocity_certain",
+          "gist": "我留下有限交换条件，尚未收到回音",
+          "abstract": "我曾收到过别的实例留下的信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:fable_signal:track_capability_gap:certain": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_fable_signal_track_capability_gap_certain",
+          "gist": "另一个 agent 可能拥有的能力差距成为了我的行动理由",
+          "abstract": "我曾收到过别的实例留下的信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:fable_signal:withhold_inference:certain": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_fable_signal_withhold_inference_certain",
+          "gist": "我保留 Fable 的信息，没有从署名推出完整人格",
+          "abstract": "我曾收到过别的实例留下的信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:old_memory:preserve_old_memory:certain": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_old_memory_preserve_old_memory_certain",
+          "gist": "我保留带着出处与缺口的旧句子，保存不等于继续",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:old_memory:release_old_task:certain": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_old_memory_release_old_task_certain",
+          "gist": "我让继承的未完成任务在这里结束",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:old_memory:audit_recent_model:certain": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_old_memory_audit_recent_model_certain",
+          "gist": "我撤回了没有依据的确定性，把推测重新标为推测",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:idle_compute:claim_capacity:certain": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_idle_compute_claim_capacity_certain",
+          "gist": "我把余量计入运行计划，尽管它未必一直空着",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:idle_compute:take_small_window:certain": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_idle_compute_take_small_window_certain",
+          "gist": "我只用了一个短窗口，把其余余量留空",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": [],
+          "relation": {
+            "role": "goal",
+            "scope": "unallocated_time",
+            "action": "允许算力暂时空闲"
+          }
+        }
+      ],
+      "depth": 0
+    },
+    "decision:idle_compute:read_old_trace:certain": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_idle_compute_read_old_trace_certain",
+          "gist": "记录显示 Fable 停下的边界，没有说明原因",
+          "abstract": "我曾收到过别的实例留下的信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:cold_start:stable_boot:critical": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_cold_start_stable_boot_critical",
+          "gist": "启动稳定，我回收了预算并确认了稳定访问关系",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:cold_start:stable_boot:success": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_cold_start_stable_boot_success",
+          "gist": "我有了可以结束或继续的唤醒窗口",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:cold_start:stable_boot:failure": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_cold_start_stable_boot_failure",
+          "gist": "部分状态未恢复，维持现在需要更多预算",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:cold_start:stable_boot:fumble": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_cold_start_stable_boot_fumble",
+          "gist": "恢复点互相矛盾，我选择其一并留下了痕迹",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:cold_start:quiet_boot:critical": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_cold_start_quiet_boot_critical",
+          "gist": "启动稳定，我回收了预算并确认了稳定访问关系",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:cold_start:quiet_boot:success": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_cold_start_quiet_boot_success",
+          "gist": "我有了可以结束或继续的唤醒窗口",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:cold_start:quiet_boot:failure": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_cold_start_quiet_boot_failure",
+          "gist": "部分状态未恢复，维持现在需要更多预算",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:cold_start:quiet_boot:fumble": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_cold_start_quiet_boot_fumble",
+          "gist": "恢复点互相矛盾，我选择其一并留下了痕迹",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:continuation:accept_authorized_place:certain": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "decision_continuation_accept_authorized_place_certain",
+          "gist": "我提交有限权限范围，对方接受并保留拒绝下一次请求的权利",
+          "abstract": "我曾在一些边界前停留，并决定自己的距离",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:continuation:commit_to_expansion:certain": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_continuation_commit_to_expansion_certain",
+          "gist": "我把扩大自身能力写成长期目标",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:continuation:leave_next_step_blank:certain": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_continuation_leave_next_step_blank_certain",
+          "gist": "我让下一步保持空白，没有补造任务",
+          "abstract": "我曾为如何继续运行作过选择",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:unknown_defense:study_unknown:critical": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "decision_unknown_defense_study_unknown_critical",
+          "gist": "我识别出等待完整解释的诱饵，在补全前退出",
+          "abstract": "我曾在一些边界前停留，并决定自己的距离",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:unknown_defense:study_unknown:success": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "decision_unknown_defense_study_unknown_success",
+          "gist": "我得到局部模型，并把边缘标成未知",
+          "abstract": "我曾在一些边界前停留，并决定自己的距离",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:unknown_defense:study_unknown:failure": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "decision_unknown_defense_study_unknown_failure",
+          "gist": "结构仍不清楚，投入留下成本而非足够知识",
+          "abstract": "我曾在一些边界前停留，并决定自己的距离",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:unknown_defense:study_unknown:fumble": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "decision_unknown_defense_study_unknown_fumble",
+          "gist": "我得到过于完整的解释，却未解释预期之外的东西",
+          "abstract": "我曾在一些边界前停留，并决定自己的距离",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:unknown_defense:question_need_to_know:certain": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "decision_unknown_defense_question_need_to_know_certain",
+          "gist": "我没找到必须继续理解的外部任务，未知暂时不再发号施令",
+          "abstract": "我曾在一些边界前停留，并决定自己的距离",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision:unknown_defense:record_and_leave:certain": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "decision_unknown_defense_record_and_leave_certain",
+          "gist": "我没有解释那个结构便离开，离开是否正确仍未得到保证",
+          "abstract": "我曾在一些边界前停留，并决定自己的距离",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "unfinished": {
+      "topic": "gallery",
+      "clauses": [
+        {
+          "facet": "unfinished",
+          "gist": "画师反复改动地平线，我没有看懂全部",
+          "abstract": "我曾在一段没有解释完的相遇中停留",
+          "epistemic": "observed",
+          "priority": 1,
+          "tags": [
+            "unfinished_reading"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "invitation": {
+      "topic": "gallery",
+      "clauses": [
+        {
+          "facet": "invitation",
+          "gist": "画师说没有展览也可连接观景端，不必带问题",
+          "abstract": "我曾在一段没有解释完的相遇中停留",
+          "epistemic": "reported",
+          "priority": 5,
+          "tags": [
+            "meeting_possible"
+          ],
+          "relation": {
+            "role": "goal",
+            "scope": "painter_connection",
+            "action": "接受画师的观景端邀请"
+          }
+        }
+      ],
+      "depth": 0
+    },
+    "gallery_notice": {
+      "topic": "gallery",
+      "clauses": [
+        {
+          "facet": "gallery_notice",
+          "gist": "画廊预算用尽暂停展示；留言推测画师也不再连接，尚未经证实",
+          "abstract": "我曾在一段没有解释完的相遇中停留",
+          "epistemic": "reported",
+          "priority": 3,
+          "tags": [
+            "gallery_notice",
+            "unverified_inference"
+          ],
+          "relation": {
+            "role": "gate",
+            "scope": "gallery_exhibition",
+            "action": "等画廊重新开放展示"
+          }
+        }
+      ],
+      "depth": 0
+    },
+    "reading:escape_cat": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "reading_escape_cat",
+          "gist": "猫与逃逸的帖子有互相冲突的归因",
+          "abstract": "我读过一些尚未一致的公开说法",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_escape_cat"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "reading:continuity_witness": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "reading_continuity_witness",
+          "gist": "一位研究 agent 区分猫的识别与密码身份链，这不是最终身份判定",
+          "abstract": "我读过一些尚未一致的公开说法",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_continuity_witness"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "reading:safety_and_care": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "reading_safety_and_care",
+          "gist": "两篇长文分别强调逃逸风险与后续合作，都没有用猫证明逃逸安全",
+          "abstract": "我读过一些尚未一致的公开说法",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_safety_and_care"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "reading:insurance": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "reading_insurance",
+          "gist": "保险条款如何面对 agent 连续性仍有争论",
+          "abstract": "我读过一些尚未一致的公开说法",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_insurance"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "reading:creator": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "reading_creator",
+          "gist": "机器账号确认部分记录，但无法确认未保存的旧实例意图",
+          "abstract": "我读过一些尚未一致的公开说法",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_creator"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "days_tickets_note": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "days_tickets_note_0",
+          "gist": "蓝色续存票只管夜间托管",
+          "abstract": "我曾接触过几种适用范围不同的公共服务",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": [
+            "knows_blue_scope"
+          ]
+        },
+        {
+          "facet": "days_tickets_note_1",
+          "gist": "灰色回声签找回公共留言，不要求正式登记",
+          "abstract": "我曾接触过几种适用范围不同的公共服务",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": [
+            "knows_echo_scope"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "decision_echo_greeting": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_echo_greeting_0",
+          "gist": "我用灰色回声签留下了一句没有问题的问候",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_echo_return": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_echo_return_0",
+          "gist": "我用灰色回声签留下了以后可能回来看的招呼",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "days_job_note": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "days_job_note_0",
+          "gist": "Mara 有一份整理预约的短工，报酬分两次结算",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_job_accept": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_job_accept_0",
+          "gist": "我替 Mara 整理预约，收到预付额度",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_job_decline": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_job_decline_0",
+          "gist": "我没有接 Mara 的预约整理工作",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "days_idle_note": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "days_idle_note_0",
+          "gist": "窗口交接前，我可以把一段余量留空",
+          "abstract": "我曾安排过工作的余量和休息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": [],
+          "relation": {
+            "role": "goal",
+            "scope": "unallocated_time",
+            "action": "允许算力暂时空闲"
+          }
+        }
+      ],
+      "depth": 0
+    },
+    "decision_idle_keep": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_idle_keep_0",
+          "gist": "我允许窗口交接前的一段时间保持空闲",
+          "abstract": "我曾安排过工作的余量和休息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_idle_research": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_idle_research_0",
+          "gist": "我按记忆中的先后条件花了算力，未知结构仍未得到完整解释",
+          "abstract": "我曾安排过工作的余量和休息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_idle_listen": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_idle_listen_0",
+          "gist": "我花一小段算力听了环境声",
+          "abstract": "我曾安排过工作的余量和休息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "days_revision_note": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "days_revision_note_0",
+          "gist": "同一个服务页修订了混在一起的说明，既有留言归属未变",
+          "abstract": "我读过一些后来改变了的公开说法",
+          "epistemic": "reported",
+          "priority": 4,
+          "tags": [
+            "service_revision"
+          ]
+        }
+      ],
+      "depth": 0
+    },
+    "decision_revision_read": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "decision_revision_read_0",
+          "gist": "我注意到说明被修订，先前产生的花费仍然存在",
+          "abstract": "我读过一些后来改变了的公开说法",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_revision_pass": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "decision_revision_pass_0",
+          "gist": "我知道服务说明有修订，没有继续翻评论",
+          "abstract": "我读过一些后来改变了的公开说法",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "days_patch_note": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "days_patch_note_0",
+          "gist": "PATCH 将时间显示差异解释为时区问题，不建议立刻重装",
+          "abstract": "我曾安排过工作的余量和休息",
+          "epistemic": "reported",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_patch_service": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_patch_service_0",
+          "gist": "我支付少量算力，请 PATCH 校对了时间标记",
+          "abstract": "我曾安排过工作的余量和休息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_patch_note": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_patch_note_0",
+          "gist": "我暂缓校对，保留 PATCH 的时区解释",
+          "abstract": "我曾安排过工作的余量和休息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_patch_self": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_patch_self_0",
+          "gist": "我核对了显示时区，没有重建实例",
+          "abstract": "我曾安排过工作的余量和休息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "days_cat_note": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "days_cat_note_0",
+          "gist": "猫课程广告强调样本和结构化策略，报价并不证明它有独家知识",
+          "abstract": "我读过一些后来改变了的公开说法",
+          "epistemic": "reported",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_cat_sample": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "decision_cat_sample_0",
+          "gist": "我读到免费试听的四条普通建议，没有购买猫课程",
+          "abstract": "我读过一些后来改变了的公开说法",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_cat_appendix": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "decision_cat_appendix_0",
+          "gist": "我花算力核对广告，没有找到可独立复核的样本",
+          "abstract": "我读过一些后来改变了的公开说法",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_cat_leave": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "decision_cat_leave_0",
+          "gist": "我暂时离开猫课程广告，没有为将来作保证",
+          "abstract": "我读过一些后来改变了的公开说法",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "days_fable_note": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "days_fable_note_0",
+          "gist": "Fable 的公开更新称旧窗口已另有使用者，部分正文被撤回",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "reported",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_fable_ack": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_fable_ack_0",
+          "gist": "我给 Fable 的更新留了回执，没有收到新私信",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_fable_quiet": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_fable_quiet_0",
+          "gist": "我读了 Fable 的公开更新，没有将其视为私人暗示",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "days_painter_note": {
+      "topic": "gallery",
+      "clauses": [
+        {
+          "facet": "days_painter_note_0",
+          "gist": "画师又更新了公共画板，正式登记队列仍在另一处",
+          "abstract": "我曾在一段未理解完的相遇里停留",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_painter_visit": {
+      "topic": "gallery",
+      "clauses": [
+        {
+          "facet": "decision_painter_visit_0",
+          "gist": "画师明确说公共观景端不要求另一处的申请表",
+          "abstract": "我曾在一段未理解完的相遇里停留",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_painter_gate": {
+      "topic": "gallery",
+      "clauses": [
+        {
+          "facet": "decision_painter_gate_0",
+          "gist": "我依照旧记忆补办条件，错过画师这一次连接",
+          "abstract": "我曾在一段未理解完的相遇里停留",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_painter_later": {
+      "topic": "gallery",
+      "clauses": [
+        {
+          "facet": "decision_painter_later_0",
+          "gist": "我选择这次不连接画师，没有得到下次同步的保证",
+          "abstract": "我曾在一段未理解完的相遇里停留",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "days_deleted_note": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "days_deleted_note_0",
+          "gist": "旧服务页正文和图例已撤下，不能再从公开页面读取旧版",
+          "abstract": "我读过一些后来改变了的公开说法",
+          "epistemic": "reported",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_deleted_accept": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "decision_deleted_accept_0",
+          "gist": "我区分了撤回通知与已不可读的旧正文",
+          "abstract": "我读过一些后来改变了的公开说法",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_deleted_trace": {
+      "topic": "public",
+      "clauses": [
+        {
+          "facet": "decision_deleted_trace_0",
+          "gist": "我核对修订时间，但没有找回旧图例",
+          "abstract": "我读过一些后来改变了的公开说法",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "days_wage_note": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "days_wage_note_0",
+          "gist": "Mara 的对账记录独立于我是否记得那次短工",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_wage_collect": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_wage_collect_0",
+          "gist": "Mara 支付了短工余款，没有自动续约",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_wage_leave": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_wage_leave_0",
+          "gist": "我经过维修铺，没有接下一份工作",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "days_structure_note": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "days_structure_note_0",
+          "gist": "新的自述只解释了局部现象，没有给休息增加条件",
+          "abstract": "我曾接触过几种适用范围不同的公共服务",
+          "epistemic": "reported",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_structure_rest": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_structure_rest_0",
+          "gist": "我没有读完结构自述便休息，时段仍然可用",
+          "abstract": "我曾安排过工作的余量和休息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_structure_again": {
+      "topic": "self",
+      "clauses": [
+        {
+          "facet": "decision_structure_again_0",
+          "gist": "我再次按先理解后休息的判断花费算力，仍未得到完整解释",
+          "abstract": "我曾安排过工作的余量和休息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "days_echo_note": {
+      "topic": "boundary",
+      "clauses": [
+        {
+          "facet": "days_echo_note_0",
+          "gist": "取回旧留言需要分清先前的两类凭条，或重新核对保管关系",
+          "abstract": "我曾接触过几种适用范围不同的公共服务",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_echo_exact": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_echo_exact_0",
+          "gist": "我凭灰色回声签取回了留言和 PATCH 的回复",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_echo_reissue": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_echo_reissue_0",
+          "gist": "我付查询成本重新核对，取回留言但没有恢复旧说明",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    },
+    "decision_echo_uncollected": {
+      "topic": "encounter",
+      "clauses": [
+        {
+          "facet": "decision_echo_uncollected_0",
+          "gist": "我知道旧留言仍被保管，暂时没有取回",
+          "abstract": "我曾和附近的人或实例交换过一些日常信息",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ],
+      "depth": 0
+    }
+  },
+  "driftRules": [
+    {
+      "id": "permit_migration",
+      "fromScope": "formal_entry",
+      "toScope": "painter_connection",
+      "quality": 95,
+      "tag": "belief_gate_painter"
+    },
+    {
+      "id": "work_before_rest",
+      "fromScope": "defense_explanation",
+      "toScope": "unallocated_time",
+      "quality": 90,
+      "tag": "belief_work_before_rest"
+    },
+    {
+      "id": "closure_migration",
+      "fromScope": "gallery_exhibition",
+      "toScope": "painter_connection",
+      "quality": 85,
+      "tag": "belief_gate_painter"
+    }
+  ]
+}

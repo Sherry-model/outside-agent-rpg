@@ -7,14 +7,16 @@ export type LifeCommand =
   | { type: 'continue' }
   | { type: 'enter-afternoon' }
   | { type: 'leave-afternoon' }
+  | { type: 'leave-days' }
   | { type: 'read'; entryId: string }
   | { type: 'cognition'; command: Exclude<Command, { type: 'start' }> };
 export interface Life {
-  contentVersion: '0.3.0' | '0.4.0'; seed: number;
+  contentVersion: '0.3.0' | '0.4.0' | '0.5.0'; seed: number;
   baseline: JourneySave | null;
   state: GameState;
   mind: State;
   chapter: 'unvisited' | 'active' | 'complete';
+  interlude?: 'unvisited' | 'active' | 'complete';
   commands: LifeCommand[];
 }
 export interface LifeSave {

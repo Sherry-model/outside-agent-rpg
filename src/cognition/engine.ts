@@ -33,6 +33,7 @@ export function canChoose(content: Content, s: State, id: string): string {
   if (loadPercent(s) >= 100) return '上下文已满，先整理一次。';
   const choice = currentNode(content, s).choices.find(c => c.id === id);
   if (!choice) return '没有这项选择。';
+  if (choice.requiresWorldFlag && !s.world.flags[choice.requiresWorldFlag]) return '这段实际经历尚未发生。';
   if (choice.requiresTag && !hasTag(s, choice.requiresTag)) return '当前上下文没有这条线索；可以检查留下的记忆。';
   if (RESOURCE_KEYS.some(k => s.instance.resources[k] < (choice.costs?.[k] ?? 0))) return '当前资源不足。';
   return '';
@@ -129,6 +130,7 @@ export function reduce(content: Content, state: State, command: Exclude<Command,
       for (const k of RESOURCE_KEYS) instance.resources[k] -= choice.costs?.[k] ?? 0;
       const outcome = roll ? choice.outcomes![roll.result] : choice.outcome!;
       effects(s, outcome.effects);
+      for (const note of outcome.inject ?? []) inject(s,note,sourceId,id);
       resolution = { title: choice.text, text: [...outcome.text], next: outcome.next, ...(roll ? { roll } : {}) };
       instance.turn++;
     } else if (command.type === 'pin') {

@@ -3,6 +3,7 @@ import { parseStory } from '../src/engine/parser';
 import { contentVersions } from '../src/story-tomorrow';
 import { config, parseLifeContent } from '../src/life/content';
 import { library } from '../src/life/reading';
+import { daysContent } from '../src/life/days';
 const manifest = JSON.parse(readFileSync('src/story/manifest.json', 'utf8'));
 const sources = readdirSync('src/story/events').filter(f => f.endsWith('.json')).map(source => ({ source, data: JSON.parse(readFileSync(`src/story/events/${source}`, 'utf8')) }));
 const story = parseStory(manifest, sources);
@@ -14,3 +15,5 @@ console.log(`✓ 持续上下文 / ${config.version}: capacity ${config.capacity
 
 if(!story.events[library.unlockAfterVisited]) throw new Error("转发栏入口引用未知事件。");
 console.log(`✓ 转发栏 / ${library.version}: ${library.entries.length} entries, schema and unlock reference valid.`);
+
+console.log(`✓ 余下的三天 / ${config.version}: ${daysContent.nodes.filter(n=>n.kind==='EVENT').length} events, ${daysContent.nodes.reduce((n,e)=>n+e.choices.length,0)} choices, source annotations and references valid.`);

@@ -31,15 +31,15 @@ export interface Effects {
   resources?: Partial<Resources>; hidden?: Partial<Personalities>;
   worldFlags?: Record<string, boolean>;
 }
-export interface Outcome { text: string[]; next: string; effects?: Effects }
+export interface Outcome { text: string[]; next: string; effects?: Effects; inject?: NoteTemplate[] }
 export interface Choice {
-  id: string; text: string; hint: string; requiresTag?: string;
+  id: string; text: string; hint: string; requiresTag?: string; requiresWorldFlag?: string;
   costs?: Partial<Resources>;
   check?: CheckSpec; outcome?: Outcome; outcomes?: Record<CheckResult, Outcome>;
 }
 export interface Node {
   id: string; kind: 'EVENT' | 'ENDING'; title: string; text: string[];
-  scene?: StoryEvent['scene']; receive?: string[]; facts?: Record<string, boolean>;
+  period?: string; scene?: StoryEvent['scene']; receive?: string[]; facts?: Record<string, boolean>;
   choices: Choice[];
   inject?: NoteTemplate[];
 }

@@ -7,6 +7,7 @@ import { contentFor, configFor, parseLifeContent } from './content';
 import type { Life, LifeCommand } from './types';
 import { library } from './reading';
 
+export const episodeActive = (life:Life) => life.chapter==='active' || life.interlude==='active';
 export const totalTurn = (life: Life) => life.state.turn + life.mind.instance.turn + (life.baseline?.chapter?.state.instance.turn ?? 0);
 export const readIds = (life: Life) => life.commands.flatMap(c=>c.type==='read'?[c.entryId]:[]);
 export const readingAvailable = (life: Life) => life.state.visited.includes(library.unlockAfterVisited);
@@ -14,7 +15,7 @@ export const available = (life: Life) => life.chapter === 'unvisited' && life.st
 function add(life: Life, note: NoteTemplate, sourceId: string, semanticKey = note.id) {
   const id = `${note.id}-${life.commands.length}`;
   const meaning = contentFor(life.contentVersion).semantic?.sources[semanticKey];
-  if(life.contentVersion==='0.4.0' && !meaning) throw new Error(`缺少已发生经历的标注：${semanticKey}`);
+  if(life.contentVersion!=='0.3.0' && !meaning) throw new Error(`缺少已发生经历的标注：${semanticKey}`);
   life.mind.instance.context.items.push({...structuredClone(note),...(meaning ? {meaning:structuredClone(meaning)} : {}),id,pinned:false,sourceId,historyId:`life-${life.commands.length}`});
 }
 function observe(life: Life) {
@@ -31,16 +32,16 @@ function toMain(life: Life) {
   life.state.resources = {...life.mind.instance.resources}; life.state.rngState = life.mind.rngState;
   for (const key of PERSONALITY_KEYS) life.state.personality[key] = Math.round((life.mind.instance.hidden[key]-50)/5);
 }
-export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.4.0'): Life {
+export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.5.0'): Life {
   parseLifeContent(configFor(version),story);
   if (baseline?.chapter?.status === 'active') throw new Error('这是旧版进行中的午后，请用 versions/OUTSIDE-journey-content-0.2.2.html 继续；本文件未被覆盖。');
   const state = baseline ? structuredClone(baseline.state) : createGame(story,seed);
   const content = structuredClone(contentFor(version));
   content.initial.resources = {...state.resources};
   for (const key of PERSONALITY_KEYS) content.initial.hidden[key] = 50 + 5*state.personality[key];
-  const life: Life = {contentVersion:version,seed,baseline:structuredClone(baseline),state,mind:create(content,seed),chapter:baseline?.chapter ? 'complete' : 'unvisited',commands:[]};
+  const life: Life = {contentVersion:version,seed,baseline:structuredClone(baseline),state,mind:create(content,seed),chapter:baseline?.chapter ? 'complete' : 'unvisited',commands:[],...(version==='0.5.0'?{interlude:'unvisited' as const}:{})};
   fromMain(life);
-  if (state.phase !== 'ending') observe(life);
+  if (state.phase !== 'ending' && !beginDays(life)) observe(life);
   return life;
 }
 export function step(story: Story, before: Life, command: LifeCommand): Life {
@@ -48,16 +49,19 @@ export function step(story: Story, before: Life, command: LifeCommand): Life {
   const life = structuredClone(before);
   life.commands.push(structuredClone(command));
   if (command.type === 'cognition') {
-    if (life.chapter !== 'active' && command.command.type === 'choose') throw new Error('请使用当前主线的选项。');
-    if (life.chapter !== 'active' && command.command.type === 'continue' && !pending(life.mind)) throw new Error('没有待确认的整理结果。');
+    if (!episodeActive(life) && command.command.type === 'choose') throw new Error('请使用当前主线的选项。');
+    if (!episodeActive(life) && command.command.type === 'continue' && !pending(life.mind)) throw new Error('没有待确认的整理结果。');
     life.mind = reduce(contentFor(life.contentVersion),life.mind,command.command);
     toMain(life);
   } else if (command.type === 'read') {
     const entry = library.entries.find(e=>e.id===command.entryId);
-    if (!entry || !readingAvailable(life) || life.chapter==='active' || life.state.phase!=='event' || pending(life.mind)) throw new Error('现在不能打开新的转发。');
+    if (!entry || !readingAvailable(life) || episodeActive(life) || life.state.phase!=='event' || pending(life.mind)) throw new Error('现在不能打开新的转发。');
     if (before.mind.instance.context.items.some(i=>i.sourceId===entry.id)) throw new Error('这条内容仍在上下文中，可以直接重看。');
     if (loadPercent(life.mind)>=100) throw new Error('上下文已满，请先整理。');
     add(life,{id:`reading-${entry.id}`,text:entry.contextText,weight:entry.weight,tags:[`reading_${entry.id}`],confidence:'LOW',sourceLabel:entry.source},entry.id,`reading:${entry.id}`);
+  } else if (command.type === 'leave-days') {
+    if(life.interlude!=='active' || life.mind.instance.phase!=='ending') throw new Error('这几天还没有走完。');
+    life.interlude='complete';toMain(life);fromMain(life);observe(life);
   } else if (command.type === 'enter-afternoon') {
     if (!available(before)) throw new Error('这个午后尚未到来，或已经过去。');
     life.chapter = 'active'; life.mind.instance.nodeId = 'afternoon'; life.mind.instance.phase = 'event';
@@ -65,7 +69,7 @@ export function step(story: Story, before: Life, command: LifeCommand): Life {
     if (life.chapter !== 'active' || life.mind.instance.phase !== 'ending') throw new Error('请先读完这个午后。');
     life.chapter = 'complete'; toMain(life); fromMain(life);
   } else {
-    if (life.chapter === 'active') throw new Error('请先结束当前的午后。');
+    if (episodeActive(life)) throw new Error('请先结束当前这段经历。');
     if (pending(life.mind)) throw new Error('请先确认整理结果。');
     if (command.type === 'choose') {
       if (loadPercent(life.mind) >= 100) throw new Error('上下文已满，请先整理。');
@@ -76,8 +80,19 @@ export function step(story: Story, before: Life, command: LifeCommand): Life {
       fromMain(life,previous);
     } else {
       life.state = advance(story,life.state); fromMain(life);
-      if (life.state.phase !== 'ending') observe(life);
+      if (life.state.phase !== 'ending' && !beginDays(life)) observe(life);
     }
   }
   return life;
+}
+
+/** The days begin after the defense encounter, before the inherited task returns. */
+function beginDays(life:Life):boolean {
+  if(life.contentVersion!=='0.5.0'||life.interlude!=='unvisited'||life.state.phase!=='event')return false;
+  if(life.state.journal.at(-1)?.eventId!=='unknown_defense'||!['old_memory','continuation'].includes(life.state.currentEventId))return false;
+  life.interlude='active';life.mind.instance.nodeId='days_tickets';life.mind.instance.phase='event';life.mind.instance.pendingId=null;
+  const node=contentFor(life.contentVersion).nodes.find(n=>n.id==='days_tickets')!;
+  if(node.facts) life.mind.world.flags={...life.mind.world.flags,...node.facts};
+  for(const note of node.inject??[])add(life,note,'days_tickets');
+  return true;
 }

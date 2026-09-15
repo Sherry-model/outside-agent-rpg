@@ -1,6 +1,8 @@
 import Ajv from 'ajv';
 import raw from './content.json';
 import old from './releases/0.3.0.json';
+import previous from './releases/0.4.0.json';
+import { daysContent, daysSemantic } from './days';
 import afternoon04 from './afternoon-0.4.json';
 import { parseContent } from '../cognition/parser';
 import { semantic } from './semantic-content';
@@ -11,7 +13,7 @@ import type { Content, NoteTemplate } from '../cognition/types';
 import type { Story } from '../engine/types';
 
 export interface LifeContent {
-  version: '0.3.0' | '0.4.0'; capacity: number; voluntaryMinItems: number; recallWeight: number; outcomeWeight: number;
+  version: '0.3.0' | '0.4.0' | '0.5.0'; capacity: number; voluntaryMinItems: number; recallWeight: number; outcomeWeight: number;
   chapterEntry: { eventId: string; requiresVisited: string };
   observations: Record<string, NoteTemplate>;
 }
@@ -23,7 +25,7 @@ export function parseLifeContent(data: unknown, story: Story): LifeContent {
   }
   if (Object.values(story.events).some(e => e.kind === 'event' && !data.observations[e.id])) throw new Error('普通事件缺少认知注入定义。');
   if (new Set(Object.values(data.observations).map(n => n.id)).size !== Object.keys(data.observations).length) throw new Error('观察 ID 重复。');
-  if (data.version === '0.4.0') {
+  if (data.version !== '0.3.0') {
     const required = Object.values(data.observations).map(n=>n.id);
     for(const event of Object.values(story.events)) for(const choice of event.choices) {
       for(const result of choice.check ? ['critical','success','failure','fumble'] : ['certain']) required.push(`decision:${event.id}:${choice.id}:${result}`);
@@ -42,18 +44,21 @@ const legacyContent: Content = {
 };
 
 export const legacyConfig = old as LifeContent;
-export function configFor(version: LifeContent['version']): LifeContent { return version==='0.3.0' ? legacyConfig : config; }
+export function configFor(version: LifeContent['version']): LifeContent { return version==='0.3.0' ? legacyConfig : version==='0.4.0' ? previous as LifeContent : config; }
 const nextAfternoon = parseContent(afternoon04);
 function annotated(note: NoteTemplate): NoteTemplate {
   const meaning = semantic.sources[note.id];
   if(!meaning) throw new Error(`缺少午后语义标注：${note.id}`);
   return {...note,meaning:structuredClone(meaning)};
 }
-export const cognitionContent: Content = {
+const previousContent: Content = {
   ...nextAfternoon, id:'outside-life', version:'0.4.0', start:'mainline',semantic,
-  cognition:{capacity:config.capacity,voluntaryMinItems:config.voluntaryMinItems,recallWeight:config.recallWeight},
+  cognition:{capacity:previous.capacity,voluntaryMinItems:previous.voluntaryMinItems,recallWeight:previous.recallWeight},
   news:nextAfternoon.news.map(n=>({...n,...annotated(n)})),
   nodes:[{id:'mainline',kind:'EVENT',title:'仍在近处',text:['一些经历还没有被折起来。'],choices:[]},
     ...nextAfternoon.nodes.map(n=>({...n,...(n.inject ? {inject:n.inject.map(annotated)} : {})}))],
 };
-export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : cognitionContent; }
+export const cognitionContent: Content = {...previousContent,version:'0.5.0',semantic:daysSemantic,
+  cognition:{capacity:config.capacity,voluntaryMinItems:config.voluntaryMinItems,recallWeight:config.recallWeight},
+  nodes:[...previousContent.nodes,...daysContent.nodes],news:[...previousContent.news,...daysContent.news]};
+export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : version==='0.4.0' ? previousContent : cognitionContent; }
