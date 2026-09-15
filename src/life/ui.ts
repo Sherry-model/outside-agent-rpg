@@ -1,10 +1,10 @@
+import { resultNames as results } from '../ui/result-labels';
 import { canCompress, INVESTMENTS, loadPercent, pending, preview, weight } from '../cognition/engine';
 import { contentFor } from './content';
 import { nearPanel, directoryPanel } from '../cognition/panels';
 import type { Life } from './types';
 const esc = (s: unknown) => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
 const confidence = {UNKNOWN:'未确定',LOW:'较低',MEDIUM:'暂信',HIGH:'确信'};
-const results = {critical:'大成功',success:'成功',failure:'失败',fumble:'大失败'};
 export function meter(life: Life) {
   const s=life.mind;
   return `<section class="context-panel"><div class="panel-label">CONTEXT <span>${weight(s)} / ${s.instance.context.capacity}</span></div><div class="context-meter" role="meter" aria-label="上下文使用量" aria-valuemin="0" aria-valuemax="${s.instance.context.capacity}" aria-valuenow="${weight(s)}"><span style="width:${Math.min(100,loadPercent(s))}%"></span></div><button class="text-button" data-view="context">看看仍在近处的东西 →</button></section>`;

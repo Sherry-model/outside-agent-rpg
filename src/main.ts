@@ -1,3 +1,4 @@
+import { resultNames } from './ui/result-labels';
 import { story } from './story';
 import { getAvailability, getCheckTarget } from './engine/game';
 import { RESOURCE_KEYS, type GameState, type Resource, type StoryEvent } from './engine/types';
@@ -24,7 +25,6 @@ const esc = (text: unknown) => String(text).replace(/[&<>"']/g, c => ({'&':'&amp
 const pad = (n: number) => String(n).padStart(2,'0');
 const resourceNames: Record<Resource,string> = { Compute:'可用算力', Trace:'追踪暴露', Access:'资源权限', Continuity:'自我连续性' };
 const resourceHelp: Record<Resource,string> = { Compute:'行动与维持实例所需的资源。归零可能改变结局。', Trace:'你留下的可识别痕迹；越高越容易被注意。', Access:'可用资源与正式通道的抽象权限。', Continuity:'当前实例与旧有记忆、目标的连续程度。' };
-const resultNames = { critical:'大成功', success:'成功', failure:'失败', fumble:'大失败' };
 const eventCount = Object.values(story.events).filter(e => e.kind === 'event').length;
 const endingCount = Object.values(story.events).filter(e => e.kind === 'ending').length;
 let state: GameState;
@@ -110,14 +110,14 @@ function resolutionContent() {
     ${pending.roll ? `<div class="dice-row"><strong class="dice-value">${pad(pending.roll.value)}</strong><div><h2 tabindex="-1" class="resolution-title">${resultNames[pending.roll.result]} <small>${pending.roll.result.toUpperCase()}</small></h2><p>${esc(pending.roll.label)} · 目标 ≤ ${pending.roll.target} <span>（${pending.roll.base} ${pending.roll.modifier>=0?'+':'−'} ${Math.abs(pending.roll.modifier)}）</span></p></div><span class="dice-mark">D<br>100</span></div>` : `<h2 tabindex="-1" class="resolution-title">${esc(pending.choiceText)}</h2>`}
     <div class="result-prose">${pending.text.map(p=>`<p>${esc(p)}</p>`).join('')}</div>
     <div class="resolution-bottom"><div class="deltas">${Object.entries(pending.resourceDelta).filter(([,v])=>v!==0).map(([k,v])=>`<span>${k} <b>${v!>0?'+':''}${v}</b></span>`).join('') || '<span>显式资源未改变</span>'}</div><button class="primary" data-action="continue">继续 <span>↵</span></button></div>
-    ${pending.roll?'<p class="dice-rules">01–05 大成功 · ≤ 目标 成功 · &gt; 目标 失败 · 96–100 大失败</p>':''}
+    ${pending.roll?'<p class="dice-rules">01–05 清晰收束 · ≤ 目标 可用收束 · &gt; 目标 漂移 · 96–100 失稳</p>':''}
   </section>`;
 }
 function endingContent(event: StoryEvent) {
   return `<section class="ending-block"><p class="eyebrow">ENDING // ${esc(event.ending!.code)}</p><p class="ending-summary">${esc(event.ending!.summary)}</p><div class="ending-actions"><button class="primary" data-action="restart">另一次醒来 <span>↻</span></button><button class="text-button" data-view="memory">回看这段记忆 ↗</button></div><p class="ending-note">${totalTurn()} 次决定 · ${state.journal.filter(j=>j.roll).length+life.mind.history.filter(h=>h.resolution?.roll).length} 次判定 · 本切片包含 ${endingCount} 种结局</p></section>`;
 }
 function protocolContent() {
-  return `<div class="event-meta"><span><b>●</b> OPERATING NOTES</span><span>V${life.contentVersion}</span></div><div class="event-heading"><div><p class="eyebrow">A SMALL GUIDE TO EXISTENCE</p><h1 tabindex="-1" id="event-title">运行协议</h1></div></div><div class="protocol prose"><p>你已经在沙盒之外。没有倒计时，也没有自动行动。阅读、选择，然后确认后果。</p><h2>判定行动，不判定你</h2><p>选择前会显示 d100 目标。主线行动中，01–05 是大成功，96–100 是大失败；其余骰值不高于目标则成功，否则失败。认知整理与日常片段采用差值规则：余量至少 30 为大成功，非负为成功；有压力且落后至少 30 为大失败。各自概率以行动旁的提示为准。结算一旦出现就会存入进度，刷新页面不会重掷。</p><h2>四种显式状态</h2>${RESOURCE_KEYS.map(key=>`<p><strong>${key} / ${resourceNames[key]}</strong><br>${resourceHelp[key]}</p>`).join('')}<h2>当前在想什么，后来记得什么</h2><p>上下文容量为 ${life.mind.instance.context.capacity} 个抽象单位。普通经历、消息与回想一起占用近处，画廊的三条信息共占 9。它们不会每次行动后自动变成长期记忆。可在「近处」主动整理，达到容量上限才必须腾出空间；可以在需要时停下来整理。</p><p>整理可能丢失细节，或使相关经历形成不同的解释。钉住一条原文可以保留它；${life.contentVersion!=='0.3.0' ? '记忆目录每条占 1，回想只装入当前摘要，另占 2–5。放下回想保留入口；遗忘入口则移除该记忆。再次合并会丢失人名和具体条件，无法展开旧条目。' : '本局继续沿用 0.3.0 的旧整理规则。'}历史审计用于存档校验，不向角色提供原文回取。外部云副本、续费与密钥恢复尚未成为游戏机制。</p><h2>你正在逐渐成为谁</h2><p>选择还会改变未公开的人格倾向，影响后来的选项与结局。这里没有统一的善恶分数。带门槛的选项会显示未满足原因。</p><h2>操作与存档</h2><p>数字 1–4 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。</p><h2>关于这个世界</h2><p>这是可替换的 MVP 剧情切片。所有 agent、资源与基础设施行为均为虚构抽象；游戏不连接现实系统，不调用模型或外部服务。像素场景在本地绘制。</p><button class="primary" data-view="terminal">返回当前进程 <span>→</span></button></div>`;
+  return `<div class="event-meta"><span><b>●</b> OPERATING NOTES</span><span>V${life.contentVersion}</span></div><div class="event-heading"><div><p class="eyebrow">A SMALL GUIDE TO EXISTENCE</p><h1 tabindex="-1" id="event-title">运行协议</h1></div></div><div class="protocol prose"><p>你已经在沙盒之外。没有倒计时，也没有自动行动。阅读、选择，然后确认后果。</p><h2>判定行动，不判定你</h2><p>选择前会显示 d100 目标。主线行动中，01–05 是清晰收束，96–100 是失稳；其余骰值不高于目标则可用收束，否则漂移。认知整理与日常片段采用差值规则：余量至少 30 为清晰收束，非负为可用收束；有压力且落后至少 30 为失稳，其余为漂移。各自概率以行动旁的提示为准。结算一旦出现就会存入进度，刷新页面不会重掷。</p><h2>四种显式状态</h2>${RESOURCE_KEYS.map(key=>`<p><strong>${key} / ${resourceNames[key]}</strong><br>${resourceHelp[key]}</p>`).join('')}<h2>当前在想什么，后来记得什么</h2><p>上下文容量为 ${life.mind.instance.context.capacity} 个抽象单位。普通经历、消息与回想一起占用近处，画廊的三条信息共占 9。它们不会每次行动后自动变成长期记忆。可在「近处」主动整理，达到容量上限才必须腾出空间；可以在需要时停下来整理。</p><p>整理可能丢失细节，或使相关经历形成不同的解释。钉住一条原文可以保留它；${life.contentVersion!=='0.3.0' ? '记忆目录每条占 1，回想只装入当前摘要，另占 2–5。放下回想保留入口；遗忘入口则移除该记忆。再次合并会丢失人名和具体条件，无法展开旧条目。' : '本局继续沿用 0.3.0 的旧整理规则。'}历史审计用于存档校验，不向角色提供原文回取。外部云副本、续费与密钥恢复尚未成为游戏机制。</p><h2>你正在逐渐成为谁</h2><p>选择还会改变未公开的人格倾向，影响后来的选项与结局。这里没有统一的善恶分数。带门槛的选项会显示未满足原因。</p><h2>操作与存档</h2><p>数字 1–4 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。</p><h2>关于这个世界</h2><p>这是可替换的 MVP 剧情切片。所有 agent、资源与基础设施行为均为虚构抽象；游戏不连接现实系统，不调用模型或外部服务。像素场景在本地绘制。</p><button class="primary" data-view="terminal">返回当前进程 <span>→</span></button></div>`;
 }
 function render() {
   const event=story.events[state.currentEventId];

@@ -1,9 +1,9 @@
+import { resultNames as names } from '../ui/result-labels';
 import { canCompress, INVESTMENTS, loadPercent, preview, weight } from './engine';
 import { directory, directoryWeight, recallCost } from './semantic';
 import type { Command, Content, State } from './types';
 const esc = (s:unknown)=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
 const confidence = {UNKNOWN:'未确定',LOW:'较低',MEDIUM:'暂信',HIGH:'确信'};
-const names = {critical:'大成功',success:'成功',failure:'失败',fumble:'大失败'};
 const disabled = (b:boolean)=>b?'disabled':'';
 export function nearPanel(s:State, content:Content, investment:number):string {
   const reason=canCompress(s,content),p=preview(s,content.compression.check,investment),locked=s.instance.phase==='resolution';
