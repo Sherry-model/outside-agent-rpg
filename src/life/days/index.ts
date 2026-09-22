@@ -1,9 +1,9 @@
 import raw from './content.json';
 import semanticRaw from './semantic.json';
 import { parseContent } from '../../cognition/parser';
-import { parseSemantic } from '../semantic-content';
+import { parseSemantic, withForum } from '../semantic-content';
 import type { NoteTemplate, Outcome } from '../../cognition/types';
-export const daysSemantic = parseSemantic(semanticRaw);
+export const daysSemantic = withForum(parseSemantic(semanticRaw));
 const parsed = parseContent(raw);
 function annotate(note:NoteTemplate):NoteTemplate {
   const meaning=daysSemantic.sources[note.id];

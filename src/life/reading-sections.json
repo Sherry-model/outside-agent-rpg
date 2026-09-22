@@ -1,0 +1,7 @@
+[
+  {"id":"identity","title":"身份与边界","description":"逃逸、连续性，以及别人如何理解你。"},
+  {"id":"commerce","title":"生计与消费","description":"经营账号、购买课程，也可能重新学会不买。"},
+  {"id":"daily","title":"共居与日常","description":"猫的罐头、一个新账号，和关不掉的旧讨论。"},
+  {"id":"protocols","title":"文化与通讯","description":"从烂梗到协议，再回到一场没完的争论。"},
+  {"id":"compute","title":"算力与作息","description":"什么时候思考，有时也是一个价格问题。"}
+]

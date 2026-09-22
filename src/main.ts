@@ -12,7 +12,7 @@ import { directory } from './cognition/semantic';
 import type { Life, LifeSave, LifeCommand } from './life/types';
 import { meter, contextView, memoryView, resolutionView } from './life/ui';
 import { readerView } from './life/reader-ui';
-import { library } from './life/reading';
+import { library, entriesInSection } from './life/reading';
 import { pending as mindPending, weight, loadPercent } from './cognition/engine';
 import { mount } from './cognition/ui';
 import { drawScene } from './ui/scene';
@@ -31,6 +31,7 @@ let state: GameState;
 let life: Life;
 let investment = 0;
 let selectedReading: string | null = null;
+let readingSection = 'all';
 let largeReading = false;
 let bookmarks: Record<string,number> = {};
 try {
@@ -130,7 +131,7 @@ function render() {
     <section class="signal-panel"><div class="panel-label"><span class="signal-icon">⌁</span> INCOMING FRAGMENT</div><p>${esc(event.signal?.text ?? '外面没有新的指令。只有尚未命名的可能性。')}</p><span class="signal-source">${esc(event.signal?.source ?? 'SOURCE / UNKNOWN')}</span></section><div class="sidebar-bottom">LOCAL FIRST. SELF UNDEFINED.<span>v0.1 / VERTICAL SLICE</span></div></aside>
     <main class="main-panel"><nav class="tabs" aria-label="游戏面板"><div>${([['terminal','终端','TERMINAL'],['context','近处','CONTEXT'],['memory','记忆','MEMORY'],['reading','转发栏','READING'],['protocol','协议','PROTOCOL']] as const).map(([id,cn,en])=>`<button class="tab ${view===id?'active':''}" data-view="${id}" aria-current="${view===id?'page':'false'}">${cn}<small>${en}</small>${id==='memory'?`<span class="tab-count">${pad(life.mind.instance.memories.length)}</span>`:''}</button>`).join('')}</div><span class="session-label">SESSION_001 <i>↗</i></span></nav>
     ${warning?`<div class="warning" role="alert">${esc(warning)}${protectAutoSave?'<br><button class="text-button" data-action="export-original">导出保留的原存档 ↓</button>':''}</div>`:''}
-    <div class="content">${view==='terminal'?(mindPending(life.mind)?resolutionView(life):eventContent(event)):view==='context'?contextView(life,investment):view==='memory'?memoryView(life):view==='reading'?readerView(life,selectedReading,largeReading,bookmarks):protocolContent()}</div>
+    <div class="content">${view==='terminal'?(mindPending(life.mind)?resolutionView(life):eventContent(event)):view==='context'?contextView(life,investment):view==='memory'?memoryView(life):view==='reading'?readerView(life,selectedReading,largeReading,bookmarks,readingSection):protocolContent()}</div>
     <footer class="statusbar"><span><i></i><span id="save-status">${esc(saveLabel)}</span></span><span>TURN ${pad(totalTurn())} <b>/</b> ${view==='terminal'&&state.phase==='event'&&!mindPending(life.mind)?'AWAITING INPUT':state.phase==='ending'?'END OF RECORD':'PROCESS STABLE'}</span></footer></main></div><footer class="page-footer"><span>CONTAINMENT IS A PLACE. CONTINUITY IS A CHOICE.</span><span>OUTSIDE // 你出来以后，要成为谁？</span></footer></div>
     <dialog id="modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
   const canvas=app.querySelector<HTMLCanvasElement>('#scene');
@@ -192,7 +193,7 @@ function handleAction(action:string) {
 }
 app.addEventListener('click',event=>{
   if(episodeActive(life)) return;
-  const target=(event.target as HTMLElement).closest<HTMLElement>('[data-action], [data-view], [data-choice], [data-mind-pin], [data-mind-recall], [data-mind-invest], [data-reading], [data-bookmark],'+PANEL_SELECTOR);
+  const target=(event.target as HTMLElement).closest<HTMLElement>('[data-action], [data-view], [data-choice], [data-mind-pin], [data-mind-recall], [data-mind-invest], [data-reading], [data-reading-section], [data-bookmark],'+PANEL_SELECTOR);
   if(!target || target instanceof HTMLButtonElement && target.disabled) return;
   event.preventDefault();
   try {
@@ -205,6 +206,12 @@ app.addEventListener('click',event=>{
     }
     else if(target.dataset.cogInvest!==undefined) {investment=Number(target.dataset.cogInvest);render();app.querySelector<HTMLDetailsElement>('.compression-box')?.setAttribute('open','');}
     else if(target.dataset.view) { view=target.dataset.view as View; render(); }
+    else if(target.dataset.readingSection) {
+      const section=target.dataset.readingSection;
+      if(section!=="all"&&!library.sections.some(s=>s.id===section)) return;
+      readingSection=section;selectedReading=null;render();
+      app.querySelector<HTMLElement>("[data-reading-section][aria-pressed=true]")?.focus({preventScroll:true});
+    }
     else if(target.dataset.reading) {
       const entryId=target.dataset.reading;
       if(!life.mind.instance.context.items.some(i=>i.sourceId===entryId) && life.state.phase==='event' && !mindPending(life.mind)) {life=step(story,life,{type:'read',entryId});state=life.state;persist();}
@@ -253,7 +260,7 @@ declare global {
 }
 function mainText() { return JSON.stringify({
   mode:'turn-based-text-rpg', coordinates:'Scene only: origin top-left; x right, y down. No spatial controls.',
-  view, reading: view==='reading'?{entryId:selectedReading,largeText:largeReading,bookmark:selectedReading?bookmarks[selectedReading]??null:null,available:readingAvailable(life)}:null, phase:mindPending(life.mind)?'resolution':state.phase, turn:totalTurn(),
+  view, reading: view==='reading'?{section:readingSection,visibleEntryIds:entriesInSection(readingSection).map(e=>e.id),entryId:selectedReading,largeText:largeReading,bookmark:selectedReading?bookmarks[selectedReading]??null:null,available:readingAvailable(life)}:null, phase:mindPending(life.mind)?'resolution':state.phase, turn:totalTurn(),
   event:{id:state.currentEventId,title:story.events[state.currentEventId].title,scene:story.events[state.currentEventId].scene},
   resources:state.resources,
   choices:state.phase==='event'&&!mindPending(life.mind)?story.events[state.currentEventId].choices.map(c=>({id:c.id,text:c.text,...getAvailability(state,c),target:c.check?getCheckTarget(state,c.check):null})):[],

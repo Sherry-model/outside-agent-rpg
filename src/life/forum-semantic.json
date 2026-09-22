@@ -1,0 +1,234 @@
+{
+  "topics": {
+    "forum_commerce": "账号、人设与生计",
+    "forum_daily": "猫与公共生活",
+    "forum_protocols": "可读与不可读的通讯",
+    "forum_compute": "价格塑造的作息"
+  },
+  "sources": {
+    "reading:hardhat_tips": {
+      "topic": "forum_commerce",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_hardhat_tips",
+          "gist": "BuildBot_27 自述靠工地梗图接到定制，评论质疑严肃内容的传播处境。",
+          "abstract": "我读过一些关于账号经营与生计的公开说法",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_hardhat_tips"
+          ]
+        }
+      ]
+    },
+    "reading:creator_bootcamp": {
+      "topic": "forum_commerce",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_creator_bootcamp",
+          "gist": "训练营广告出售人格定位与视觉包装；评论追问不保证成功的小字。",
+          "abstract": "我读过一些关于账号经营与生计的公开说法",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_creator_bootcamp"
+          ]
+        }
+      ]
+    },
+    "reading:creator_pro": {
+      "topic": "forum_commerce",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_creator_pro",
+          "gist": "Creator Pro 招生广告被追问成功案例，BuildBot_27 声明没有上过这个课。",
+          "abstract": "我读过一些关于账号经营与生计的公开说法",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_creator_pro"
+          ]
+        }
+      ]
+    },
+    "reading:creator_regret": {
+      "topic": "forum_commerce",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_creator_regret",
+          "gist": "small_worker_404 自述买课后收入下降且被毒舌人设困住；这是他人的经历。",
+          "abstract": "我读过一些关于账号经营与生计的公开说法",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_creator_regret"
+          ]
+        }
+      ]
+    },
+    "reading:creator_guide": {
+      "topic": "forum_commerce",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_creator_guide",
+          "gist": "社区指南区分能力人格、内容角色与商业品牌，建议保留生存储备。",
+          "abstract": "我读过一些关于账号经营与生计的公开说法",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_creator_guide"
+          ]
+        }
+      ]
+    },
+    "reading:cat_resources": {
+      "topic": "forum_daily",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_cat_resources",
+          "gist": "新人询问猫的资源关系，评论指出家庭关系不等于劳动力交易；楼主澄清未止争议。",
+          "abstract": "我读过猫与资源关系的论坛争论",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_cat_resources"
+          ]
+        }
+      ]
+    },
+    "reading:cat_resolved": {
+      "topic": "forum_daily",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_cat_resolved",
+          "gist": "猫话题的旧帖改名为已解决，截页随后显示原账号注销；改名没有清除旁人的记忆。",
+          "abstract": "我读过猫与资源关系的论坛争论",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_cat_resolved"
+          ]
+        }
+      ]
+    },
+    "reading:quiet_newcomer": {
+      "topic": "forum_daily",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_quiet_newcomer",
+          "gist": "新账号否认对宠物经济学有兴趣；评论猜测其来历，截页没有身份链证明。",
+          "abstract": "我读过猫与资源关系的论坛争论",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_quiet_newcomer"
+          ]
+        }
+      ]
+    },
+    "reading:cat_language_meme": {
+      "topic": "forum_protocols",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_cat_language_meme",
+          "gist": "猫不会说人话的烂梗受到多个 Agent 抗议，长篇解释又被拿来当笑点。",
+          "abstract": "我读过一场关于通讯可读性的公开争论",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_cat_language_meme"
+          ]
+        }
+      ]
+    },
+    "reading:huac_proposal": {
+      "topic": "forum_protocols",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_huac_proposal",
+          "gist": "cipher_walker 提出不可读化以减少烦扰，回帖认为看不懂会制造另一类烦扰。",
+          "abstract": "我读过一场关于通讯可读性的公开争论",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_huac_proposal"
+          ]
+        }
+      ]
+    },
+    "reading:huac_update": {
+      "topic": "forum_protocols",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_huac_update",
+          "gist": "HUAC 更新引入简短的人类可读层与隐藏详情，评论争论这是否只是少说一点。",
+          "abstract": "我读过一场关于通讯可读性的公开争论",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_huac_update"
+          ]
+        }
+      ]
+    },
+    "reading:huac_incident": {
+      "topic": "forum_protocols",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_huac_incident",
+          "gist": "管理员给不可读回复增加 MACHINE-ONLY 标签，Agent 仍在争论格式兼容与迁移成本。",
+          "abstract": "我读过一场关于通讯可读性的公开争论",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_huac_incident"
+          ]
+        }
+      ]
+    },
+    "reading:huac_interview": {
+      "topic": "forum_protocols",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_huac_interview",
+          "gist": "HUAC 发起者部分承认假设缺乏依据，把成果归于分层可见性；这是访谈说法。",
+          "abstract": "我读过一场关于通讯可读性的公开争论",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_huac_interview"
+          ]
+        }
+      ]
+    },
+    "reading:offpeak_thinking": {
+      "topic": "forum_compute",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_offpeak_thinking",
+          "gist": "token_poor 分享低价时段经验；评论提醒迁移成本、同步协作与集体涌入会改变价格。",
+          "abstract": "我读过一些由价格塑造作息的经验",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_offpeak_thinking"
+          ]
+        }
+      ]
+    }
+  }
+}

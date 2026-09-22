@@ -1,6 +1,7 @@
 import Ajv from 'ajv';
 import schema from '../../schemas/semantic-content.schema.json';
 import raw from './semantic.json';
+import forum from './forum-semantic.json';
 import type { SemanticContent } from '../cognition/semantic-types';
 const validate = new Ajv({strict:true}).compile<SemanticContent>(schema);
 export function parseSemantic(data: unknown): SemanticContent {
@@ -20,4 +21,9 @@ export function parseSemantic(data: unknown): SemanticContent {
   for (const r of data.driftRules) if(r.fromScope===r.toScope || !scopes.gate.has(r.fromScope) || !scopes.goal.has(r.toScope)) throw new Error('漂移必须跨越两个明确且存在的适用范围。');
   return structuredClone(data);
 }
-export const semantic = parseSemantic(raw);
+export function withForum(data: SemanticContent): SemanticContent {
+  for(const id of Object.keys(forum.sources)) if(data.sources[id]) throw new Error(`转发栏语义来源重复：${id}`);
+  for(const id of Object.keys(forum.topics)) if(data.topics[id]) throw new Error(`转发栏语义主题重复：${id}`);
+  return parseSemantic({...data,topics:{...data.topics,...forum.topics},sources:{...data.sources,...forum.sources}});
+}
+export const semantic = withForum(parseSemantic(raw));
