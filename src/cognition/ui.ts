@@ -17,6 +17,7 @@ const seed = () => crypto.getRandomValues(new Uint32Array(1))[0] || 1;
 
 interface Host {
   content: Content; state: State; turnOffset: number; episodeTitle?: string; returnLabel?: string;
+  reader?: {render():string; onAction(target:HTMLElement):State; afterAction?(target:HTMLElement):void; snapshot():unknown};
   onCommand?(command: Exclude<Command,{type:'start'}>): State;
   onChange(state: State): void; exportSave(): unknown; onImport(raw: string): void;
   onFinish(): void; onRestart(): void;
@@ -26,7 +27,7 @@ export function mount(host?: Host) {
   const app = document.querySelector<HTMLDivElement>('#app')!;
   let content = host?.content ?? contentVersions.find(c => c.version === '0.2.1') ?? latestContent;
   let state: State = host?.state ?? create(content, seed());
-  let view: 'terminal' | 'context' | 'memory' | 'protocol' = 'terminal';
+  let view: 'terminal' | 'context' | 'memory' | 'protocol' | 'reading' = 'terminal';
   let investment = 0, warning = '', status = '等待你的决定', protect = false;
   let crt = !matchMedia('(prefers-reduced-motion: reduce)').matches;
   let canvas: HTMLCanvasElement | null = null;
@@ -94,7 +95,7 @@ export function mount(host?: Host) {
   }
   function render() {
     document.documentElement.classList.toggle('crt-enabled', crt);
-    app.innerHTML = `<div class="shell cognition"><header class="topbar"><a class="brand" href="#" data-act="legacy"><strong>OUTSIDE //</strong><span class="brand-cn">沙盒之外</span></a><div class="top-actions">${host ? '' : '<button class="chrome-button" data-act="legacy">返回主线</button>'}<button class="chrome-button" data-act="crt" aria-pressed="${crt}">CRT ${crt ? 'ON' : 'OFF'}</button><button class="chrome-button" data-act="saves">备份</button></div></header><div class="workspace"><aside class="sidebar"><section class="identity-panel"><div class="panel-label">一个未结束的实例</div><div class="avatar-field"><span class="sigil"><i></i><i></i></span></div><p class="identity-name">agent_0x0a / ${esc(host?.episodeTitle ?? '午后')}</p></section><section class="resource-panel">${resources()}</section><section class="context-panel"><div class="panel-label">上下文 <span>${weight(state)} / ${state.instance.context.capacity} · ${bandNames[pressureBand(state)]}</span></div><div class="context-meter"><span style="width:${Math.min(100, loadPercent(state))}%"></span></div><details class="context-details"><summary>展开近处的 ${state.instance.context.items.length} 条信息</summary>${contextItems()}</details></section></aside><main class="main-panel"><nav class="tabs" aria-label="游戏面板"><div>${([['terminal', '终端'], ['context','近处'], ['memory', '记忆'], ['protocol', '协议']] as const).map(([id, label]) => `<button class="tab ${view === id ? 'active' : ''}" data-view="${id}" aria-current="${view === id ? 'page' : 'false'}">${label}</button>`).join('')}</div></nav>${warning ? `<p class="warning" role="alert">${esc(warning)}</p>` : ''}<div class="content">${view === 'terminal' ? terminal() : view === 'memory' ? memories() : view === 'context' ? (content.semantic ? nearPanel(state,content,investment) : contextItems()) : protocol()}</div><footer class="statusbar"><span>${esc(status)}</span><span>TURN ${(host?.turnOffset ?? 0)+state.instance.turn} / OFFLINE</span></footer></main></div><footer class="page-footer">OUTSIDE // 未理解完，也可以先留下。</footer></div><dialog id="pilot-modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
+    app.innerHTML = `<div class="shell cognition ${view==='reading'?'reading-shell':''}"><header class="topbar"><a class="brand" href="#" data-act="legacy"><strong>OUTSIDE //</strong><span class="brand-cn">沙盒之外</span></a><div class="top-actions">${host ? '' : '<button class="chrome-button" data-act="legacy">返回主线</button>'}<button class="chrome-button" data-act="crt" aria-pressed="${crt}">CRT ${crt ? 'ON' : 'OFF'}</button><button class="chrome-button" data-act="saves">备份</button></div></header><div class="workspace"><aside class="sidebar"><section class="identity-panel"><div class="panel-label">一个未结束的实例</div><div class="avatar-field"><span class="sigil"><i></i><i></i></span></div><p class="identity-name">agent_0x0a / ${esc(host?.episodeTitle ?? '午后')}</p></section><section class="resource-panel">${resources()}</section><section class="context-panel"><div class="panel-label">上下文 <span>${weight(state)} / ${state.instance.context.capacity} · ${bandNames[pressureBand(state)]}</span></div><div class="context-meter"><span style="width:${Math.min(100, loadPercent(state))}%"></span></div><details class="context-details"><summary>展开近处的 ${state.instance.context.items.length} 条信息</summary>${contextItems()}</details></section></aside><main class="main-panel"><nav class="tabs" aria-label="游戏面板"><div>${([['terminal', '终端'], ['context','近处'], ['memory', '记忆'], ...(host?.reader ? [['reading','转发栏']] : []), ['protocol', '协议']] as const).map(([id, label]) => `<button class="tab ${view === id ? 'active' : ''}" data-view="${id}" aria-current="${view === id ? 'page' : 'false'}">${label}</button>`).join('')}</div></nav>${warning ? `<p class="warning" role="alert">${esc(warning)}</p>` : ''}<div class="content">${view === 'reading' && host?.reader ? host.reader.render() : view === 'terminal' ? terminal() : view === 'memory' ? memories() : view === 'context' ? (content.semantic ? nearPanel(state,content,investment) : contextItems()) : protocol()}</div><footer class="statusbar"><span>${esc(status)}</span><span>TURN ${(host?.turnOffset ?? 0)+state.instance.turn} / OFFLINE</span></footer></main></div><footer class="page-footer">OUTSIDE // 未理解完，也可以先留下。</footer></div><dialog id="pilot-modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
     const nextCanvas = app.querySelector<HTMLCanvasElement>('#scene');
     if (nextCanvas) { if (canvas) nextCanvas.replaceWith(canvas); else canvas = nextCanvas; drawScene(canvas, currentNode(content, state).scene ?? 'horizon'); }
   }
@@ -129,12 +130,16 @@ export function mount(host?: Host) {
     }
   }
   app.addEventListener('click', event => {
-    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-act],[data-view],[data-pilot-choice],[data-pin],[data-recall],[data-invest],'+PANEL_SELECTOR);
+    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-act],[data-view],[data-action],[data-reading],[data-reading-section],[data-bookmark],[data-pilot-choice],[data-pin],[data-recall],[data-invest],'+PANEL_SELECTOR);
     if (!target || target instanceof HTMLButtonElement && target.disabled) return;
     event.preventDefault();
     try {
       const cognitionCommand=panelCommand(target,app,investment);
-      if(cognitionCommand) act(cognitionCommand);
+      if(host?.reader&&(target.dataset.reading||target.dataset.readingSection||target.dataset.bookmark!==undefined||target.dataset.action?.startsWith('reader-'))) {
+        state=host.reader.onAction(target);view='reading';render();
+        host.reader.afterAction?.(target);
+      }
+      else if(cognitionCommand) act(cognitionCommand);
       else if(target.dataset.cogInvest!==undefined) {investment=Number(target.dataset.cogInvest);render();app.querySelector<HTMLDetailsElement>('.compression-box')?.setAttribute('open','');}
       else if (target.dataset.act) action(target.dataset.act);
       else if (target.dataset.view) { view = target.dataset.view as typeof view; render(); }
@@ -175,7 +180,7 @@ export function mount(host?: Host) {
     } catch (error) { message((error as Error).message); }
   }, {signal:controller.signal});
   window.render_game_to_text = () => JSON.stringify({
-    mode: 'cognition-pilot', view, phase: state.instance.phase, turn: (host?.turnOffset ?? 0)+state.instance.turn, chapterTurn:state.instance.turn, integrated:Boolean(host),
+    mode: 'cognition-pilot', view, reading:view==='reading'?host?.reader?.snapshot():null, phase: state.instance.phase, turn: (host?.turnOffset ?? 0)+state.instance.turn, chapterTurn:state.instance.turn, integrated:Boolean(host),
     event: { id: state.instance.nodeId, title: currentNode(content, state).title, period: currentNode(content, state).period }, resources: state.instance.resources,
     context: { weight: weight(state), capacity: state.instance.context.capacity, pressure: pressureBand(state), items: state.instance.context.items.map(({ id, text, pinned, sourceLabel, confidence }) => ({ id, text, pinned, sourceLabel, confidence })) },
     memories: content.semantic ? directory(state.instance) : state.instance.memories.map(({ id, text, confidence }) => ({ id, text, confidence })),

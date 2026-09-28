@@ -3,7 +3,7 @@ import { PERSONALITY_KEYS, type Story } from '../engine/types';
 import { create, reduce, loadPercent, pending } from '../cognition/engine';
 import type { NoteTemplate } from '../cognition/types';
 import type { JourneySave } from '../persistence/journey';
-import { contentFor, configFor, parseLifeContent } from './content';
+import { contentFor, routedContent, configFor, parseLifeContent } from './content';
 import type { Life, LifeCommand } from './types';
 import { library } from './reading';
 
@@ -11,6 +11,11 @@ export const episodeActive = (life:Life) => life.chapter==='active' || life.inte
 export const totalTurn = (life: Life) => life.state.turn + life.mind.instance.turn + (life.baseline?.chapter?.state.instance.turn ?? 0);
 export const readIds = (life: Life) => life.commands.flatMap(c=>c.type==='read'?[c.entryId]:[]);
 export const readingAvailable = (life: Life) => life.state.visited.includes(library.unlockAfterVisited);
+export const daysReading = (life:Life) => life.contentVersion==='0.6.0'&&life.interlude==='active';
+export function newReadingAllowed(life:Life):boolean {
+  const phase=episodeActive(life)?life.mind.instance.phase:life.state.phase;
+  return readingAvailable(life)&&(!episodeActive(life)||daysReading(life))&&phase==='event'&&!pending(life.mind)&&loadPercent(life.mind)<100;
+}
 export const available = (life: Life) => life.chapter === 'unvisited' && life.state.phase === 'event' && !pending(life.mind) && loadPercent(life.mind) < 100 && life.state.currentEventId === configFor(life.contentVersion).chapterEntry.eventId && life.state.visited.includes(configFor(life.contentVersion).chapterEntry.requiresVisited);
 function add(life: Life, note: NoteTemplate, sourceId: string, semanticKey = note.id) {
   const id = `${note.id}-${life.commands.length}`;
@@ -32,14 +37,14 @@ function toMain(life: Life) {
   life.state.resources = {...life.mind.instance.resources}; life.state.rngState = life.mind.rngState;
   for (const key of PERSONALITY_KEYS) life.state.personality[key] = Math.round((life.mind.instance.hidden[key]-50)/5);
 }
-export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.5.0'): Life {
+export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.6.0'): Life {
   parseLifeContent(configFor(version),story);
   if (baseline?.chapter?.status === 'active') throw new Error('这是旧版进行中的午后，请用 versions/OUTSIDE-journey-content-0.2.2.html 继续；本文件未被覆盖。');
   const state = baseline ? structuredClone(baseline.state) : createGame(story,seed);
   const content = structuredClone(contentFor(version));
   content.initial.resources = {...state.resources};
   for (const key of PERSONALITY_KEYS) content.initial.hidden[key] = 50 + 5*state.personality[key];
-  const life: Life = {contentVersion:version,seed,baseline:structuredClone(baseline),state,mind:create(content,seed),chapter:baseline?.chapter ? 'complete' : 'unvisited',commands:[],...(version==='0.5.0'?{interlude:'unvisited' as const}:{})};
+  const life: Life = {contentVersion:version,seed,baseline:structuredClone(baseline),state,mind:create(content,seed),chapter:baseline?.chapter ? 'complete' : 'unvisited',commands:[],...(['0.5.0','0.6.0'].includes(version)?{interlude:'unvisited' as const}:{})};
   fromMain(life);
   if (state.phase !== 'ending' && !beginDays(life)) observe(life);
   return life;
@@ -51,11 +56,11 @@ export function step(story: Story, before: Life, command: LifeCommand): Life {
   if (command.type === 'cognition') {
     if (!episodeActive(life) && command.command.type === 'choose') throw new Error('请使用当前主线的选项。');
     if (!episodeActive(life) && command.command.type === 'continue' && !pending(life.mind)) throw new Error('没有待确认的整理结果。');
-    life.mind = reduce(contentFor(life.contentVersion),life.mind,command.command);
+    life.mind = reduce(routedContent(life.contentVersion,life.mind),life.mind,command.command);
     toMain(life);
   } else if (command.type === 'read') {
     const entry = library.entries.find(e=>e.id===command.entryId);
-    if (!entry || !readingAvailable(life) || episodeActive(life) || life.state.phase!=='event' || pending(life.mind)) throw new Error('现在不能打开新的转发。');
+    if (!entry || !readingAvailable(life) || (episodeActive(life)&&!daysReading(life)) || (episodeActive(life)?life.mind.instance.phase:life.state.phase)!=='event' || pending(life.mind)) throw new Error('现在不能打开新的转发。');
     if (before.mind.instance.context.items.some(i=>i.sourceId===entry.id)) throw new Error('这条内容仍在上下文中，可以直接重看。');
     if (loadPercent(life.mind)>=100) throw new Error('上下文已满，请先整理。');
     add(life,{id:`reading-${entry.id}`,text:entry.contextText,weight:entry.weight,tags:[`reading_${entry.id}`],confidence:'LOW',sourceLabel:entry.source},entry.id,`reading:${entry.id}`);
@@ -88,7 +93,7 @@ export function step(story: Story, before: Life, command: LifeCommand): Life {
 
 /** The days begin after the defense encounter, before the inherited task returns. */
 function beginDays(life:Life):boolean {
-  if(life.contentVersion!=='0.5.0'||life.interlude!=='unvisited'||life.state.phase!=='event')return false;
+  if(!['0.5.0','0.6.0'].includes(life.contentVersion)||life.interlude!=='unvisited'||life.state.phase!=='event')return false;
   if(life.state.journal.at(-1)?.eventId!=='unknown_defense'||!['old_memory','continuation'].includes(life.state.currentEventId))return false;
   life.interlude='active';life.mind.instance.nodeId='days_tickets';life.mind.instance.phase='event';life.mind.instance.pendingId=null;
   const node=contentFor(life.contentVersion).nodes.find(n=>n.id==='days_tickets')!;

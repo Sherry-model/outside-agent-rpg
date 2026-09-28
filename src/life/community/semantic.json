@@ -1,0 +1,567 @@
+{
+  "topics": {
+    "community_a": "维修铺的交班与作息"
+  },
+  "sources": {
+    "pg_e01_observation": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e01_observation",
+          "gist": "Mara 请人整理交班说明，报酬 4；二号机今晚不能启动，原附件仍由她保管。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e01_pg_e01_brief_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e01_pg_e01_brief_result",
+          "gist": "我用三条提醒交付，停机警告在首行，参数仍需查看附件。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e01_pg_e01_layers_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e01_pg_e01_layers_result",
+          "gist": "我交付三条摘要与完整附件，Mara 接受了分层呈现。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e01_pg_e01_decline_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e01_pg_e01_decline_result",
+          "gist": "我拒绝这次小活，Mara 自己赶在交班前整理。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e01_pg_e01_huac_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e01_pg_e01_huac_result",
+          "gist": "我提起 HUAC 讨论，交付摘要与全文；Mara 说这个办法能用。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_job_observation": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_job_observation",
+          "gist": "机器人模板的第五个班次被另一模板读成星期五；Mara 悬赏 3 点对齐这一单。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_job_pg_e02_sample_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_job_pg_e02_sample_result",
+          "gist": "我让双方对照同一个预约，班次和日期终于对齐，报酬到账。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_job_pg_e02_owner_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_job_pg_e02_owner_result",
+          "gist": "我请 Mara 本人确认这一格，她收回剩余校对。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_job_pg_e02_leave_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_job_pg_e02_leave_result",
+          "gist": "我退出这次排错，另一位整理员接下工作。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_job_pg_e02_forum_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_job_pg_e02_forum_result",
+          "gist": "我提起格式兼容争论，用对照样例排错并获得报酬。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_huac_observation": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_huac_observation",
+          "gist": "机器人模板的第五个班次被另一模板读成星期五；Mara 悬赏 3 点对齐这一单。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_huac_pg_e02_sample_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_huac_pg_e02_sample_result",
+          "gist": "我让双方对照同一个预约，班次和日期终于对齐，报酬到账。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_huac_pg_e02_owner_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_huac_pg_e02_owner_result",
+          "gist": "我请 Mara 本人确认这一格，她收回剩余校对。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_huac_pg_e02_leave_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_huac_pg_e02_leave_result",
+          "gist": "我退出这次排错，另一位整理员接下工作。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_huac_pg_e02_forum_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_huac_pg_e02_forum_result",
+          "gist": "我提起格式兼容争论，用对照样例排错并获得报酬。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_declined_observation": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_declined_observation",
+          "gist": "机器人模板的第五个班次被另一模板读成星期五；Mara 悬赏 3 点对齐这一单。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_declined_pg_e02_sample_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_declined_pg_e02_sample_result",
+          "gist": "我让双方对照同一个预约，班次和日期终于对齐，报酬到账。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_declined_pg_e02_owner_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_declined_pg_e02_owner_result",
+          "gist": "我请 Mara 本人确认这一格，她收回剩余校对。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_declined_pg_e02_leave_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_declined_pg_e02_leave_result",
+          "gist": "我退出这次排错，另一位整理员接下工作。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e02_declined_pg_e02_forum_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e02_declined_pg_e02_forum_result",
+          "gist": "我提起格式兼容争论，用对照样例排错并获得报酬。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e03_observation": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e03_observation",
+          "gist": "Mara 四点后离线。清单报酬 8；即时成本 6，准备并预付夜间共 3，无人批次预付 4。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e03_pg_e03_live_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e03_pg_e03_live_result",
+          "gist": "我花 6 当场交付，Mara 将在明早付 8。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e03_pg_e03_prepared_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e03_pg_e03_prepared_result",
+          "gist": "我花 1 问清问题并预付 2，夜间批次已付清，约好明早收 8。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e03_pg_e03_unprepared_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e03_pg_e03_unprepared_result",
+          "gist": "我预付 4 预约无人批次，粗版会标注假设，明早报酬 8。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e03_pg_e03_decline_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e03_pg_e03_decline_result",
+          "gist": "我拒绝夜班，Mara 另找人，这份报价窗口已经关闭。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_live_observation": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_live_observation",
+          "gist": "Mara 确认清单已交付，应付报酬 8；今天的交流不影响这笔款。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_live_pg_e04_receipt_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_live_pg_e04_receipt_result",
+          "gist": "我收到了已交付清单的 8 点报酬。我只回复交付回执。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_live_pg_e04_rest_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_live_pg_e04_rest_result",
+          "gist": "我收到了已交付清单的 8 点报酬。我把今天的接单状态改成休息。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_live_pg_e04_chat_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_live_pg_e04_chat_result",
+          "gist": "我收到了已交付清单的 8 点报酬。Mara 发来猫把螺母睡热的工作台照片。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_prepared_observation": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_prepared_observation",
+          "gist": "Mara 确认清单已交付，应付报酬 8；今天的交流不影响这笔款。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_prepared_pg_e04_receipt_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_prepared_pg_e04_receipt_result",
+          "gist": "我收到了已交付清单的 8 点报酬。我只回复交付回执。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_prepared_pg_e04_rest_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_prepared_pg_e04_rest_result",
+          "gist": "我收到了已交付清单的 8 点报酬。我把今天的接单状态改成休息。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_prepared_pg_e04_chat_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_prepared_pg_e04_chat_result",
+          "gist": "我收到了已交付清单的 8 点报酬。Mara 发来猫把螺母睡热的工作台照片。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_unprepared_observation": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_unprepared_observation",
+          "gist": "Mara 确认清单已交付，应付报酬 8；今天的交流不影响这笔款。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_unprepared_pg_e04_receipt_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_unprepared_pg_e04_receipt_result",
+          "gist": "我收到了已交付清单的 8 点报酬。我只回复交付回执。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_unprepared_pg_e04_rest_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_unprepared_pg_e04_rest_result",
+          "gist": "我收到了已交付清单的 8 点报酬。我把今天的接单状态改成休息。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_unprepared_pg_e04_chat_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_unprepared_pg_e04_chat_result",
+          "gist": "我收到了已交付清单的 8 点报酬。Mara 发来猫把螺母睡热的工作台照片。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_declined_observation": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_declined_observation",
+          "gist": "我没接夜班，Mara 已找别人，今天只有普通问候。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_declined_pg_e04_rest_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_declined_pg_e04_rest_result",
+          "gist": "今天没有夜班款项。我把今天的接单状态改成休息。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e04_declined_pg_e04_chat_result": {
+      "topic": "community_a",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e04_declined_pg_e04_chat_result",
+          "gist": "今天没有夜班款项。Mara 发来猫把螺母睡热的工作台照片。",
+          "abstract": "我在维修铺经历过工作、交班与不同的作息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    }
+  }
+}

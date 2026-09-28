@@ -16,7 +16,9 @@
 
 **「余下的三天」/ 0.5.0**：离开未知结构后自动接续，加入跨三天的 12 个日常事件、每条路线约 24 个新认知输入。小额短工、维护、猫课广告、修订与撤下的说明，以及旧对象的再次相遇，最后回到原有结局段。早期凭条到第三天才再次用上；遗失细节后仍可补查或离开。
 
-**已有 0.3.0 / 0.4.0 局按原版本继续运行**，不会中途插入三天。先导出旧局，再重新开始即可体验 0.5.0。
+**本分支新增 A 线 / 0.6.0**：第一晚可进入 Mara 维修铺的四次相遇，也可略过；三天中可随时切到转发栏再回来。普通交班和排错无需读帖，准确引用讨论则需要近处有相应线索。夜间工作先付费用，交付后次日收款，拒单也会有后续回应。B/C/D 尚未接入，ABCD 完成前不合并开发分支。
+
+**已有 0.3.0 / 0.4.0 / 0.5.0 局按原版本继续运行**，不会中途加入 A 线。先导出旧局，再重新开始即可体验 0.6.0。
 
 新导出使用 `outside-life-save / v1`，包含完整生活状态、旧档迁移起点（如有）与可重放命令。原 v1 主线或已完成午后的旧旅程仍可导入；旧日志标明为历史记录，不逆推当时未保存的 Context。旧版正在进行的午后请使用 [versions](versions/README.md) 中对应 HTML 恢复，避免改变进行中的规则。若自动恢复提示不兼容，可先点「导出保留的原存档」，原浏览器键不会被覆盖。
 
@@ -47,6 +49,8 @@ npm run test:reading
 npm run test:forum
 npm run test:semantic
 npm run test:days
+npm run test:community
+npm run test:skill:community
 npm run test:skill:days
 npm run test:skill:cognition
 ```
@@ -67,7 +71,7 @@ npm run test:skill:cognition
 
 四个资源：Compute、Trace、Access、Continuity，按 0–100 限制。隐藏人格：RiskInversion、EpistemicAppetite、Suspicion、HumanAnchoring。当前生活层持续保存 0..100 倾向，主线旧条件读取映射后的 -10..10 值；细小漂移不会在章节切换时丢掉。主线 d100 极端窗与认知 margin 判定仍分别标记。
 
-当前生活内容版本 0.5.0，认知规则沿用 0.4.0，午后与三天共用 Context。三天的数据和编写说明在 `src/life/days/`；旧版本 JSON 与完整 HTML 保留。
+本开发分支生活内容版本 0.6.0，认知规则沿用 0.4.0，午后与三天共用 Context。三天的数据和编写说明在 `src/life/days/`，A 线在 `src/life/community/`；旧版本 JSON 与完整 HTML 保留。
 
 完整目标栈、背包、成就、随机身份、长期社交、身体、外部备份交易与世界内 Fork/Snapshot/Prune/Merge 尚未实现。新材料中的保险、勒索、记忆继承等先通过人物与信息呈现，不把每个设想变成数值机制。所有文件、论坛内容和所谓基础设施行为均为本地虚构数据。
 

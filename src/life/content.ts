@@ -2,6 +2,8 @@ import Ajv from 'ajv';
 import raw from './content.json';
 import old from './releases/0.3.0.json';
 import previous from './releases/0.4.0.json';
+import release05 from './releases/0.5.0.json';
+import { withCommunity, communityRoutes } from './community';
 import { daysContent, daysSemantic } from './days';
 import afternoon04 from './afternoon-0.4.json';
 import { parseContent } from '../cognition/parser';
@@ -9,11 +11,11 @@ import { semantic } from './semantic-content';
 import { library } from './reading';
 import schema from '../../schemas/life-content.schema.json';
 import { content as afternoon } from '../story-tomorrow';
-import type { Content, NoteTemplate } from '../cognition/types';
+import type { Content, NoteTemplate, State } from '../cognition/types';
 import type { Story } from '../engine/types';
 
 export interface LifeContent {
-  version: '0.3.0' | '0.4.0' | '0.5.0'; capacity: number; voluntaryMinItems: number; recallWeight: number; outcomeWeight: number;
+  version: '0.3.0' | '0.4.0' | '0.5.0' | '0.6.0'; capacity: number; voluntaryMinItems: number; recallWeight: number; outcomeWeight: number;
   chapterEntry: { eventId: string; requiresVisited: string };
   observations: Record<string, NoteTemplate>;
 }
@@ -44,7 +46,7 @@ const legacyContent: Content = {
 };
 
 export const legacyConfig = old as LifeContent;
-export function configFor(version: LifeContent['version']): LifeContent { return version==='0.3.0' ? legacyConfig : version==='0.4.0' ? previous as LifeContent : config; }
+export function configFor(version: LifeContent['version']): LifeContent { return version==='0.3.0' ? legacyConfig : version==='0.4.0' ? previous as LifeContent : version==='0.5.0' ? release05 as LifeContent : config; }
 const nextAfternoon = parseContent(afternoon04);
 function annotated(note: NoteTemplate): NoteTemplate {
   const meaning = semantic.sources[note.id];
@@ -59,6 +61,10 @@ const previousContent: Content = {
     ...nextAfternoon.nodes.map(n=>({...n,...(n.inject ? {inject:n.inject.map(annotated)} : {})}))],
 };
 export const cognitionContent: Content = {...previousContent,version:'0.5.0',semantic:daysSemantic,
-  cognition:{capacity:config.capacity,voluntaryMinItems:config.voluntaryMinItems,recallWeight:config.recallWeight},
+  cognition:{capacity:release05.capacity,voluntaryMinItems:release05.voluntaryMinItems,recallWeight:release05.recallWeight},
   nodes:[...previousContent.nodes,...daysContent.nodes],news:[...previousContent.news,...daysContent.news]};
-export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : version==='0.4.0' ? previousContent : cognitionContent; }
+const communityContent=withCommunity(cognitionContent);
+export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : version==='0.4.0' ? previousContent : version==='0.5.0' ? cognitionContent : communityContent; }
+export function routedContent(version:LifeContent['version'],state:State):Content {
+  const content=contentFor(version);return version==='0.6.0'?communityRoutes(content,state):content;
+}

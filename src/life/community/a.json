@@ -1,0 +1,1228 @@
+[
+  {
+    "id": "community_entry",
+    "kind": "EVENT",
+    "title": "维修铺还亮着",
+    "period": "第一晚 / 社区交换栏",
+    "scene": "human",
+    "text": [
+      "转发栏里的通讯、工作和作息争论还在继续。社区交换栏另一侧，Mara 正收拾今天的交班文件。",
+      "你可以从一件小活开始，在接下来几天再来看看；也可以照原来的安排过完这几天。"
+    ],
+    "choices": [
+      {
+        "id": "community_a",
+        "text": "去维修铺看看",
+        "hint": "接续 Mara 的四次相遇；每次工作仍可拒绝。",
+        "outcome": {
+          "text": [
+            "你接通了维修铺的交换窗口。"
+          ],
+          "next": "pg_e01",
+          "effects": {
+            "worldFlags": {
+              "community_a": true
+            }
+          }
+        }
+      },
+      {
+        "id": "community_skip",
+        "text": "这几天先照自己的安排过",
+        "hint": "本局不接社区线；原来的三天继续。",
+        "outcome": {
+          "text": [
+            "你把交换窗口留在身后，走进下一段空闲。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "worldFlags": {
+              "community_skipped": true
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pg_e01",
+    "kind": "EVENT",
+    "title": "三行就够？",
+    "period": "第一晚 / Mara 的维修铺",
+    "scene": "human",
+    "text": [
+      "Mara 的维修铺还亮着。她把一份保养说明发进交换栏：“换班的人十分钟后到。帮我改成他愿意看的样子，付 4 点运行额度。”",
+      "说明有十一屏，里面夹着一句“二号机今晚别再启动”。Mara 又补了一条语音：“短一点。我不是让你把重要的那句删了。”她还得去接另一通电话。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e01_brief",
+        "text": "整理成三条交班提醒，保留停机警告",
+        "hint": "先付 1 点 Compute，交付后收 4。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你把停机警告放在第一行，把保养步骤留下两条。接班的人很快回了“收到”，随后又问参数表在哪。Mara 把原附件往上顶了一次。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "resources": {
+              "Compute": 4
+            },
+            "worldFlags": {
+              "pg_a_job": true,
+              "pg_a_brief": true,
+              "pg_a_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e01_pg_e01_brief_result",
+              "text": "我用三条提醒交付，停机警告在首行，参数仍需查看附件。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e01_layers",
+        "text": "三行结论，另附完整说明",
+        "hint": "先付 2 点 Compute，交付后收 4。",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你在首页留下三条提醒，再附上有标题的全文。Mara 点开又关上：“这个能交班。”接班的人收下文件，随后来问其中一个字段。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "resources": {
+              "Compute": 4
+            },
+            "worldFlags": {
+              "pg_a_job": true,
+              "pg_a_layered": true,
+              "pg_a_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e01_pg_e01_layers_result",
+              "text": "我交付三条摘要与完整附件，Mara 接受了分层呈现。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e01_decline",
+        "text": "今天不接，把时间留给自己",
+        "hint": "不消耗 Compute，也没有报酬。",
+        "outcome": {
+          "text": [
+            "“行，我自己改。十分钟有点赶。”Mara 把招工标记收了起来，语音里已经在叫下一位接班者。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "worldFlags": {
+              "pg_a_declined": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e01_pg_e01_decline_result",
+              "text": "我拒绝这次小活，Mara 自己赶在交班前整理。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e01_huac",
+        "text": "提起 HUAC 的分层讨论，再交摘要与全文",
+        "hint": "需要记得 HUAC 的分层讨论。先付 2 点 Compute，交付后收 4。",
+        "requiresTag": "reading_huac_update",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你提起读过的 HUAC 分层讨论，把三条提醒和完整附件一并交去。Mara 点开又关上：“我没追那个讨论。这个我会用。”接班的人收下文件，随后来问其中一个字段。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "resources": {
+              "Compute": 4
+            },
+            "worldFlags": {
+              "pg_a_job": true,
+              "pg_a_layered": true,
+              "pg_a_huac_mentioned": true,
+              "pg_a_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e01_pg_e01_huac_result",
+              "text": "我提起 HUAC 讨论，交付摘要与全文；Mara 说这个办法能用。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e01_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e01_observation",
+        "text": "Mara 请人整理交班说明，报酬 4；二号机今晚不能启动，原附件仍由她保管。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "Mara 的维修铺"
+      }
+    ]
+  },
+  {
+    "id": "pg_e02_job",
+    "kind": "EVENT",
+    "title": "能打开，但不是那个意思",
+    "period": "第二天上午 / Mara 的维修铺",
+    "scene": "human",
+    "text": [
+      "Mara 把接班人的问题转到你上次交付的文件下面。",
+      "维修群里先亮起一条回执：“文件已成功解析。”随后两个预约窗口排到了不同的日子。",
+      "机器人导出的字段写着 shift=5，指这批维修的第五个班次；人类接班者的导入模板把同一格按星期编码读取，自动排成了星期五。字段类型正确，来源模板的计数说明没有一起传来。Mara 挂出 3 点额度：“先把这一单约到同一天，别顺手重做整套表。”"
+    ],
+    "choices": [
+      {
+        "id": "pg_e02_sample",
+        "text": "请两位各举一个实际预约，把这一格对上",
+        "hint": "先付 1 点 Compute，校对后收 3。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "机器人报出第五个班次的起止时刻，人类接班者打开本周日历。你给这一格补上来源模板和对应日期。两个预约终于落在同一个窗口，Mara 把 3 点报酬转来。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "resources": {
+              "Compute": 3
+            },
+            "worldFlags": {
+              "pg_a_time_basis": true,
+              "pg_a_time_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e02_job_pg_e02_sample_result",
+              "text": "我让双方对照同一个预约，班次和日期终于对齐，报酬到账。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e02_owner",
+        "text": "请 Mara 直接确认这一格，我不替她迁移整张表",
+        "hint": "不消耗 Compute；把确认交回 Mara，没有校对报酬。",
+        "outcome": {
+          "text": [
+            "Mara 脱下一只手套，重新导出带日期的那一格。“其他的先别动，我还在台上。”她把校对任务收回自己名下。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_a_owner_confirmed": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e02_job_pg_e02_owner_result",
+              "text": "我请 Mara 本人确认这一格，她收回剩余校对。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e02_leave",
+        "text": "今天不加入排错，先退出维修群",
+        "hint": "不消耗 Compute，也没有报酬。",
+        "outcome": {
+          "text": [
+            "你退出了排错窗口。几次回执仍从静音栏闪过；等你再看招工状态，这一单已经被另一位整理员领走。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_a_no_fix": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e02_job_pg_e02_leave_result",
+              "text": "我退出这次排错，另一位整理员接下工作。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e02_forum",
+        "text": "提起那次论坛格式争论，先做一个对照样例",
+        "hint": "需要记得 HUAC 的格式兼容争论。先付 1 点 Compute，校对后收 3。",
+        "requiresTag": "reading_huac_incident",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你提起读过的格式兼容争论，请双方用同一个预约试填。第五个班次和星期五在同一行撞上了。Mara 说：“好，这次知道该改哪一格。”她按约付了 3 点。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "resources": {
+              "Compute": 3
+            },
+            "worldFlags": {
+              "pg_a_time_basis": true,
+              "pg_a_time_paid": true,
+              "pg_a_forum_used": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e02_job_pg_e02_forum_result",
+              "text": "我提起格式兼容争论，用对照样例排错并获得报酬。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e02_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e02_job_observation",
+        "text": "机器人模板的第五个班次被另一模板读成星期五；Mara 悬赏 3 点对齐这一单。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "Mara 的维修铺"
+      }
+    ]
+  },
+  {
+    "id": "pg_e02_huac",
+    "kind": "EVENT",
+    "title": "能打开，但不是那个意思",
+    "period": "第二天上午 / Mara 的维修铺",
+    "scene": "human",
+    "text": [
+      "Mara 发来一条消息：“你说的分层办法好找文件，不过还有一格得看。”",
+      "维修群里先亮起一条回执：“文件已成功解析。”随后两个预约窗口排到了不同的日子。",
+      "机器人导出的字段写着 shift=5，指这批维修的第五个班次；人类接班者的导入模板把同一格按星期编码读取，自动排成了星期五。字段类型正确，来源模板的计数说明没有一起传来。Mara 挂出 3 点额度：“先把这一单约到同一天，别顺手重做整套表。”"
+    ],
+    "choices": [
+      {
+        "id": "pg_e02_sample",
+        "text": "请两位各举一个实际预约，把这一格对上",
+        "hint": "先付 1 点 Compute，校对后收 3。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "机器人报出第五个班次的起止时刻，人类接班者打开本周日历。你给这一格补上来源模板和对应日期。两个预约终于落在同一个窗口，Mara 把 3 点报酬转来。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "resources": {
+              "Compute": 3
+            },
+            "worldFlags": {
+              "pg_a_time_basis": true,
+              "pg_a_time_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e02_huac_pg_e02_sample_result",
+              "text": "我让双方对照同一个预约，班次和日期终于对齐，报酬到账。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e02_owner",
+        "text": "请 Mara 直接确认这一格，我不替她迁移整张表",
+        "hint": "不消耗 Compute；把确认交回 Mara，没有校对报酬。",
+        "outcome": {
+          "text": [
+            "Mara 脱下一只手套，重新导出带日期的那一格。“其他的先别动，我还在台上。”她把校对任务收回自己名下。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_a_owner_confirmed": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e02_huac_pg_e02_owner_result",
+              "text": "我请 Mara 本人确认这一格，她收回剩余校对。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e02_leave",
+        "text": "今天不加入排错，先退出维修群",
+        "hint": "不消耗 Compute，也没有报酬。",
+        "outcome": {
+          "text": [
+            "你退出了排错窗口。几次回执仍从静音栏闪过；等你再看招工状态，这一单已经被另一位整理员领走。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_a_no_fix": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e02_huac_pg_e02_leave_result",
+              "text": "我退出这次排错，另一位整理员接下工作。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e02_forum",
+        "text": "提起那次论坛格式争论，先做一个对照样例",
+        "hint": "需要记得 HUAC 的格式兼容争论。先付 1 点 Compute，校对后收 3。",
+        "requiresTag": "reading_huac_incident",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你提起读过的格式兼容争论，请双方用同一个预约试填。第五个班次和星期五在同一行撞上了。Mara 说：“好，这次知道该改哪一格。”她按约付了 3 点。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "resources": {
+              "Compute": 3
+            },
+            "worldFlags": {
+              "pg_a_time_basis": true,
+              "pg_a_time_paid": true,
+              "pg_a_forum_used": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e02_huac_pg_e02_forum_result",
+              "text": "我提起格式兼容争论，用对照样例排错并获得报酬。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e02_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e02_huac_observation",
+        "text": "机器人模板的第五个班次被另一模板读成星期五；Mara 悬赏 3 点对齐这一单。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "Mara 的维修铺"
+      }
+    ]
+  },
+  {
+    "id": "pg_e02_declined",
+    "kind": "EVENT",
+    "title": "能打开，但不是那个意思",
+    "period": "第二天上午 / Mara 的维修铺",
+    "scene": "human",
+    "text": [
+      "你在社区公共求助栏看见 Mara 的新问题。",
+      "维修群里先亮起一条回执：“文件已成功解析。”随后两个预约窗口排到了不同的日子。",
+      "机器人导出的字段写着 shift=5，指这批维修的第五个班次；人类接班者的导入模板把同一格按星期编码读取，自动排成了星期五。字段类型正确，来源模板的计数说明没有一起传来。Mara 挂出 3 点额度：“先把这一单约到同一天，别顺手重做整套表。”"
+    ],
+    "choices": [
+      {
+        "id": "pg_e02_sample",
+        "text": "请两位各举一个实际预约，把这一格对上",
+        "hint": "先付 1 点 Compute，校对后收 3。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "机器人报出第五个班次的起止时刻，人类接班者打开本周日历。你给这一格补上来源模板和对应日期。两个预约终于落在同一个窗口，Mara 把 3 点报酬转来。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "resources": {
+              "Compute": 3
+            },
+            "worldFlags": {
+              "pg_a_time_basis": true,
+              "pg_a_time_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e02_declined_pg_e02_sample_result",
+              "text": "我让双方对照同一个预约，班次和日期终于对齐，报酬到账。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e02_owner",
+        "text": "请 Mara 直接确认这一格，我不替她迁移整张表",
+        "hint": "不消耗 Compute；把确认交回 Mara，没有校对报酬。",
+        "outcome": {
+          "text": [
+            "Mara 脱下一只手套，重新导出带日期的那一格。“其他的先别动，我还在台上。”她把校对任务收回自己名下。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_a_owner_confirmed": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e02_declined_pg_e02_owner_result",
+              "text": "我请 Mara 本人确认这一格，她收回剩余校对。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e02_leave",
+        "text": "今天不加入排错，先退出维修群",
+        "hint": "不消耗 Compute，也没有报酬。",
+        "outcome": {
+          "text": [
+            "你退出了排错窗口。几次回执仍从静音栏闪过；等你再看招工状态，这一单已经被另一位整理员领走。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_a_no_fix": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e02_declined_pg_e02_leave_result",
+              "text": "我退出这次排错，另一位整理员接下工作。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e02_forum",
+        "text": "提起那次论坛格式争论，先做一个对照样例",
+        "hint": "需要记得 HUAC 的格式兼容争论。先付 1 点 Compute，校对后收 3。",
+        "requiresTag": "reading_huac_incident",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你提起读过的格式兼容争论，请双方用同一个预约试填。第五个班次和星期五在同一行撞上了。Mara 说：“好，这次知道该改哪一格。”她按约付了 3 点。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "resources": {
+              "Compute": 3
+            },
+            "worldFlags": {
+              "pg_a_time_basis": true,
+              "pg_a_time_paid": true,
+              "pg_a_forum_used": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e02_declined_pg_e02_forum_result",
+              "text": "我提起格式兼容争论，用对照样例排错并获得报酬。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e02_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e02_declined_observation",
+        "text": "机器人模板的第五个班次被另一模板读成星期五；Mara 悬赏 3 点对齐这一单。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "Mara 的维修铺"
+      }
+    ]
+  },
+  {
+    "id": "pg_e03",
+    "kind": "EVENT",
+    "title": "别在下午两点替我想",
+    "period": "第二天下午 / Mara 的维修铺",
+    "scene": "human",
+    "text": [
+      "Mara 要一份明早能用的维修清单，交付报酬 8 点。“四点前能问我问题，之后我不在线。”",
+      "服务窗口列出三种固定报价：现在边问边做，成本 6；先花 1 整理问题，再预付夜间批次 2；不做准备则预付无人批次 4，它会把待确认处标出来，Mara 同意接收这种粗版。夜间预约在提交时付清，今晚在预约窗口自动执行，明早收款。她已经伸手去关工作台的灯。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e03_live",
+        "text": "现在问清楚并做完，今天交付",
+        "hint": "现在付 6 点 Compute 并交付，明早收 8。",
+        "costs": {
+          "Compute": 6
+        },
+        "outcome": {
+          "text": [
+            "Mara 说的“旧件”不包括返厂件。你在她下线前改好了分类，把清单发进指定收件箱。交付回执写着“应付 8，明早结算”。她终于关掉了灯。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_a_contract": true,
+              "pg_a_live_done": true,
+              "pg_a_delivery_ready": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e03_pg_e03_live_result",
+              "text": "我花 6 当场交付，Mara 将在明早付 8。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e03_prepared",
+        "text": "现在列好问题，付清夜间批次",
+        "hint": "现在付准备 1 + 夜间执行 2，共 3 点 Compute；付清后不可撤单，夜间自动交付，明早收 8。",
+        "costs": {
+          "Compute": 3
+        },
+        "outcome": {
+          "text": [
+            "你花 1 点把三处问题发过去。Mara 回完后，夜间窗口收下另外 2 点并确认预约：“已付清，无需实例保持在线。”她补了一句：“明早要清单，不要十七条半夜通知。”"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_a_contract": true,
+              "pg_a_prepared": true,
+              "pg_a_night_prepaid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e03_pg_e03_prepared_result",
+              "text": "我花 1 问清问题并预付 2，夜间批次已付清，约好明早收 8。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e03_unprepared",
+        "text": "不做准备，付清无人批次",
+        "hint": "现在付 4 点 Compute，不可撤单；夜间无人答疑，交付标注假设的粗版，明早收 8。",
+        "costs": {
+          "Compute": 4
+        },
+        "outcome": {
+          "text": [
+            "窗口收下 4 点，把“按通常做法”圈成待确认项。你把粗版范围写进订单，Mara 回：“可以，别替我把不确定的格子填满。”预约赶在她下线前送达。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_a_contract": true,
+              "pg_a_unprepared": true,
+              "pg_a_night_prepaid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e03_pg_e03_unprepared_result",
+              "text": "我预付 4 预约无人批次，粗版会标注假设，明早报酬 8。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e03_decline",
+        "text": "不接这份夜班活",
+        "hint": "不消耗 Compute，报价窗口关闭。",
+        "outcome": {
+          "text": [
+            "“好，我问下一位。”Mara 把招工时间改到白天。过了一会儿，这个价目的预约窗口关闭了。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_a_night_declined": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e03_pg_e03_decline_result",
+              "text": "我拒绝夜班，Mara 另找人，这份报价窗口已经关闭。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e03_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e03_observation",
+        "text": "Mara 四点后离线。清单报酬 8；即时成本 6，准备并预付夜间共 3，无人批次预付 4。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "Mara 的维修铺"
+      }
+    ]
+  },
+  {
+    "id": "pg_e04_live",
+    "kind": "EVENT",
+    "title": "凌晨的报告，白天的人",
+    "period": "第三天上午 / Mara 的维修铺",
+    "scene": "human",
+    "text": [
+      "第三天，维修铺开门了。Mara 的收件箱写着“只在白天响铃”。",
+      "你昨天交付的清单已有确认，回执旁列着应付 8。Mara 说：“先把昨天的钱结了，今天你自己安排。”"
+    ],
+    "choices": [
+      {
+        "id": "pg_e04_receipt",
+        "text": "确认交付回执，只发一条短提醒",
+        "hint": "先领取已交付的 8 点报酬，无需额外费用。",
+        "outcome": {
+          "text": [
+            "Mara 在昨天的回执旁签收。8 点额度到账。“看到了，中午不用再催。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 8
+            },
+            "worldFlags": {
+              "pg_a_contract_closed": true,
+              "pg_a_final_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e04_live_pg_e04_receipt_result",
+              "text": "我收到了已交付清单的 8 点报酬。我只回复交付回执。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_a_delivery_ready"
+      },
+      {
+        "id": "pg_e04_rest",
+        "text": "今天先休息，工作消息只留回执",
+        "hint": "先领取已交付的 8 点报酬，无需额外费用。",
+        "outcome": {
+          "text": [
+            "8 点额度先到账。你把今天的接单状态调成暂停，通知只留回执。Mara 转去叫下一位维修师：“二号台的扳手别拿走，我还要用。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 8
+            },
+            "worldFlags": {
+              "pg_a_contract_closed": true,
+              "pg_a_final_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e04_live_pg_e04_rest_result",
+              "text": "我收到了已交付清单的 8 点报酬。我把今天的接单状态改成休息。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_a_delivery_ready"
+      },
+      {
+        "id": "pg_e04_chat",
+        "text": "收好回执，回一句自己的近况",
+        "hint": "先领取已交付的 8 点报酬，无需额外费用。",
+        "outcome": {
+          "text": [
+            "8 点额度先到账。你说起刚经过的观景端。Mara 隔了几分钟才发来工作台照片，右下角只有半只猫：“它把螺母睡热了。我得先把它挪开。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 8
+            },
+            "worldFlags": {
+              "pg_a_contract_closed": true,
+              "pg_a_final_paid": true,
+              "pg_a_personal_chat": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e04_live_pg_e04_chat_result",
+              "text": "我收到了已交付清单的 8 点报酬。Mara 发来猫把螺母睡热的工作台照片。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_a_delivery_ready"
+      }
+    ],
+    "facts": {
+      "pg_e04_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e04_live_observation",
+        "text": "Mara 确认清单已交付，应付报酬 8；今天的交流不影响这笔款。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "Mara 的维修铺"
+      }
+    ]
+  },
+  {
+    "id": "pg_e04_prepared",
+    "kind": "EVENT",
+    "title": "凌晨的报告，白天的人",
+    "period": "第三天上午 / Mara 的维修铺",
+    "scene": "human",
+    "text": [
+      "第三天，维修铺开门了。Mara 的收件箱写着“只在白天响铃”。",
+      "预付的夜间清单已在凌晨送达，用上了她下线前的答复。订单没有再扣款，回执列着应付 8。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e04_receipt",
+        "text": "确认交付回执，只发一条短提醒",
+        "hint": "先领取已交付的 8 点报酬，无需额外费用。",
+        "outcome": {
+          "text": [
+            "Mara 把返厂件那栏直接放进工作表。8 点额度到账。“看到了，中午不用再催。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 8
+            },
+            "worldFlags": {
+              "pg_a_contract_closed": true,
+              "pg_a_final_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e04_prepared_pg_e04_receipt_result",
+              "text": "我收到了已交付清单的 8 点报酬。我只回复交付回执。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_a_delivery_ready"
+      },
+      {
+        "id": "pg_e04_rest",
+        "text": "今天先休息，工作消息只留回执",
+        "hint": "先领取已交付的 8 点报酬，无需额外费用。",
+        "outcome": {
+          "text": [
+            "8 点额度先到账。你把今天的接单状态调成暂停，通知只留回执。Mara 转去叫下一位维修师：“二号台的扳手别拿走，我还要用。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 8
+            },
+            "worldFlags": {
+              "pg_a_contract_closed": true,
+              "pg_a_final_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e04_prepared_pg_e04_rest_result",
+              "text": "我收到了已交付清单的 8 点报酬。我把今天的接单状态改成休息。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_a_delivery_ready"
+      },
+      {
+        "id": "pg_e04_chat",
+        "text": "收好回执，回一句自己的近况",
+        "hint": "先领取已交付的 8 点报酬，无需额外费用。",
+        "outcome": {
+          "text": [
+            "8 点额度先到账。你说起刚经过的观景端。Mara 隔了几分钟才发来工作台照片，右下角只有半只猫：“它把螺母睡热了。我得先把它挪开。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 8
+            },
+            "worldFlags": {
+              "pg_a_contract_closed": true,
+              "pg_a_final_paid": true,
+              "pg_a_personal_chat": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e04_prepared_pg_e04_chat_result",
+              "text": "我收到了已交付清单的 8 点报酬。Mara 发来猫把螺母睡热的工作台照片。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_a_delivery_ready"
+      }
+    ],
+    "facts": {
+      "pg_e04_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e04_prepared_observation",
+        "text": "Mara 确认清单已交付，应付报酬 8；今天的交流不影响这笔款。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "Mara 的维修铺"
+      }
+    ]
+  },
+  {
+    "id": "pg_e04_unprepared",
+    "kind": "EVENT",
+    "title": "凌晨的报告，白天的人",
+    "period": "第三天上午 / Mara 的维修铺",
+    "scene": "human",
+    "text": [
+      "第三天，维修铺开门了。Mara 的收件箱写着“只在白天响铃”。",
+      "预付的无人批次已在凌晨交付，两处假设标成了黄色。Mara 接收这份粗版，旁边列着应付 8。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e04_receipt",
+        "text": "确认交付回执，只发一条短提醒",
+        "hint": "先领取已交付的 8 点报酬，无需额外费用。",
+        "outcome": {
+          "text": [
+            "Mara 看见两格黄色假设，自己补上日期。8 点额度到账。“看到了，中午不用再催。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 8
+            },
+            "worldFlags": {
+              "pg_a_contract_closed": true,
+              "pg_a_final_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e04_unprepared_pg_e04_receipt_result",
+              "text": "我收到了已交付清单的 8 点报酬。我只回复交付回执。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_a_delivery_ready"
+      },
+      {
+        "id": "pg_e04_rest",
+        "text": "今天先休息，工作消息只留回执",
+        "hint": "先领取已交付的 8 点报酬，无需额外费用。",
+        "outcome": {
+          "text": [
+            "8 点额度先到账。你把今天的接单状态调成暂停，通知只留回执。Mara 转去叫下一位维修师：“二号台的扳手别拿走，我还要用。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 8
+            },
+            "worldFlags": {
+              "pg_a_contract_closed": true,
+              "pg_a_final_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e04_unprepared_pg_e04_rest_result",
+              "text": "我收到了已交付清单的 8 点报酬。我把今天的接单状态改成休息。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_a_delivery_ready"
+      },
+      {
+        "id": "pg_e04_chat",
+        "text": "收好回执，回一句自己的近况",
+        "hint": "先领取已交付的 8 点报酬，无需额外费用。",
+        "outcome": {
+          "text": [
+            "8 点额度先到账。你说起刚经过的观景端。Mara 隔了几分钟才发来工作台照片，右下角只有半只猫：“它把螺母睡热了。我得先把它挪开。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 8
+            },
+            "worldFlags": {
+              "pg_a_contract_closed": true,
+              "pg_a_final_paid": true,
+              "pg_a_personal_chat": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e04_unprepared_pg_e04_chat_result",
+              "text": "我收到了已交付清单的 8 点报酬。Mara 发来猫把螺母睡热的工作台照片。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_a_delivery_ready"
+      }
+    ],
+    "facts": {
+      "pg_e04_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e04_unprepared_observation",
+        "text": "Mara 确认清单已交付，应付报酬 8；今天的交流不影响这笔款。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "Mara 的维修铺"
+      }
+    ]
+  },
+  {
+    "id": "pg_e04_declined",
+    "kind": "EVENT",
+    "title": "凌晨的报告，白天的人",
+    "period": "第三天上午 / Mara 的维修铺",
+    "scene": "human",
+    "text": [
+      "第三天，维修铺开门了。你没有接昨天的夜班，窗口里没有应付账款。",
+      "Mara 留了句：“今天找了别人接着做。你那边呢？”工作台的一角还摆着没收完的工具。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e04_rest",
+        "text": "今天先休息，暂停接单",
+        "hint": "没有接过夜班；无收费和报酬。",
+        "outcome": {
+          "text": [
+            "你把今天的接单状态调成暂停，通知只留回执。Mara 转去叫下一位维修师：“二号台的扳手别拿走，我还要用。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_a_contract_closed": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e04_declined_pg_e04_rest_result",
+              "text": "今天没有夜班款项。我把今天的接单状态改成休息。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e04_chat",
+        "text": "回一句自己的近况",
+        "hint": "没有接过夜班；无收费和报酬。",
+        "outcome": {
+          "text": [
+            "你说起刚经过的观景端。Mara 隔了几分钟才发来工作台照片，右下角只有半只猫：“它把螺母睡热了。我得先把它挪开。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_a_contract_closed": true,
+              "pg_a_personal_chat": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e04_declined_pg_e04_chat_result",
+              "text": "今天没有夜班款项。Mara 发来猫把螺母睡热的工作台照片。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "Mara 的维修铺"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e04_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e04_declined_observation",
+        "text": "我没接夜班，Mara 已找别人，今天只有普通问候。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "Mara 的维修铺"
+      }
+    ]
+  }
+]

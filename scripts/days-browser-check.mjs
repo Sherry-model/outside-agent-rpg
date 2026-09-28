@@ -11,7 +11,7 @@ const out='output/days';await mkdir(out,{recursive:true});
 const story=parseStory(JSON.parse(await readFile('src/story/manifest.json','utf8')),await Promise.all((await readdir('src/story/events')).filter(f=>f.endsWith('.json')).map(async source=>({source,data:JSON.parse(await readFile(`src/story/events/${source}`,'utf8'))}))));
 const main=(l,id)=>step(story,step(story,l,{type:'choose',choiceId:id}),{type:'continue'});
 const chapter=(l,id)=>step(story,step(story,l,{type:'cognition',command:{type:'choose',choiceId:id,investment:0}}),{type:'cognition',command:{type:'continue'}});
-let before=createLife(story,1234);
+let before=createLife(story,1234,null,'0.5.0');
 for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference'])before=main(before,id);
 before=step(story,before,{type:'enter-afternoon'});
 for(const id of ['look','stay','leave_board','walk_out','leave_open'])before=chapter(before,id);
@@ -82,7 +82,7 @@ try{
   checks.push({label,compressions,lateRecall:true,mergeLoss:mobile,ending:(await stateOf(page)).event.id});await context.close();
  }
  // The main story can bypass old_memory; that must not bypass the new days.
- let blank=createLife(story,1234);for(const id of ['leave_task_blank','stable_boot','take_small_window','withhold_inference','observe_public_terms'])blank=main(blank,id);
+ let blank=createLife(story,1234,null,'0.5.0');for(const id of ['leave_task_blank','stable_boot','take_small_window','withhold_inference','observe_public_terms'])blank=main(blank,id);
  await writeFile(`${out}/blank-task.json`,JSON.stringify(createSave(blank)));
  const context=await browser.newContext({offline:true}),page=await context.newPage();
  page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
