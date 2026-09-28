@@ -9,7 +9,7 @@ import { available, createLife, step, episodeActive, totalTurn as lifeTurn, read
 import { contentFor } from './life/content';
 import { PANEL_SELECTOR, panelCommand } from './cognition/panels';
 import { directory } from './cognition/semantic';
-import type { Life, LifeSave, LifeCommand } from './life/types';
+import { hasCommunity, type Life, type LifeSave, type LifeCommand } from './life/types';
 import { meter, contextView, memoryView, resolutionView } from './life/ui';
 import { readerView } from './life/reader-ui';
 import { library, entriesInSection } from './life/reading';
@@ -55,7 +55,7 @@ try {
   const save = readSave(storage,'auto',story);
   life = save?.life ?? createLife(story,seed());
   state = life.state;
-  if(save) saveLabel = life.contentVersion!=='0.6.0'?`已恢复 ${life.contentVersion} 旧局 · 新局体验社区往返`:'已恢复本地进度';
+  if(save) saveLabel = !hasCommunity(life.contentVersion)?`已恢复 ${life.contentVersion} 旧局 · 新局体验社区往返`:'已恢复本地进度';
 } catch(error) {
   life = createLife(story,seed()); state = life.state; protectAutoSave=true;
   warning = `自动存档未载入：${(error as Error).message} 原存档已保留，自动写入暂停。请导出当前进度；明确重新开始或载入有效存档后恢复自动保存。`;
@@ -89,7 +89,7 @@ function eventContent(event: StoryEvent) {
   return `<div class="event-meta"><span><b>●</b> ${esc(event.chapter)}</span><span>${state.phase==='ending' ? 'TRANSMISSION CLOSED' : `NODE ${pad(state.visited.filter(id => story.events[id].kind === 'event').length)} <i>/ ${pad(eventCount)}</i>`}</span></div>
     <div class="event-heading"><div><p class="eyebrow">${esc(event.subtitle)}</p><h1 id="event-title" tabindex="-1">${esc(event.title)}</h1></div><span class="event-glyph" aria-hidden="true">${state.phase==='ending' ? '◈' : '⌁'}</span></div>
     ${sceneMarkup(event)}${state.phase==='event' && available(life) ? '<aside class="news-arrival"><p>Fable 的信号淡下去以后，附近的公共目录里还亮着一块画板。正式入口可以稍后再去。</p><button class="text-button" data-action="tomorrow">先看看那块画板 →</button></aside>' : ''}
-    ${life.contentVersion==='0.6.0'&&event.id==='human_gate'&&state.phase==='event'?'<aside class="news-arrival"><p>公共目录里有人争论怎样交班、什么时候工作。接下来的几天，你也许会遇见其中的人。</p><button class="text-button" data-view="reading">看看转发栏 →</button></aside>':''}
+    ${hasCommunity(life.contentVersion)&&event.id==='human_gate'&&state.phase==='event'?'<aside class="news-arrival"><p>公共目录里有人争论怎样交班、什么时候工作。接下来的几天，你也许会遇见其中的人。</p><button class="text-button" data-view="reading">看看转发栏 →</button></aside>':''}
     <div class="prose">${event.text.map(p=>`<p>${esc(p)}</p>`).join('')}</div>
     ${state.phase==='ending' ? endingContent(event) : state.phase==='resolution' ? resolutionContent() : choicesContent(event)}`;
 }
@@ -215,7 +215,7 @@ app.addEventListener('click',event=>{
     }
     else if(target.dataset.reading) {
       const entryId=target.dataset.reading;
-      if(life.contentVersion==='0.6.0'&&!life.mind.instance.context.items.some(i=>i.sourceId===entryId)&&!newReadingAllowed(life))throw new Error('先确认当前结果或整理近处，再重新打开这篇转发。');
+      if(hasCommunity(life.contentVersion)&&!life.mind.instance.context.items.some(i=>i.sourceId===entryId)&&!newReadingAllowed(life))throw new Error('先确认当前结果或整理近处，再重新打开这篇转发。');
       if(!life.mind.instance.context.items.some(i=>i.sourceId===entryId) && life.state.phase==='event' && !mindPending(life.mind)) {life=step(story,life,{type:'read',entryId});state=life.state;persist();}
       selectedReading=entryId;view='reading';render();app.querySelector<HTMLElement>('#reading-title')?.focus({preventScroll:true});app.querySelector('.reading-article')?.scrollIntoView({block:'start',behavior:'instant'});
     }
@@ -277,7 +277,7 @@ function restore(save: LifeSave) {
   protectAutoSave=false; investment=0; change(save.life);
 }
 function readingSnapshot() {
-  const entryId=life.contentVersion==='0.6.0'&&!life.mind.instance.context.items.some(i=>i.sourceId===selectedReading)?null:selectedReading;
+  const entryId=hasCommunity(life.contentVersion)&&!life.mind.instance.context.items.some(i=>i.sourceId===selectedReading)?null:selectedReading;
   return {section:readingSection,visibleEntryIds:entriesInSection(readingSection).map(e=>e.id),entryId,largeText:largeReading,bookmark:entryId?bookmarks[entryId]??null:null,available:readingAvailable(life)};
 }
 function chapterReaderAction(target:HTMLElement) {

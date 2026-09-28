@@ -18,5 +18,5 @@ console.log(`✓ 转发栏 / ${library.version}: ${library.entries.length} entri
 
 console.log(`✓ 余下的三天 / 基础内容 0.5.0: ${daysContent.nodes.filter(n=>n.kind==='EVENT').length} events, ${daysContent.nodes.reduce((n,e)=>n+e.choices.length,0)} choices, source annotations and references valid.`);
 
-const community=contentFor('0.6.0').nodes.filter(n=>n.id==='community_entry'||n.id.startsWith('pg_e'));
-console.log(`✓ 社区 A 线 / 0.6.0: ${community.length} authored nodes (four encounters, fixed variants, and selector); schema, sources and return references valid.`);
+const community=contentFor('0.6.1').nodes.filter(n=>n.id==='community_entry'||n.id.startsWith('pg_e'));
+console.log(`✓ 社区 A 线 / 0.6.1: ${community.length} authored nodes (four encounters, fixed variants, and selector); schema, sources and return references valid.`);

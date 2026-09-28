@@ -2,6 +2,7 @@ import Ajv from 'ajv';
 import schema from '../../../schemas/cognition/content.schema.json';
 import raw from './a.json';
 import meanings from './semantic.json';
+import revisedText from './text-0.6.1.json';
 import { parseSemantic } from '../semantic-content';
 import { pending } from '../../cognition/engine';
 import type { Content, Node, NoteTemplate, Outcome, State } from '../../cognition/types';
@@ -28,6 +29,18 @@ export function withCommunity(base:Content):Content {
   });
   for(const node of nodes)for(const c of node.choices)if(!ids.has(c.outcome.next))throw new Error('社区返回目标缺失：'+c.outcome.next);
   return {...base,version:'0.6.0',semantic,nodes:[...base.nodes,...nodes]};
+}
+
+/** Prose-only release; retain 0.6.0 outcomes for strict save replay. */
+export function withRevisedCommunityText(base:Content):Content {
+  const content=structuredClone(base);
+  content.version='0.6.1';
+  const first=content.nodes.find(n=>n.id==='pg_e01')!;
+  first.choices.find(c=>c.id==='pg_e01_huac')!.outcome!.text=[revisedText.huacReply];
+  for(const node of content.nodes.filter(n=>n.id.startsWith('pg_e02_'))) {
+    node.text.splice(2,0,revisedText.handoverContext);
+  }
+  return content;
 }
 
 /** Resolve world-based routes before reducing a command. No knowledge is read from history. */

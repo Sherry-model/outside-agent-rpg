@@ -1,6 +1,8 @@
 # Community A: work, handover, and different hours
 
-Implemented in life content **0.6.0**, on `codex/community-abcd`. This branch stays separate until A–D are accepted. B/C/D are not implemented. Existing 0.3/0.4/0.5 saves retain their original route and chapter-reading restrictions; cognition rules remain 0.4.0 and life-save format remains v1.
+Implemented in life content **0.6.1** (A first shipped in 0.6.0), on `codex/community-abcd`. This branch stays separate until A–D are accepted. B/C/D are not implemented. Existing 0.3/0.4/0.5 saves retain their original route and chapter-reading restrictions; cognition rules remain 0.4.0 and life-save format remains v1.
+
+`a.json` is frozen at 0.6.0. `text-0.6.1.json` supplies two prose corrections, applied to a cloned content graph so old saves still replay exactly. Pricing, semantic inputs, and work outcomes are unchanged.
 
 `a.json` contains four authored encounters (PG-E01–E04), their fixed world-state variants, and a one-run selector. `semantic.json` supplies lossy summaries of only the actual observed/reported input. Reading-tag requirements use the existing public posts; generic solutions do not require reading.
 

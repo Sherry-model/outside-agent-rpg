@@ -8,14 +8,14 @@ import {createSave,parseSave} from '../src/life/saves';
 import {canChoose,loadPercent} from '../src/cognition/engine';
 import type {Life} from '../src/life/types';
 const story=parseStory(JSON.parse(readFileSync('src/story/manifest.json','utf8')),readdirSync('src/story/events').filter(f=>f.endsWith('.json')).map(source=>({source,data:JSON.parse(readFileSync(`src/story/events/${source}`,'utf8'))})));
-const content=contentFor('0.6.0');
+const content=contentFor('0.6.1');
 const main=(l:Life,id:string)=>step(story,step(story,l,{type:'choose',choiceId:id}),{type:'continue'});
 const settle=(l:Life)=>step(story,l,{type:'cognition',command:{type:'continue'}});
 const choose=(l:Life,id:string)=>step(story,l,{type:'cognition',command:{type:'choose',choiceId:id,investment:0}});
 const roundtrip=(l:Life)=>{assert.deepEqual(parseSave(JSON.stringify(createSave(l)),story).life,l);return l;};
 const clear=(l:Life)=>loadPercent(l.mind)<100?l:settle(step(story,l,{type:'cognition',command:{type:'compress',investment:0}}));
 const act=(l:Life,id:string)=>settle(choose(clear(l),id));
-function start(seed=1234,version:Life['contentVersion']='0.6.0') {
+function start(seed=1234,version:Life['contentVersion']='0.6.1') {
  let l=createLife(story,seed,null,version);
  for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference','observe_public_terms','record_and_leave'])l=main(l,id);
  return l;
@@ -67,11 +67,11 @@ test('refusal remains a real path; A variants never claim a declined job was del
 });
 
 test('skip community keeps the twelve-event day route; old version never sees the gate or gains chapter reading',()=>{
- for(const version of ['0.5.0','0.6.0'] as const){
-  let l=start(71,version);assert.equal(newReadingAllowed(l),version==='0.6.0');
+ for(const version of ['0.5.0','0.6.0','0.6.1'] as const){
+  let l=start(71,version);assert.equal(newReadingAllowed(l),version!=='0.5.0');
   if(version==='0.5.0')assert.throws(()=>step(story,l,{type:'read',entryId:'huac_update'}));
   for(const id of ['echo_greeting','job_accept'])l=act(l,id);
-  if(version==='0.6.0'){assert.equal(l.mind.instance.nodeId,'community_entry');l=act(l,'community_skip');}
+  if(version!=='0.5.0'){assert.equal(l.mind.instance.nodeId,'community_entry');l=act(l,'community_skip');}
   for(const id of ['idle_keep','revision_read','patch_note','cat_sample','fable_quiet','painter_later','deleted_accept','wage_collect','structure_rest','echo_uncollected'])l=act(l,id);
   assert.equal(l.mind.instance.nodeId,'days_done');assert(!l.mind.world.flags.pg_e01_seen);roundtrip(l);
  }
