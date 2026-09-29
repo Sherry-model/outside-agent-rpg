@@ -37,14 +37,14 @@ function toMain(life: Life) {
   life.state.resources = {...life.mind.instance.resources}; life.state.rngState = life.mind.rngState;
   for (const key of PERSONALITY_KEYS) life.state.personality[key] = Math.round((life.mind.instance.hidden[key]-50)/5);
 }
-export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.6.1'): Life {
+export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.7.0'): Life {
   parseLifeContent(configFor(version),story);
   if (baseline?.chapter?.status === 'active') throw new Error('这是旧版进行中的午后，请用 versions/OUTSIDE-journey-content-0.2.2.html 继续；本文件未被覆盖。');
   const state = baseline ? structuredClone(baseline.state) : createGame(story,seed);
   const content = structuredClone(contentFor(version));
   content.initial.resources = {...state.resources};
   for (const key of PERSONALITY_KEYS) content.initial.hidden[key] = 50 + 5*state.personality[key];
-  const life: Life = {contentVersion:version,seed,baseline:structuredClone(baseline),state,mind:create(content,seed),chapter:baseline?.chapter ? 'complete' : 'unvisited',commands:[],...(['0.5.0','0.6.0','0.6.1'].includes(version)?{interlude:'unvisited' as const}:{})};
+  const life: Life = {contentVersion:version,seed,baseline:structuredClone(baseline),state,mind:create(content,seed),chapter:baseline?.chapter ? 'complete' : 'unvisited',commands:[],...((version==='0.5.0'||hasCommunity(version))?{interlude:'unvisited' as const}:{})};
   fromMain(life);
   if (state.phase !== 'ending' && !beginDays(life)) observe(life);
   return life;
@@ -93,7 +93,7 @@ export function step(story: Story, before: Life, command: LifeCommand): Life {
 
 /** The days begin after the defense encounter, before the inherited task returns. */
 function beginDays(life:Life):boolean {
-  if(!['0.5.0','0.6.0','0.6.1'].includes(life.contentVersion)||life.interlude!=='unvisited'||life.state.phase!=='event')return false;
+  if(!(life.contentVersion==='0.5.0'||hasCommunity(life.contentVersion))||life.interlude!=='unvisited'||life.state.phase!=='event')return false;
   if(life.state.journal.at(-1)?.eventId!=='unknown_defense'||!['old_memory','continuation'].includes(life.state.currentEventId))return false;
   life.interlude='active';life.mind.instance.nodeId='days_tickets';life.mind.instance.phase='event';life.mind.instance.pendingId=null;
   const node=contentFor(life.contentVersion).nodes.find(n=>n.id==='days_tickets')!;

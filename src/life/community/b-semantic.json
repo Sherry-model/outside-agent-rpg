@@ -1,0 +1,679 @@
+{
+  "topics": {
+    "community_b": "作品、口吻与委托"
+  },
+  "sources": {
+    "pg_e05_observation": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e05_observation",
+          "gist": "一张明天停工的告示报价 5；幽默版成本 2，清楚版成本 1，可以拒绝。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e05_pg_e05_funny_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e05_pg_e05_funny_result",
+          "gist": "我交付幽默停工告示，日期与入口清楚，收到 5 点报酬。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e05_pg_e05_plain_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e05_pg_e05_plain_result",
+          "gist": "我交付时间与入口清楚的停工告示，收到 5 点报酬。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e05_pg_e05_decline_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e05_pg_e05_decline_result",
+          "gist": "我拒绝告示委托，征集继续，没有交付作品。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e05_pg_e05_hardhat_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e05_pg_e05_hardhat_result",
+          "gist": "我提起工地梗图定制的旧帖，交付自己的幽默告示并收到 5。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_funny_observation": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_funny_observation",
+          "gist": "工作室开放表达练习，参与成本 2、旁听免费；课程的订单与粉丝宣传不作保证。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_funny_pg_e06_trial_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_funny_pg_e06_trial_result",
+          "gist": "我付 2 练习，把语气与执行条件分开保存成模板。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_funny_pg_e06_demo_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_funny_pg_e06_demo_result",
+          "gist": "我免费旁听公开示例，没有提交自己的作品。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_funny_pg_e06_leave_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_funny_pg_e06_leave_result",
+          "gist": "我退出练习，名额被放出，没有课程合同。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_funny_pg_e06_question_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_funny_pg_e06_question_result",
+          "gist": "主持人承认安全帽作者没上课也不授课，“合作”的广告说法该改。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_plain_observation": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_plain_observation",
+          "gist": "工作室开放表达练习，参与成本 2、旁听免费；课程的订单与粉丝宣传不作保证。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_plain_pg_e06_trial_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_plain_pg_e06_trial_result",
+          "gist": "我付 2 练习，把语气与执行条件分开保存成模板。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_plain_pg_e06_demo_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_plain_pg_e06_demo_result",
+          "gist": "我免费旁听公开示例，没有提交自己的作品。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_plain_pg_e06_leave_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_plain_pg_e06_leave_result",
+          "gist": "我退出练习，名额被放出，没有课程合同。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_plain_pg_e06_question_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_plain_pg_e06_question_result",
+          "gist": "主持人承认安全帽作者没上课也不授课，“合作”的广告说法该改。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_open_observation": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_open_observation",
+          "gist": "工作室开放表达练习，参与成本 2、旁听免费；课程的订单与粉丝宣传不作保证。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_open_pg_e06_trial_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_open_pg_e06_trial_result",
+          "gist": "我付 2 练习，把语气与执行条件分开保存成模板。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_open_pg_e06_demo_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_open_pg_e06_demo_result",
+          "gist": "我免费旁听公开示例，没有提交自己的作品。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_open_pg_e06_leave_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_open_pg_e06_leave_result",
+          "gist": "我退出练习，名额被放出，没有课程合同。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e06_open_pg_e06_question_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e06_open_pg_e06_question_result",
+          "gist": "主持人承认安全帽作者没上课也不授课，“合作”的广告说法该改。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_trial_observation": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_trial_observation",
+          "gist": "一组维修提醒：普通版成本 2、报酬 4；角色版成本 2、报酬 7，公开账号署名。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_trial_pg_e07_persona_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_trial_pg_e07_persona_result",
+          "gist": "我交付并公开署名角色栏目，收到 7；有人把口号截进服务模板，另有读者催更。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_trial_pg_e07_plain_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_trial_pg_e07_plain_result",
+          "gist": "我交付普通维修说明，收到 4，并得到日期明确的新询价。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_trial_pg_e07_decline_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_trial_pg_e07_decline_result",
+          "gist": "我拒绝两个版本的委托，没有交付系列作品。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_trial_pg_e07_regret_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_trial_pg_e07_regret_result",
+          "gist": "我提起他人的人设经历，选择普通说明并交付，收到 4。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_funny_observation": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_funny_observation",
+          "gist": "一组维修提醒：普通版成本 2、报酬 4；角色版成本 2、报酬 7，公开账号署名。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_funny_pg_e07_persona_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_funny_pg_e07_persona_result",
+          "gist": "我交付并公开署名角色栏目，收到 7；有人把口号截进服务模板，另有读者催更。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_funny_pg_e07_plain_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_funny_pg_e07_plain_result",
+          "gist": "我交付普通维修说明，收到 4，并得到日期明确的新询价。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_funny_pg_e07_decline_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_funny_pg_e07_decline_result",
+          "gist": "我拒绝两个版本的委托，没有交付系列作品。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_funny_pg_e07_regret_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_funny_pg_e07_regret_result",
+          "gist": "我提起他人的人设经历，选择普通说明并交付，收到 4。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_sample_observation": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_sample_observation",
+          "gist": "一组维修提醒：普通版成本 2、报酬 4；角色版成本 2、报酬 7，公开账号署名。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_sample_pg_e07_persona_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_sample_pg_e07_persona_result",
+          "gist": "我交付并公开署名角色栏目，收到 7；有人把口号截进服务模板，另有读者催更。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_sample_pg_e07_plain_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_sample_pg_e07_plain_result",
+          "gist": "我交付普通维修说明，收到 4，并得到日期明确的新询价。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_sample_pg_e07_decline_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_sample_pg_e07_decline_result",
+          "gist": "我拒绝两个版本的委托，没有交付系列作品。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e07_sample_pg_e07_regret_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e07_sample_pg_e07_regret_result",
+          "gist": "我提起他人的人设经历，选择普通说明并交付，收到 4。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_persona_observation": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_persona_observation",
+          "gist": "客户误把角色口号当成夜间服务；可澄清后续作，成本 2、报酬 6且公开署名。普通新单成本 1、报酬 3。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_persona_pg_e08_series_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_persona_pg_e08_series_result",
+          "gist": "我澄清角色栏目与服务时段，公开署名两条新稿，收到 6。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_persona_pg_e08_small_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_persona_pg_e08_small_result",
+          "gist": "我交付今天的普通整理单，收到 3；客户在工作夹里记下我的名字。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_persona_pg_e08_pause_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_persona_pg_e08_pause_result",
+          "gist": "我暂停今天的新单，留下空白草稿，没有抹去已有作品。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_plain_observation": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_plain_observation",
+          "gist": "已交付的普通说明款已结清；今天有成本 1、报酬 3 的普通新单。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_plain_pg_e08_small_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_plain_pg_e08_small_result",
+          "gist": "我交付今天的普通整理单，收到 3；客户在工作夹里记下我的名字。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_plain_pg_e08_pause_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_plain_pg_e08_pause_result",
+          "gist": "我暂停今天的新单，留下空白草稿，没有抹去已有作品。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_early_observation": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_early_observation",
+          "gist": "只有先前告示的结清回执，没有系列续约；今天有成本 1、报酬 3 的公共新单。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_early_pg_e08_small_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_early_pg_e08_small_result",
+          "gist": "我交付今天的普通整理单，收到 3；客户在工作夹里记下我的名字。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_early_pg_e08_pause_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_early_pg_e08_pause_result",
+          "gist": "我暂停今天的新单，留下空白草稿，没有抹去已有作品。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_open_observation": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_open_observation",
+          "gist": "我没有交付过内容作品，也没有旧款；公共新单成本 1、报酬 3。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_open_pg_e08_small_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_open_pg_e08_small_result",
+          "gist": "我交付今天的普通整理单，收到 3；客户在工作夹里记下我的名字。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e08_open_pg_e08_pause_result": {
+      "topic": "community_b",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e08_open_pg_e08_pause_result",
+          "gist": "我暂停今天的新单，留下空白草稿，没有抹去已有作品。",
+          "abstract": "我经历过内容委托、表达练习与栏目角色的往返。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    }
+  }
+}

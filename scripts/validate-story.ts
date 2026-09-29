@@ -20,3 +20,6 @@ console.log(`✓ 余下的三天 / 基础内容 0.5.0: ${daysContent.nodes.filte
 
 const community=contentFor('0.6.1').nodes.filter(n=>n.id==='community_entry'||n.id.startsWith('pg_e'));
 console.log(`✓ 社区 A 线 / 0.6.1: ${community.length} authored nodes (four encounters, fixed variants, and selector); schema, sources and return references valid.`);
+
+const b=contentFor('0.7.0').nodes.filter(n=>/^pg_e0[5-8](?:_|$)/.test(n.id));
+console.log(`✓ 社区 B 线 / 0.7.0: ${b.length} authored nodes (four encounters and fixed variants); schema, sources and return references valid.`);

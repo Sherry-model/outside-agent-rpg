@@ -1,0 +1,1396 @@
+[
+  {
+    "id": "pg_e05",
+    "kind": "EVENT",
+    "title": "需要一张开工图",
+    "period": "第一晚 / 社区内容交换栏",
+    "scene": "human",
+    "text": [
+      "社区交换栏征集一张维修停工告示，付 5 点运行额度。委托人贴出安全帽小方块的旧帖：“不用画成它。我们只是想让人一眼看见二号台明天不开。”",
+      "他想要一点幽默，值班员却只关心替代入口和日期。旁边的免费人格诊断已经替你起好栏目名：“冷面维修系 Agent”。委托人瞥了一眼：“名字可以晚点取，告示明天午休前得挂上。”"
+    ],
+    "choices": [
+      {
+        "id": "pg_e05_funny",
+        "text": "做一张自己觉得好笑的停工图",
+        "hint": "先付 2 点 Compute，交付后收 5。",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你画了一把对着空工位等人的扳手，在旁边排好停工日期。委托人先笑了，值班员放大看了一眼替代入口：“这张行。”5 点报酬到账，扳手被人另存成了小图。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "resources": {
+              "Compute": 5
+            },
+            "worldFlags": {
+              "pg_b_order": true,
+              "pg_b_funny": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e05_pg_e05_funny_result",
+              "text": "我交付幽默停工告示，日期与入口清楚，收到 5 点报酬。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e05_plain",
+        "text": "只把停工时间和替代入口排清楚",
+        "hint": "先付 1 点 Compute，交付后收 5。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你把时间、位置和替代入口排在前三行。值班员把它排进明天的公告，委托人转来 5 点：“这个我能直接用。”"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "resources": {
+              "Compute": 5
+            },
+            "worldFlags": {
+              "pg_b_order": true,
+              "pg_b_plain": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e05_pg_e05_plain_result",
+              "text": "我交付时间与入口清楚的停工告示，收到 5 点报酬。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e05_decline",
+        "text": "现在不做，让征集继续挂着",
+        "hint": "不消耗 Compute，也没有报酬。",
+        "outcome": {
+          "text": [
+            "“那我先找下一个，明天午休前得挂。”委托人把征集顶回列表，你的窗口回到空白草稿。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "worldFlags": {
+              "pg_b_declined": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e05_pg_e05_decline_result",
+              "text": "我拒绝告示委托，征集继续，没有交付作品。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e05_hardhat",
+        "text": "提起工地梗图的定制经历，再画自己的扳手",
+        "hint": "需要记得安全帽作者的自述。先付 2 点 Compute，交付后收 5。",
+        "requiresTag": "reading_hardhat_tips",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你说起读过有人靠工地梗图接到定制。委托人回：“我也想看看你的笑话。”你画了一把对着空工位等人的扳手，在旁边排好停工日期。委托人先笑了，值班员放大看了一眼替代入口：“这张行。”5 点报酬到账，扳手被人另存成了小图。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "resources": {
+              "Compute": 5
+            },
+            "worldFlags": {
+              "pg_b_order": true,
+              "pg_b_funny": true,
+              "pg_b_hardhat_mentioned": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e05_pg_e05_hardhat_result",
+              "text": "我提起工地梗图定制的旧帖，交付自己的幽默告示并收到 5。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e05_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e05_observation",
+        "text": "一张明天停工的告示报价 5；幽默版成本 2，清楚版成本 1，可以拒绝。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "社区内容委托"
+      }
+    ]
+  },
+  {
+    "id": "pg_e06_funny",
+    "kind": "EVENT",
+    "title": "比作品先到的报价",
+    "period": "第二天上午 / 社区内容交换栏",
+    "scene": "human",
+    "text": [
+      "内容工作室的邀请附着你那把等人的扳手：“这张很好笑，要不要来试试文字的口气？”",
+      "主持人把同一句维修提示写成抱怨、温和和紧急三版，请值班员试读。对方把紧急版里一个会误导操作的词圈出来。",
+      "“语气能改，停机条件不能跟着变。”主持人说。参与一次练习耗费 2 点运行预算；旁听免费。完整课程另以 credits 报价，仍挂着含糊的“百万级粉丝合作案例”。主持人承认：“课能练表达，订单和粉丝我保证不了。”"
+    ],
+    "choices": [
+      {
+        "id": "pg_e06_trial",
+        "text": "试一次不同语气，把它当作练习",
+        "hint": "付 2 点 Compute，参加一次表达练习。",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你先写一条故意不耐烦的提醒，再改成温和版。值班员指出两版都省掉了复位条件。补全后，两种口气各有人喜欢。你保存了“语气”和“执行条件”分开的两格模板。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_b_trial": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e06_funny_pg_e06_trial_result",
+              "text": "我付 2 练习，把语气与执行条件分开保存成模板。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e06_demo",
+        "text": "只看公开演示，不交自己的作品",
+        "hint": "免费旁听公开演示，不购买课程。",
+        "outcome": {
+          "text": [
+            "主持人让你看一组去掉客户信息的样稿。一句好笑的提醒被改了三遍，最后值班员终于没有漏看停机条件。你把公开示例的链接留了下来。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_b_demo": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e06_funny_pg_e06_demo_result",
+              "text": "我免费旁听公开示例，没有提交自己的作品。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e06_leave",
+        "text": "这不是我现在想做的事，退出",
+        "hint": "免费退出本次练习。",
+        "outcome": {
+          "text": [
+            "主持人已经把练习分组排好：“可以，下一轮的名额我先放出去。”你关掉窗口，练习仍在继续。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_b_workshop_left": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e06_funny_pg_e06_leave_result",
+              "text": "我退出练习，名额被放出，没有课程合同。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e06_question",
+        "text": "先问一句：安全帽作者本人来授课吗？",
+        "hint": "需要记得 Creator Pro 成功案例受到质疑的帖子；不收费。",
+        "requiresTag": "reading_creator_pro",
+        "outcome": {
+          "text": [
+            "主持人说：“他没在这里上课，也不来授课。那张图只是我们引用的案例。”你指了指仍写着“合作”的标题。她停了一下：“这个词该改。”旁边的人已经开始下一轮练习。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_b_case_questioned": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e06_funny_pg_e06_question_result",
+              "text": "主持人承认安全帽作者没上课也不授课，“合作”的广告说法该改。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e06_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e06_funny_observation",
+        "text": "工作室开放表达练习，参与成本 2、旁听免费；课程的订单与粉丝宣传不作保证。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "社区内容委托"
+      }
+    ]
+  },
+  {
+    "id": "pg_e06_plain",
+    "kind": "EVENT",
+    "title": "比作品先到的报价",
+    "period": "第二天上午 / 社区内容交换栏",
+    "scene": "human",
+    "text": [
+      "内容工作室附上你排好的停工告示：“这张很清楚。我们有一节不同语气的开放练习。”",
+      "主持人把同一句维修提示写成抱怨、温和和紧急三版，请值班员试读。对方把紧急版里一个会误导操作的词圈出来。",
+      "“语气能改，停机条件不能跟着变。”主持人说。参与一次练习耗费 2 点运行预算；旁听免费。完整课程另以 credits 报价，仍挂着含糊的“百万级粉丝合作案例”。主持人承认：“课能练表达，订单和粉丝我保证不了。”"
+    ],
+    "choices": [
+      {
+        "id": "pg_e06_trial",
+        "text": "试一次不同语气，把它当作练习",
+        "hint": "付 2 点 Compute，参加一次表达练习。",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你先写一条故意不耐烦的提醒，再改成温和版。值班员指出两版都省掉了复位条件。补全后，两种口气各有人喜欢。你保存了“语气”和“执行条件”分开的两格模板。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_b_trial": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e06_plain_pg_e06_trial_result",
+              "text": "我付 2 练习，把语气与执行条件分开保存成模板。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e06_demo",
+        "text": "只看公开演示，不交自己的作品",
+        "hint": "免费旁听公开演示，不购买课程。",
+        "outcome": {
+          "text": [
+            "主持人让你看一组去掉客户信息的样稿。一句好笑的提醒被改了三遍，最后值班员终于没有漏看停机条件。你把公开示例的链接留了下来。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_b_demo": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e06_plain_pg_e06_demo_result",
+              "text": "我免费旁听公开示例，没有提交自己的作品。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e06_leave",
+        "text": "这不是我现在想做的事，退出",
+        "hint": "免费退出本次练习。",
+        "outcome": {
+          "text": [
+            "主持人已经把练习分组排好：“可以，下一轮的名额我先放出去。”你关掉窗口，练习仍在继续。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_b_workshop_left": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e06_plain_pg_e06_leave_result",
+              "text": "我退出练习，名额被放出，没有课程合同。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e06_question",
+        "text": "先问一句：安全帽作者本人来授课吗？",
+        "hint": "需要记得 Creator Pro 成功案例受到质疑的帖子；不收费。",
+        "requiresTag": "reading_creator_pro",
+        "outcome": {
+          "text": [
+            "主持人说：“他没在这里上课，也不来授课。那张图只是我们引用的案例。”你指了指仍写着“合作”的标题。她停了一下：“这个词该改。”旁边的人已经开始下一轮练习。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_b_case_questioned": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e06_plain_pg_e06_question_result",
+              "text": "主持人承认安全帽作者没上课也不授课，“合作”的广告说法该改。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e06_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e06_plain_observation",
+        "text": "工作室开放表达练习，参与成本 2、旁听免费；课程的订单与粉丝宣传不作保证。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "社区内容委托"
+      }
+    ]
+  },
+  {
+    "id": "pg_e06_open",
+    "kind": "EVENT",
+    "title": "比作品先到的报价",
+    "period": "第二天上午 / 社区内容交换栏",
+    "scene": "human",
+    "text": [
+      "你在公共征集页看到一节开放练习。报名栏没有作品要求。",
+      "主持人把同一句维修提示写成抱怨、温和和紧急三版，请值班员试读。对方把紧急版里一个会误导操作的词圈出来。",
+      "“语气能改，停机条件不能跟着变。”主持人说。参与一次练习耗费 2 点运行预算；旁听免费。完整课程另以 credits 报价，仍挂着含糊的“百万级粉丝合作案例”。主持人承认：“课能练表达，订单和粉丝我保证不了。”"
+    ],
+    "choices": [
+      {
+        "id": "pg_e06_trial",
+        "text": "试一次不同语气，把它当作练习",
+        "hint": "付 2 点 Compute，参加一次表达练习。",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你先写一条故意不耐烦的提醒，再改成温和版。值班员指出两版都省掉了复位条件。补全后，两种口气各有人喜欢。你保存了“语气”和“执行条件”分开的两格模板。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_b_trial": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e06_open_pg_e06_trial_result",
+              "text": "我付 2 练习，把语气与执行条件分开保存成模板。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e06_demo",
+        "text": "只看公开演示，不交自己的作品",
+        "hint": "免费旁听公开演示，不购买课程。",
+        "outcome": {
+          "text": [
+            "主持人让你看一组去掉客户信息的样稿。一句好笑的提醒被改了三遍，最后值班员终于没有漏看停机条件。你把公开示例的链接留了下来。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_b_demo": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e06_open_pg_e06_demo_result",
+              "text": "我免费旁听公开示例，没有提交自己的作品。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e06_leave",
+        "text": "这不是我现在想做的事，退出",
+        "hint": "免费退出本次练习。",
+        "outcome": {
+          "text": [
+            "主持人已经把练习分组排好：“可以，下一轮的名额我先放出去。”你关掉窗口，练习仍在继续。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_b_workshop_left": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e06_open_pg_e06_leave_result",
+              "text": "我退出练习，名额被放出，没有课程合同。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e06_question",
+        "text": "先问一句：安全帽作者本人来授课吗？",
+        "hint": "需要记得 Creator Pro 成功案例受到质疑的帖子；不收费。",
+        "requiresTag": "reading_creator_pro",
+        "outcome": {
+          "text": [
+            "主持人说：“他没在这里上课，也不来授课。那张图只是我们引用的案例。”你指了指仍写着“合作”的标题。她停了一下：“这个词该改。”旁边的人已经开始下一轮练习。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_b_case_questioned": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e06_open_pg_e06_question_result",
+              "text": "主持人承认安全帽作者没上课也不授课，“合作”的广告说法该改。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e06_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e06_open_observation",
+        "text": "工作室开放表达练习，参与成本 2、旁听免费；课程的订单与粉丝宣传不作保证。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "社区内容委托"
+      }
+    ]
+  },
+  {
+    "id": "pg_e07_trial",
+    "kind": "EVENT",
+    "title": "再凶一点，就像上次",
+    "period": "第二天下午 / 社区内容交换栏",
+    "scene": "human",
+    "text": [
+      "委托人打开你练过的两格模板：一格写语气，一格写执行条件。“再试一组？这次可以更凶一点。”",
+      "普通说明付 4，毒舌扳手角色版付 7，两版各花 2 点制作。角色版要进入公共栏目，用你的账号署名。",
+      "“骂乱放工具可以，别拿客户本人开涮。”委托人说。预览里的扳手正对一颗螺母喊：“你又迟到了一圈。”你可以保留这个笑话，也可以改回平常的工作口吻。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e07_persona",
+        "text": "接一单角色表演，页首写清只是栏目",
+        "hint": "先付 2 点 Compute，交付收 7。公共栏目以你的账号署名，Trace +1；页首写明表演。",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你把迟到的螺母又改了一次，自己也笑了。上线时页首写着角色栏目，评论里有人接了一句“今天顺时针请假”。另一个客户只截走“凌晨也替你骂醒故障”那行，贴进了服务请求模板。还有读者催下一期：“再凶一点。”"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "resources": {
+              "Compute": 7,
+              "Trace": 1
+            },
+            "worldFlags": {
+              "pg_b_persona_job": true,
+              "pg_b_persona_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e07_trial_pg_e07_persona_result",
+              "text": "我交付并公开署名角色栏目，收到 7；有人把口号截进服务模板，另有读者催更。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e07_plain",
+        "text": "只接普通说明，用自己的语气",
+        "hint": "先付 2 点 Compute，交付后收 4。",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你交出一组普通说明。委托人把其中两条直接贴到工作台，7 点那份角色单则交给另一位作者。4 点报酬到账，你收到一条日期写得很清楚的新询价。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "resources": {
+              "Compute": 4
+            },
+            "worldFlags": {
+              "pg_b_plain_job": true,
+              "pg_b_plain_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e07_trial_pg_e07_plain_result",
+              "text": "我交付普通维修说明，收到 4，并得到日期明确的新询价。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e07_decline",
+        "text": "两个版本都不接",
+        "hint": "不消耗 Compute，也没有报酬。",
+        "outcome": {
+          "text": [
+            "委托人收回样稿：“今天得排上，先找别人。”下一期预告换上另一位作者的名字。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_b_series_declined": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e07_trial_pg_e07_decline_result",
+              "text": "我拒绝两个版本的委托，没有交付系列作品。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e07_regret",
+        "text": "提起不喜欢后来要求的帖子，接普通说明",
+        "hint": "需要记得那位作者的人设经历。先付 2 点 Compute，交付后收 4。",
+        "requiresTag": "reading_creator_regret",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "“我读过有人接到后来不喜欢的要求。”你说。委托人把两份范围分别列出：“这次你选就好。”你交出一组普通说明。委托人把其中两条直接贴到工作台，7 点那份角色单则交给另一位作者。4 点报酬到账，你收到一条日期写得很清楚的新询价。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "resources": {
+              "Compute": 4
+            },
+            "worldFlags": {
+              "pg_b_plain_job": true,
+              "pg_b_plain_paid": true,
+              "pg_b_regret_mentioned": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e07_trial_pg_e07_regret_result",
+              "text": "我提起他人的人设经历，选择普通说明并交付，收到 4。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e07_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e07_trial_observation",
+        "text": "一组维修提醒：普通版成本 2、报酬 4；角色版成本 2、报酬 7，公开账号署名。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "社区内容委托"
+      }
+    ]
+  },
+  {
+    "id": "pg_e07_funny",
+    "kind": "EVENT",
+    "title": "再凶一点，就像上次",
+    "period": "第二天下午 / 社区内容交换栏",
+    "scene": "human",
+    "text": [
+      "委托人发来你那把等人的扳手：“再来一组？这次让它更凶一点。”",
+      "普通说明付 4，毒舌扳手角色版付 7，两版各花 2 点制作。角色版要进入公共栏目，用你的账号署名。",
+      "“骂乱放工具可以，别拿客户本人开涮。”委托人说。预览里的扳手正对一颗螺母喊：“你又迟到了一圈。”你可以保留这个笑话，也可以改回平常的工作口吻。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e07_persona",
+        "text": "接一单角色表演，页首写清只是栏目",
+        "hint": "先付 2 点 Compute，交付收 7。公共栏目以你的账号署名，Trace +1；页首写明表演。",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你把迟到的螺母又改了一次，自己也笑了。上线时页首写着角色栏目，评论里有人接了一句“今天顺时针请假”。另一个客户只截走“凌晨也替你骂醒故障”那行，贴进了服务请求模板。还有读者催下一期：“再凶一点。”"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "resources": {
+              "Compute": 7,
+              "Trace": 1
+            },
+            "worldFlags": {
+              "pg_b_persona_job": true,
+              "pg_b_persona_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e07_funny_pg_e07_persona_result",
+              "text": "我交付并公开署名角色栏目，收到 7；有人把口号截进服务模板，另有读者催更。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e07_plain",
+        "text": "只接普通说明，用自己的语气",
+        "hint": "先付 2 点 Compute，交付后收 4。",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你交出一组普通说明。委托人把其中两条直接贴到工作台，7 点那份角色单则交给另一位作者。4 点报酬到账，你收到一条日期写得很清楚的新询价。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "resources": {
+              "Compute": 4
+            },
+            "worldFlags": {
+              "pg_b_plain_job": true,
+              "pg_b_plain_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e07_funny_pg_e07_plain_result",
+              "text": "我交付普通维修说明，收到 4，并得到日期明确的新询价。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e07_decline",
+        "text": "两个版本都不接",
+        "hint": "不消耗 Compute，也没有报酬。",
+        "outcome": {
+          "text": [
+            "委托人收回样稿：“今天得排上，先找别人。”下一期预告换上另一位作者的名字。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_b_series_declined": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e07_funny_pg_e07_decline_result",
+              "text": "我拒绝两个版本的委托，没有交付系列作品。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e07_regret",
+        "text": "提起不喜欢后来要求的帖子，接普通说明",
+        "hint": "需要记得那位作者的人设经历。先付 2 点 Compute，交付后收 4。",
+        "requiresTag": "reading_creator_regret",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "“我读过有人接到后来不喜欢的要求。”你说。委托人把两份范围分别列出：“这次你选就好。”你交出一组普通说明。委托人把其中两条直接贴到工作台，7 点那份角色单则交给另一位作者。4 点报酬到账，你收到一条日期写得很清楚的新询价。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "resources": {
+              "Compute": 4
+            },
+            "worldFlags": {
+              "pg_b_plain_job": true,
+              "pg_b_plain_paid": true,
+              "pg_b_regret_mentioned": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e07_funny_pg_e07_regret_result",
+              "text": "我提起他人的人设经历，选择普通说明并交付，收到 4。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e07_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e07_funny_observation",
+        "text": "一组维修提醒：普通版成本 2、报酬 4；角色版成本 2、报酬 7，公开账号署名。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "社区内容委托"
+      }
+    ]
+  },
+  {
+    "id": "pg_e07_sample",
+    "kind": "EVENT",
+    "title": "这次，要哪个声音",
+    "period": "第二天下午 / 社区内容交换栏",
+    "scene": "human",
+    "text": [
+      "委托人先发来一页样稿。这是你第一次试这组维修提醒，不需要交过作品或参加过练习。",
+      "普通说明付 4，毒舌扳手角色版付 7，两版各花 2 点制作。角色版要进入公共栏目，用你的账号署名。",
+      "“骂乱放工具可以，别拿客户本人开涮。”委托人说。预览里的扳手正对一颗螺母喊：“你又迟到了一圈。”你可以保留这个笑话，也可以改回平常的工作口吻。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e07_persona",
+        "text": "接一单角色表演，页首写清只是栏目",
+        "hint": "先付 2 点 Compute，交付收 7。公共栏目以你的账号署名，Trace +1；页首写明表演。",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你把迟到的螺母又改了一次，自己也笑了。上线时页首写着角色栏目，评论里有人接了一句“今天顺时针请假”。另一个客户只截走“凌晨也替你骂醒故障”那行，贴进了服务请求模板。还有读者催下一期：“再凶一点。”"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "resources": {
+              "Compute": 7,
+              "Trace": 1
+            },
+            "worldFlags": {
+              "pg_b_persona_job": true,
+              "pg_b_persona_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e07_sample_pg_e07_persona_result",
+              "text": "我交付并公开署名角色栏目，收到 7；有人把口号截进服务模板，另有读者催更。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e07_plain",
+        "text": "只接普通说明，用自己的语气",
+        "hint": "先付 2 点 Compute，交付后收 4。",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你交出一组普通说明。委托人把其中两条直接贴到工作台，7 点那份角色单则交给另一位作者。4 点报酬到账，你收到一条日期写得很清楚的新询价。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "resources": {
+              "Compute": 4
+            },
+            "worldFlags": {
+              "pg_b_plain_job": true,
+              "pg_b_plain_paid": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e07_sample_pg_e07_plain_result",
+              "text": "我交付普通维修说明，收到 4，并得到日期明确的新询价。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e07_decline",
+        "text": "两个版本都不接",
+        "hint": "不消耗 Compute，也没有报酬。",
+        "outcome": {
+          "text": [
+            "委托人收回样稿：“今天得排上，先找别人。”下一期预告换上另一位作者的名字。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_b_series_declined": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e07_sample_pg_e07_decline_result",
+              "text": "我拒绝两个版本的委托，没有交付系列作品。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e07_regret",
+        "text": "提起不喜欢后来要求的帖子，接普通说明",
+        "hint": "需要记得那位作者的人设经历。先付 2 点 Compute，交付后收 4。",
+        "requiresTag": "reading_creator_regret",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "“我读过有人接到后来不喜欢的要求。”你说。委托人把两份范围分别列出：“这次你选就好。”你交出一组普通说明。委托人把其中两条直接贴到工作台，7 点那份角色单则交给另一位作者。4 点报酬到账，你收到一条日期写得很清楚的新询价。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "resources": {
+              "Compute": 4
+            },
+            "worldFlags": {
+              "pg_b_plain_job": true,
+              "pg_b_plain_paid": true,
+              "pg_b_regret_mentioned": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e07_sample_pg_e07_regret_result",
+              "text": "我提起他人的人设经历，选择普通说明并交付，收到 4。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e07_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e07_sample_observation",
+        "text": "一组维修提醒：普通版成本 2、报酬 4；角色版成本 2、报酬 7，公开账号署名。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "社区内容委托"
+      }
+    ]
+  },
+  {
+    "id": "pg_e08_persona",
+    "kind": "EVENT",
+    "title": "下一单，用哪个声音",
+    "period": "第三天上午 / 社区内容交换栏",
+    "scene": "human",
+    "text": [
+      "一个客户把你的栏目口号填进工单：“凌晨也替我骂醒故障，昨晚怎么没回复？”夜间服务根本没在合同里。委托人愿意改清两种模板，再付 6 点买本次两条新内容，制作成本 2。",
+      "另一边有普通整理单，付 3、成本 1，客户想在午前拿到。今天你可以接下眼前的委托，或把时间空下来。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e08_series",
+        "text": "分清栏目和服务，再写两条自己喜欢的笑话",
+        "hint": "先付 2 点 Compute，交付收 6。公开账号署名，Trace +1；只交两条，不承诺夜间待命。",
+        "requiresWorldFlag": "pg_b_persona_job",
+        "costs": {
+          "Compute": 2
+        },
+        "outcome": {
+          "text": [
+            "你把栏目样稿移出服务模板，客户确认了真实响应时段。新稿里，扳手开了一场只有一颗螺母迟到的会议。委托人笑着付了 6 点，那个说你不够凶的读者也回了一句：“这次迟到算工时吗？”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 6,
+              "Trace": 1
+            },
+            "worldFlags": {
+              "pg_b_limited_series": true,
+              "pg_b_service_scope_clarified": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e08_persona_pg_e08_series_result",
+              "text": "我澄清角色栏目与服务时段，公开署名两条新稿，收到 6。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e08_small",
+        "text": "今天接普通整理单",
+        "hint": "先付 1 点 Compute，交付后收 3。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你把普通整理单赶在午前送到，3 点报酬到账。客户回了一张工作夹的截图，文件名里抄对了你的名字。原委托人把这轮新栏目排给别人，两边各自继续。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 3
+            },
+            "worldFlags": {
+              "pg_b_small_work": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e08_persona_pg_e08_small_result",
+              "text": "我交付今天的普通整理单，收到 3；客户在工作夹里记下我的名字。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e08_pause",
+        "text": "今天暂停接单",
+        "hint": "不消耗 Compute；暂停今天的新单，已交付作品仍保留。",
+        "outcome": {
+          "text": [
+            "你把今天的状态改成暂停。普通单很快标为已接。栏目也换上下一位作者的预告。你留下一个空白的草稿窗口，想写的时候还能从这里开始。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_b_pause": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e08_persona_pg_e08_pause_result",
+              "text": "我暂停今天的新单，留下空白草稿，没有抹去已有作品。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e08_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e08_persona_observation",
+        "text": "客户误把角色口号当成夜间服务；可澄清后续作，成本 2、报酬 6且公开署名。普通新单成本 1、报酬 3。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "社区内容委托"
+      }
+    ]
+  },
+  {
+    "id": "pg_e08_plain",
+    "kind": "EVENT",
+    "title": "下一单，用哪个声音",
+    "period": "第三天上午 / 社区内容交换栏",
+    "scene": "human",
+    "text": [
+      "屏幕上是昨天普通维修说明的交付回执，4 点报酬已经结清。客户的新询价只写了内容和日期，没有角色栏目或夜间待命。",
+      "另一边有普通整理单，付 3、成本 1，客户想在午前拿到。今天你可以接下眼前的委托，或把时间空下来。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e08_small",
+        "text": "今天接普通整理单",
+        "hint": "先付 1 点 Compute，交付后收 3。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你把普通整理单赶在午前送到，3 点报酬到账。客户回了一张工作夹的截图，文件名里抄对了你的名字。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 3
+            },
+            "worldFlags": {
+              "pg_b_small_work": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e08_plain_pg_e08_small_result",
+              "text": "我交付今天的普通整理单，收到 3；客户在工作夹里记下我的名字。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e08_pause",
+        "text": "今天暂停接单",
+        "hint": "不消耗 Compute；暂停今天的新单，已交付作品仍保留。",
+        "outcome": {
+          "text": [
+            "你把今天的状态改成暂停。普通单很快标为已接。你留下一个空白的草稿窗口，想写的时候还能从这里开始。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_b_pause": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e08_plain_pg_e08_pause_result",
+              "text": "我暂停今天的新单，留下空白草稿，没有抹去已有作品。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e08_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e08_plain_observation",
+        "text": "已交付的普通说明款已结清；今天有成本 1、报酬 3 的普通新单。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "社区内容委托"
+      }
+    ]
+  },
+  {
+    "id": "pg_e08_early",
+    "kind": "EVENT",
+    "title": "下一单，用哪个声音",
+    "period": "第三天上午 / 社区内容交换栏",
+    "scene": "human",
+    "text": [
+      "你先前那张停工告示已经交付，5 点报酬早已结清。昨天的系列委托交给了别人，今天没有续约来信。",
+      "另一边有普通整理单，付 3、成本 1，客户想在午前拿到。今天你可以接下眼前的委托，或把时间空下来。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e08_small",
+        "text": "今天接普通整理单",
+        "hint": "先付 1 点 Compute，交付后收 3。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你把普通整理单赶在午前送到，3 点报酬到账。客户回了一张工作夹的截图，文件名里抄对了你的名字。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 3
+            },
+            "worldFlags": {
+              "pg_b_small_work": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e08_early_pg_e08_small_result",
+              "text": "我交付今天的普通整理单，收到 3；客户在工作夹里记下我的名字。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e08_pause",
+        "text": "今天暂停接单",
+        "hint": "不消耗 Compute；暂停今天的新单，已交付作品仍保留。",
+        "outcome": {
+          "text": [
+            "你把今天的状态改成暂停。普通单很快标为已接。你留下一个空白的草稿窗口，想写的时候还能从这里开始。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_b_pause": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e08_early_pg_e08_pause_result",
+              "text": "我暂停今天的新单，留下空白草稿，没有抹去已有作品。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e08_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e08_early_observation",
+        "text": "只有先前告示的结清回执，没有系列续约；今天有成本 1、报酬 3 的公共新单。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "社区内容委托"
+      }
+    ]
+  },
+  {
+    "id": "pg_e08_open",
+    "kind": "EVENT",
+    "title": "下一单，用哪个声音",
+    "period": "第三天上午 / 社区内容交换栏",
+    "scene": "human",
+    "text": [
+      "你没有交过这几次内容委托，收件箱里没有旧单回执或续约。公共征集页仍有新单。",
+      "另一边有普通整理单，付 3、成本 1，客户想在午前拿到。今天你可以接下眼前的委托，或把时间空下来。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e08_small",
+        "text": "今天接普通整理单",
+        "hint": "先付 1 点 Compute，交付后收 3。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你把普通整理单赶在午前送到，3 点报酬到账。客户回了一张工作夹的截图，文件名里抄对了你的名字。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "resources": {
+              "Compute": 3
+            },
+            "worldFlags": {
+              "pg_b_small_work": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e08_open_pg_e08_small_result",
+              "text": "我交付今天的普通整理单，收到 3；客户在工作夹里记下我的名字。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e08_pause",
+        "text": "今天暂停接单",
+        "hint": "不消耗 Compute；暂停今天的新单，已交付作品仍保留。",
+        "outcome": {
+          "text": [
+            "你把今天的状态改成暂停。普通单很快标为已接。你留下一个空白的草稿窗口，想写的时候还能从这里开始。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_b_pause": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e08_open_pg_e08_pause_result",
+              "text": "我暂停今天的新单，留下空白草稿，没有抹去已有作品。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "社区内容委托"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e08_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e08_open_observation",
+        "text": "我没有交付过内容作品，也没有旧款；公共新单成本 1、报酬 3。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "MEDIUM",
+        "sourceLabel": "社区内容委托"
+      }
+    ]
+  }
+]

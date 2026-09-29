@@ -4,6 +4,8 @@ import old from './releases/0.3.0.json';
 import previous from './releases/0.4.0.json';
 import release05 from './releases/0.5.0.json';
 import release06 from './releases/0.6.0.json';
+import release061 from './releases/0.6.1.json';
+import {withCommunityB, communityBRoutes} from './community/b';
 import { withCommunity, withRevisedCommunityText, communityRoutes } from './community';
 import { hasCommunity, type Life } from './types';
 import { daysContent, daysSemantic } from './days';
@@ -48,7 +50,7 @@ const legacyContent: Content = {
 };
 
 export const legacyConfig = old as LifeContent;
-export function configFor(version: LifeContent['version']): LifeContent { return version==='0.3.0' ? legacyConfig : version==='0.4.0' ? previous as LifeContent : version==='0.5.0' ? release05 as LifeContent : version==='0.6.0' ? release06 as LifeContent : config; }
+export function configFor(version: LifeContent['version']): LifeContent { return version==='0.3.0' ? legacyConfig : version==='0.4.0' ? previous as LifeContent : version==='0.5.0' ? release05 as LifeContent : version==='0.6.0' ? release06 as LifeContent : version==='0.6.1' ? release061 as LifeContent : config; }
 const nextAfternoon = parseContent(afternoon04);
 function annotated(note: NoteTemplate): NoteTemplate {
   const meaning = semantic.sources[note.id];
@@ -67,7 +69,8 @@ export const cognitionContent: Content = {...previousContent,version:'0.5.0',sem
   nodes:[...previousContent.nodes,...daysContent.nodes],news:[...previousContent.news,...daysContent.news]};
 const communityContent=withCommunity(cognitionContent);
 const revisedCommunityContent=withRevisedCommunityText(communityContent);
-export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : version==='0.4.0' ? previousContent : version==='0.5.0' ? cognitionContent : version==='0.6.0' ? communityContent : revisedCommunityContent; }
+const communityBContent=withCommunityB(revisedCommunityContent);
+export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : version==='0.4.0' ? previousContent : version==='0.5.0' ? cognitionContent : version==='0.6.0' ? communityContent : version==='0.6.1' ? revisedCommunityContent : communityBContent; }
 export function routedContent(version:LifeContent['version'],state:State):Content {
-  const content=contentFor(version);return hasCommunity(version)?communityRoutes(content,state):content;
+  const content=contentFor(version);return version==='0.7.0'?communityBRoutes(content,state):hasCommunity(version)?communityRoutes(content,state):content;
 }
