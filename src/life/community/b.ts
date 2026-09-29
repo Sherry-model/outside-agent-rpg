@@ -2,6 +2,7 @@ import Ajv from 'ajv';
 import schema from '../../../schemas/cognition/content.schema.json';
 import raw from './b.json';
 import meanings from './b-semantic.json';
+import revisedText from './text-0.7.1.json';
 import {parseSemantic} from '../semantic-content';
 import {pending} from '../../cognition/engine';
 import {communityRoutes} from './index';
@@ -41,6 +42,20 @@ export function withCommunityB(base:Content):Content {
   entry.title='交换栏的两扇窗口';
   entry.text=['维修铺的交班文件还没收完，另一侧的内容委托也挂上了征集。转发栏里争论过的工作与表达，到了眼前都有具体的交付时间。','接下来的几天，你可以继续去维修铺看看，或跟进内容委托，也可以照自己的安排过。'];
   entry.choices.splice(1,0,{id:'community_b',text:'去看看内容委托',hint:'接续创作、表达练习与下一单；每次工作仍可拒绝。',outcome:{text:['你打开内容委托的征集页，停工告示排在第一条。'],next:'pg_e05',effects:{worldFlags:{community_b:true}}}});
+  return content;
+}
+
+/** Correct the no-work record without changing released 0.7.0 replay data. */
+export function withRevisedCommunityBText(base:Content):Content {
+  const content=structuredClone(base);
+  content.version='0.7.1';
+  const pause=content.nodes.find(n=>n.id==='pg_e08_open')!.choices.find(c=>c.id==='pg_e08_pause')!;
+  pause.hint=revisedText.pauseHint;
+  const note=pause.outcome!.inject!.find(n=>n.id==='pg_e08_open_pg_e08_pause_result')!;
+  note.text=revisedText.pauseRecord;
+  const meaning=content.semantic!.sources[note.id];
+  meaning.clauses[0].gist=revisedText.pauseRecord;
+  note.meaning=structuredClone(meaning);
   return content;
 }
 

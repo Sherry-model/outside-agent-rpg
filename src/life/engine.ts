@@ -37,7 +37,7 @@ function toMain(life: Life) {
   life.state.resources = {...life.mind.instance.resources}; life.state.rngState = life.mind.rngState;
   for (const key of PERSONALITY_KEYS) life.state.personality[key] = Math.round((life.mind.instance.hidden[key]-50)/5);
 }
-export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.7.0'): Life {
+export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.7.1'): Life {
   parseLifeContent(configFor(version),story);
   if (baseline?.chapter?.status === 'active') throw new Error('这是旧版进行中的午后，请用 versions/OUTSIDE-journey-content-0.2.2.html 继续；本文件未被覆盖。');
   const state = baseline ? structuredClone(baseline.state) : createGame(story,seed);

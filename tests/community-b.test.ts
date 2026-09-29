@@ -8,7 +8,7 @@ import {createSave,parseSave} from '../src/life/saves';
 import {canChoose,loadPercent} from '../src/cognition/engine';
 import type {Life} from '../src/life/types';
 const story=parseStory(JSON.parse(readFileSync('src/story/manifest.json','utf8')),readdirSync('src/story/events').filter(f=>f.endsWith('.json')).map(source=>({source,data:JSON.parse(readFileSync(`src/story/events/${source}`,'utf8'))})));
-const content=contentFor('0.7.0');
+const content=contentFor('0.7.1');
 const main=(l:Life,id:string)=>step(story,step(story,l,{type:'choose',choiceId:id}),{type:'continue'});
 const settle=(l:Life)=>step(story,l,{type:'cognition',command:{type:'continue'}});
 const choose=(l:Life,id:string)=>step(story,l,{type:'cognition',command:{type:'choose',choiceId:id,investment:0}});
@@ -16,7 +16,7 @@ const replay=(l:Life)=>{assert.deepEqual(parseSave(JSON.stringify(createSave(l))
 const clear=(l:Life)=>loadPercent(l.mind)<100?l:settle(step(story,l,{type:'cognition',command:{type:'compress',investment:0}}));
 const act=(l:Life,id:string)=>settle(choose(clear(l),id));
 const walk=(l:Life,ids:string[])=>ids.reduce((l,id)=>act(l,id),l);
-function gate(seed=1234,blank=false,version:Life['contentVersion']='0.7.0'){
+function gate(seed=1234,blank=false,version:Life['contentVersion']='0.7.1'){
  let l=createLife(story,seed,null,version);
  for(const id of [blank?'leave_task_blank':'keep_history','stable_boot','take_small_window','withhold_inference','observe_public_terms','record_and_leave'])l=main(l,id);
  return walk(l,['echo_greeting','job_accept']);

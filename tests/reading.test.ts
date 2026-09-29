@@ -11,7 +11,7 @@ import {createSave,parseSave} from '../src/life/saves';
 import {contentFor} from '../src/life/content';
 import {weight} from '../src/cognition/engine';
 
-function gate(version:'0.3.0'|'0.4.0'|'0.5.0'|'0.6.0'|'0.6.1'|'0.7.0') {
+function gate(version:'0.3.0'|'0.4.0'|'0.5.0'|'0.6.0'|'0.6.1'|'0.7.0'|'0.7.1') {
  let life=createLife(story,0x12345678,null,version);
  for(const choiceId of ['keep_history','stable_boot','take_small_window','withhold_inference']) {
   life=step(story,step(story,life,{type:'choose',choiceId}),{type:'continue'});
@@ -30,7 +30,7 @@ test('Directory validates category references and preserves the original archive
  assert.equal(forum.find(e=>e.id==='cat_resolved')!.posts.at(-1)!.author,'论坛系统');
 });
 test('Every new post opens and replays in each supported life version without changing the world',()=>{
- for(const version of ['0.3.0','0.4.0','0.5.0','0.6.0','0.6.1','0.7.0'] as const) for(const entry of forum) {
+ for(const version of ['0.3.0','0.4.0','0.5.0','0.6.0','0.6.1','0.7.0','0.7.1'] as const) for(const entry of forum) {
   const before=gate(version);let life=step(story,before,{type:'read',entryId:entry.id});
   assert.deepEqual(life.state,before.state);assert.equal(totalTurn(life),totalTurn(before));
   assert.equal(weight(life.mind),weight(before.mind)+entry.weight);

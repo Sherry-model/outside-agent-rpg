@@ -1,6 +1,6 @@
 # Community A/B: work, handover, and creative commissions
 
-Implemented in life content **0.7.0** (A first shipped in 0.6.0, with revised prose in 0.6.1), on `codex/community-abcd`. This branch stays separate until A–D are accepted. C/D are not implemented. New runs choose A, B, or skip; old 0.6.0/0.6.1 runs keep the two-choice A/skip entry. Existing 0.3/0.4/0.5 saves retain their original route and chapter-reading restrictions; cognition rules remain 0.4.0 and life-save format remains v1.
+Implemented in life content **0.7.1** (A first shipped in 0.6.0, with revised prose in 0.6.1), on `codex/community-abcd`. This branch stays separate until A–D are accepted. C/D are not implemented. New runs choose A, B, or skip; old 0.6.0/0.6.1 runs keep the two-choice A/skip entry. Existing 0.3/0.4/0.5 saves retain their original route and chapter-reading restrictions; cognition rules remain 0.4.0 and life-save format remains v1.
 
 `a.json` is frozen at 0.6.0. `text-0.6.1.json` supplies two prose corrections, applied to a cloned content graph so old saves still replay exactly. Pricing, semantic inputs, and work outcomes are unchanged.
 
@@ -40,3 +40,7 @@ E05 costs 2/1 for funny/plain work and pays 5. E06 practice costs 2; observation
 Source replies require retained `reading_hardhat_tips`, `reading_creator_pro`, or `reading_creator_regret` clues. These supplement ordinary choices at the same price; fine summary recall can qualify, coarse merging/forgetting cannot. World facts preserve completed work independently of memory.
 
 Run `npm run test:community:b` for four desktop/mobile UI paths, then `npm run test:skill:community:b` for the original skill client. Evidence and replayable exports go to `output/community-b/` and `output/skill-community-b/`. The 0.6.1 configuration is frozen in `src/life/releases/0.6.1.json`; do not change old content or semantics when adding C/D.
+
+## B refusal record correction in 0.7.1
+
+`b.json` and `b-semantic.json` are frozen at 0.7.0. `text-0.7.1.json` is applied to a cloned graph, correcting only the `pg_e08_open` pause hint, result input, and its semantic gist. The attached note meaning and shared semantic source are updated together. `releases/0.7.0.json` preserves the old configuration; old saves retain their original version. Prices, flags, outcomes, and other branches are unchanged.
