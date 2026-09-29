@@ -26,3 +26,6 @@ console.log(`✓ 社区 B 线 / 0.7.1: ${b.length} authored nodes (four encounte
 
 const c=contentFor('0.8.0').nodes.filter(n=>/^pg_e(09|10|11|12)(?:_|$)/.test(n.id));
 console.log(`✓ 社区 C 线 / 0.8.0: ${c.length} authored nodes (four encounters and fixed variants); schema, sources and return references valid.`);
+
+const d=contentFor('0.9.0').nodes.filter(n=>/^pg_e(13|14|15|16)(?:_|$)/.test(n.id));
+console.log(`✓ 社区 D 线 / 0.9.0: ${d.length} authored nodes; schema, sources and return references valid.`);

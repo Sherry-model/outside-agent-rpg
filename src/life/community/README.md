@@ -1,6 +1,6 @@
-# Community A/B/C: work, handover, and creative commissions
+# Community A/B/C/D: work, handover, and creative commissions
 
-Implemented in life content **0.8.0** (A first shipped in 0.6.0, with revised prose in 0.6.1), on `codex/community-abcd`. This branch stays separate until A–D are accepted. D is not implemented. New runs choose A, B, C, or skip; old 0.6.0/0.6.1 runs keep the two-choice A/skip entry. Existing 0.3/0.4/0.5 saves retain their original route and chapter-reading restrictions; cognition rules remain 0.4.0 and life-save format remains v1.
+Implemented in life content **0.9.0** (A first shipped in 0.6.0, with revised prose in 0.6.1), on `codex/community-abcd`. This branch stays separate until A–D are accepted. D is implemented for review. New runs choose A, B, C, D, or skip through a two-page menu; old 0.6.0/0.6.1 runs keep the two-choice A/skip entry. Existing 0.3/0.4/0.5 saves retain their original route and chapter-reading restrictions; cognition rules remain 0.4.0 and life-save format remains v1.
 
 `a.json` is frozen at 0.6.0. `text-0.6.1.json` supplies two prose corrections, applied to a cloned content graph so old saves still replay exactly. Pricing, semantic inputs, and work outcomes are unchanged.
 
@@ -64,3 +64,27 @@ E09 costs 1 before paying 3 for scheduling; watching is free. Publicly signing t
 The original-post hints use `reading_cat_resources`, `reading_cat_resolved` and `reading_quiet_newcomer`; current-page reading grants none of these tags. Fine summary recall may preserve the source claim; coarse merging and forgetting cannot recover it. Ordinary actions remain unlocked. `creator` does not support the old title-change claim.
 
 Run `test:community:c` and `test:skill:community:c`. The current entry has four choices, so B's browser regression expects four on new runs; released 0.7 menus remain three choices. Frozen configurations/content and historical HTML files must remain unchanged when adding D.
+
+
+## D line in 0.9.0
+
+`d.ts` clones the C graph and adds nine fixed authored nodes from `d.json`. `d-semantic.json` distinguishes current observation, a privately shared old sentence, a new statement and its final publication approval. The C router is used unchanged for runs that did not select D.
+
+The first selector page offers A/B/another page/skip; the second offers C/D/back/skip. Navigation has no relationship flags or observations and remains within the existing four-choice schema and keyboard controls. Old menus are frozen. Only selecting a line establishes its relationship; refusing a task still permits subsequent encounters.
+
+| Previous event | D encounter / variants | Return |
+| --- | --- | --- |
+| days_job | pg_e13 | days_idle |
+| days_patch | pg_e14_known / public | days_cat |
+| days_fable | pg_e15_backup / waiting | days_painter |
+| days_wage | pg_e16_backup / original × applied / none | days_structure |
+
+E13 distinguishes seeing the cat approach from checking the customer's receipt (cost 1). A source-based reply requires `reading_continuity_witness`; it does not validate permissions. E14 handles postmark_6's own letters, not that customer's package: cost 3 authorizes and creates a copy in an independent account, then verifies its returned fragment and receipt. This prepays storage/retrieval through the end of day three. Checking the existing invoice costs 1; only communicating maintenance times is free.
+
+E15 starts the original account's maintenance without deleting the stored letters. A verified, created and accessible independent copy selects the retrieval-capable variant; retrieval is prepaid and free. Submitting a supplementary statement costs 1 and does not promise compensation. Waiting is free. E16 restores original access, separately retaining copy and application facts. At `days_done`, prepaid independent access expires without deleting the copy or changing original-account access.
+
+Only E15 retrieval gives the exact `pg_d_shared_line` clue, as a new private input. The old quotation remains unapproved for public use. E16 has an ordinary new-statement choice and a precise-clue choice that changes only the private opening question; both obtain a new statement from postmark_6 and its approval of the final attributed text. The precise choice also requires the actual private-sharing fact. Fine recall may preserve the quote; coarse merging/forgetting loses it. Neither History nor publication approval restores forgotten old text. Editing the factual account costs 1; new-statement assistance and declining the review are free. All player assistance is anonymous, so every D choice has zero Trace change.
+
+Each scene injects 5 Context on entry and 2 for its result. Private retrieval adds a separate 3-point quote input. The E16 new-statement paths add 3 for the statement and 2 for confirmation of its publication scope. No private letter is added to the public reading catalog. No wall clock, general claims system, identity resolver or automatic renewal is introduced.
+
+Run `test:community:d` and `test:skill:community:d`. C's browser path now visits the second selector page on new 0.9 runs; `readingEntries` permits C's existing current page in 0.9 while preserving old-version behavior. Freeze 0.9 before any later prose or behavior revision.

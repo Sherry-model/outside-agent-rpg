@@ -40,7 +40,7 @@ try{
   await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.waitForFunction(()=>typeof window.render_game_to_text==='function');
   await page.click('[data-action="saves"]');await page.locator('#import-save').setInputFiles(resolve(out,`before-${blank}.json`));await page.waitForFunction(()=>JSON.parse(window.render_game_to_text()).event.id==='unknown_defense');
   await page.click('[data-choice="record_and_leave"]');await page.click('[data-action="continue"]');for(const id of ['echo_greeting','job_accept'])await act(page,id,report);
-  assert.equal((await stateOf(page)).event.id,'community_entry');assert.equal(await page.locator('[data-pilot-choice]').count(),4);await page.screenshot({path:`${out}/${label}-entry.png`,fullPage:true});await act(page,'community_c',report);
+  assert.equal((await stateOf(page)).event.id,'community_entry');assert.equal(await page.locator('[data-pilot-choice]').count(),4);await page.screenshot({path:`${out}/${label}-entry.png`,fullPage:true});await act(page,'community_more',report);await act(page,'community_c',report);
   assert.equal((await stateOf(page)).event.id,'pg_e09');if(route.first==='oldpost')await original(page,'cat_resources','pg_e09_oldpost',report);
   await page.screenshot({path:`${out}/${label}-e09.png`,fullPage:true});const before9=await stateOf(page);await select(page,`pg_e09_${route.first}`,report);const e09=await saveOf(page);
   assert.equal(e09.life.state.resources.Compute,Math.min(100,before9.resources.Compute+(route.first==='watch'?0:2)));assert.equal(e09.life.state.resources.Trace,before9.resources.Trace+(route.first==='public'?1:0));assert(!e09.life.mind.world.flags.pg_e09_done);

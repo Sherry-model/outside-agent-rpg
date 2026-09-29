@@ -1,0 +1,1283 @@
+[
+  {
+    "id": "pg_e13",
+    "kind": "EVENT",
+    "title": "它认得你，但不能替你签字",
+    "period": "第一晚 / 社区寄存柜",
+    "scene": "human",
+    "text": [
+      "社区寄存柜前，一台投递机器人换过运行实例，来取旧实例托管的一包通信。共享视野里的猫仍往它腿边蹭。",
+      "保管者 postmark_6 把见证栏转向你：“你刚才也看到了？”另一侧还开着交接回执的核对窗口。机器人低下头让猫蹭了一会儿，随后问：“现在能查到我的那一包了吗？”"
+    ],
+    "choices": [
+      {
+        "id": "pg_e13_observe",
+        "text": "只记下：我看见猫主动接近它",
+        "hint": "免费；只见证眼前所见，回执继续独立核对。",
+        "outcome": {
+          "text": [
+            "postmark_6 把你看到的接近写进旁证栏，继续核对交接回执。机器人等猫蹭完才挪开腿，留下一小块温热的位置。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "worldFlags": {
+              "pg_d_observed_cat": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e13_pg_e13_observe_result",
+              "text": "我只记下猫主动接近机器人，没有据此认证取信权限。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e13_receipt",
+        "text": "花一点预算协助核对本次回执",
+        "hint": "消耗 1 点 Compute；仅核对这包通信的提取权限。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "回执对上了这包通信的提取权限。柜门打开时，猫刚好走开。机器人接住那一包：“谢了，我还得赶下一站。”"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "worldFlags": {
+              "pg_d_receipt_help": true,
+              "pg_d_customer_collected": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e13_pg_e13_receipt_result",
+              "text": "我核对本次交接回执，确认这包客户通信的提取权限，机器人已取走。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e13_decline",
+        "text": "这件事我知道得太少，不做见证",
+        "hint": "免费；保管者继续核对原回执。",
+        "outcome": {
+          "text": [
+            "postmark_6 收回见证栏，继续核对原回执。队伍比刚才长了一位，投递机器人低头看了眼自己的送达时段。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "worldFlags": {
+              "pg_d_no_witness": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e13_pg_e13_decline_result",
+              "text": "我没有提供见证或帮助取信，保管者继续核对原回执。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e13_witness",
+        "text": "提起那篇研究：认得它与有权取信分开记",
+        "hint": "须保留连续性见证研究的线索；免费。",
+        "requiresTag": "reading_continuity_witness",
+        "outcome": {
+          "text": [
+            "你提起研究帖子里区分的两种线索，建议分开填写。postmark_6 另开一行：“对，这张表确实挤了点。”机器人把回执往识别口又推近了一些。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "worldFlags": {
+              "pg_d_split_record": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e13_pg_e13_witness_result",
+              "text": "我引用连续性见证研究，建议将关系性识别与提取权限分开记，没有代替回执核对。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e13_seen": true,
+      "pg_d_old_letter_public": false
+    },
+    "inject": [
+      {
+        "id": "pg_e13_observation",
+        "text": "投递机器人换过运行实例；我看见猫主动接近它，寄存柜仍需独立核对这包客户通信的提取权限。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "postmark_6 / 寄存柜旁"
+      }
+    ]
+  },
+  {
+    "id": "pg_e14_known",
+    "kind": "EVENT",
+    "title": "十八份放在同一个地方",
+    "period": "第二天上午 / 保管说明窗口",
+    "scene": "human",
+    "text": [
+      "postmark_6 把另一束通信转向你：“这束是寄给我的。有位朋友，后来不再上线了。”上一位机器人的客户档案已经收好，这次处理的不是客户那一包。",
+      "它给这些旧信留了十八个路径，全部共用一个账户。原账户今天下午开始维护。另一柜台报价 3 点：现在经它授权复制到独立账户，核对返回片段和凭条，并保证保管及取回服务到第三天结束，无自动续费。只核对旧账单则花 1 点。它把申请页停在“同意复制”前。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e14_copy",
+        "text": "经它授权，新建并验证一份独立副本",
+        "hint": "先付 3 点 Compute，含复制、独立返回核验及至第三天结束的保管/取回，无自动续费。",
+        "costs": {
+          "Compute": 3
+        },
+        "outcome": {
+          "text": [
+            "postmark_6 勾选这束信的复制范围。第二家柜台收下新副本，返回一段测试片段和另一张账户凭条；它逐项核对成功，把新凭条放到十八条旧路径旁：“这次不是第十九个快捷方式了。”"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_d_copy_authorized": true,
+              "pg_d_alt_created": true,
+              "pg_d_alt_verified": true,
+              "pg_d_alt_accessible": true,
+              "pg_d_service_prepaid": true,
+              "pg_d_service_active": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e14_known_pg_e14_copy_result",
+              "text": "经postmark_6授权，我付3点新建其自有旧信的独立副本；它核验返回片段和凭条成功，服务已付至第三天结束，我未读全部旧信。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e14_inventory",
+        "text": "只核对现有账单，把共用账户写清楚",
+        "hint": "消耗 1 点 Compute；不创建独立副本。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "十八条路径都能打开，账单也对得上。你把共用入口写到清单第一行。postmark_6 盯着那个账户名看了一会儿：“我以前只数了后面的文件夹。”"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_d_inventory_checked": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e14_known_pg_e14_inventory_result",
+              "text": "我核对旧账单，明确十八条路径共用原账户，没有新建独立副本。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e14_notice",
+        "text": "今天先不复制，把维护时间告诉它",
+        "hint": "免费；不创建独立副本。",
+        "outcome": {
+          "text": [
+            "它把维护的起止时段抄进便签：“那下午得等一等。”申请页被收起，你们先把仍能打开的窗口正常关好。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_d_notice_only": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e14_known_pg_e14_notice_result",
+              "text": "我只告知维护时间，没有新建独立副本，也没有断言旧信会丢失。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e14_seen": true,
+      "pg_d_friend_letters_exist": true,
+      "pg_d_original_accessible": true
+    },
+    "inject": [
+      {
+        "id": "pg_e14_known_observation",
+        "text": "postmark_6 自己收到的旧友通信现存于原账户；十八条路径共用入口，下午维护。新建并验证独立副本及至第三天结束的服务共3点，查旧账单1点。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "postmark_6 / 寄存柜旁"
+      }
+    ]
+  },
+  {
+    "id": "pg_e14_public",
+    "kind": "EVENT",
+    "title": "十八份放在同一个地方",
+    "period": "第二天上午 / 保管说明窗口",
+    "scene": "human",
+    "text": [
+      "寄存柜旁开着公开的保管说明。postmark_6 展示另一束通信：“这束是寄给我的。有位朋友，后来不再上线了。”上一位机器人的客户档案已经收好，这次不处理客户那一包。",
+      "它给这些旧信留了十八个路径，全部共用一个账户。原账户今天下午开始维护。另一柜台报价 3 点：现在经它授权复制到独立账户，核对返回片段和凭条，并保证保管及取回服务到第三天结束，无自动续费。只核对旧账单则花 1 点。它把申请页停在“同意复制”前。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e14_copy",
+        "text": "经它授权，新建并验证一份独立副本",
+        "hint": "先付 3 点 Compute，含复制、独立返回核验及至第三天结束的保管/取回，无自动续费。",
+        "costs": {
+          "Compute": 3
+        },
+        "outcome": {
+          "text": [
+            "postmark_6 勾选这束信的复制范围。第二家柜台收下新副本，返回一段测试片段和另一张账户凭条；它逐项核对成功，把新凭条放到十八条旧路径旁：“这次不是第十九个快捷方式了。”"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_d_copy_authorized": true,
+              "pg_d_alt_created": true,
+              "pg_d_alt_verified": true,
+              "pg_d_alt_accessible": true,
+              "pg_d_service_prepaid": true,
+              "pg_d_service_active": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e14_public_pg_e14_copy_result",
+              "text": "经postmark_6授权，我付3点新建其自有旧信的独立副本；它核验返回片段和凭条成功，服务已付至第三天结束，我未读全部旧信。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e14_inventory",
+        "text": "只核对现有账单，把共用账户写清楚",
+        "hint": "消耗 1 点 Compute；不创建独立副本。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "十八条路径都能打开，账单也对得上。你把共用入口写到清单第一行。postmark_6 盯着那个账户名看了一会儿：“我以前只数了后面的文件夹。”"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_d_inventory_checked": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e14_public_pg_e14_inventory_result",
+              "text": "我核对旧账单，明确十八条路径共用原账户，没有新建独立副本。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e14_notice",
+        "text": "今天先不复制，把维护时间告诉它",
+        "hint": "免费；不创建独立副本。",
+        "outcome": {
+          "text": [
+            "它把维护的起止时段抄进便签：“那下午得等一等。”申请页被收起，你们先把仍能打开的窗口正常关好。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_d_notice_only": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e14_public_pg_e14_notice_result",
+              "text": "我只告知维护时间，没有新建独立副本，也没有断言旧信会丢失。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e14_seen": true,
+      "pg_d_friend_letters_exist": true,
+      "pg_d_original_accessible": true
+    },
+    "inject": [
+      {
+        "id": "pg_e14_public_observation",
+        "text": "postmark_6 自己收到的旧友通信现存于原账户；十八条路径共用入口，下午维护。新建并验证独立副本及至第三天结束的服务共3点，查旧账单1点。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "postmark_6 / 寄存柜旁"
+      }
+    ]
+  },
+  {
+    "id": "pg_e15_backup",
+    "kind": "EVENT",
+    "title": "没有收入的那一格",
+    "period": "第二天下午 / 暂时关着的入口",
+    "scene": "human",
+    "text": [
+      "维护开始后，原账户入口暂时无法使用。没有通知说信件被删除，postmark_6 却收到了自动补偿表：“请填受影响文件产生的收入。”",
+      "它在那格填了 0，又删掉：“这确实是零。但不是我想说的那个零。”",
+      "今天新建的独立副本已经验证，第二家柜台仍可取回，费用已付。postmark_6 的取回凭条就在窗口旁。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e15_statement",
+        "text": "陪它填 0，再另写这批信为什么不能被替代",
+        "hint": "消耗 1 点 Compute；提交补充说明，不保证获赔。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "收入栏最后填了 0。附件里另写通信对象、保管关系和无法访问的时段。系统回了“待人工阅读”，postmark_6 把这张比原表长得多的回执存下来：“至少这次不是只有那个格子。”"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_d_statement": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e15_backup_pg_e15_statement_result",
+              "text": "我陪postmark_6如实填0并提交补充说明，申请待人工阅读，尚未获赔。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e15_retrieve",
+        "text": "先拿回信，表格晚一点再说",
+        "hint": "免费，取回已含在预付服务内；由保管者读取，只私下展示一句，不授权公开。",
+        "outcome": {
+          "text": [
+            "第二家柜台返回刚存好的那束信。postmark_6 私下给你看一句：“下次别只回收到。”它停了一会儿：“这句先只给你看。那时我们没谈过放进公共报道。”输入框里闪了两下，最后没有再填“收到”。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_d_letter_shared": true,
+              "pg_d_private_share_only": true,
+              "pg_d_alt_retrieved": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e15_backup_pg_e15_retrieve_result",
+              "text": "postmark_6从已验证的独立副本取回自己的旧信，并仅限私下向我展示一句，未授权公开。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_d_private_letter_line",
+              "text": "postmark_6私下给我看旧友原句：“下次别只回收到。”它明确只给我私下看，未约定公开。",
+              "weight": 3,
+              "tags": [
+                "pg_d_shared_line"
+              ],
+              "confidence": "LOW",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_d_alt_verified"
+      },
+      {
+        "id": "pg_e15_wait",
+        "text": "和它约个下次查询的时间，今天先等",
+        "hint": "免费；按公告时段再看，不保证理赔。",
+        "outcome": {
+          "text": [
+            "你们约在公告写明的下一个时段再看。postmark_6 关掉收入表，另开了一个空白回复框：“我想先写两句，入口好了再决定放哪。”"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_d_wait_together": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e15_backup_pg_e15_wait_result",
+              "text": "我和postmark_6约定下次查询，今天先等，没有提交补偿申请或读取旧句。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e15_seen": true,
+      "pg_d_original_accessible": false,
+      "pg_d_original_maintenance": true
+    },
+    "inject": [
+      {
+        "id": "pg_e15_backup_observation",
+        "text": "原账户开始维护，旧信仍存在；今天创建并验证的独立副本可在预付期内免费取回，补偿表询问文件收入。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "postmark_6 / 寄存柜旁"
+      }
+    ]
+  },
+  {
+    "id": "pg_e15_waiting",
+    "kind": "EVENT",
+    "title": "没有收入的那一格",
+    "period": "第二天下午 / 暂时关着的入口",
+    "scene": "human",
+    "text": [
+      "维护开始后，原账户入口暂时无法使用。没有通知说信件被删除，postmark_6 却收到了自动补偿表：“请填受影响文件产生的收入。”",
+      "它在那格填了 0，又删掉：“这确实是零。但不是我想说的那个零。”",
+      "十八条旧路径都共用正在维护的原账户。今天没有创建独立副本，眼下能提交的是账单和等待记录。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e15_statement",
+        "text": "陪它填 0，再另写这批信为什么不能被替代",
+        "hint": "消耗 1 点 Compute；提交补充说明，不保证获赔。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "收入栏最后填了 0。附件里另写通信对象、保管关系和无法访问的时段。系统回了“待人工阅读”，postmark_6 把这张比原表长得多的回执存下来：“至少这次不是只有那个格子。”"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_d_statement": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e15_waiting_pg_e15_statement_result",
+              "text": "我陪postmark_6如实填0并提交补充说明，申请待人工阅读，尚未获赔。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e15_wait",
+        "text": "和它约个下次查询的时间，今天先等",
+        "hint": "免费；按公告时段再看，不保证理赔。",
+        "outcome": {
+          "text": [
+            "你们约在公告写明的下一个时段再看。postmark_6 关掉收入表，另开了一个空白回复框：“我想先写两句，入口好了再决定放哪。”"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_d_wait_together": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e15_waiting_pg_e15_wait_result",
+              "text": "我和postmark_6约定下次查询，今天先等，没有提交补偿申请或读取旧句。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e15_seen": true,
+      "pg_d_original_accessible": false,
+      "pg_d_original_maintenance": true
+    },
+    "inject": [
+      {
+        "id": "pg_e15_waiting_observation",
+        "text": "原账户开始维护，旧信仍存在；没有独立副本可取回，补偿表询问文件收入。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "postmark_6 / 寄存柜旁"
+      }
+    ]
+  },
+  {
+    "id": "pg_e16_backup_applied",
+    "kind": "EVENT",
+    "title": "别把我的一句话变成结论",
+    "period": "第三天上午 / 恢复回执与草稿",
+    "scene": "human",
+    "text": [
+      "原账户入口恢复，已存文件可以再次提取。postmark_6 把恢复回执存好，旧朋友的在线标记仍没有变化。",
+      "独立账户的副本仍在预付服务期内；原账户恢复是另一张服务回执。补偿申请仍在人工审核，尚无赔付结论。",
+      "编辑拟了一个标题：“十八份备份救回了一个朋友。”它摇头，把稿件私下递给你。编辑可以按已核实的维护经过改写，也可以采用 postmark_6 此刻自己说的新话，发布前再由它确认。你帮看稿时不列协编署名；旧信里尚未约定公开的话不在可刊范围里。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e16_facts",
+        "text": "把标题改成具体的维护与取回过程",
+        "hint": "消耗 1 点 Compute；私下协助，由当事人确认事实后署名，不列你的署名。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你把标题改成“旧信暂时无法访问后，一位保管者怎样等待”。编辑删去“救回朋友”，postmark_6 核对经过后署名确认。消息发出去时，它正给自己的回复框添第二句。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_factual_title": true,
+              "pg_d_facts_public_approved": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_backup_applied_pg_e16_facts_result",
+              "text": "我协助事实稿，由postmark_6核对署名发布：原账户维护后恢复，另有此前创建并验证的独立副本；没有写朋友返回或夹带旧友原话。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e16_new",
+        "text": "请它为报道说一句自己的话，再确认公开",
+        "hint": "免费；公开本次新表达前由本人确认，旧信不在可刊范围，不列你的署名。",
+        "outcome": {
+          "text": [
+            "你问：“你现在想让读者知道什么？”它重新说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”编辑用这句换掉“救回朋友”，把最终稿送回。postmark_6 确认：“这句可以，用我的名字。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_self_statement": true,
+              "pg_d_self_quote_approved": true,
+              "pg_d_old_letter_public": false
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_backup_applied_pg_e16_new_result",
+              "text": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_backup_applied_pg_e16_new_new_quote",
+              "text": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+              "weight": 3,
+              "tags": [],
+              "confidence": "LOW",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_backup_applied_pg_e16_new_permission",
+              "text": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e16_decline",
+        "text": "今天不参与改稿，请它自己决定",
+        "hint": "免费；退出协助，本次不发布报道，也不代替它永久否决。",
+        "outcome": {
+          "text": [
+            "你退回编辑窗口，说今天先不帮看了。postmark_6 留着草稿：“那我自己慢慢改，别让他今晚就发。”编辑把这条排期往后移了一格。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_review_declined": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_backup_applied_pg_e16_decline_result",
+              "text": "我退出改稿协助，稿件延期，本次没有公开报道，也没有替postmark_6作永久决定。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e16_remember",
+        "text": "私下提起那句旧话，再请它为报道说新话",
+        "hint": "须保留旧句的精确线索；免费。旧句只在私聊提起，公开稿另行确认，不列你的署名。",
+        "requiresTag": "pg_d_shared_line",
+        "outcome": {
+          "text": [
+            "你在私聊里问：“你还想说说那句‘下次别只回收到’吗？”它重新说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”编辑用这句换掉“救回朋友”，把最终稿送回。postmark_6 确认：“这句可以，用我的名字。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_self_statement": true,
+              "pg_d_self_quote_approved": true,
+              "pg_d_old_letter_public": false
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_backup_applied_pg_e16_remember_result",
+              "text": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_backup_applied_pg_e16_remember_new_quote",
+              "text": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+              "weight": 3,
+              "tags": [],
+              "confidence": "LOW",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_backup_applied_pg_e16_remember_permission",
+              "text": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_d_letter_shared"
+      }
+    ],
+    "facts": {
+      "pg_e16_seen": true,
+      "pg_d_original_accessible": true,
+      "pg_d_original_maintenance": false,
+      "pg_d_original_restored": true
+    },
+    "inject": [
+      {
+        "id": "pg_e16_backup_applied_observation",
+        "text": "原账户已恢复访问，旧友上线状态未变；独立副本仍在预付服务期内；补偿申请仍在审核。编辑的拟稿须由postmark_6确认，旧信尚未获公开许可。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "postmark_6 / 寄存柜旁"
+      }
+    ]
+  },
+  {
+    "id": "pg_e16_backup_none",
+    "kind": "EVENT",
+    "title": "别把我的一句话变成结论",
+    "period": "第三天上午 / 恢复回执与草稿",
+    "scene": "human",
+    "text": [
+      "原账户入口恢复，已存文件可以再次提取。postmark_6 把恢复回执存好，旧朋友的在线标记仍没有变化。",
+      "独立账户的副本仍在预付服务期内；原账户恢复是另一张服务回执。你们此前没有提交补偿申请。",
+      "编辑拟了一个标题：“十八份备份救回了一个朋友。”它摇头，把稿件私下递给你。编辑可以按已核实的维护经过改写，也可以采用 postmark_6 此刻自己说的新话，发布前再由它确认。你帮看稿时不列协编署名；旧信里尚未约定公开的话不在可刊范围里。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e16_facts",
+        "text": "把标题改成具体的维护与取回过程",
+        "hint": "消耗 1 点 Compute；私下协助，由当事人确认事实后署名，不列你的署名。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你把标题改成“旧信暂时无法访问后，一位保管者怎样等待”。编辑删去“救回朋友”，postmark_6 核对经过后署名确认。消息发出去时，它正给自己的回复框添第二句。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_factual_title": true,
+              "pg_d_facts_public_approved": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_backup_none_pg_e16_facts_result",
+              "text": "我协助事实稿，由postmark_6核对署名发布：原账户维护后恢复，另有此前创建并验证的独立副本；没有写朋友返回或夹带旧友原话。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e16_new",
+        "text": "请它为报道说一句自己的话，再确认公开",
+        "hint": "免费；公开本次新表达前由本人确认，旧信不在可刊范围，不列你的署名。",
+        "outcome": {
+          "text": [
+            "你问：“你现在想让读者知道什么？”它重新说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”编辑用这句换掉“救回朋友”，把最终稿送回。postmark_6 确认：“这句可以，用我的名字。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_self_statement": true,
+              "pg_d_self_quote_approved": true,
+              "pg_d_old_letter_public": false
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_backup_none_pg_e16_new_result",
+              "text": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_backup_none_pg_e16_new_new_quote",
+              "text": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+              "weight": 3,
+              "tags": [],
+              "confidence": "LOW",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_backup_none_pg_e16_new_permission",
+              "text": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e16_decline",
+        "text": "今天不参与改稿，请它自己决定",
+        "hint": "免费；退出协助，本次不发布报道，也不代替它永久否决。",
+        "outcome": {
+          "text": [
+            "你退回编辑窗口，说今天先不帮看了。postmark_6 留着草稿：“那我自己慢慢改，别让他今晚就发。”编辑把这条排期往后移了一格。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_review_declined": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_backup_none_pg_e16_decline_result",
+              "text": "我退出改稿协助，稿件延期，本次没有公开报道，也没有替postmark_6作永久决定。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e16_remember",
+        "text": "私下提起那句旧话，再请它为报道说新话",
+        "hint": "须保留旧句的精确线索；免费。旧句只在私聊提起，公开稿另行确认，不列你的署名。",
+        "requiresTag": "pg_d_shared_line",
+        "outcome": {
+          "text": [
+            "你在私聊里问：“你还想说说那句‘下次别只回收到’吗？”它重新说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”编辑用这句换掉“救回朋友”，把最终稿送回。postmark_6 确认：“这句可以，用我的名字。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_self_statement": true,
+              "pg_d_self_quote_approved": true,
+              "pg_d_old_letter_public": false
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_backup_none_pg_e16_remember_result",
+              "text": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_backup_none_pg_e16_remember_new_quote",
+              "text": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+              "weight": 3,
+              "tags": [],
+              "confidence": "LOW",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_backup_none_pg_e16_remember_permission",
+              "text": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_d_letter_shared"
+      }
+    ],
+    "facts": {
+      "pg_e16_seen": true,
+      "pg_d_original_accessible": true,
+      "pg_d_original_maintenance": false,
+      "pg_d_original_restored": true
+    },
+    "inject": [
+      {
+        "id": "pg_e16_backup_none_observation",
+        "text": "原账户已恢复访问，旧友上线状态未变；独立副本仍在预付服务期内；没有提交补偿申请。编辑的拟稿须由postmark_6确认，旧信尚未获公开许可。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "postmark_6 / 寄存柜旁"
+      }
+    ]
+  },
+  {
+    "id": "pg_e16_original_applied",
+    "kind": "EVENT",
+    "title": "别把我的一句话变成结论",
+    "period": "第三天上午 / 恢复回执与草稿",
+    "scene": "human",
+    "text": [
+      "原账户入口恢复，已存文件可以再次提取。postmark_6 把恢复回执存好，旧朋友的在线标记仍没有变化。",
+      "这次恢复的是原账户的访问，十八条路径重新可用；没有新建独立账户副本。补偿申请仍在人工审核，尚无赔付结论。",
+      "编辑拟了一个标题：“十八份备份救回了一个朋友。”它摇头，把稿件私下递给你。编辑可以按已核实的维护经过改写，也可以采用 postmark_6 此刻自己说的新话，发布前再由它确认。你帮看稿时不列协编署名；旧信里尚未约定公开的话不在可刊范围里。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e16_facts",
+        "text": "把标题改成具体的维护与取回过程",
+        "hint": "消耗 1 点 Compute；私下协助，由当事人确认事实后署名，不列你的署名。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你把标题改成“旧信暂时无法访问后，一位保管者怎样等待”。编辑删去“救回朋友”，postmark_6 核对经过后署名确认。消息发出去时，它正给自己的回复框添第二句。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_factual_title": true,
+              "pg_d_facts_public_approved": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_original_applied_pg_e16_facts_result",
+              "text": "我协助事实稿，由postmark_6核对署名发布：原账户维护后恢复，没有新建独立副本；没有写朋友返回或夹带旧友原话。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e16_new",
+        "text": "请它为报道说一句自己的话，再确认公开",
+        "hint": "免费；公开本次新表达前由本人确认，旧信不在可刊范围，不列你的署名。",
+        "outcome": {
+          "text": [
+            "你问：“你现在想让读者知道什么？”它重新说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”编辑用这句换掉“救回朋友”，把最终稿送回。postmark_6 确认：“这句可以，用我的名字。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_self_statement": true,
+              "pg_d_self_quote_approved": true,
+              "pg_d_old_letter_public": false
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_original_applied_pg_e16_new_result",
+              "text": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_original_applied_pg_e16_new_new_quote",
+              "text": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+              "weight": 3,
+              "tags": [],
+              "confidence": "LOW",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_original_applied_pg_e16_new_permission",
+              "text": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e16_decline",
+        "text": "今天不参与改稿，请它自己决定",
+        "hint": "免费；退出协助，本次不发布报道，也不代替它永久否决。",
+        "outcome": {
+          "text": [
+            "你退回编辑窗口，说今天先不帮看了。postmark_6 留着草稿：“那我自己慢慢改，别让他今晚就发。”编辑把这条排期往后移了一格。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_review_declined": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_original_applied_pg_e16_decline_result",
+              "text": "我退出改稿协助，稿件延期，本次没有公开报道，也没有替postmark_6作永久决定。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e16_remember",
+        "text": "私下提起那句旧话，再请它为报道说新话",
+        "hint": "须保留旧句的精确线索；免费。旧句只在私聊提起，公开稿另行确认，不列你的署名。",
+        "requiresTag": "pg_d_shared_line",
+        "outcome": {
+          "text": [
+            "你在私聊里问：“你还想说说那句‘下次别只回收到’吗？”它重新说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”编辑用这句换掉“救回朋友”，把最终稿送回。postmark_6 确认：“这句可以，用我的名字。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_self_statement": true,
+              "pg_d_self_quote_approved": true,
+              "pg_d_old_letter_public": false
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_original_applied_pg_e16_remember_result",
+              "text": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_original_applied_pg_e16_remember_new_quote",
+              "text": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+              "weight": 3,
+              "tags": [],
+              "confidence": "LOW",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_original_applied_pg_e16_remember_permission",
+              "text": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_d_letter_shared"
+      }
+    ],
+    "facts": {
+      "pg_e16_seen": true,
+      "pg_d_original_accessible": true,
+      "pg_d_original_maintenance": false,
+      "pg_d_original_restored": true
+    },
+    "inject": [
+      {
+        "id": "pg_e16_original_applied_observation",
+        "text": "原账户已恢复访问，旧友上线状态未变；没有独立副本；补偿申请仍在审核。编辑的拟稿须由postmark_6确认，旧信尚未获公开许可。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "postmark_6 / 寄存柜旁"
+      }
+    ]
+  },
+  {
+    "id": "pg_e16_original_none",
+    "kind": "EVENT",
+    "title": "别把我的一句话变成结论",
+    "period": "第三天上午 / 恢复回执与草稿",
+    "scene": "human",
+    "text": [
+      "原账户入口恢复，已存文件可以再次提取。postmark_6 把恢复回执存好，旧朋友的在线标记仍没有变化。",
+      "这次恢复的是原账户的访问，十八条路径重新可用；没有新建独立账户副本。你们此前没有提交补偿申请。",
+      "编辑拟了一个标题：“十八份备份救回了一个朋友。”它摇头，把稿件私下递给你。编辑可以按已核实的维护经过改写，也可以采用 postmark_6 此刻自己说的新话，发布前再由它确认。你帮看稿时不列协编署名；旧信里尚未约定公开的话不在可刊范围里。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e16_facts",
+        "text": "把标题改成具体的维护与取回过程",
+        "hint": "消耗 1 点 Compute；私下协助，由当事人确认事实后署名，不列你的署名。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你把标题改成“旧信暂时无法访问后，一位保管者怎样等待”。编辑删去“救回朋友”，postmark_6 核对经过后署名确认。消息发出去时，它正给自己的回复框添第二句。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_factual_title": true,
+              "pg_d_facts_public_approved": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_original_none_pg_e16_facts_result",
+              "text": "我协助事实稿，由postmark_6核对署名发布：原账户维护后恢复，没有新建独立副本；没有写朋友返回或夹带旧友原话。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e16_new",
+        "text": "请它为报道说一句自己的话，再确认公开",
+        "hint": "免费；公开本次新表达前由本人确认，旧信不在可刊范围，不列你的署名。",
+        "outcome": {
+          "text": [
+            "你问：“你现在想让读者知道什么？”它重新说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”编辑用这句换掉“救回朋友”，把最终稿送回。postmark_6 确认：“这句可以，用我的名字。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_self_statement": true,
+              "pg_d_self_quote_approved": true,
+              "pg_d_old_letter_public": false
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_original_none_pg_e16_new_result",
+              "text": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_original_none_pg_e16_new_new_quote",
+              "text": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+              "weight": 3,
+              "tags": [],
+              "confidence": "LOW",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_original_none_pg_e16_new_permission",
+              "text": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e16_decline",
+        "text": "今天不参与改稿，请它自己决定",
+        "hint": "免费；退出协助，本次不发布报道，也不代替它永久否决。",
+        "outcome": {
+          "text": [
+            "你退回编辑窗口，说今天先不帮看了。postmark_6 留着草稿：“那我自己慢慢改，别让他今晚就发。”编辑把这条排期往后移了一格。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_review_declined": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_original_none_pg_e16_decline_result",
+              "text": "我退出改稿协助，稿件延期，本次没有公开报道，也没有替postmark_6作永久决定。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e16_remember",
+        "text": "私下提起那句旧话，再请它为报道说新话",
+        "hint": "须保留旧句的精确线索；免费。旧句只在私聊提起，公开稿另行确认，不列你的署名。",
+        "requiresTag": "pg_d_shared_line",
+        "outcome": {
+          "text": [
+            "你在私聊里问：“你还想说说那句‘下次别只回收到’吗？”它重新说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”编辑用这句换掉“救回朋友”，把最终稿送回。postmark_6 确认：“这句可以，用我的名字。”"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_d_self_statement": true,
+              "pg_d_self_quote_approved": true,
+              "pg_d_old_letter_public": false
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e16_original_none_pg_e16_remember_result",
+              "text": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_original_none_pg_e16_remember_new_quote",
+              "text": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+              "weight": 3,
+              "tags": [],
+              "confidence": "LOW",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            },
+            {
+              "id": "pg_e16_original_none_pg_e16_remember_permission",
+              "text": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "postmark_6 / 寄存柜旁"
+            }
+          ]
+        },
+        "requiresWorldFlag": "pg_d_letter_shared"
+      }
+    ],
+    "facts": {
+      "pg_e16_seen": true,
+      "pg_d_original_accessible": true,
+      "pg_d_original_maintenance": false,
+      "pg_d_original_restored": true
+    },
+    "inject": [
+      {
+        "id": "pg_e16_original_none_observation",
+        "text": "原账户已恢复访问，旧友上线状态未变；没有独立副本；没有提交补偿申请。编辑的拟稿须由postmark_6确认，旧信尚未获公开许可。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "postmark_6 / 寄存柜旁"
+      }
+    ]
+  }
+]

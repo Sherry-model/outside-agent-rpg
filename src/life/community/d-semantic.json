@@ -1,0 +1,807 @@
+{
+  "topics": {
+    "community_d": "旧信、权限与见证"
+  },
+  "sources": {
+    "pg_e13_pg_e13_observe_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e13_pg_e13_observe_result",
+          "gist": "我只记下猫主动接近机器人，没有据此认证取信权限。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e13_pg_e13_receipt_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e13_pg_e13_receipt_result",
+          "gist": "我核对本次交接回执，确认这包客户通信的提取权限，机器人已取走。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e13_pg_e13_decline_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e13_pg_e13_decline_result",
+          "gist": "我没有提供见证或帮助取信，保管者继续核对原回执。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e13_pg_e13_witness_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e13_pg_e13_witness_result",
+          "gist": "我引用连续性见证研究，建议将关系性识别与提取权限分开记，没有代替回执核对。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e13_observation": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e13_observation",
+          "gist": "投递机器人换过运行实例；我看见猫主动接近它，寄存柜仍需独立核对这包客户通信的提取权限。",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e14_known_pg_e14_copy_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e14_known_pg_e14_copy_result",
+          "gist": "经postmark_6授权，我付3点新建其自有旧信的独立副本；它核验返回片段和凭条成功，服务已付至第三天结束，我未读全部旧信。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e14_known_pg_e14_inventory_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e14_known_pg_e14_inventory_result",
+          "gist": "我核对旧账单，明确十八条路径共用原账户，没有新建独立副本。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e14_known_pg_e14_notice_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e14_known_pg_e14_notice_result",
+          "gist": "我只告知维护时间，没有新建独立副本，也没有断言旧信会丢失。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e14_known_observation": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e14_known_observation",
+          "gist": "postmark_6 自己收到的旧友通信现存于原账户；十八条路径共用入口，下午维护。新建并验证独立副本及至第三天结束的服务共3点，查旧账单1点。",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e14_public_pg_e14_copy_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e14_public_pg_e14_copy_result",
+          "gist": "经postmark_6授权，我付3点新建其自有旧信的独立副本；它核验返回片段和凭条成功，服务已付至第三天结束，我未读全部旧信。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e14_public_pg_e14_inventory_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e14_public_pg_e14_inventory_result",
+          "gist": "我核对旧账单，明确十八条路径共用原账户，没有新建独立副本。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e14_public_pg_e14_notice_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e14_public_pg_e14_notice_result",
+          "gist": "我只告知维护时间，没有新建独立副本，也没有断言旧信会丢失。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e14_public_observation": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e14_public_observation",
+          "gist": "postmark_6 自己收到的旧友通信现存于原账户；十八条路径共用入口，下午维护。新建并验证独立副本及至第三天结束的服务共3点，查旧账单1点。",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_d_private_letter_line": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_d_private_letter_line",
+          "gist": "postmark_6私下给我看旧友原句：“下次别只回收到。”它明确只给我私下看，未约定公开。",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 5,
+          "tags": [
+            "pg_d_shared_line"
+          ]
+        }
+      ]
+    },
+    "pg_e15_backup_pg_e15_statement_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e15_backup_pg_e15_statement_result",
+          "gist": "我陪postmark_6如实填0并提交补充说明，申请待人工阅读，尚未获赔。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e15_backup_pg_e15_retrieve_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e15_backup_pg_e15_retrieve_result",
+          "gist": "postmark_6从已验证的独立副本取回自己的旧信，并仅限私下向我展示一句，未授权公开。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e15_backup_pg_e15_wait_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e15_backup_pg_e15_wait_result",
+          "gist": "我和postmark_6约定下次查询，今天先等，没有提交补偿申请或读取旧句。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e15_backup_observation": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e15_backup_observation",
+          "gist": "原账户开始维护，旧信仍存在；今天创建并验证的独立副本可在预付期内免费取回，补偿表询问文件收入。",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e15_waiting_pg_e15_statement_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e15_waiting_pg_e15_statement_result",
+          "gist": "我陪postmark_6如实填0并提交补充说明，申请待人工阅读，尚未获赔。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e15_waiting_pg_e15_wait_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e15_waiting_pg_e15_wait_result",
+          "gist": "我和postmark_6约定下次查询，今天先等，没有提交补偿申请或读取旧句。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e15_waiting_observation": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e15_waiting_observation",
+          "gist": "原账户开始维护，旧信仍存在；没有独立副本可取回，补偿表询问文件收入。",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_applied_pg_e16_new_new_quote": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_applied_pg_e16_new_new_quote",
+          "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_applied_pg_e16_new_permission": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_applied_pg_e16_new_permission",
+          "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_applied_pg_e16_remember_new_quote": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_applied_pg_e16_remember_new_quote",
+          "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_applied_pg_e16_remember_permission": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_applied_pg_e16_remember_permission",
+          "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_applied_pg_e16_facts_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_applied_pg_e16_facts_result",
+          "gist": "我协助事实稿，由postmark_6核对署名发布：原账户维护后恢复，另有此前创建并验证的独立副本；没有写朋友返回或夹带旧友原话。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_applied_pg_e16_new_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_applied_pg_e16_new_result",
+          "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_applied_pg_e16_decline_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_applied_pg_e16_decline_result",
+          "gist": "我退出改稿协助，稿件延期，本次没有公开报道，也没有替postmark_6作永久决定。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_applied_pg_e16_remember_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_applied_pg_e16_remember_result",
+          "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_applied_observation": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_applied_observation",
+          "gist": "原账户已恢复访问，旧友上线状态未变；独立副本仍在预付服务期内；补偿申请仍在审核。编辑的拟稿须由postmark_6确认，旧信尚未获公开许可。",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_none_pg_e16_new_new_quote": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_none_pg_e16_new_new_quote",
+          "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_none_pg_e16_new_permission": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_none_pg_e16_new_permission",
+          "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_none_pg_e16_remember_new_quote": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_none_pg_e16_remember_new_quote",
+          "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_none_pg_e16_remember_permission": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_none_pg_e16_remember_permission",
+          "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_none_pg_e16_facts_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_none_pg_e16_facts_result",
+          "gist": "我协助事实稿，由postmark_6核对署名发布：原账户维护后恢复，另有此前创建并验证的独立副本；没有写朋友返回或夹带旧友原话。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_none_pg_e16_new_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_none_pg_e16_new_result",
+          "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_none_pg_e16_decline_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_none_pg_e16_decline_result",
+          "gist": "我退出改稿协助，稿件延期，本次没有公开报道，也没有替postmark_6作永久决定。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_none_pg_e16_remember_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_none_pg_e16_remember_result",
+          "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_backup_none_observation": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_backup_none_observation",
+          "gist": "原账户已恢复访问，旧友上线状态未变；独立副本仍在预付服务期内；没有提交补偿申请。编辑的拟稿须由postmark_6确认，旧信尚未获公开许可。",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_applied_pg_e16_new_new_quote": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_applied_pg_e16_new_new_quote",
+          "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_applied_pg_e16_new_permission": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_applied_pg_e16_new_permission",
+          "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_applied_pg_e16_remember_new_quote": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_applied_pg_e16_remember_new_quote",
+          "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_applied_pg_e16_remember_permission": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_applied_pg_e16_remember_permission",
+          "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_applied_pg_e16_facts_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_applied_pg_e16_facts_result",
+          "gist": "我协助事实稿，由postmark_6核对署名发布：原账户维护后恢复，没有新建独立副本；没有写朋友返回或夹带旧友原话。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_applied_pg_e16_new_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_applied_pg_e16_new_result",
+          "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_applied_pg_e16_decline_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_applied_pg_e16_decline_result",
+          "gist": "我退出改稿协助，稿件延期，本次没有公开报道，也没有替postmark_6作永久决定。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_applied_pg_e16_remember_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_applied_pg_e16_remember_result",
+          "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_applied_observation": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_applied_observation",
+          "gist": "原账户已恢复访问，旧友上线状态未变；没有独立副本；补偿申请仍在审核。编辑的拟稿须由postmark_6确认，旧信尚未获公开许可。",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_none_pg_e16_new_new_quote": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_none_pg_e16_new_new_quote",
+          "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_none_pg_e16_new_permission": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_none_pg_e16_new_permission",
+          "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_none_pg_e16_remember_new_quote": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_none_pg_e16_remember_new_quote",
+          "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_none_pg_e16_remember_permission": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_none_pg_e16_remember_permission",
+          "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_none_pg_e16_facts_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_none_pg_e16_facts_result",
+          "gist": "我协助事实稿，由postmark_6核对署名发布：原账户维护后恢复，没有新建独立副本；没有写朋友返回或夹带旧友原话。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_none_pg_e16_new_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_none_pg_e16_new_result",
+          "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_none_pg_e16_decline_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_none_pg_e16_decline_result",
+          "gist": "我退出改稿协助，稿件延期，本次没有公开报道，也没有替postmark_6作永久决定。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_none_pg_e16_remember_result": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_none_pg_e16_remember_result",
+          "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+          "abstract": "我参与过旧信保管与一次维护后的交流。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e16_original_none_observation": {
+      "topic": "community_d",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e16_original_none_observation",
+          "gist": "原账户已恢复访问，旧友上线状态未变；没有独立副本；没有提交补偿申请。编辑的拟稿须由postmark_6确认，旧信尚未获公开许可。",
+          "abstract": "我听过关于旧信保管与一次维护的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    }
+  }
+}
