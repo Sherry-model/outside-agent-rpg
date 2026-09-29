@@ -12,7 +12,7 @@ import { directory } from './cognition/semantic';
 import { hasCommunity, type Life, type LifeSave, type LifeCommand } from './life/types';
 import { meter, contextView, memoryView, resolutionView } from './life/ui';
 import { readerView } from './life/reader-ui';
-import { library, entriesInSection } from './life/reading';
+import { library, entriesInSection, readingEntries, readingCatalog } from './life/reading';
 import { pending as mindPending, weight, loadPercent } from './cognition/engine';
 import { mount } from './cognition/ui';
 import { drawScene } from './ui/scene';
@@ -37,7 +37,7 @@ let bookmarks: Record<string,number> = {};
 try {
   largeReading = localStorage.getItem('outside.reader.large') === 'true';
   const stored:unknown=JSON.parse(localStorage.getItem('outside.reader.bookmarks') ?? '{}');
-  if(stored && typeof stored==='object' && !Array.isArray(stored)) for(const entry of library.entries) {
+  if(stored && typeof stored==='object' && !Array.isArray(stored)) for(const entry of readingCatalog) {
     const value=(stored as Record<string,unknown>)[entry.id];
     if(typeof value==='number' && Number.isInteger(value) && value>=0 && value<entry.posts.length) bookmarks[entry.id]=value;
   }
@@ -277,8 +277,8 @@ function restore(save: LifeSave) {
   protectAutoSave=false; investment=0; change(save.life);
 }
 function readingSnapshot() {
-  const entryId=hasCommunity(life.contentVersion)&&!life.mind.instance.context.items.some(i=>i.sourceId===selectedReading)?null:selectedReading;
-  return {section:readingSection,visibleEntryIds:entriesInSection(readingSection).map(e=>e.id),entryId,largeText:largeReading,bookmark:entryId?bookmarks[entryId]??null:null,available:readingAvailable(life)};
+  const entryId=!readingEntries(life).some(e=>e.id===selectedReading)?null:hasCommunity(life.contentVersion)&&!life.mind.instance.context.items.some(i=>i.sourceId===selectedReading)?null:selectedReading;
+  return {section:readingSection,visibleEntryIds:entriesInSection(readingSection,life).map(e=>e.id),entryId,largeText:largeReading,bookmark:entryId?bookmarks[entryId]??null:null,available:readingAvailable(life)};
 }
 function chapterReaderAction(target:HTMLElement) {
   if(target.dataset.readingSection) {
@@ -286,7 +286,7 @@ function chapterReaderAction(target:HTMLElement) {
     if(section==='all'||library.sections.some(s=>s.id===section)){readingSection=section;selectedReading=null;}
   } else if(target.dataset.reading) {
     const entryId=target.dataset.reading;
-    if(!library.entries.some(e=>e.id===entryId))throw new Error('找不到这篇转发。');
+    if(!readingEntries(life).some(e=>e.id===entryId))throw new Error('找不到这篇转发。');
     if(!life.mind.instance.context.items.some(i=>i.sourceId===entryId)) {
       life=step(story,life,{type:'read',entryId});state=life.state;persist();
     }

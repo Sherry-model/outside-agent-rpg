@@ -5,7 +5,7 @@ import type { NoteTemplate } from '../cognition/types';
 import type { JourneySave } from '../persistence/journey';
 import { contentFor, routedContent, configFor, parseLifeContent } from './content';
 import { hasCommunity, type Life, type LifeCommand } from './types';
-import { library } from './reading';
+import { library,readingEntries } from './reading';
 
 export const episodeActive = (life:Life) => life.chapter==='active' || life.interlude==='active';
 export const totalTurn = (life: Life) => life.state.turn + life.mind.instance.turn + (life.baseline?.chapter?.state.instance.turn ?? 0);
@@ -37,7 +37,7 @@ function toMain(life: Life) {
   life.state.resources = {...life.mind.instance.resources}; life.state.rngState = life.mind.rngState;
   for (const key of PERSONALITY_KEYS) life.state.personality[key] = Math.round((life.mind.instance.hidden[key]-50)/5);
 }
-export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.7.1'): Life {
+export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.8.0'): Life {
   parseLifeContent(configFor(version),story);
   if (baseline?.chapter?.status === 'active') throw new Error('这是旧版进行中的午后，请用 versions/OUTSIDE-journey-content-0.2.2.html 继续；本文件未被覆盖。');
   const state = baseline ? structuredClone(baseline.state) : createGame(story,seed);
@@ -59,7 +59,7 @@ export function step(story: Story, before: Life, command: LifeCommand): Life {
     life.mind = reduce(routedContent(life.contentVersion,life.mind),life.mind,command.command);
     toMain(life);
   } else if (command.type === 'read') {
-    const entry = library.entries.find(e=>e.id===command.entryId);
+    const entry = readingEntries(life).find(e=>e.id===command.entryId);
     if (!entry || !readingAvailable(life) || (episodeActive(life)&&!daysReading(life)) || (episodeActive(life)?life.mind.instance.phase:life.state.phase)!=='event' || pending(life.mind)) throw new Error('现在不能打开新的转发。');
     if (before.mind.instance.context.items.some(i=>i.sourceId===entry.id)) throw new Error('这条内容仍在上下文中，可以直接重看。');
     if (loadPercent(life.mind)>=100) throw new Error('上下文已满，请先整理。');

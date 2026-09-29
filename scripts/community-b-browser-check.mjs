@@ -40,7 +40,7 @@ try{
   await page.waitForFunction(()=>JSON.parse(window.render_game_to_text()).event.id==='unknown_defense');
   await page.click('[data-choice="record_and_leave"]');await page.click('[data-action="continue"]');
   for(const id of ['echo_greeting','job_accept'])await act(page,id,report);
-  assert.equal((await stateOf(page)).event.id,'community_entry');assert.equal(await page.locator('[data-pilot-choice]').count(),3);
+  assert.equal((await stateOf(page)).event.id,'community_entry');assert.equal(await page.locator('[data-pilot-choice]').count(),4);
   await page.screenshot({path:`${out}/${label}-entry.png`,fullPage:true});await act(page,'community_b',report);
   assert.equal((await stateOf(page)).event.id,'pg_e05');assert(!(await saveOf(page)).life.mind.world.flags.community_a);
   if(route.first==='hardhat'){

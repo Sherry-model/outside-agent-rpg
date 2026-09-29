@@ -1,0 +1,567 @@
+{
+  "topics": {
+    "community_c": "工时、截页与新关系"
+  },
+  "sources": {
+    "pg_e09_pg_e09_public_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e09_pg_e09_public_result",
+          "gist": "我改好排班并署名公开提交工时分类，收到3点报酬。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e09_pg_e09_private_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e09_pg_e09_private_result",
+          "gist": "我修改排班并只写交班单，收到3点报酬，没有公开工时分类。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e09_pg_e09_watch_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e09_pg_e09_watch_result",
+          "gist": "我没有接排班，Mara 自己调整顺序，等待记录仍在机器人本地。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e09_pg_e09_oldpost_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e09_pg_e09_oldpost_result",
+          "gist": "我提起猫与资源旧帖，私下分享链接并完成排班，收到3点报酬。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e09_observation": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e09_observation",
+          "gist": "Mara 授权我查看共享视野并修改排班，成本1、报酬3；机器人希望十七分钟等待进入公共工时。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e10_self_pg_e10_explain_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e10_self_pg_e10_explain_result",
+          "gist": "我署名解释自己的工时记录，附上排班和原帖。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e10_self_pg_e10_label_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e10_self_pg_e10_label_result",
+          "gist": "我私信请求节选标记，转发者修改现存标题；旧截页仍在流传。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e10_self_pg_e10_mute_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e10_self_pg_e10_mute_result",
+          "gist": "我没有回应工时争论，只静音讨论，工作通道仍开着。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e10_self_pg_e10_oldpost_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e10_self_pg_e10_oldpost_result",
+          "gist": "我私下引用猫与资源后续帖，请转发者标明节选；现存标题已改，旧图仍在。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e10_self_observation": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e10_self_observation",
+          "gist": "我署名提交的工时页被截去排班背景；当前原帖仍有十七分钟等待。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e10_other_pg_e10_explain_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e10_other_pg_e10_explain_result",
+          "gist": "我署名说明 @shift_log 原帖中的排班和等待记录，没有认领原帖。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e10_other_pg_e10_label_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e10_other_pg_e10_label_result",
+          "gist": "我私信请求节选标记，转发者修改现存标题；旧截页仍在流传。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e10_other_pg_e10_mute_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e10_other_pg_e10_mute_result",
+          "gist": "我没有回应工时争论，只静音讨论，工作通道仍开着。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e10_other_pg_e10_oldpost_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e10_other_pg_e10_oldpost_result",
+          "gist": "我私下引用猫与资源后续帖，请转发者标明节选；现存标题已改，旧图仍在。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e10_other_observation": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e10_other_observation",
+          "gist": "@shift_log 署名提交的工时页被截去排班背景；我不是作者，收到查看邀请。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e11_pg_e11_work_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e11_pg_e11_work_result",
+          "gist": "我依据这次演示登记工作能力，quiet_worker_204 询问明天何时来。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e11_pg_e11_ask_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e11_pg_e11_ask_result",
+          "gist": "我私下询问履历关联意愿，对方拒绝关联并补充本次演示。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e11_pg_e11_return_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e11_pg_e11_return_result",
+          "gist": "我退回推荐表，由管理员另找审核者，没有替新账号作推荐。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e11_pg_e11_reply_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e11_pg_e11_reply_result",
+          "gist": "我署名指出新住户旧截页没有身份链，并按本次演示登记工作能力。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e11_observation": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e11_observation",
+          "gist": "quiet_worker_204 递交匿名字段演示；我受托处理工作登记，现有材料没有新旧账号身份链。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e12_direct_pg_e12_link_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e12_direct_pg_e12_link_result",
+          "gist": "我重新核对当前工时页，私下提交原帖链接，由管理员补在标题旁；外部旧图仍在。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e12_direct_pg_e12_work_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e12_direct_pg_e12_work_result",
+          "gist": "我回复直接收到的新交付，约定下一次工作时段。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e12_direct_pg_e12_mute_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e12_direct_pg_e12_mute_result",
+          "gist": "我静音这轮讨论，保留已有工作联络和新交付。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e12_direct_observation": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e12_direct_observation",
+          "gist": "管理员允许补原帖链接但不保证删除外部缓存；quiet_worker_204 沿登记联络给我发来新交付。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e12_public_pg_e12_link_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e12_public_pg_e12_link_result",
+          "gist": "我重新核对当前工时页，私下提交原帖链接，由管理员补在标题旁；外部旧图仍在。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e12_public_pg_e12_work_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e12_public_pg_e12_work_result",
+          "gist": "我看到公开样例后首次发起工作联系，约定下一次工作时段。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e12_public_pg_e12_mute_result": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e12_public_pg_e12_mute_result",
+          "gist": "我静音讨论，仍可查看公开交付，没有发起新的工作联系。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "pg_e12_public_observation": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "pg_e12_public_observation",
+          "gist": "管理员允许补原帖链接但不保证删除外部缓存；我在公开区看见新交付，不是它的推荐人。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:c_waiting_self_base": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_c_waiting_self_base",
+          "gist": "当前工时页由我署名提交，记录十七分钟等待和绕行排班。转发截图仅剩分类一行。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:c_waiting_self_base_linked": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_c_waiting_self_base_linked",
+          "gist": "当前工时页由我署名提交，记录十七分钟等待和绕行排班。转发截图仅剩分类一行。管理员已补上原帖链接，外部缓存未保证删除。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:c_waiting_self_reply": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_c_waiting_self_reply",
+          "gist": "当前工时页由我署名提交，记录十七分钟等待和绕行排班。我已署名回复并附上原帖。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:c_waiting_self_reply_linked": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_c_waiting_self_reply_linked",
+          "gist": "当前工时页由我署名提交，记录十七分钟等待和绕行排班。我已署名回复并附上原帖。管理员已补上原帖链接，外部缓存未保证删除。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:c_waiting_self_label": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_c_waiting_self_label",
+          "gist": "当前工时页由我署名提交，记录十七分钟等待和绕行排班。转发者已在现存标题标明节选。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:c_waiting_self_label_linked": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_c_waiting_self_label_linked",
+          "gist": "当前工时页由我署名提交，记录十七分钟等待和绕行排班。转发者已在现存标题标明节选。管理员已补上原帖链接，外部缓存未保证删除。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:c_waiting_other_base": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_c_waiting_other_base",
+          "gist": "当前工时页由@shift_log署名提交，记录十七分钟等待和绕行排班。转发截图仅剩分类一行。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:c_waiting_other_base_linked": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_c_waiting_other_base_linked",
+          "gist": "当前工时页由@shift_log署名提交，记录十七分钟等待和绕行排班。转发截图仅剩分类一行。管理员已补上原帖链接，外部缓存未保证删除。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:c_waiting_other_reply": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_c_waiting_other_reply",
+          "gist": "当前工时页由@shift_log署名提交，记录十七分钟等待和绕行排班。我已署名回复并附上原帖。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:c_waiting_other_reply_linked": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_c_waiting_other_reply_linked",
+          "gist": "当前工时页由@shift_log署名提交，记录十七分钟等待和绕行排班。我已署名回复并附上原帖。管理员已补上原帖链接，外部缓存未保证删除。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:c_waiting_other_label": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_c_waiting_other_label",
+          "gist": "当前工时页由@shift_log署名提交，记录十七分钟等待和绕行排班。转发者已在现存标题标明节选。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:c_waiting_other_label_linked": {
+      "topic": "community_c",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_c_waiting_other_label_linked",
+          "gist": "当前工时页由@shift_log署名提交，记录十七分钟等待和绕行排班。转发者已在现存标题标明节选。管理员已补上原帖链接，外部缓存未保证删除。",
+          "abstract": "我经历过维修铺的工时讨论、截页转发和一次新工作接洽。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    }
+  }
+}

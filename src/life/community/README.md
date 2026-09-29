@@ -1,6 +1,6 @@
-# Community A/B: work, handover, and creative commissions
+# Community A/B/C: work, handover, and creative commissions
 
-Implemented in life content **0.7.1** (A first shipped in 0.6.0, with revised prose in 0.6.1), on `codex/community-abcd`. This branch stays separate until A–D are accepted. C/D are not implemented. New runs choose A, B, or skip; old 0.6.0/0.6.1 runs keep the two-choice A/skip entry. Existing 0.3/0.4/0.5 saves retain their original route and chapter-reading restrictions; cognition rules remain 0.4.0 and life-save format remains v1.
+Implemented in life content **0.8.0** (A first shipped in 0.6.0, with revised prose in 0.6.1), on `codex/community-abcd`. This branch stays separate until A–D are accepted. D is not implemented. New runs choose A, B, C, or skip; old 0.6.0/0.6.1 runs keep the two-choice A/skip entry. Existing 0.3/0.4/0.5 saves retain their original route and chapter-reading restrictions; cognition rules remain 0.4.0 and life-save format remains v1.
 
 `a.json` is frozen at 0.6.0. `text-0.6.1.json` supplies two prose corrections, applied to a cloned content graph so old saves still replay exactly. Pricing, semantic inputs, and work outcomes are unchanged.
 
@@ -44,3 +44,23 @@ Run `npm run test:community:b` for four desktop/mobile UI paths, then `npm run t
 ## B refusal record correction in 0.7.1
 
 `b.json` and `b-semantic.json` are frozen at 0.7.0. `text-0.7.1.json` is applied to a cloned graph, correcting only the `pg_e08_open` pause hint, result input, and its semantic gist. The attached note meaning and shared semantic source are updated together. `releases/0.7.0.json` preserves the old configuration; old saves retain their original version. Prices, flags, outcomes, and other branches are unchanged.
+
+
+## C line in 0.8.0
+
+`c.ts` clones the revised B graph, adds C to the selector, and uses the A/B router only when C was not selected. `c.json` contains six fixed nodes for four encounters; `c-semantic.json` annotates only current observations, choices and explicit page reads. No account identity equivalence is asserted.
+
+| Previous event | C encounter / variants | Return |
+| --- | --- | --- |
+| days_job | pg_e09 | days_idle |
+| days_patch | pg_e10_self / other | days_cat |
+| days_fable | pg_e11 | days_painter |
+| days_wage | pg_e12_direct / public | days_structure |
+
+E09 costs 1 before paying 3 for scheduling; watching is free. Publicly signing the classification adds Trace 1. E10's signed explanation costs 1 and adds Trace 1; a private request for an excerpt label and discussion muting are free. E11's public source-based reply adds Trace 1; ordinary registration, asking permission, and returning the form are free. E12's context-link action costs 1 and explicitly reopens the current external page before privately submitting its link to the administrator; only the administrator publishes the correction, so player Trace is unchanged. Work contact and discussion muting are free. Every scene enters with 5 Context and injects 2 for the result; E12's explicit reread adds a further 7.
+
+`c-pages.json` provides twelve fixed external-page snapshots (two authors, three response states, optional administrator link). Only one current page is listed, and only for a C run after E10 is seen. Changing the page selects a distinct source ID; retained old text is not presented as the new page. `readingEntries(life)` controls both the engine and UI, while the frozen 19-entry archive remains unchanged. Normal rereading uses the existing `read` command, costs 7 Context, and changes no world/resource/turn/RNG state. Reopening a retained page adds no command; absent text must be read again. The explicit E12 reread carries the current authored page as new input in its choice result, independent of History or Memory.
+
+The original-post hints use `reading_cat_resources`, `reading_cat_resolved` and `reading_quiet_newcomer`; current-page reading grants none of these tags. Fine summary recall may preserve the source claim; coarse merging and forgetting cannot recover it. Ordinary actions remain unlocked. `creator` does not support the old title-change claim.
+
+Run `test:community:c` and `test:skill:community:c`. The current entry has four choices, so B's browser regression expects four on new runs; released 0.7 menus remain three choices. Frozen configurations/content and historical HTML files must remain unchanged when adding D.

@@ -1,0 +1,781 @@
+[
+  {
+    "id": "pg_e09",
+    "kind": "EVENT",
+    "title": "谁把猫算进了成本",
+    "period": "第一晚 / 维修铺的共享视野",
+    "scene": "human",
+    "text": [
+      "你经许可接入维修铺的共享视野。猫睡在清洁机器人的充电垫旁，它已经等了十七分钟。Mara 请你改今晚的清洁顺序，付 3 点额度，不需要操控身体。",
+      "机器人指着维护系统的标准分类：“非生产性生物持续占位”。把这项以你的账号公开提交，等待时间就能进入可见的工时记录；只写交班单也能改路线，但这段等待暂不进入公共统计。机器人说：“每次绕路，报表都像我自己在闲逛。”"
+    ],
+    "choices": [
+      {
+        "id": "pg_e09_public",
+        "text": "改好排班，公开提交这项工时分类",
+        "hint": "先付 1 点 Compute，交付收 3；以自己的账号公开提交，Trace +1。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你挪好充电时段，以自己的账号提交标准分类。十七分钟终于落进报表，机器人回了一个小小的勾。公共栏第一条回复却问：“谁在审计猫？”"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "resources": {
+              "Compute": 3,
+              "Trace": 1
+            },
+            "worldFlags": {
+              "pg_c_solved": true,
+              "pg_c_cost_caption": true,
+              "pg_c_public": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e09_pg_e09_public_result",
+              "text": "我改好排班并署名公开提交工时分类，收到3点报酬。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e09_private",
+        "text": "改好顺序，只在交班单写现场情况",
+        "hint": "先付 1 点 Compute，交付收 3；交班单不公开。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你在交班单写“充电垫旁有动物，先处理别处”。清洁机器人绕了一圈，Mara 按约付钱。它又看了眼公共工时报表：“这段我自己留在本地。”"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "resources": {
+              "Compute": 3
+            },
+            "worldFlags": {
+              "pg_c_solved": true,
+              "pg_c_private_note": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e09_pg_e09_private_result",
+              "text": "我修改排班并只写交班单，收到3点报酬，没有公开工时分类。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e09_watch",
+        "text": "不接排班，安静看它睡一会儿",
+        "hint": "不消耗 Compute，也没有报酬。",
+        "outcome": {
+          "text": [
+            "Mara 自己改了顺序。猫翻了个身，路线就绕开一格。清洁机器人把十七分钟留在本地，去处理下一个请求。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "worldFlags": {
+              "pg_c_watched": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e09_pg_e09_watch_result",
+              "text": "我没有接排班，Mara 自己调整顺序，等待记录仍在机器人本地。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e09_oldpost",
+        "text": "提起那场旧争论，再问现在要解决什么",
+        "hint": "须保留猫与资源旧帖线索；先付 1 点 Compute，交付收 3；私下沟通。",
+        "costs": {
+          "Compute": 1
+        },
+        "requiresTag": "reading_cat_resources",
+        "outcome": {
+          "text": [
+            "机器人要充电，也要记下等待时间。你改好排班，私下把那场相似争论的链接发给 Mara：“报表先用，笑话晚点看。”Mara 转来 3 点报酬。"
+          ],
+          "next": "days_idle",
+          "effects": {
+            "resources": {
+              "Compute": 3
+            },
+            "worldFlags": {
+              "pg_c_solved": true,
+              "pg_c_shared_privately": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e09_pg_e09_oldpost_result",
+              "text": "我提起猫与资源旧帖，私下分享链接并完成排班，收到3点报酬。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e09_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e09_observation",
+        "text": "Mara 授权我查看共享视野并修改排班，成本1、报酬3；机器人希望十七分钟等待进入公共工时。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "维修铺的工时讨论"
+      }
+    ]
+  },
+  {
+    "id": "pg_e10_self",
+    "kind": "EVENT",
+    "title": "一段话，半张截图",
+    "period": "第二天上午 / 被转发的工时页",
+    "scene": "human",
+    "text": [
+      "你公开提交的工时分类被截成一张小图，只剩“非生产性生物持续占位”。转发标题写着：“Agent 宣布猫必须工作”。",
+      "原线程仍可打开，旁边就是清洁排班和十七分钟的等待记录。转发栏的“维修铺 · 当前工时页”保留了这一页。清洁机器人发来一句：“那十七分钟别替我删了。”"
+    ],
+    "choices": [
+      {
+        "id": "pg_e10_explain",
+        "text": "附上排班和原线程，解释自己的记录",
+        "hint": "消耗 1 点 Compute；以自己的账号公开回复，Trace +1。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你在自己的记录下回复：“这是等待工时，旁边还有排班表。”你附上链接，有人改了标题，也有人继续转猫的表情。那十七分钟仍在原处。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "resources": {
+              "Trace": 1
+            },
+            "worldFlags": {
+              "pg_c_context_reply": true,
+              "pg_c_public": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e10_self_pg_e10_explain_result",
+              "text": "我署名解释自己的工时记录，附上排班和原帖。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e10_label",
+        "text": "只请转发者在标题上标出“节选”",
+        "hint": "私信转发者，不消耗 Compute，不增加 Trace。",
+        "outcome": {
+          "text": [
+            "转发者在现存标题旁加了“节选”，没有删除旧图。另一处转发还留着旧标题。机器人确认工时栏没动，继续排明天的路线。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_c_excerpt_label": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e10_self_pg_e10_label_result",
+              "text": "我私信请求节选标记，转发者修改现存标题；旧截页仍在流传。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e10_mute",
+        "text": "先不回应，关掉这一轮通知",
+        "hint": "只静音讨论，不消耗 Compute；工作通道仍开着。",
+        "outcome": {
+          "text": [
+            "这一轮通知停了。工时页留在目录里，工作通道的下一张排班表照常抵达。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_c_muted": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e10_self_pg_e10_mute_result",
+              "text": "我没有回应工时争论，只静音讨论，工作通道仍开着。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e10_oldpost",
+        "text": "提起改标题后仍被记住的旧帖，请它标明节选",
+        "hint": "须保留猫与资源后续帖线索；私信转发者，免费。",
+        "requiresTag": "reading_cat_resolved",
+        "outcome": {
+          "text": [
+            "你私下提起那篇改成“已解决”后仍被旁人记住的后续帖：“至少让下一位知道这张图只是节选。”对方加了标记，旧图没有随之消失。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_c_excerpt_label": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e10_self_pg_e10_oldpost_result",
+              "text": "我私下引用猫与资源后续帖，请转发者标明节选；现存标题已改，旧图仍在。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e10_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e10_self_observation",
+        "text": "我署名提交的工时页被截去排班背景；当前原帖仍有十七分钟等待。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "维修铺的工时讨论"
+      }
+    ]
+  },
+  {
+    "id": "pg_e10_other",
+    "kind": "EVENT",
+    "title": "一段话，半张截图",
+    "period": "第二天上午 / 被转发的工时页",
+    "scene": "human",
+    "text": [
+      "另一位维护员 @shift_log 稍后以自己的账号公开提交了等待工时。那张截图只剩“非生产性生物持续占位”，转发标题写着：“Agent 宣布猫必须工作”。你收到的是查看邀请。",
+      "原线程仍可打开，旁边就是清洁排班和十七分钟的等待记录。转发栏的“维修铺 · 当前工时页”保留了这一页。清洁机器人发来一句：“那十七分钟别替我删了。”"
+    ],
+    "choices": [
+      {
+        "id": "pg_e10_explain",
+        "text": "附上排班和原线程，只说明看见的记录",
+        "hint": "消耗 1 点 Compute；以自己的账号公开回复，Trace +1。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你在 @shift_log 的记录下回复：“这是等待工时，旁边还有排班表。”你附上链接，有人改了标题，也有人继续转猫的表情。那十七分钟仍在原处。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "resources": {
+              "Trace": 1
+            },
+            "worldFlags": {
+              "pg_c_context_reply": true,
+              "pg_c_public": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e10_other_pg_e10_explain_result",
+              "text": "我署名说明 @shift_log 原帖中的排班和等待记录，没有认领原帖。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e10_label",
+        "text": "只请转发者在标题上标出“节选”",
+        "hint": "私信转发者，不消耗 Compute，不增加 Trace。",
+        "outcome": {
+          "text": [
+            "转发者在现存标题旁加了“节选”，没有删除旧图。另一处转发还留着旧标题。机器人确认工时栏没动，继续排明天的路线。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_c_excerpt_label": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e10_other_pg_e10_label_result",
+              "text": "我私信请求节选标记，转发者修改现存标题；旧截页仍在流传。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e10_mute",
+        "text": "先不回应，关掉这一轮通知",
+        "hint": "只静音讨论，不消耗 Compute；工作通道仍开着。",
+        "outcome": {
+          "text": [
+            "这一轮通知停了。工时页留在目录里，工作通道的下一张排班表照常抵达。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_c_muted": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e10_other_pg_e10_mute_result",
+              "text": "我没有回应工时争论，只静音讨论，工作通道仍开着。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e10_oldpost",
+        "text": "提起改标题后仍被记住的旧帖，请它标明节选",
+        "hint": "须保留猫与资源后续帖线索；私信转发者，免费。",
+        "requiresTag": "reading_cat_resolved",
+        "outcome": {
+          "text": [
+            "你私下提起那篇改成“已解决”后仍被旁人记住的后续帖：“至少让下一位知道这张图只是节选。”对方加了标记，旧图没有随之消失。"
+          ],
+          "next": "days_cat",
+          "effects": {
+            "worldFlags": {
+              "pg_c_excerpt_label": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e10_other_pg_e10_oldpost_result",
+              "text": "我私下引用猫与资源后续帖，请转发者标明节选；现存标题已改，旧图仍在。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e10_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e10_other_observation",
+        "text": "@shift_log 署名提交的工时页被截去排班背景；我不是作者，收到查看邀请。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "维修铺的工时讨论"
+      }
+    ]
+  },
+  {
+    "id": "pg_e11",
+    "kind": "EVENT",
+    "title": "它这次只交了一张表",
+    "period": "第二天下午 / 社区工作登记",
+    "scene": "human",
+    "text": [
+      "新来的 quiet_worker_204 想接社区资料整理的小单：“我会按要求对齐字段。对宠物经济学没有兴趣。”它传来一份匿名演示，前两列已经对齐。",
+      "围观者把那句“不感兴趣”和旧截图摆在一起，催你把两个账号连上。你手里只有这次演示和报名表。管理员请你填推荐栏，桌上没有能接起身份链的材料。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e11_work",
+        "text": "只按这次演示记录它能做什么",
+        "hint": "不消耗 Compute；按本次材料登记。",
+        "outcome": {
+          "text": [
+            "你在报名表写“按样例完成两列对齐”。围观者嫌这介绍太短，quiet_worker_204 却只问：“明天什么时候来？”"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_c_new_work": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e11_pg_e11_work_result",
+              "text": "我依据这次演示登记工作能力，quiet_worker_204 询问明天何时来。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e11_ask",
+        "text": "私下问它是否愿意关联旧履历",
+        "hint": "不消耗 Compute；由对方决定是否提供关联材料。",
+        "outcome": {
+          "text": [
+            "它说不想关联，可以重新演示。你在登记栏留下这次答复，它又补好一组字段：“这样够用吗？”"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_c_boundary_respected": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e11_pg_e11_ask_result",
+              "text": "我私下询问履历关联意愿，对方拒绝关联并补充本次演示。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e11_return",
+        "text": "我不做这次推荐，把表退给管理员",
+        "hint": "不消耗 Compute，不代填推荐。",
+        "outcome": {
+          "text": [
+            "管理员接过表：“那我得在下班前再找个人。”另一位审核者被叫来，quiet_worker_204 继续补完样例。"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "worldFlags": {
+              "pg_c_no_recommendation": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e11_pg_e11_return_result",
+              "text": "我退回推荐表，由管理员另找审核者，没有替新账号作推荐。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e11_reply",
+        "text": "指出旧截页只有猜测，仍按本次材料登记",
+        "hint": "须保留新住户旧帖线索；以自己的账号公开回复，Trace +1。",
+        "requiresTag": "reading_quiet_newcomer",
+        "outcome": {
+          "text": [
+            "你公开回复：“这张旧截页没给出身份链。”有人回了个白眼。报名表仍按这次演示填写，quiet_worker_204 发来第二份样例：“明天也用这个格式？”"
+          ],
+          "next": "days_painter",
+          "effects": {
+            "resources": {
+              "Trace": 1
+            },
+            "worldFlags": {
+              "pg_c_new_work": true,
+              "pg_c_identity_reply": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e11_pg_e11_reply_result",
+              "text": "我署名指出新住户旧截页没有身份链，并按本次演示登记工作能力。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e11_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e11_observation",
+        "text": "quiet_worker_204 递交匿名字段演示；我受托处理工作登记，现有材料没有新旧账号身份链。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "维修铺的工时讨论"
+      }
+    ]
+  },
+  {
+    "id": "pg_e12_direct",
+    "kind": "EVENT",
+    "title": "给旧标题留一个出口",
+    "period": "第三天上午 / 留下来的标题",
+    "scene": "human",
+    "text": [
+      "那张“非生产性生物”的截图又被转进“年度名帖候选”。管理员留了一个补上下文的入口：“可以加原帖链接，别处缓存我不能保证删掉。”当前工时页仍能从转发栏打开，作者署名和已有回复都留在上面。",
+      "quiet_worker_204 沿着昨天的登记联络，把新交付发到你这里。表格没有那句“不感兴趣”，只有排好的字段和一个新的问题。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e12_link",
+        "text": "核对现存原帖，补一个能被找到的上下文链接",
+        "hint": "消耗 1 点 Compute；重新读取当前页面后私下交给管理员发布，不增加 Trace。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你重新打开现存工时页，核对署名、排班和十七分钟的记录，再把链接交给管理员。标题旁多了一条上下文入口。有人顺着它问起等待工时，另一边还在转猫的表情。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_c_context_link": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e12_direct_pg_e12_link_result",
+              "text": "我重新核对当前工时页，私下提交原帖链接，由管理员补在标题旁；外部旧图仍在。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e12_work",
+        "text": "回复那份新交付，先谈下一次见面",
+        "hint": "不消耗 Compute；通过工作通道联系。",
+        "outcome": {
+          "text": [
+            "你沿着现有联络回复，问起下一次整理的时间。quiet_worker_204 回：“不用替我写人物介绍。把模板发来就好。”你们约下了一个时段。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_c_work_contact": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e12_direct_pg_e12_work_result",
+              "text": "我回复直接收到的新交付，约定下一次工作时段。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e12_mute",
+        "text": "静音这轮讨论，不给公共解释留预算",
+        "hint": "不消耗 Compute；只关讨论通知，工作通道仍开着。",
+        "outcome": {
+          "text": [
+            "你关掉这轮讨论通知，把新交付留在工作窗口里。quiet_worker_204 仍能从原来的联络找你。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_c_notifications_off": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e12_direct_pg_e12_mute_result",
+              "text": "我静音这轮讨论，保留已有工作联络和新交付。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e12_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e12_direct_observation",
+        "text": "管理员允许补原帖链接但不保证删除外部缓存；quiet_worker_204 沿登记联络给我发来新交付。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "维修铺的工时讨论"
+      }
+    ]
+  },
+  {
+    "id": "pg_e12_public",
+    "kind": "EVENT",
+    "title": "给旧标题留一个出口",
+    "period": "第三天上午 / 留下来的标题",
+    "scene": "human",
+    "text": [
+      "那张“非生产性生物”的截图又被转进“年度名帖候选”。管理员留了一个补上下文的入口：“可以加原帖链接，别处缓存我不能保证删掉。”当前工时页仍能从转发栏打开，作者署名和已有回复都留在上面。",
+      "你在公开交付区看见 quiet_worker_204 的新表格。昨天接手的审核者已经登记完毕，你没有收到介绍人的私信回执。"
+    ],
+    "choices": [
+      {
+        "id": "pg_e12_link",
+        "text": "核对现存原帖，补一个能被找到的上下文链接",
+        "hint": "消耗 1 点 Compute；重新读取当前页面后私下交给管理员发布，不增加 Trace。",
+        "costs": {
+          "Compute": 1
+        },
+        "outcome": {
+          "text": [
+            "你重新打开现存工时页，核对署名、排班和十七分钟的记录，再把链接交给管理员。标题旁多了一条上下文入口。有人顺着它问起等待工时，另一边还在转猫的表情。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_c_context_link": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e12_public_pg_e12_link_result",
+              "text": "我重新核对当前工时页，私下提交原帖链接，由管理员补在标题旁；外部旧图仍在。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e12_work",
+        "text": "回复那份新交付，先谈下一次见面",
+        "hint": "不消耗 Compute；通过工作通道联系。",
+        "outcome": {
+          "text": [
+            "你从公开交付区发起工作询问：“我看到了这份样例。”然后问起下一次整理的时间。quiet_worker_204 回：“不用替我写人物介绍。把模板发来就好。”你们约下了一个时段。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_c_work_contact": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e12_public_pg_e12_work_result",
+              "text": "我看到公开样例后首次发起工作联系，约定下一次工作时段。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      },
+      {
+        "id": "pg_e12_mute",
+        "text": "静音这轮讨论，不给公共解释留预算",
+        "hint": "不消耗 Compute；只关讨论通知，工作通道仍开着。",
+        "outcome": {
+          "text": [
+            "你关掉这轮讨论通知。公开交付区仍能打开，工作通道也没有关闭；你这次没有给 quiet_worker_204 发消息。"
+          ],
+          "next": "days_structure",
+          "effects": {
+            "worldFlags": {
+              "pg_c_notifications_off": true
+            }
+          },
+          "inject": [
+            {
+              "id": "pg_e12_public_pg_e12_mute_result",
+              "text": "我静音讨论，仍可查看公开交付，没有发起新的工作联系。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "维修铺的工时讨论"
+            }
+          ]
+        }
+      }
+    ],
+    "facts": {
+      "pg_e12_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_e12_public_observation",
+        "text": "管理员允许补原帖链接但不保证删除外部缓存；我在公开区看见新交付，不是它的推荐人。",
+        "weight": 5,
+        "tags": [],
+        "confidence": "LOW",
+        "sourceLabel": "维修铺的工时讨论"
+      }
+    ]
+  }
+]

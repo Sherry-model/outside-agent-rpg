@@ -24,7 +24,9 @@
     "test:community": "node --import tsx scripts/community-browser-check.mjs",
     "test:skill:community": "node scripts/prepare-community-skill.mjs && node scripts/web_game_playwright_client.js --url output/skill-community/fixture.html --click-selector [data-pilot-choice=pg_e03_prepared] --actions-file tests/skill-actions.json --iterations 1 --pause-ms 250 --screenshot-dir output/skill-community",
     "test:community:b": "node --import tsx scripts/community-b-browser-check.mjs",
-    "test:skill:community:b": "node scripts/prepare-community-b-skill.mjs && node scripts/web_game_playwright_client.js --url output/skill-community-b/fixture.html --click-selector [data-pilot-choice=pg_e07_persona] --actions-file tests/skill-actions.json --iterations 1 --pause-ms 250 --screenshot-dir output/skill-community-b"
+    "test:skill:community:b": "node scripts/prepare-community-b-skill.mjs && node scripts/web_game_playwright_client.js --url output/skill-community-b/fixture.html --click-selector [data-pilot-choice=pg_e07_persona] --actions-file tests/skill-actions.json --iterations 1 --pause-ms 250 --screenshot-dir output/skill-community-b",
+    "test:community:c": "node --import tsx scripts/community-c-browser-check.mjs",
+    "test:skill:community:c": "node scripts/prepare-community-c-skill.mjs && node scripts/web_game_playwright_client.js --url output/skill-community-c/fixture.html --click-selector [data-pilot-choice=pg_e12_link] --actions-file tests/skill-actions.json --iterations 1 --pause-ms 250 --screenshot-dir output/skill-community-c"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
