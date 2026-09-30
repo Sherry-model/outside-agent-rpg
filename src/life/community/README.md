@@ -1,6 +1,6 @@
 # Community A/B/C/D: work, handover, and creative commissions
 
-Implemented in life content **0.9.0** (A first shipped in 0.6.0, with revised prose in 0.6.1), on `codex/community-abcd`. This branch stays separate until A–D are accepted. D is implemented for review. New runs choose A, B, C, D, or skip through a two-page menu; old 0.6.0/0.6.1 runs keep the two-choice A/skip entry. Existing 0.3/0.4/0.5 saves retain their original route and chapter-reading restrictions; cognition rules remain 0.4.0 and life-save format remains v1.
+Implemented in life content **0.9.0** (A first shipped in 0.6.0, with revised prose in 0.6.1), developed on `codex/community-abcd`. All four lines have passed acceptance. New runs choose A, B, C, D, or skip through a two-page menu; old 0.6.0/0.6.1 runs keep the two-choice A/skip entry. Existing 0.3/0.4/0.5 saves retain their original route and chapter-reading restrictions; cognition rules remain 0.4.0 and life-save format remains v1.
 
 `a.json` is frozen at 0.6.0. `text-0.6.1.json` supplies two prose corrections, applied to a cloned content graph so old saves still replay exactly. Pricing, semantic inputs, and work outcomes are unchanged.
 
