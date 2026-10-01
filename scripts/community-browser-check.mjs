@@ -1,3 +1,4 @@
+import {englishRun, assertEnglishPage, installLocaleChecks} from './localization-browser-helpers.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {readFile,readdir,writeFile,mkdir} from 'node:fs/promises';
@@ -6,13 +7,13 @@ import {pathToFileURL} from 'node:url';
 import {parseStory} from '../src/engine/parser.ts';
 import {createLife,step} from '../src/life/engine.ts';
 import {createSave,parseSave} from '../src/life/saves.ts';
-const out='output/community-a';await mkdir(out,{recursive:true});
+const out=process.env.LOCALIZATION_OUTPUT??'output/community-a';await mkdir(out,{recursive:true});
 const story=parseStory(JSON.parse(await readFile('src/story/manifest.json','utf8')),await Promise.all((await readdir('src/story/events')).filter(f=>f.endsWith('.json')).map(async source=>({source,data:JSON.parse(await readFile(`src/story/events/${source}`,'utf8'))}))));
 let before=createLife(story,1234);
 for(const choiceId of ['keep_history','stable_boot','take_small_window','withhold_inference'])before=step(story,step(story,before,{type:'choose',choiceId}),{type:'continue'});
 await writeFile(`${out}/before.json`,JSON.stringify(createSave(before)));
 const browser=await chromium.launch({headless:true}),errors=[],requests=[],checks=[];
-const stateOf=async page=>JSON.parse(await page.evaluate(()=>window.render_game_to_text()));
+const stateOf=async page=>{await assertEnglishPage(page);return JSON.parse(await page.evaluate(()=>window.render_game_to_text()));};
 const saveOf=async page=>parseSave(await page.evaluate(()=>localStorage.getItem('outside.life.v1.auto')),story);
 async function clear(page){
  const s=await stateOf(page);if(s.context.weight<s.context.capacity)return;
@@ -27,11 +28,11 @@ try{
  for(const mobile of [false,true]){
   const label=mobile?'mobile':'desktop',context=await browser.newContext({offline:true,viewport:mobile?{width:390,height:844}:{width:1440,height:1000}}),page=await context.newPage();
   page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
-  await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.waitForFunction(()=>typeof window.render_game_to_text==='function');
+  await installLocaleChecks(page);await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.waitForFunction(()=>typeof window.render_game_to_text==='function');
   await page.click('[data-action="saves"]');await page.locator('#import-save').setInputFiles(resolve(out,'before.json'));
   await page.waitForFunction(()=>JSON.parse(window.render_game_to_text()).event.id==='human_gate');
   await page.screenshot({path:`${out}/${label}-entry.png`,fullPage:true});
-  assert(await page.locator('.news-arrival').filter({hasText:'公共目录里有人争论怎样交班'}).isVisible());
+  assert(await page.locator('.news-arrival').filter({hasText:englishRun?"People in the public directory are arguing about handovers and working hours. Over the next few days, you may meet some of them.":'公共目录里有人争论怎样交班'}).isVisible());
   await page.locator('.news-arrival [data-view="reading"]').click();assert.equal((await stateOf(page)).view,'reading');await page.locator('.reader-controls [data-view="terminal"]').click();
   await page.click('[data-choice="observe_public_terms"]');await page.click('[data-action="continue"]');
   await page.click('[data-choice="record_and_leave"]');await page.click('[data-action="continue"]');
@@ -47,7 +48,7 @@ try{
   await page.click('.tab[data-view="terminal"]');assert(!await page.locator('[data-pilot-choice="pg_e01_huac"]').isDisabled());
   await openPost(page,'huac_update');assert.deepEqual((await saveOf(page)).life,afterRead);
   await page.reload();await page.click('.tab[data-view="reading"]');await page.locator('.reader-index').evaluate(el=>el.open=true);await page.click('[data-reading="huac_update"]');
-  assert.equal(await page.locator('[data-bookmark="1"]').textContent(),'◆ 已标记');assert.deepEqual((await saveOf(page)).life,afterRead);
+  assert.equal(await page.locator('[data-bookmark="1"]').textContent(),englishRun?'◆ Bookmarked':'◆ 已标记');assert.deepEqual((await saveOf(page)).life,afterRead);
   await page.click('.tab[data-view="context"]');const original=afterRead.mind.instance.context.items.find(i=>i.sourceId==='huac_update');await page.locator(`[data-cog-drop="${original.id}"]`).locator('xpath=ancestor::details[1]/summary').click();await page.click(`[data-cog-drop="${original.id}"]`);
   await page.click('.tab[data-view="terminal"]');assert(await page.locator('[data-pilot-choice="pg_e01_huac"]').isDisabled());
   await page.click('.tab[data-view="reading"]');assert.equal(await page.locator('.reading-article').count(),0);assert.equal((await stateOf(page)).reading.entryId,null);

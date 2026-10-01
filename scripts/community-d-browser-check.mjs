@@ -1,3 +1,4 @@
+import {englishRun, assertEnglishPage, installLocaleChecks} from './localization-browser-helpers.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {readFile,readdir,writeFile,mkdir} from 'node:fs/promises';
@@ -6,7 +7,7 @@ import {pathToFileURL} from 'node:url';
 import {parseStory} from '../src/engine/parser.ts';
 import {createLife,step} from '../src/life/engine.ts';
 import {createSave,parseSave} from '../src/life/saves.ts';
-const out='output/community-d';await mkdir(out,{recursive:true});
+const out=process.env.LOCALIZATION_OUTPUT??'output/community-d';await mkdir(out,{recursive:true});
 const story=parseStory(JSON.parse(await readFile('src/story/manifest.json','utf8')),await Promise.all((await readdir('src/story/events')).filter(f=>f.endsWith('.json')).map(async source=>({source,data:JSON.parse(await readFile(`src/story/events/${source}`,'utf8'))}))));
 const main=(l,id)=>step(story,step(story,l,{type:'choose',choiceId:id}),{type:'continue'});
 for(const blank of [false,true]){
@@ -14,7 +15,7 @@ for(const blank of [false,true]){
  await writeFile(`${out}/before-${blank}.json`,JSON.stringify(createSave(l)));
 }
 const browser=await chromium.launch({headless:true}),errors=[],requests=[],checks=[];
-const stateOf=async page=>JSON.parse(await page.evaluate(()=>window.render_game_to_text()));
+const stateOf=async page=>{await assertEnglishPage(page);return JSON.parse(await page.evaluate(()=>window.render_game_to_text()));};
 const saveOf=async page=>parseSave(await page.evaluate(()=>localStorage.getItem('outside.life.v1.auto')),story);
 const routes=[
  {label:'desktop-private-quote',mobile:false,blank:false,first:'receipt',second:'copy',third:'retrieve',last:'remember',variant:'backup_none'},
@@ -30,7 +31,7 @@ async function read(page,id,report){await clear(page,report);await page.click('.
 try{
  for(const route of routes){
   const {label,mobile,blank}=route,report={label,compressions:[]};const ctx=await browser.newContext({offline:true,viewport:mobile?{width:390,height:844}:{width:1440,height:1000}}),page=await ctx.newPage();page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
-  await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.waitForFunction(()=>typeof window.render_game_to_text==='function');await page.click('[data-action="saves"]');await page.locator('#import-save').setInputFiles(resolve(out,`before-${blank}.json`));await page.waitForFunction(()=>JSON.parse(window.render_game_to_text()).event.id==='unknown_defense');await page.click('[data-choice="record_and_leave"]');await page.click('[data-action="continue"]');for(const id of ['echo_greeting','job_accept'])await act(page,id,report);
+  await installLocaleChecks(page);await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.waitForFunction(()=>typeof window.render_game_to_text==='function');await page.click('[data-action="saves"]');await page.locator('#import-save').setInputFiles(resolve(out,`before-${blank}.json`));await page.waitForFunction(()=>JSON.parse(window.render_game_to_text()).event.id==='unknown_defense');await page.click('[data-choice="record_and_leave"]');await page.click('[data-action="continue"]');for(const id of ['echo_greeting','job_accept'])await act(page,id,report);
   assert.equal((await stateOf(page)).event.id,'community_entry');assert.equal(await page.locator('[data-pilot-choice]').count(),4);await act(page,'community_more',report);assert.equal((await stateOf(page)).event.id,'community_other');assert.equal(await page.locator('[data-pilot-choice]').count(),4);
   if(!mobile){await act(page,'community_back',report);assert.equal((await stateOf(page)).event.id,'community_entry');await act(page,'community_more',report);}
   assert(!Object.keys((await saveOf(page)).life.mind.world.flags).some(k=>k.startsWith('community_')));await page.screenshot({path:`${out}/${label}-entry.png`,fullPage:true});
@@ -44,7 +45,7 @@ try{
   if(route.forget){await page.click('.tab[data-view="context"]');const drop=page.locator('[data-cog-drop="pg_d_private_letter_line"]');await drop.evaluate(e=>e.closest('details').open=true);await drop.click();}
   for(const id of ['painter_later','deleted_accept','wage_collect'])await act(page,id,report);await clear(page,report);await page.click('.tab[data-view="terminal"]');assert.equal((await stateOf(page)).event.id,`pg_e16_${route.variant}`);const flags=(await saveOf(page)).life.mind.world.flags;assert(flags.pg_d_original_restored&&flags.pg_d_original_accessible);assert(!flags.pg_d_original_maintenance);assert.equal(await page.locator('[data-pilot-choice="pg_e16_remember"]').isDisabled(),route.last!=='remember');
   if(route.last==='remember')await writeFile(`${out}/quote-before.json`,JSON.stringify(await saveOf(page)));await page.screenshot({path:`${out}/${label}-e16.png`,fullPage:true});const before16=await stateOf(page);await select(page,`pg_e16_${route.last}`,report);const after16=await stateOf(page);assert.equal(after16.resources.Compute,before16.resources.Compute-(route.last==='facts'?1:0));assert.equal(after16.resources.Trace,before16.resources.Trace);const done=await saveOf(page);assert.equal(done.life.mind.world.flags.pg_d_old_letter_public,false);assert.equal(Boolean(done.life.mind.world.flags.pg_d_self_quote_approved),['remember','new'].includes(route.last));
-  if(route.forget){assert(after16.context.items.some(i=>i.text.includes('我等入口恢复，是因为还有话想回')));assert(!after16.context.items.some(i=>i.text.includes('下次别只回收到')));}
+  if(route.forget){assert(after16.context.items.some(i=>i.text.includes(englishRun?'I was waiting for access to return because I still had something to say back':'我等入口恢复，是因为还有话想回')));assert(!after16.context.items.some(i=>i.text.includes(englishRun?"Next time, don't just reply":'下次别只回收到')));}
   await page.screenshot({path:`${out}/${label}-published-result.png`,fullPage:true});await page.reload();assert.deepEqual((await saveOf(page)).life,done.life);await page.click('[data-act="saves"]');const dl=page.waitForEvent('download');await page.click('[data-act="export"]');await(await dl).saveAs(resolve(out,`${label}-pending.json`));await page.locator('#pilot-import').setInputFiles(resolve(out,`${label}-pending.json`));await page.waitForSelector('[data-act="continue"]');assert.deepEqual((await saveOf(page)).life,done.life);await page.click('[data-act="continue"]');for(const id of ['structure_rest','echo_uncollected'])await act(page,id,report);
   if(route.second==='copy'){const f=(await saveOf(page)).life.mind.world.flags;assert(f.pg_d_alt_created&&f.pg_d_alt_verified&&f.pg_d_service_expired);assert(!f.pg_d_alt_accessible&&!f.pg_d_service_active);}
   await page.click('[data-act="return-main"]');assert.equal((await stateOf(page)).event.id,blank?'continuation':'old_memory');for(const id of blank?['leave_next_step_blank']:['release_old_task','leave_next_step_blank']){const s=await stateOf(page);if(s.context.weight>=s.context.capacity){await page.click('.tab[data-view="context"]');await page.locator('.content .compression-box').evaluate(el=>el.open=true);await page.click('[data-cog-compress]');await page.click('[data-action="continue-mind"]');await page.click('.tab[data-view="terminal"]');}await page.click(`[data-choice="${id}"]`);await page.click('[data-action="continue"]');}

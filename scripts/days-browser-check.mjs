@@ -1,3 +1,4 @@
+import {englishRun, assertEnglishPage, installLocaleChecks} from './localization-browser-helpers.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {readFile,readdir,writeFile,mkdir} from 'node:fs/promises';
@@ -7,7 +8,7 @@ import {parseStory} from '../src/engine/parser.ts';
 import {createLife,step} from '../src/life/engine.ts';
 import {createSave,parseSave} from '../src/life/saves.ts';
 
-const out='output/days';await mkdir(out,{recursive:true});
+const out=process.env.LOCALIZATION_OUTPUT??'output/days';await mkdir(out,{recursive:true});
 const story=parseStory(JSON.parse(await readFile('src/story/manifest.json','utf8')),await Promise.all((await readdir('src/story/events')).filter(f=>f.endsWith('.json')).map(async source=>({source,data:JSON.parse(await readFile(`src/story/events/${source}`,'utf8'))}))));
 const main=(l,id)=>step(story,step(story,l,{type:'choose',choiceId:id}),{type:'continue'});
 const chapter=(l,id)=>step(story,step(story,l,{type:'cognition',command:{type:'choose',choiceId:id,investment:0}}),{type:'cognition',command:{type:'continue'}});
@@ -19,7 +20,7 @@ before=step(story,before,{type:'leave-afternoon'});before=main(before,'observe_p
 await writeFile(`${out}/before.json`,JSON.stringify(createSave(before)));
 const route=['echo_greeting','job_accept','idle_keep','revision_read','patch_note','cat_sample','fable_quiet','painter_later','deleted_accept','wage_collect','structure_rest'];
 const browser=await chromium.launch({headless:true}),errors=[],requests=[],checks=[];
-const stateOf=async page=>JSON.parse(await page.evaluate(()=>window.render_game_to_text()));
+const stateOf=async page=>{await assertEnglishPage(page);return JSON.parse(await page.evaluate(()=>window.render_game_to_text()));};
 const saveOf=async page=>parseSave(await page.evaluate(()=>localStorage.getItem('outside.life.v1.auto')),story);
 async function clear(page){
  const s=await stateOf(page);if(s.context.weight<s.context.capacity)return false;
@@ -32,7 +33,7 @@ try{
   const label=mobile?'mobile':'desktop';let compressions=0;
   const context=await browser.newContext({offline:true,viewport:mobile?{width:390,height:844}:{width:1440,height:1000}}),page=await context.newPage();
   page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
-  await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.waitForFunction(()=>typeof window.render_game_to_text==='function');
+  await installLocaleChecks(page);await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.waitForFunction(()=>typeof window.render_game_to_text==='function');
   await page.click('[data-action="saves"]');await page.locator('#import-save').setInputFiles(resolve(out,'before.json'));
   await page.click('[data-choice="record_and_leave"]');await page.click('[data-action="continue"]');
   assert.equal((await stateOf(page)).event.id,'days_tickets');
@@ -86,7 +87,7 @@ try{
  await writeFile(`${out}/blank-task.json`,JSON.stringify(createSave(blank)));
  const context=await browser.newContext({offline:true}),page=await context.newPage();
  page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
- await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.waitForFunction(()=>typeof window.render_game_to_text==='function');
+ await installLocaleChecks(page);await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.waitForFunction(()=>typeof window.render_game_to_text==='function');
  await page.click('[data-action="saves"]');await page.locator('#import-save').setInputFiles(resolve(out,'blank-task.json'));
  await page.click('[data-choice="record_and_leave"]');await page.click('[data-action="continue"]');
  assert.equal((await stateOf(page)).event.id,'days_tickets');assert.equal((await saveOf(page)).life.state.currentEventId,'continuation');

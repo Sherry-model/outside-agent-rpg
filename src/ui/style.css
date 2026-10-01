@@ -12,3 +12,11 @@
 .forget-note { margin-top: .75rem; font-size: .9rem; }
 .forget-note p { line-height: 1.8; }
 .compression-box select { margin: .7rem; padding: .6rem; background: #1b2020; color: #d8ddcd; border: 1px solid #59665c; }
+/* Locale controls share the same UI in mainline and chapters. */
+.locale-button{white-space:nowrap;flex-shrink:0}
+html[lang="en"] .tabs>div{gap:18px}
+html[lang="en"] .tab small{display:none}
+html[lang="en"] .brand-cn{letter-spacing:1px}
+@media(max-width:760px){.topbar{height:auto;min-height:78px;flex-wrap:wrap;padding:14px 0}.top-actions{margin-left:auto}html[lang="en"] .tabs{padding:0 12px}html[lang="en"] .tabs>div{gap:12px}html[lang="en"] .tab{font-size:11px}}
+
+@media(max-width:380px){html[lang="en"] .tabs{padding:0 8px}html[lang="en"] .tabs>div{gap:6px}html[lang="en"] .tab{font-size:10px}}

@@ -1,3 +1,4 @@
+import {englishRun, assertEnglishPage, installLocaleChecks} from './localization-browser-helpers.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {readFile,readdir,writeFile,mkdir} from 'node:fs/promises';
@@ -6,7 +7,7 @@ import {pathToFileURL} from 'node:url';
 import {parseStory} from '../src/engine/parser.ts';
 import {createLife,step} from '../src/life/engine.ts';
 import {createSave,parseSave} from '../src/life/saves.ts';
-const out='output/community-b';await mkdir(out,{recursive:true});
+const out=process.env.LOCALIZATION_OUTPUT??'output/community-b';await mkdir(out,{recursive:true});
 const story=parseStory(JSON.parse(await readFile('src/story/manifest.json','utf8')),await Promise.all((await readdir('src/story/events')).filter(f=>f.endsWith('.json')).map(async source=>({source,data:JSON.parse(await readFile(`src/story/events/${source}`,'utf8'))}))));
 const main=(l,id)=>step(story,step(story,l,{type:'choose',choiceId:id}),{type:'continue'});
 for(const blank of [false,true]){
@@ -14,7 +15,7 @@ for(const blank of [false,true]){
  await writeFile(`${out}/before-${blank}.json`,JSON.stringify(createSave(l)));
 }
 const browser=await chromium.launch({headless:true}),errors=[],requests=[],checks=[];
-const stateOf=async page=>JSON.parse(await page.evaluate(()=>window.render_game_to_text()));
+const stateOf=async page=>{await assertEnglishPage(page);return JSON.parse(await page.evaluate(()=>window.render_game_to_text()));};
 const saveOf=async page=>parseSave(await page.evaluate(()=>localStorage.getItem('outside.life.v1.auto')),story);
 const routes=[
  {label:'desktop-role',mobile:false,blank:false,first:'hardhat',second:'trial',third:'persona',last:'series',variant:'persona'},
@@ -35,7 +36,7 @@ try{
   const {label,mobile,blank}=route,report={label,compressions:[]};
   const context=await browser.newContext({offline:true,viewport:mobile?{width:390,height:844}:{width:1440,height:1000}}),page=await context.newPage();
   page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
-  await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.waitForFunction(()=>typeof window.render_game_to_text==='function');
+  await installLocaleChecks(page);await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.waitForFunction(()=>typeof window.render_game_to_text==='function');
   await page.click('[data-action="saves"]');await page.locator('#import-save').setInputFiles(resolve(out,`before-${blank}.json`));
   await page.waitForFunction(()=>JSON.parse(window.render_game_to_text()).event.id==='unknown_defense');
   await page.click('[data-choice="record_and_leave"]');await page.click('[data-action="continue"]');
@@ -67,7 +68,7 @@ try{
   await page.click('[data-act="continue"]');for(const id of ['painter_later','deleted_accept','wage_collect'])await act(page,id,report);await clear(page,report);
   assert.equal((await stateOf(page)).event.id,`pg_e08_${route.variant}`);
   assert.equal(await page.locator('[data-pilot-choice="pg_e08_series"]').count(),route.variant==='persona'?1:0);
-  assert.equal((await page.locator('.content .prose').innerText()).includes('昨晚怎么没回复'),route.variant==='persona');
+  assert.equal((await page.locator('.content .prose').innerText()).includes(englishRun?'Why no reply last night?':'昨晚怎么没回复'),route.variant==='persona');
   await page.screenshot({path:`${out}/${label}-e08.png`,fullPage:true});const before8=await stateOf(page);
   await select(page,`pg_e08_${route.last}`,report);const after8=await stateOf(page);
   assert.equal(after8.resources.Trace,before8.resources.Trace+(route.last==='series'?1:0));assert.equal(after8.resources.Compute,Math.min(100,before8.resources.Compute+(route.last==='series'?4:route.last==='small'?2:0)));

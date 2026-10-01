@@ -1,3 +1,4 @@
+import {englishRun, assertEnglishPage, installLocaleChecks} from './localization-browser-helpers.mjs';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -8,16 +9,16 @@ import { parseStory } from '../src/engine/parser.ts';
 import { readdir } from 'node:fs/promises';
 import { createLife } from '../src/life/engine.ts';
 import { createSave } from '../src/life/saves.ts';
-const out='output/journey';await mkdir(out,{recursive:true});
+const out=process.env.LOCALIZATION_OUTPUT??'output/journey';await mkdir(out,{recursive:true});
 const story=parseStory(JSON.parse(await readFile('src/story/manifest.json','utf8')),await Promise.all((await readdir('src/story/events')).filter(f=>f.endsWith('.json')).map(async source=>({source,data:JSON.parse(await readFile(`src/story/events/${source}`,'utf8'))}))));
 const initial=resolve(out,'initial.json');await writeFile(initial,JSON.stringify(createSave(createLife(story,0x12345678))));
 const browser=await chromium.launch({headless:true});const errors=[],requests=[];
-const stateOf=async p=>JSON.parse(await p.evaluate(()=>window.render_game_to_text()));
+const stateOf=async p=>{await assertEnglishPage(p);return JSON.parse(await p.evaluate(()=>window.render_game_to_text()));};
 const saveOf=async p=>p.evaluate(()=>JSON.parse(localStorage.getItem('outside.life.v1.auto')));
 async function open(viewport={width:1440,height:1100}) {
  const context=await browser.newContext({offline:true,viewport});const page=await context.newPage();
  page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
- await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href+'#tomorrow');await page.waitForFunction(()=>typeof window.render_game_to_text==='function');
+ await installLocaleChecks(page);await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href+'#tomorrow');await page.waitForFunction(()=>typeof window.render_game_to_text==='function');
  assert.equal((await stateOf(page)).mode,'turn-based-text-rpg');assert.equal(await page.locator('[data-action="tomorrow"]').count(),0);
  await page.click('[data-action="saves"]');await page.locator('#import-save').setInputFiles(initial);
  await page.waitForFunction(()=>!document.querySelector('#modal').open);
@@ -49,7 +50,7 @@ try {
    assert.deepEqual((await stateOf(page)).resources,settled.resources);
    await page.click('[data-act="saves"]');const bad=structuredClone(stored);bad.life.mind.instance.resources.Compute++;
    const invalid=resolve(out,'invalid.json');await writeFile(invalid,JSON.stringify(bad));
-   await page.locator('#pilot-import').setInputFiles(invalid);await page.waitForFunction(()=>document.querySelector('.modal-message').textContent.includes('导入失败'));
+   await page.locator('#pilot-import').setInputFiles(invalid);await page.waitForFunction(prefix=>document.querySelector('.modal-message').textContent.includes(prefix),englishRun?'Import failed':'导入失败');
    assert.deepEqual((await stateOf(page)).pending,settled.pending);
    await page.locator('#pilot-import').setInputFiles(backup);await page.waitForFunction(()=>!document.querySelector('#pilot-modal').open);
    await page.click('[data-act="continue"]');await page.click('[data-view="memory"]');
