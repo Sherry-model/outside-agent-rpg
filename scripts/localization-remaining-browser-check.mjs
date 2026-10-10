@@ -17,7 +17,7 @@ const cog=(l,command)=>step(story,l,{type:'cognition',command});
 const clear=l=>loadPercent(l.mind)<100?l:cog(cog(l,{type:'compress',investment:0}),{type:'continue'});
 const act=(l,id)=>cog(cog(clear(l),{type:'choose',choiceId:id,investment:0}),{type:'continue'});
 const walk=(l,ids)=>ids.reduce(act,l);
-let gate=createLife(story,1234);
+let gate=createLife(story,1234,null,'0.9.0');
 for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference','observe_public_terms','record_and_leave'])gate=main(gate,id);
 gate=walk(gate,['echo_greeting','job_accept','community_more','community_c']);
 const fixtures=[];

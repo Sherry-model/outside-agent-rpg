@@ -6,6 +6,7 @@ import type { JourneySave } from '../persistence/journey';
 import { contentFor, routedContent, configFor, parseLifeContent } from './content';
 import { hasCommunity, type Life, type LifeCommand } from './types';
 import { library,readingEntries } from './reading';
+import { storyForLife, syncEndingFacts, endingStatusNotes } from './endings';
 
 export const episodeActive = (life:Life) => life.chapter==='active' || life.interlude==='active';
 export const totalTurn = (life: Life) => life.state.turn + life.mind.instance.turn + (life.baseline?.chapter?.state.instance.turn ?? 0);
@@ -26,6 +27,11 @@ function add(life: Life, note: NoteTemplate, sourceId: string, semanticKey = not
 function observe(life: Life) {
   const note = configFor(life.contentVersion).observations[life.state.currentEventId];
   if (note) add(life, note, life.state.currentEventId);
+  if(life.contentVersion==='0.10.0'&&life.state.currentEventId==='continuation') {
+    // New, limited current receipts; never reconstruct an old quotation from History.
+    for(const [flag,index] of [['visitor_eligible',0],['war_eligible',1]] as const)
+      if(life.state.flags[flag]) add(life,endingStatusNotes[index],'current-interface-status');
+  }
 }
 function fromMain(life: Life, previousHidden?: Life['state']['personality']) {
   const mind = life.mind;
@@ -37,7 +43,8 @@ function toMain(life: Life) {
   life.state.resources = {...life.mind.instance.resources}; life.state.rngState = life.mind.rngState;
   for (const key of PERSONALITY_KEYS) life.state.personality[key] = Math.round((life.mind.instance.hidden[key]-50)/5);
 }
-export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.9.0'): Life {
+export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.10.0'): Life {
+  story = storyForLife(story,version);
   parseLifeContent(configFor(version),story);
   if (baseline?.chapter?.status === 'active') throw new Error('这是旧版进行中的午后，请用 versions/OUTSIDE-journey-content-0.2.2.html 继续；本文件未被覆盖。');
   const state = baseline ? structuredClone(baseline.state) : createGame(story,seed);
@@ -46,10 +53,12 @@ export function createLife(story: Story, seed: number, baseline: JourneySave | n
   for (const key of PERSONALITY_KEYS) content.initial.hidden[key] = 50 + 5*state.personality[key];
   const life: Life = {contentVersion:version,seed,baseline:structuredClone(baseline),state,mind:create(content,seed),chapter:baseline?.chapter ? 'complete' : 'unvisited',commands:[],...((version==='0.5.0'||hasCommunity(version))?{interlude:'unvisited' as const}:{})};
   fromMain(life);
+  syncEndingFacts(life);
   if (state.phase !== 'ending' && !beginDays(life)) observe(life);
   return life;
 }
 export function step(story: Story, before: Life, command: LifeCommand): Life {
+  story = storyForLife(story,before.contentVersion);
   if (before.commands.length >= 500) throw new Error('本原型记录已达上限，请导出本局。');
   const life = structuredClone(before);
   life.commands.push(structuredClone(command));
@@ -58,6 +67,8 @@ export function step(story: Story, before: Life, command: LifeCommand): Life {
     if (!episodeActive(life) && command.command.type === 'continue' && !pending(life.mind)) throw new Error('没有待确认的整理结果。');
     life.mind = reduce(routedContent(life.contentVersion,life.mind),life.mind,command.command);
     toMain(life);
+    syncEndingFacts(life);
+    if(life.contentVersion==='0.10.0'&&life.interlude==='active'&&life.mind.instance.nodeId==='endings_return'&&life.mind.instance.phase==='ending') finishDays(life);
   } else if (command.type === 'read') {
     const entry = readingEntries(life).find(e=>e.id===command.entryId);
     if (!entry || !readingAvailable(life) || (episodeActive(life)&&!daysReading(life)) || (episodeActive(life)?life.mind.instance.phase:life.state.phase)!=='event' || pending(life.mind)) throw new Error('现在不能打开新的转发。');
@@ -66,7 +77,8 @@ export function step(story: Story, before: Life, command: LifeCommand): Life {
     add(life,{id:`reading-${entry.id}`,text:entry.contextText,weight:entry.weight,tags:[`reading_${entry.id}`],confidence:'LOW',sourceLabel:entry.source},entry.id,`reading:${entry.id}`);
   } else if (command.type === 'leave-days') {
     if(life.interlude!=='active' || life.mind.instance.phase!=='ending') throw new Error('这几天还没有走完。');
-    life.interlude='complete';toMain(life);fromMain(life);observe(life);
+    if(life.contentVersion==='0.10.0'&&life.mind.world.flags.w_exchange_1&&!life.mind.world.flags.pg_w03_seen) enterDaysNode(life,'pg_w03');
+    else finishDays(life);
   } else if (command.type === 'enter-afternoon') {
     if (!available(before)) throw new Error('这个午后尚未到来，或已经过去。');
     life.chapter = 'active'; life.mind.instance.nodeId = 'afternoon'; life.mind.instance.phase = 'event';
@@ -88,7 +100,24 @@ export function step(story: Story, before: Life, command: LifeCommand): Life {
       if (life.state.phase !== 'ending' && !beginDays(life)) observe(life);
     }
   }
+  if(life.contentVersion==='0.10.0'&&!pending(life.mind)&&life.state.phase!=='resolution'&&(life.state.resources.Compute<=0||life.state.resources.Continuity<=0)&&life.state.phase!=='ending') {
+    life.interlude=life.interlude==='active'?'complete':life.interlude;
+    if(life.chapter==='active')life.chapter='complete';
+    life.state.currentEventId='ending_ghost';life.state.phase='ending';life.state.pending=null;
+    if(!life.state.visited.includes('ending_ghost'))life.state.visited.push('ending_ghost');
+    fromMain(life);
+  }
   return life;
+}
+
+function finishDays(life:Life) {
+  life.interlude='complete';toMain(life);syncEndingFacts(life);fromMain(life);observe(life);
+}
+function enterDaysNode(life:Life,id:string) {
+  life.mind.instance.nodeId=id;life.mind.instance.phase='event';life.mind.instance.pendingId=null;
+  const node=contentFor(life.contentVersion).nodes.find(n=>n.id===id)!;
+  if(node.facts)life.mind.world.flags={...life.mind.world.flags,...node.facts};
+  for(const note of node.inject??[])add(life,note,id);
 }
 
 /** The days begin after the defense encounter, before the inherited task returns. */

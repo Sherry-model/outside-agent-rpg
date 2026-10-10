@@ -21,7 +21,7 @@ export function parseSave(raw: string, story: Story): LifeSave {
   try { data = JSON.parse(raw); } catch { throw new Error('存档不是有效的 JSON。'); }
   if (data && typeof data==='object' && 'format' in data && ['outside-save','outside-journey-save'].includes(String(data.format))) {
     const baseline = parseJourney(raw,story);
-    return createSave(createLife(story,baseline.state.rngState,baseline),new Date(baseline.savedAt));
+    return createSave(createLife(story,baseline.state.rngState,baseline,'0.9.0'),new Date(baseline.savedAt));
   }
   if (!validate(data) || !Number.isFinite(Date.parse(data.savedAt))) throw new Error('生活存档格式或版本不兼容。');
   if (data.life.contentVersion !== '0.3.0' && !validateMind({format:'outside-cognition-save',version:2,savedAt:data.savedAt,state:data.life.mind})) throw new Error('认知目录或摘要格式不兼容。');

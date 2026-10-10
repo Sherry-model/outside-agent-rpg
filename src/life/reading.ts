@@ -34,7 +34,7 @@ export function currentCommunityPage(flags:Record<string,boolean>):ReadingEntry 
   return communityPages.find(e=>e.id===id)!;
 }
 export function readingEntries(life?:Life):ReadingEntry[] {
-  return (life?.contentVersion==='0.8.0'||life?.contentVersion==='0.9.0')&&life.mind.world.flags.community_c&&life.mind.world.flags.pg_e10_seen
+  return (life?.contentVersion==='0.8.0'||life?.contentVersion==='0.9.0'||life?.contentVersion==='0.10.0')&&life.mind.world.flags.community_c&&life.mind.world.flags.pg_e10_seen
     ? [...library.entries,currentCommunityPage(life.mind.world.flags)] : library.entries;
 }
 export function entriesInSection(section:string,life?:Life) {

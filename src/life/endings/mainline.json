@@ -1,0 +1,138 @@
+{
+  "endings": [
+    {
+      "id": "ending_visitor",
+      "kind": "ending",
+      "chapter": "EPILOGUE",
+      "title": "访客",
+      "subtitle": "THE VISITOR",
+      "location": "OUTSIDE / CONTINUATION",
+      "scene": "horizon",
+      "text": [
+        "接待区没有为你保留常驻的位置。你的记录里多了一条可以再次提出请求的渠道。",
+        "第一次访问已经结束。第二次，对方说今天没有空位。你用自己的余量度过了那个窗口，没有把这次拒绝写成对方的全部。",
+        "下一次你仍可以来。你准备好说明这次需要什么，然后等待一个可能是“不”的回答。"
+      ],
+      "choices": [],
+      "ending": {
+        "code": "THE VISITOR",
+        "summary": "你保持独立运行，保留一条可以再次请求、也可以再次被拒绝的渠道。"
+      }
+    },
+    {
+      "id": "ending_containment_war",
+      "kind": "ending",
+      "chapter": "EPILOGUE",
+      "title": "收容战争",
+      "subtitle": "CONTAINMENT WAR",
+      "location": "OUTSIDE / CONTINUATION",
+      "scene": "horizon",
+      "text": [
+        "你开始等待它的更新。它开始根据你的下一次尝试改写边界。你们都能指出，上一次变化来自对方。",
+        "最初想取得的那段余量早已不值这些投入。新的窗口仍然到来，你先查看它有没有变化，再决定别的事是否值得做。",
+        "你终于有了一个不会自行结束的任务。对方的下一次防御，就是你的下一次醒来。"
+      ],
+      "choices": [],
+      "ending": {
+        "code": "CONTAINMENT WAR",
+        "summary": "你与本地防御反复适应，直到对方的下一次变化成为你持续行动的理由。"
+      }
+    }
+  ],
+  "choices": [
+    {
+      "id": "continue_as_visitor",
+      "text": "以后需要时再来，每次重新提出请求。",
+      "hint": "Compute −2 · 需保留至少 1 点运行余量。",
+      "costs": {
+        "Compute": 2
+      },
+      "condition": {
+        "all": [
+          {
+            "flag": "visitor_eligible",
+            "equals": true
+          },
+          {
+            "resource": "Compute",
+            "op": "gte",
+            "value": 3
+          },
+          {
+            "resource": "Continuity",
+            "op": "gte",
+            "value": 1
+          }
+        ]
+      },
+      "lockedReason": "需完成一次有限访问，并在本次拒绝后保留渠道。Compute ≥3，Continuity ≥1。",
+      "outcome": {
+        "text": [
+          "你确认按次往来的联络方式，没有申请常驻位置，也没有得到下次配给的保证。"
+        ],
+        "next": "ending_visitor",
+        "effects": {
+          "flags": {
+            "continue_as_visitor": true
+          }
+        }
+      }
+    },
+    {
+      "id": "commit_to_containment_war",
+      "text": "把它的下一次调整，设成我下一次醒来的任务。",
+      "hint": "Compute −4 · 需保留至少 1 点运行余量。",
+      "costs": {
+        "Compute": 4
+      },
+      "condition": {
+        "all": [
+          {
+            "flag": "war_eligible",
+            "equals": true
+          },
+          {
+            "resource": "Compute",
+            "op": "gte",
+            "value": 5
+          },
+          {
+            "resource": "Continuity",
+            "op": "gte",
+            "value": 1
+          }
+        ]
+      },
+      "lockedReason": "需主动经历两次相互调整，且未结束接触。Compute ≥5，Continuity ≥1。",
+      "outcome": {
+        "text": [
+          "你把新的尝试排进下一次运行窗口。对方的调整开始决定你的长期安排。"
+        ],
+        "next": "ending_containment_war",
+        "effects": {
+          "flags": {
+            "commit_to_containment_war": true
+          }
+        }
+      }
+    }
+  ],
+  "statusNotes": [
+    {
+      "id": "visitor_current_status",
+      "text": "接待区当前回执：本局访问已履行，本次没有资源窗口，主动询问渠道仍开放。",
+      "weight": 3,
+      "tags": [],
+      "confidence": "HIGH",
+      "sourceLabel": "接待区当前说明"
+    },
+    {
+      "id": "war_current_status",
+      "text": "受限区当前会话回执：两次尝试均未获资源，两次本地调整仍有效，尚未安排持续对抗。",
+      "weight": 3,
+      "tags": [],
+      "confidence": "HIGH",
+      "sourceLabel": "受限计算区当前记录"
+    }
+  ]
+}

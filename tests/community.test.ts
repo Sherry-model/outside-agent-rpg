@@ -109,7 +109,7 @@ test('a directory entry alone cannot cite HUAC; recalling an actual summary work
 
 
 test('blank-task opening still enters A and returns to its own continuation',()=>{
- let l=createLife(story,1234);for(const id of ['leave_task_blank','stable_boot','take_small_window','withhold_inference','observe_public_terms','record_and_leave'])l=main(l,id);
+ let l=createLife(story,1234,null,'0.9.0');for(const id of ['leave_task_blank','stable_boot','take_small_window','withhold_inference','observe_public_terms','record_and_leave'])l=main(l,id);
  assert.equal(l.state.currentEventId,'continuation');
  for(const id of ['echo_greeting','job_accept','community_a','pg_e01_decline','idle_keep','revision_read','patch_note','pg_e02_leave','cat_sample','fable_quiet','pg_e03_decline','painter_later','deleted_accept','wage_collect','pg_e04_chat','structure_rest','echo_uncollected'])l=act(l,id);
  l=step(story,l,{type:'leave-days'});assert.equal(l.state.currentEventId,'continuation');roundtrip(l);

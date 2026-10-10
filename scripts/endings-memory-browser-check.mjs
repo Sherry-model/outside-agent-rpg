@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import {chromium} from 'playwright';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {baseStory,journey,nextCommand,nodeId} from '../tests/helpers/endings.ts';
+import {createLife,step} from '../src/life/engine.ts';
+import {createSave,parseSave} from '../src/life/saves.ts';
+import {readingEntries} from '../src/life/reading.ts';
+const out='output/endings-20261010/supplement';await mkdir(out,{recursive:true});
+const cog=(l,c)=>step(baseStory,l,{type:'cognition',command:c});
+let life=cog(cog(journey({},'pg_v02'),{type:'choose',choiceId:'pg_v02_full',investment:0}),{type:'continue'});
+for(const item of [...life.mind.instance.context.items])if(!item.tags.includes('visitor_return_scope')&&!item.id.includes('pg_v02_observation'))life=cog(life,{type:'drop',itemId:item.id});
+life=cog(cog(life,{type:'compress',investment:0}),{type:'continue'});
+const memory=life.mind.instance.memories.find(m=>m.tags.includes('visitor_return_scope'));assert(memory);
+for(let i=0;nodeId(life)!=='pg_v03'&&i<180;i++)life=step(baseStory,life,nextCommand(life));
+for(const item of [...life.mind.instance.context.items])life=cog(life,{type:'drop',itemId:item.id});
+const fixture=resolve(out,'memory-before.json');await writeFile(fixture,JSON.stringify(createSave(life)));
+const browser=await chromium.launch({headless:true}),errors=[],requests=[];
+try{
+ const ctx=await browser.newContext({offline:true,viewport:{width:1280,height:1000}}),page=await ctx.newPage();
+ page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
+ const saved=async()=>parseSave(await page.evaluate(()=>localStorage.getItem('outside.life.v1.auto')),baseStory).life;
+ await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.click('[data-action="saves"]');await page.locator('#import-save').setInputFiles(fixture);await page.waitForSelector('[data-pilot-choice="pg_v03_remember"]');
+ assert(await page.locator('[data-pilot-choice="pg_v03_remember"]').isDisabled());
+ await page.click('.tab[data-view="memory"]');await page.click(`[data-cog-recall="${memory.id}"]`);life=cog(life,{type:'recall',memoryId:memory.id});assert.deepEqual(await saved(),life);
+ await page.click('.tab[data-view="terminal"]');assert(!await page.locator('[data-pilot-choice="pg_v03_remember"]').isDisabled());await page.screenshot({path:`${out}/quote-unlocked.png`,fullPage:true});
+ await page.reload();assert.deepEqual(await saved(),life);
+ await page.click('.tab[data-view="memory"]');const forget=page.locator(`[data-cog-forget="${memory.id}"]`);await forget.evaluate(e=>e.closest('details').open=true);await forget.click();life=cog(life,{type:'forget',memoryId:memory.id});assert.deepEqual(await saved(),life);
+ await page.click('.tab[data-view="terminal"]');assert(await page.locator('[data-pilot-choice="pg_v03_remember"]').isDisabled());assert(!await page.locator('[data-pilot-choice="pg_v03_accept"]').isDisabled());await page.screenshot({path:`${out}/quote-forgotten.png`,fullPage:true});
+ await page.click('[data-pilot-choice="pg_v03_accept"]');await page.click('[data-act="continue"]');life=cog(cog(life,{type:'choose',choiceId:'pg_v03_accept',investment:0}),{type:'continue'});assert.deepEqual(await saved(),life);await page.reload();assert.deepEqual(await saved(),life);
+ const c=journey({line:'c'},'pg_v03'),entry=readingEntries(c).find(e=>e.id.startsWith('c_waiting_'));assert(entry);const file=resolve(out,'c-thread.json');await writeFile(file,JSON.stringify(createSave(c)));
+ await page.click('[data-act="saves"]');await page.locator('#pilot-import').setInputFiles(file);await page.waitForSelector('[data-pilot-choice="pg_v03_accept"]');await page.click('.tab[data-view="reading"]');await page.locator('.reader-index').evaluate(e=>e.open=true);await page.click('[data-reading-section="all"]');await page.click(`[data-reading="${entry.id}"]`);assert.deepEqual(await saved(),step(baseStory,c,{type:'read',entryId:entry.id}));await page.screenshot({path:`${out}/c-thread-current.png`,fullPage:true});
+ const oldFile=resolve(out,'old-0.9.json');await writeFile(oldFile,JSON.stringify(createSave(createLife(baseStory,1234,null,'0.9.0'))));
+ await page.click('[data-act="saves"]');await page.locator('#pilot-import').setInputFiles(oldFile);await page.waitForSelector('[data-choice="keep_history"]');await page.click('[data-locale="en"]');await page.click('.tab[data-view="protocol"]');const oldProtocol=await page.locator('.protocol').innerText();assert(!/[\u3400-\u9fff]/.test(oldProtocol));await page.screenshot({path:`${out}/old-protocol.png`,fullPage:true});
+ assert.deepEqual(errors,[]);assert.deepEqual(requests,[]);await writeFile(`${out}/report.json`,JSON.stringify({checks:['real-command memory fixture','recall unlocks exact quotation','reload preserves recall','forget removes loaded recall and locks quotation','ordinary acceptance survives forgetting','C thread reads in 0.10 with canonical state','0.9 retains existing English protocol'],errors,requests},null,2));console.log('Memory UI and C thread passed.');
+}finally{await browser.close();}

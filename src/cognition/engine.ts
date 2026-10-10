@@ -35,6 +35,7 @@ export function canChoose(content: Content, s: State, id: string): string {
   if (!choice) return '没有这项选择。';
   if (choice.requiresWorldFlag && !s.world.flags[choice.requiresWorldFlag]) return '这段实际经历尚未发生。';
   if (choice.requiresTag && !hasTag(s, choice.requiresTag)) return '当前上下文没有这条线索；可以检查留下的记忆。';
+  if (s.instance.resources.Compute < (choice.minCompute ?? 0)) return `Compute 至少需要 ${choice.minCompute}，以保留运行余量。`;
   if (RESOURCE_KEYS.some(k => s.instance.resources[k] < (choice.costs?.[k] ?? 0))) return '当前资源不足。';
   return '';
 }

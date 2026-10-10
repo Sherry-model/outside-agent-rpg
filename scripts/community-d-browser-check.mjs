@@ -11,7 +11,7 @@ const out=process.env.LOCALIZATION_OUTPUT??'output/community-d';await mkdir(out,
 const story=parseStory(JSON.parse(await readFile('src/story/manifest.json','utf8')),await Promise.all((await readdir('src/story/events')).filter(f=>f.endsWith('.json')).map(async source=>({source,data:JSON.parse(await readFile(`src/story/events/${source}`,'utf8'))}))));
 const main=(l,id)=>step(story,step(story,l,{type:'choose',choiceId:id}),{type:'continue'});
 for(const blank of [false,true]){
- let l=createLife(story,1234);for(const id of [blank?'leave_task_blank':'keep_history','stable_boot','take_small_window','withhold_inference','observe_public_terms'])l=main(l,id);
+ let l=createLife(story,1234,null,'0.9.0');for(const id of [blank?'leave_task_blank':'keep_history','stable_boot','take_small_window','withhold_inference','observe_public_terms'])l=main(l,id);
  await writeFile(`${out}/before-${blank}.json`,JSON.stringify(createSave(l)));
 }
 const browser=await chromium.launch({headless:true}),errors=[],requests=[],checks=[];

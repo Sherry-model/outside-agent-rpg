@@ -34,7 +34,7 @@ export interface Effects {
 export interface Outcome { text: string[]; next: string; effects?: Effects; inject?: NoteTemplate[] }
 export interface Choice {
   id: string; text: string; hint: string; requiresTag?: string; requiresWorldFlag?: string;
-  costs?: Partial<Resources>;
+  costs?: Partial<Resources>; minCompute?: number;
   check?: CheckSpec; outcome?: Outcome; outcomes?: Record<CheckResult, Outcome>;
 }
 export interface Node {

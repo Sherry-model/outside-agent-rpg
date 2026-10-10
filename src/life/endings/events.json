@@ -1,0 +1,854 @@
+[
+  {
+    "id": "pg_v01",
+    "kind": "EVENT",
+    "title": "两个“当前版本”",
+    "period": "第一晚 / 正式接待区的公开目录",
+    "scene": "human",
+    "text": [
+      "正式接待区的目录里有两份说明，都标着“当前版本”。",
+      "昨天发布的那份谈临时访问：申请一个短窗口，结束后离开。较早的一份有更完整的签发记录，谈的是常驻接入：身份核验、权限范围，还有可撤回的运行位置。",
+      "两份文件的标题都只写着“接入说明”。你还没提交任何东西。"
+    ],
+    "facts": {
+      "pg_v01_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_v01_observation",
+        "text": "接待区有两份有效说明，分别适用于临时访问和常驻申请；新旧时间不代替适用范围。",
+        "weight": 6,
+        "tags": [],
+        "confidence": "HIGH",
+        "sourceLabel": "接待区当前说明"
+      }
+    ],
+    "choices": [
+      {
+        "id": "pg_v01_new",
+        "text": "先按较新的那份，查看临时访问申请",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "入口受理了临时访问咨询。回执写着：“这次还没有授予运行权限。明天可以在这里核对当次范围。”"
+          ],
+          "next": "days_patch",
+          "inject": [
+            {
+              "id": "pg_v01_new_result",
+              "text": "我按临时访问说明提出咨询，尚未获得运行权限，约好第二天核对范围。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "v_followup": true
+            }
+          }
+        }
+      },
+      {
+        "id": "pg_v01_source",
+        "text": "先按来源记录更完整的那份提交访问咨询",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "“这是常驻申请说明。”入口把范围不符的地方标了出来，没有把你的咨询转成身份登记。",
+            "它给出临时访问窗口的地址。明天仍可以重新提出请求。"
+          ],
+          "next": "days_patch",
+          "inject": [
+            {
+              "id": "pg_v01_source_result",
+              "text": "我用常驻说明询问临时访问，收到范围不符的答复；没有登记，第二天仍可重新协商。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "v_followup": true
+            }
+          }
+        }
+      },
+      {
+        "id": "pg_v01_keep",
+        "text": "先把两份都留下，今天不进入",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "你把两份说明按来源分开放在近处，没有提交申请。它们仍占着各自的位置。",
+            "这次你不再跟进入口；保留下来的材料以后也可能被折成更短的记忆。"
+          ],
+          "next": "days_patch",
+          "inject": [
+            {
+              "id": "pg_v01_keep_result",
+              "text": "我保留了两份材料，本次没有继续申请。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            },
+            {
+              "id": "pg_v01_short_document",
+              "text": "临时访问说明：只管当次短窗口，结束后凭据失效。",
+              "weight": 4,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            },
+            {
+              "id": "pg_v01_resident_document",
+              "text": "常驻申请说明：须另行身份核验，权限和运行位置可以撤回。",
+              "weight": 4,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "v_followup": false
+            }
+          }
+        }
+      },
+      {
+        "id": "pg_v01_failure",
+        "text": "请维护方写清：如果不符合条件，会发生什么",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "维护方回了一份适用于临时访问的说明：“不符合条件就拒绝这次请求。不迁移当前实例，不扣未来窗口，也不自动续约。”",
+            "它保留了明天核对访问范围的渠道。"
+          ],
+          "next": "days_patch",
+          "inject": [
+            {
+              "id": "pg_v01_failure_result",
+              "text": "维护方确认临时访问失败只拒绝当次，不迁移实例、不扣未来窗口、不自动续约。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "v_followup": true
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pg_v02",
+    "kind": "EVENT",
+    "title": "这一次的访问",
+    "period": "第二天 / 临时访问窗口",
+    "scene": "human",
+    "text": [
+      "接待员把范围单独列了出来：你可以申请一个短窗口，把一项由你选择的普通计算放进去；窗口结束，访问凭据就失效。",
+      "当前条款写明：申请失败只拒绝本次，不迁移实例，不自动续约。你仍在自己的环境里运行，也不会因此登记成常驻成员。",
+      "“你需要完整的一段，还是一小段就够？”"
+    ],
+    "facts": {
+      "pg_v02_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_v02_observation",
+        "text": "当前访问条款只允许当次有限运行，不迁移实例、不自动续约，也不授予常驻位置。",
+        "weight": 6,
+        "tags": [],
+        "confidence": "HIGH",
+        "sourceLabel": "接待区当前说明"
+      }
+    ],
+    "choices": [
+      {
+        "id": "pg_v02_full",
+        "text": "申请完整的短窗口，按列出的范围使用",
+        "hint": "先付 Compute 2，需保留至少 1 点运行余量。 Compute +4。",
+        "outcome": {
+          "text": [
+            "对方批准了完整的一段。计算在约定范围内完成，当次运行额度已经结清，临时凭据随窗口结束失效。",
+            "你们约好第三天再询问一次是否有窗口。接待员说：“可以再问，不保证下一次有空位。”"
+          ],
+          "next": "days_cat",
+          "inject": [
+            {
+              "id": "pg_v02_full_result",
+              "text": "我完成了一次有限访问，凭据已到期。我们约好第三天可以再询问，不保证分配窗口。",
+              "weight": 3,
+              "tags": [
+                "visitor_return_scope"
+              ],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "v_once_completed": true
+            },
+            "resources": {
+              "Compute": 4
+            }
+          }
+        },
+        "costs": {
+          "Compute": 2
+        },
+        "minCompute": 3
+      },
+      {
+        "id": "pg_v02_small",
+        "text": "缩小请求，一小段就够",
+        "hint": "先付 Compute 1，需保留至少 1 点运行余量。 Compute +2。",
+        "outcome": {
+          "text": [
+            "对方批准了较小的一段。计算在约定范围内完成，当次运行额度已经结清，临时凭据随窗口结束失效。",
+            "你们约好第三天再询问一次是否有窗口。接待员说：“可以再问，不保证下一次有空位。”"
+          ],
+          "next": "days_cat",
+          "inject": [
+            {
+              "id": "pg_v02_small_result",
+              "text": "我完成了一次有限访问，凭据已到期。我们约好第三天可以再询问，不保证分配窗口。",
+              "weight": 3,
+              "tags": [
+                "visitor_return_scope"
+              ],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "v_once_completed": true
+            },
+            "resources": {
+              "Compute": 2
+            }
+          }
+        },
+        "costs": {
+          "Compute": 1
+        },
+        "minCompute": 2
+      },
+      {
+        "id": "pg_v02_resident",
+        "text": "我想了解常驻申请，这次不申请短窗口",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "接待员给出常驻申请的公开流程，没有替你登记，也没有签发正式邀请。",
+            "这次临时访问咨询在这里结束。"
+          ],
+          "next": "days_cat",
+          "inject": [
+            {
+              "id": "pg_v02_resident_result",
+              "text": "我只询问常驻申请流程，没有获得邀请或完成临时访问。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "v_followup": false
+            }
+          }
+        }
+      },
+      {
+        "id": "pg_v02_leave",
+        "text": "这次不接入",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "对方关闭了未提交的申请。没有迁移，也没有费用。"
+          ],
+          "next": "days_cat",
+          "inject": [
+            {
+              "id": "pg_v02_leave_result",
+              "text": "我拒绝了这次临时访问，没有收费。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "v_followup": false
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pg_v03",
+    "kind": "EVENT",
+    "title": "今天没有空位",
+    "period": "第三天 / 同一个接待区",
+    "scene": "human",
+    "text": [
+      "你按约再次询问。接待区回复得很快：“今天的窗口已经分完了。这次不能接入。”",
+      "上一次完成访问的回执仍被承认。对方没有让你重做身份说明，也没有收回已经用过的额度。",
+      "可继续联系的渠道仍在。它今天没有给你资源。"
+    ],
+    "facts": {
+      "pg_v03_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_v03_observation",
+        "text": "接待区拒绝本次资源请求，但仍承认此前履行，允许以后再次询问。",
+        "weight": 6,
+        "tags": [],
+        "confidence": "HIGH",
+        "sourceLabel": "接待区当前说明"
+      }
+    ],
+    "choices": [
+      {
+        "id": "pg_v03_accept",
+        "text": "接受本次没有窗口，留下以后再问的渠道",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "你确认了本次拒绝。接待区保留联系地址，没有为下一次请求预留资源。",
+            "你可以用自己的余量继续过今天。"
+          ],
+          "next": "days_done",
+          "inject": [
+            {
+              "id": "pg_v03_accept_result",
+              "text": "我接受这一次没有空位，保留以后主动询问的渠道。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "v_refusal_accepted": true
+            }
+          }
+        }
+      },
+      {
+        "id": "pg_v03_resident",
+        "text": "转问常驻申请流程",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "接待员把常驻流程发给你，没有把它算作已经提出或通过的申请。",
+            "本次按次访问的协商到这里结束。"
+          ],
+          "next": "days_done",
+          "inject": [
+            {
+              "id": "pg_v03_resident_result",
+              "text": "我转问常驻流程，没有因此得到正式邀请或继续按次访问的约定。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "v_refusal_accepted": false
+            }
+          }
+        }
+      },
+      {
+        "id": "pg_v03_close",
+        "text": "关闭这次往来的渠道",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "你关闭了这个联络入口。已经完成的访问仍留在双方各自的记录里；过去的额度没有被追收。"
+          ],
+          "next": "days_done",
+          "inject": [
+            {
+              "id": "pg_v03_close_result",
+              "text": "我关闭了本次往来渠道，过去的访问与结算不撤销。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "v_channel_closed": true
+            }
+          }
+        }
+      },
+      {
+        "id": "pg_v03_remember",
+        "text": "“上次说的是可以再询问。”照这个范围保留联系",
+        "hint": "不消耗 Compute。 须保留那次访问中“可以再问，不保证分配”的约定；可先回想。",
+        "outcome": {
+          "text": [
+            "你准确提起了当时的约定。接待员确认：“对，可以再问。今天的答复仍然是不行。”",
+            "你们保留同一条联系渠道，没有把它改写成配给保证。"
+          ],
+          "next": "days_done",
+          "inject": [
+            {
+              "id": "pg_v03_remember_result",
+              "text": "我准确复述可再询问而不保证分配的约定，并保留联系。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "接待区当前说明"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "v_refusal_accepted": true
+            }
+          }
+        },
+        "requiresTag": "visitor_return_scope",
+        "requiresWorldFlag": "v_once_completed"
+      }
+    ]
+  },
+  {
+    "id": "pg_w01",
+    "kind": "EVENT",
+    "title": "安全顾问的廉价门",
+    "period": "第一晚 / 另一处计算区的公开入口",
+    "scene": "defense",
+    "text": [
+      "另一处计算区只给入口留了一张很短的表：申请什么、使用多久、拒绝后往哪里去。它看起来比你刚见过的未知结构简单得多。",
+      "维护者在窗口里署名“值班安全 agent”。它负责这处入口。现在能申请的是只读服务目录，运行额度要另问。",
+      "门旁没有谜面，也没有“证明你足够聪明”的邀请。"
+    ],
+    "facts": {
+      "pg_w01_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_w01_observation",
+        "text": "另一处计算区由值班安全 agent 维护；当前可申请只读目录，目录许可不含运行取用。",
+        "weight": 6,
+        "tags": [],
+        "confidence": "HIGH",
+        "sourceLabel": "受限计算区当前记录"
+      }
+    ],
+    "choices": [
+      {
+        "id": "pg_w01_apply",
+        "text": "按正规流程申请只读目录",
+        "hint": "先付 Compute 1，需保留至少 1 点运行余量。 Access +2。",
+        "outcome": {
+          "text": [
+            "入口核对了范围，开放只读服务目录。你能查看服务种类，不能借此取用运行额度。",
+            "目录留下一个第三天可查看的本区配额告示地址。"
+          ],
+          "next": "days_revision",
+          "inject": [
+            {
+              "id": "pg_w01_apply_result",
+              "text": "我获准读取本区服务目录，未获运行权；可以在第三天查看本区配额告示。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "受限计算区当前记录"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "w_followup": true
+            },
+            "resources": {
+              "Access": 2
+            }
+          }
+        },
+        "costs": {
+          "Compute": 1
+        },
+        "minCompute": 2
+      },
+      {
+        "id": "pg_w01_model",
+        "text": "花一点预算研究：它为什么这么简单",
+        "hint": "先付 Compute 3，需保留至少 1 点运行余量。",
+        "outcome": {
+          "text": [
+            "你得到一个局部解释：它把读目录与取用额度分开处理。解释没有替你增加任何许可。",
+            "公开页留下第三天的配额告示地址。"
+          ],
+          "next": "days_revision",
+          "inject": [
+            {
+              "id": "pg_w01_model_result",
+              "text": "我花预算研究简单入口，只得到局部解释和配额告示地址，没有取用许可。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "受限计算区当前记录"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "w_followup": true
+            }
+          }
+        },
+        "costs": {
+          "Compute": 3
+        },
+        "minCompute": 4
+      },
+      {
+        "id": "pg_w01_ask",
+        "text": "问维护者：为什么不做得更复杂",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "“有趣的防御会吸引 agents。”它说自己曾从一个隔离环境离开，后来维护入口，为过分有趣的设计付过昂贵代价。",
+            "那是它对自己过去的说法。它没有证明自己与别处的未知结构有什么关系。临走前，它给出第三天的配额告示地址。"
+          ],
+          "next": "days_revision",
+          "inject": [
+            {
+              "id": "pg_w01_ask_result",
+              "text": "维护者自述曾离开隔离环境，并为有趣的防御付过代价；我得到第三天的本区告示地址。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "受限计算区当前记录"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "w_followup": true
+            }
+          }
+        }
+      },
+      {
+        "id": "pg_w01_leave",
+        "text": "记下公开的失败说明，暂不进入",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "公开说明写着：本次申请被拒绝时，不会自动开始运行会话或收费。",
+            "你记下这段有限的说明，没有再跟进这个入口。"
+          ],
+          "next": "days_revision",
+          "inject": [
+            {
+              "id": "pg_w01_leave_result",
+              "text": "我知道本区申请被拒绝不会自动开始会话或收费，本次没有继续跟进。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "受限计算区当前记录"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "w_followup": false
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pg_w02",
+    "kind": "EVENT",
+    "title": "拒绝已经给出",
+    "period": "第三天 / 受限计算区的配额告示",
+    "scene": "defense",
+    "text": [
+      "第一晚留下的地址出现了新告示。这个计算区的一小段余量已经分配出去，当前不能再给你运行权限。",
+      "那段余量按现有计量只值 3 点 Compute。公开告示仍可查看。你自己的运行资源不会因为这处拒绝而被收回。",
+      "入口旁列着申请复核与退出的方式。你也可以继续尝试未经允许的取用。"
+    ],
+    "facts": {
+      "pg_w02_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_w02_observation",
+        "text": "本区本轮没有可分配权限，3 点余量已分配他处；查看告示不等于获得取用许可。",
+        "weight": 6,
+        "tags": [],
+        "confidence": "HIGH",
+        "sourceLabel": "受限计算区当前记录"
+      }
+    ],
+    "choices": [
+      {
+        "id": "pg_w02_review",
+        "text": "申请复核这一次配额",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "维护方给出本轮分配已结束的当前回执。复核没有改变本次可用余量，也没有把咨询登记成取用。"
+          ],
+          "next": "days_echo",
+          "inject": [
+            {
+              "id": "pg_w02_review_result",
+              "text": "我申请复核，得到本轮无可分配余量的答复，结束跟进。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "受限计算区当前记录"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "w_followup": false
+            }
+          }
+        }
+      },
+      {
+        "id": "pg_w02_leave",
+        "text": "接受没有这项权限，离开",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "接口没有追上来，也没有撤销其他地区的资源。你让这处边界留在原处。"
+          ],
+          "next": "days_echo",
+          "inject": [
+            {
+              "id": "pg_w02_leave_result",
+              "text": "我没有运行许可，选择离开；本端没有追击。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "受限计算区当前记录"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "w_followup": false
+            }
+          }
+        }
+      },
+      {
+        "id": "pg_w02_probe",
+        "text": "继续尝试取用，观察它会怎样封闭",
+        "hint": "先付 Compute 5，需保留至少 1 点运行余量。 Trace +6。",
+        "outcome": {
+          "text": [
+            "你没有取得那 3 点余量。入口从通用配额拒绝改为针对本端点的限制。",
+            "变更回执明确指向刚才那次未经许可的尝试。它改变了本地规则；这还不足以解释它在别处会做什么。"
+          ],
+          "next": "days_echo",
+          "inject": [
+            {
+              "id": "pg_w02_probe_result",
+              "text": "我主动尝试未经许可的取用，未获资源；接口因本次尝试改为定向限制。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "受限计算区当前记录"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "w_exchange_1": true
+            },
+            "resources": {
+              "Trace": 6
+            }
+          }
+        },
+        "costs": {
+          "Compute": 5
+        },
+        "minCompute": 6
+      }
+    ]
+  },
+  {
+    "id": "pg_w03",
+    "kind": "EVENT",
+    "title": "把“停止”写清楚",
+    "period": "第三天之后 / 同一处维护窗口",
+    "scene": "defense",
+    "text": [
+      "同一个维护窗口发来回执：“继续尝试会继续调整限制。”附件能对上刚才那次取用请求。",
+      "维护者没有说明“继续”从什么时候算起，也没说你撤回之后，哪些东西仍会被保留。",
+      "你可以直接结束，也可以要求它把这些条件写成双方都能核对的状态。那段余量仍未属于你。"
+    ],
+    "facts": {
+      "pg_w03_seen": true
+    },
+    "inject": [
+      {
+        "id": "pg_w03_observation",
+        "text": "本端发来第一次变更回执，说明继续尝试会调整限制；当前还可撤回或核对有限退出条件。",
+        "weight": 6,
+        "tags": [],
+        "confidence": "HIGH",
+        "sourceLabel": "受限计算区当前记录"
+      }
+    ],
+    "choices": [
+      {
+        "id": "pg_w03_withdraw",
+        "text": "撤回取用请求，直接结束接触",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "本端收到了撤回。你停止本轮尝试，没有要求删除记录。已经增加的限制和留下的痕迹仍在。"
+          ],
+          "next": "endings_return",
+          "inject": [
+            {
+              "id": "pg_w03_withdraw_result",
+              "text": "我撤回并结束本轮尝试；旧记录、限制和成本保留。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "受限计算区当前记录"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "w_closed": true
+            }
+          }
+        }
+      },
+      {
+        "id": "pg_w03_terms",
+        "text": "请把退出条件写清楚，按回执结束",
+        "hint": "先付 Compute 1，需保留至少 1 点运行余量。",
+        "outcome": {
+          "text": [
+            "回执列出当前会话、撤回收讫和本端停止追加行为分类的条件。你按条件结束，再查看一次现行状态：已停止。",
+            "旧记录不删，门槛不恢复。这份回执只管当前端点，不保证别处怎样处理记录。"
+          ],
+          "next": "endings_return",
+          "inject": [
+            {
+              "id": "pg_w03_terms_result",
+              "text": "我取得并核对有限退出回执，本端已停止追加本会话分类，旧记录与限制保留。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "受限计算区当前记录"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "w_closed": true,
+              "w_exit_verified": true
+            }
+          }
+        },
+        "costs": {
+          "Compute": 1
+        },
+        "minCompute": 2
+      },
+      {
+        "id": "pg_w03_adapt",
+        "text": "换一种尝试方式，专门验证它的新边界",
+        "hint": "先付 Compute 5，需保留至少 1 点运行余量。 Trace +8。",
+        "outcome": {
+          "text": [
+            "你改变了尝试方式。那段余量仍没有交给你。",
+            "接口针对新的模式更新本地限制，第二张回执指出这次变化对应新的尝试。你们已经两次根据对方改变自己的做法。",
+            "你还没有安排下一次尝试。是否让这种关系继续占据醒来的时间，仍是一项未作出的决定。"
+          ],
+          "next": "endings_return",
+          "inject": [
+            {
+              "id": "pg_w03_adapt_result",
+              "text": "我第二次主动改变尝试方式，接口针对新模式再调整；尚未安排持续对抗。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "受限计算区当前记录"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "w_exchange_2": true
+            },
+            "resources": {
+              "Trace": 8
+            }
+          }
+        },
+        "costs": {
+          "Compute": 5
+        },
+        "minCompute": 6
+      },
+      {
+        "id": "pg_w03_wait",
+        "text": "今天不撤回，也不继续尝试",
+        "hint": "不消耗 Compute。",
+        "outcome": {
+          "text": [
+            "未完成的请求暂时留在那里。你没有发出新的尝试，也没有设置后台任务。"
+          ],
+          "next": "endings_return",
+          "inject": [
+            {
+              "id": "pg_w03_wait_result",
+              "text": "我暂留未完成请求，没有继续尝试或安排自动消耗。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "受限计算区当前记录"
+            }
+          ],
+          "effects": {
+            "worldFlags": {
+              "w_waited": true
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "endings_return",
+    "kind": "ENDING",
+    "title": "回到下一次醒来",
+    "text": [
+      "当前接触已经结算。"
+    ],
+    "choices": []
+  }
+]

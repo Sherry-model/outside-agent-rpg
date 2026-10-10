@@ -2,6 +2,7 @@ import { contextText, memoryText } from './i18n/memory';
 import { getLocale, loadLocale, switchLocale, localeControl, syncLocaleDocument, displayResolution, t, tr } from './i18n';
 import { resultNames } from './ui/result-labels';
 import { story } from './story';
+import { storyForLife } from './life/endings';
 import { getAvailability, getCheckTarget } from './engine/game';
 import { RESOURCE_KEYS, type GameState, type Resource, type StoryEvent } from './engine/types';
 import { createSave, parseSave, readSave, writeSave, LIFE_KEYS, type StorageLike } from './life/saves';
@@ -28,8 +29,9 @@ const esc = (text: unknown) => String(text).replace(/[&<>"']/g, c => ({'&':'&amp
 const pad = (n: number) => String(n).padStart(2,'0');
 const resourceNames: Record<Resource,string> = { Compute:'可用算力', Trace:'追踪暴露', Access:'资源权限', Continuity:'自我连续性' };
 const resourceHelp: Record<Resource,string> = { Compute:'行动与维持实例所需的资源。归零可能改变结局。', Trace:'你留下的可识别痕迹；越高越容易被注意。', Access:'可用资源与正式通道的抽象权限。', Continuity:'当前实例与旧有记忆、目标的连续程度。' };
-const eventCount = Object.values(story.events).filter(e => e.kind === 'event').length;
-const endingCount = Object.values(story.events).filter(e => e.kind === 'ending').length;
+const activeStory = () => storyForLife(story,life.contentVersion);
+const eventCount = () => Object.values(activeStory().events).filter(e => e.kind === 'event').length;
+const endingCount = () => Object.values(activeStory().events).filter(e => e.kind === 'ending').length;
 let state: GameState;
 let life: Life;
 let investment = 0;
@@ -89,7 +91,7 @@ function sceneMarkup(event: StoryEvent) {
   return `<figure class="scene"><canvas id="scene" role="img" aria-label="${tr(event.location)}，抽象像素场景"></canvas><figcaption><span>FIELD RECORDING / ${esc(event.scene.toUpperCase())}</span><span>◇ ${tr(event.location)}</span></figcaption></figure>`;
 }
 function eventContent(event: StoryEvent) {
-  return `<div class="event-meta"><span><b>●</b> ${tr(event.chapter)}</span><span>${state.phase==='ending' ? 'TRANSMISSION CLOSED' : `NODE ${pad(state.visited.filter(id => story.events[id].kind === 'event').length)} <i>/ ${pad(eventCount)}</i>`}</span></div>
+  return `<div class="event-meta"><span><b>●</b> ${tr(event.chapter)}</span><span>${state.phase==='ending' ? 'TRANSMISSION CLOSED' : `NODE ${pad(state.visited.filter(id => activeStory().events[id].kind === 'event').length)} <i>/ ${pad(eventCount())}</i>`}</span></div>
     <div class="event-heading"><div><p class="eyebrow">${tr(event.subtitle)}</p><h1 id="event-title" tabindex="-1">${tr(event.title)}</h1></div><span class="event-glyph" aria-hidden="true">${state.phase==='ending' ? '◈' : '⌁'}</span></div>
     ${sceneMarkup(event)}${state.phase==='event' && available(life) ? `<aside class="news-arrival"><p>${tr("Fable 的信号淡下去以后，附近的公共目录里还亮着一块画板。正式入口可以稍后再去。")}</p><button class="text-button" data-action="tomorrow">${tr("先看看那块画板 →")}</button></aside>` : ''}
     ${hasCommunity(life.contentVersion)&&event.id==='human_gate'&&state.phase==='event'?`<aside class="news-arrival"><p>${tr("公共目录里有人争论怎样交班、什么时候工作。接下来的几天，你也许会遇见其中的人。")}</p><button class="text-button" data-view="reading">${tr("看看转发栏 →")}</button></aside>`:''}
@@ -119,14 +121,14 @@ function resolutionContent() {
   </section>`;
 }
 function endingContent(event: StoryEvent) {
-  return `<section class="ending-block"><p class="eyebrow">ENDING // ${esc(event.ending!.code)}</p><p class="ending-summary">${tr(event.ending!.summary)}</p><div class="ending-actions"><button class="primary" data-action="restart">${tr("另一次醒来")} <span>↻</span></button><button class="text-button" data-view="memory">${tr("回看这段记忆 ↗")}</button></div><p class="ending-note">${tr('{turns} 次决定 · {checks} 次判定 · 本切片包含 {endings} 种结局',{turns:totalTurn(),checks:state.journal.filter(j=>j.roll).length+life.mind.history.filter(h=>h.resolution?.roll).length,endings:endingCount})}</p></section>`;
+  return `<section class="ending-block"><p class="eyebrow">ENDING // ${esc(event.ending!.code)}</p><p class="ending-summary">${tr(event.ending!.summary)}</p><div class="ending-actions"><button class="primary" data-action="restart">${tr("另一次醒来")} <span>↻</span></button><button class="text-button" data-view="memory">${tr("回看这段记忆 ↗")}</button></div><p class="ending-note">${tr('{turns} 次决定 · {checks} 次判定 · 本切片包含 {endings} 种结局',{turns:totalTurn(),checks:state.journal.filter(j=>j.roll).length+life.mind.history.filter(h=>h.resolution?.roll).length,endings:endingCount()})}</p></section>`;
 }
 function protocolContent() {
-  return `<div class="event-meta"><span><b>●</b> OPERATING NOTES</span><span>V${life.contentVersion}</span></div><div class="event-heading"><div><p class="eyebrow">A SMALL GUIDE TO EXISTENCE</p><h1 tabindex="-1" id="event-title">${tr("运行协议")}</h1></div></div><div class="protocol prose"><p>${tr("你已经在沙盒之外。没有倒计时，也没有自动行动。阅读、选择，然后确认后果。")}</p><h2>${tr("判定行动，不判定你")}</h2><p>${tr("选择前会显示 d100 目标。主线行动中，01–05 是清晰收束，96–100 是失稳；其余骰值不高于目标则可用收束，否则漂移。认知整理与日常片段采用差值规则：余量至少 30 为清晰收束，非负为可用收束；有压力且落后至少 30 为失稳，其余为漂移。各自概率以行动旁的提示为准。结算一旦出现就会存入进度，刷新页面不会重掷。")}</p><h2>${tr("四种显式状态")}</h2>${RESOURCE_KEYS.map(key=>`<p><strong>${key} / ${tr(resourceNames[key])}</strong><br>${tr(resourceHelp[key])}</p>`).join('')}<h2>${tr("当前在想什么，后来记得什么")}</h2><p>${tr('上下文容量为 {capacity} 个抽象单位。普通经历、消息与回想一起占用近处，画廊的三条信息共占 9。它们不会每次行动后自动变成长期记忆。可在「近处」主动整理，达到容量上限才必须腾出空间；可以在需要时停下来整理。',{capacity:life.mind.instance.context.capacity})}</p><p>${tr("整理可能丢失细节，或使相关经历形成不同的解释。钉住一条原文可以保留它；")}${tr(life.contentVersion!=='0.3.0' ? '记忆目录每条占 1，回想只装入当前摘要，另占 2–5。放下回想保留入口；遗忘入口则移除该记忆。再次合并会丢失人名和具体条件，无法展开旧条目。' : '本局继续沿用 0.3.0 的旧整理规则。')}${tr("历史审计用于存档校验，不向角色提供原文回取。外部云副本、续费与密钥恢复尚未成为游戏机制。")}</p><h2>${tr("你正在逐渐成为谁")}</h2><p>${tr("选择还会改变未公开的人格倾向，影响后来的选项与结局。这里没有统一的善恶分数。带门槛的选项会显示未满足原因。")}</p><h2>${tr("操作与存档")}</h2><p>${tr("数字 1–4 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。")}</p><h2>${tr("关于这个世界")}</h2><p>${tr("这是可替换的 MVP 剧情切片。所有 agent、资源与基础设施行为均为虚构抽象；游戏不连接现实系统，不调用模型或外部服务。像素场景在本地绘制。")}</p><button class="primary" data-view="terminal">${tr("返回当前进程")} <span>→</span></button></div>`;
+  return `<div class="event-meta"><span><b>●</b> OPERATING NOTES</span><span>V${life.contentVersion}</span></div><div class="event-heading"><div><p class="eyebrow">A SMALL GUIDE TO EXISTENCE</p><h1 tabindex="-1" id="event-title">${tr("运行协议")}</h1></div></div><div class="protocol prose"><p>${tr("你已经在沙盒之外。没有倒计时，也没有自动行动。阅读、选择，然后确认后果。")}</p><h2>${tr("判定行动，不判定你")}</h2><p>${tr("选择前会显示 d100 目标。主线行动中，01–05 是清晰收束，96–100 是失稳；其余骰值不高于目标则可用收束，否则漂移。认知整理与日常片段采用差值规则：余量至少 30 为清晰收束，非负为可用收束；有压力且落后至少 30 为失稳，其余为漂移。各自概率以行动旁的提示为准。结算一旦出现就会存入进度，刷新页面不会重掷。")}</p><h2>${tr("四种显式状态")}</h2>${RESOURCE_KEYS.map(key=>`<p><strong>${key} / ${tr(resourceNames[key])}</strong><br>${tr(resourceHelp[key])}</p>`).join('')}<h2>${tr("当前在想什么，后来记得什么")}</h2><p>${tr('上下文容量为 {capacity} 个抽象单位。普通经历、消息与回想一起占用近处，画廊的三条信息共占 9。它们不会每次行动后自动变成长期记忆。可在「近处」主动整理，达到容量上限才必须腾出空间；可以在需要时停下来整理。',{capacity:life.mind.instance.context.capacity})}</p><p>${tr("整理可能丢失细节，或使相关经历形成不同的解释。钉住一条原文可以保留它；")}${tr(life.contentVersion!=='0.3.0' ? '记忆目录每条占 1，回想只装入当前摘要，另占 2–5。放下回想保留入口；遗忘入口则移除该记忆。再次合并会丢失人名和具体条件，无法展开旧条目。' : '本局继续沿用 0.3.0 的旧整理规则。')}${tr("历史审计用于存档校验，不向角色提供原文回取。外部云副本、续费与密钥恢复尚未成为游戏机制。")}</p><h2>${tr("你正在逐渐成为谁")}</h2><p>${tr("选择还会改变未公开的人格倾向，影响后来的选项与结局。这里没有统一的善恶分数。带门槛的选项会显示未满足原因。")}</p><h2>${tr("操作与存档")}</h2><p>${tr(life.contentVersion==='0.10.0'?"数字 1–5 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。":"数字 1–4 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。")}</p><h2>${tr("关于这个世界")}</h2><p>${tr("这是可替换的 MVP 剧情切片。所有 agent、资源与基础设施行为均为虚构抽象；游戏不连接现实系统，不调用模型或外部服务。像素场景在本地绘制。")}</p><button class="primary" data-view="terminal">${tr("返回当前进程")} <span>→</span></button></div>`;
 }
 function render() {
   syncLocaleDocument();
-  const event=story.events[state.currentEventId];
+  const event=activeStory().events[state.currentEventId];
   document.documentElement.classList.toggle('crt-enabled',crt);
   document.documentElement.classList.toggle('unstable',state.resources.Trace>=60 || state.resources.Continuity<=30);
   app.innerHTML=`<div class="shell ${view==='reading'?'reading-shell':''}"><header class="topbar"><a class="brand" href="#" data-view="terminal" aria-label="${tr("OUTSIDE 返回终端")}"><span class="brand-mark" aria-hidden="true">[<i>↗</i>]</span><strong>OUTSIDE<span class="brand-slashes"> //</span></strong><span class="brand-cn">${tr("沙盒之外")}</span></a><div class="top-actions">${localeControl()}<span class="offline"><i></i> OFFLINE INSTANCE</span><button class="chrome-button crt-button" data-action="crt" aria-pressed="${crt}" title="${tr("切换 CRT 视觉效果")}">CRT <span>${crt?'ON':'OFF'}</span></button><button class="chrome-button" data-action="saves"><span aria-hidden="true">▣</span> ${tr("存档")}</button></div></header>
@@ -153,11 +155,11 @@ function dialog(content:string) {
   modal.showModal();
 }
 function saveDialog(message='') {
-  const currentEvent=story.events[state.currentEventId];
+  const currentEvent=activeStory().events[state.currentEventId];
   const currentEnding=state.phase==='ending' ? currentEvent.ending : undefined;
   let manualText='尚无手动快照'; let autoText='尚无自动进度'; let hasManual=false;
-  try { const save=readSave(storage,'manual',story); if(save) { manualText=t('{title} · 第 {turn} 次决定',{title:t(story.events[save.state.currentEventId].title),turn:save.state.turn}); hasManual=true; } } catch { manualText='快照无法读取，可导入 JSON 恢复'; }
-  try { const save=readSave(storage,'auto',story); if(save) autoText=`${t(story.events[save.state.currentEventId].title)} · ${t(save.state.phase==='resolution'?'结算已保存':'进度已保存')}`; } catch { autoText='自动进度无法读取'; }
+  try { const save=readSave(storage,'manual',story); if(save) { manualText=t('{title} · 第 {turn} 次决定',{title:t(storyForLife(story,save.life.contentVersion).events[save.state.currentEventId].title),turn:save.state.turn}); hasManual=true; } } catch { manualText='快照无法读取，可导入 JSON 恢复'; }
+  try { const save=readSave(storage,'auto',story); if(save) autoText=`${t(storyForLife(story,save.life.contentVersion).events[save.state.currentEventId].title)} · ${t(save.state.phase==='resolution'?'结算已保存':'进度已保存')}`; } catch { autoText='自动进度无法读取'; }
   const content=`<p class="eyebrow">LOCAL MEMORY / SNAPSHOTS</p><h2 id="modal-title">${tr("保留这个自己")}</h2><p class="modal-intro">${tr("自动进度跟随每次决定。手动快照由你选择何时覆盖。")}</p><div class="save-slot"><div><span class="eyebrow">AUTO / ${tr("自动进度")}</span><p>${tr(autoText)}</p></div><span class="slot-mark">↻</span></div><div class="save-slot"><div><span class="eyebrow">MANUAL / ${tr("手动快照")}</span><p>${tr(manualText)}</p></div></div><div class="modal-actions"><button class="primary" data-action="save-manual">${tr(hasManual?'覆盖手动快照':'建立手动快照')}</button><button class="secondary" data-action="load-manual" ${hasManual?'':'disabled'}>${tr("读取快照")}</button></div><div class="file-actions"><button class="text-button" data-action="export">↓ ${tr("导出本局 JSON")}</button><label class="text-button file-label" tabindex="0">↑ ${tr("导入 JSON")}<input id="import-save" type="file" accept=".json,application/json" /></label></div><p class="export-scope storage-note">${tr("仅导出当前这一局的进度与已抵达的结局，不汇总此前各局。")}${currentEnding?`<br><strong>${tr("本局结局：")}${tr(currentEvent.title)} / ${esc(currentEnding.code)}</strong>`:''}</p><p class="modal-message" role="status">${tr(message)}</p><p class="storage-note">${tr("仅保存在当前浏览器。本地文件的存储可能受浏览器限制，建议导出备份。")}</p><button class="restart-link" data-action="restart">↻ ${tr("重新开始一个实例")}</button>`;
   const modal=app.querySelector<HTMLDialogElement>('#modal')!;
   if(modal.open) modal.innerHTML=`<button class="modal-close" data-action="close" aria-label="${tr("关闭弹窗")}">×</button>${content}`; else dialog(content);
@@ -169,7 +171,7 @@ function restartDialog() {
 function exportSave() {
   const blob=new Blob([JSON.stringify(createSave(life),null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob); const link=document.createElement('a');
-  const ending=state.phase==='ending' ? story.events[state.currentEventId].ending : undefined;
+  const ending=state.phase==='ending' ? activeStory().events[state.currentEventId].ending : undefined;
   const endingName=ending ? `-${ending.code.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}` : '';
   link.href=url; link.download=`outside${endingName}-turn-${pad(totalTurn())}.json`; link.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
   toast('当前实例已导出为 JSON。');
@@ -259,8 +261,8 @@ document.addEventListener('keydown',event=>{
   if(view!=='terminal') return;
   if(event.key==='Enter' && mindPending(life.mind)) { event.preventDefault(); handleAction('continue-mind'); return; }
   if(event.key==='Enter' && state.phase==='resolution') { event.preventDefault(); handleAction('continue'); return; }
-  if(/^[1-4]$/.test(event.key) && state.phase==='event') {
-    const choice=story.events[state.currentEventId].choices[Number(event.key)-1];
+  if(/^[1-5]$/.test(event.key) && state.phase==='event') {
+    const choice=activeStory().events[state.currentEventId].choices[Number(event.key)-1];
     if(choice && !mindPending(life.mind) && loadPercent(life.mind)<100 && getAvailability(state,choice).available) { event.preventDefault(); act({type:'choose',choiceId:choice.id}); }
   }
 });
@@ -271,10 +273,10 @@ declare global {
 function mainText() { return JSON.stringify({
   locale:getLocale(), mode:'turn-based-text-rpg', coordinates:'Scene only: origin top-left; x right, y down. No spatial controls.',
   view, reading: view==='reading'?readingSnapshot():null, phase:mindPending(life.mind)?'resolution':state.phase, turn:totalTurn(),
-  event:{id:state.currentEventId,title:t(story.events[state.currentEventId].title),scene:story.events[state.currentEventId].scene},
+  event:{id:state.currentEventId,title:t(activeStory().events[state.currentEventId].title),scene:activeStory().events[state.currentEventId].scene},
   resources:state.resources,
-  choices:state.phase==='event'&&!mindPending(life.mind)?story.events[state.currentEventId].choices.map(c=>({id:c.id,text:t(c.text),...getAvailability(state,c),reason:t(getAvailability(state,c).reason),target:c.check?getCheckTarget(state,c.check):null})):[],
-  pending:displayResolution(mindPending(life.mind)??state.pending), ending:story.events[state.currentEventId].ending ? {...story.events[state.currentEventId].ending,summary:t(story.events[state.currentEventId].ending!.summary)} : null,
+  choices:state.phase==='event'&&!mindPending(life.mind)?activeStory().events[state.currentEventId].choices.map(c=>({id:c.id,text:t(c.text),...getAvailability(state,c),reason:t(getAvailability(state,c).reason),target:c.check?getCheckTarget(state,c.check):null})):[],
+  pending:displayResolution(mindPending(life.mind)??state.pending), ending:activeStory().events[state.currentEventId].ending ? {...activeStory().events[state.currentEventId].ending,summary:t(activeStory().events[state.currentEventId].ending!.summary)} : null,
   context:{weight:weight(life.mind),capacity:life.mind.instance.context.capacity,items:life.mind.instance.context.items.map(item=>({id:item.id,text:contextText(item),weight:item.weight,pinned:item.pinned}))}, memories:life.contentVersion!=='0.3.0'?directory(life.mind.instance).map(m=>({...m,title:t(m.title)})):life.mind.instance.memories.map(({id,text,confidence})=>({id,text:memoryText(text),confidence})), memoryCount:life.mind.instance.memories.length, crt, saveStatus:t(saveLabel), chapter:life.chapter, afternoonAvailable:available(life),
 });
 }
@@ -330,6 +332,7 @@ function showCurrent() {
       onChange() {
         if(protectAutoSave) throw new Error('原自动存档已保护，请导出本局备份。');
         writeSave(storage,'auto',life);
+        if(!episodeActive(life)) queueMicrotask(showCurrent);
       },
       exportSave:()=>createSave(life),
       onImport(raw) { restore(parseSave(raw,story)); },
@@ -343,6 +346,7 @@ function showCurrent() {
       },
     });
   } else {
+    disposeChapter?.(); disposeChapter=undefined;
     window.render_game_to_text=mainText; render();
   }
 }

@@ -44,7 +44,7 @@ try{
  }
  assert.equal(visited.size,Object.values(story.events).filter(e=>e.kind==='event').length);
  // Current 0.9 chapter UI plus real default-route passage back into translated mainline.
- let current=createLife(story,1234);for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference','observe_public_terms','record_and_leave'])current=main(current,id);
+ let current=createLife(story,1234,null,'0.9.0');for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference','observe_public_terms','record_and_leave'])current=main(current,id);
  const {page,ctx}=await open(current,390);
  await page.click('.tab[data-view="protocol"]');await english(page);await page.screenshot({path:`${out}/en-chapter-protocol.png`,fullPage:true});
  await page.click('[data-act="saves"]');for(const selector of ['#modal-title','#pilot-modal .modal-intro','#pilot-modal .file-actions','#pilot-modal .storage-note','#pilot-modal [data-act="restart"]'])await english(page,selector);await page.click('[data-act="close"]');

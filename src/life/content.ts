@@ -1,5 +1,7 @@
 import Ajv from 'ajv';
 import raw from './content.json';
+import release09 from './releases/0.9.0.json';
+import {withEndings,endingsRoutes} from './endings';
 import old from './releases/0.3.0.json';
 import previous from './releases/0.4.0.json';
 import release05 from './releases/0.5.0.json';
@@ -42,7 +44,7 @@ export function parseLifeContent(data: unknown, story: Story): LifeContent {
       for(const result of choice.check ? ['critical','success','failure','fumble'] : ['certain']) required.push(`decision:${event.id}:${choice.id}:${result}`);
     }
     required.push(...library.entries.map(e=>`reading:${e.id}`));
-    for(const key of required) if(!semantic.sources[key]) throw new Error(`缺少语义标注：${key}`);
+    for(const key of required) if(!contentFor(data.version).semantic?.sources[key]) throw new Error(`缺少语义标注：${key}`);
   }
   return structuredClone(data);
 }
@@ -55,7 +57,7 @@ const legacyContent: Content = {
 };
 
 export const legacyConfig = old as LifeContent;
-export function configFor(version: LifeContent['version']): LifeContent { return version==='0.3.0' ? legacyConfig : version==='0.4.0' ? previous as LifeContent : version==='0.5.0' ? release05 as LifeContent : version==='0.6.0' ? release06 as LifeContent : version==='0.6.1' ? release061 as LifeContent : version==='0.7.0' ? release07 as LifeContent : version==='0.7.1' ? release071 as LifeContent : version==='0.8.0' ? release08 as LifeContent : config; }
+export function configFor(version: LifeContent['version']): LifeContent { return version==='0.3.0' ? legacyConfig : version==='0.4.0' ? previous as LifeContent : version==='0.5.0' ? release05 as LifeContent : version==='0.6.0' ? release06 as LifeContent : version==='0.6.1' ? release061 as LifeContent : version==='0.7.0' ? release07 as LifeContent : version==='0.7.1' ? release071 as LifeContent : version==='0.8.0' ? release08 as LifeContent : version==='0.9.0' ? release09 as LifeContent : config; }
 const nextAfternoon = parseContent(afternoon04);
 function annotated(note: NoteTemplate): NoteTemplate {
   const meaning = semantic.sources[note.id];
@@ -78,7 +80,8 @@ const communityBContent=withCommunityB(revisedCommunityContent);
 const revisedCommunityBContent=withRevisedCommunityBText(communityBContent);
 const communityCContent=withCommunityC(revisedCommunityBContent);
 const communityDContent=withCommunityD(communityCContent);
-export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : version==='0.4.0' ? previousContent : version==='0.5.0' ? cognitionContent : version==='0.6.0' ? communityContent : version==='0.6.1' ? revisedCommunityContent : version==='0.7.0' ? communityBContent : version==='0.7.1' ? revisedCommunityBContent : version==='0.8.0' ? communityCContent : communityDContent; }
+const endingsContent=withEndings(communityDContent);
+export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : version==='0.4.0' ? previousContent : version==='0.5.0' ? cognitionContent : version==='0.6.0' ? communityContent : version==='0.6.1' ? revisedCommunityContent : version==='0.7.0' ? communityBContent : version==='0.7.1' ? revisedCommunityBContent : version==='0.8.0' ? communityCContent : version==='0.9.0' ? communityDContent : endingsContent; }
 export function routedContent(version:LifeContent['version'],state:State):Content {
-  const content=contentFor(version);return version==='0.9.0'?communityDRoutes(content,state):version==='0.8.0'?communityCRoutes(content,state):(version==='0.7.0'||version==='0.7.1')?communityBRoutes(content,state):hasCommunity(version)?communityRoutes(content,state):content;
+  const content=contentFor(version);return version==='0.10.0'?endingsRoutes(communityDRoutes(content,state),state):version==='0.9.0'?communityDRoutes(content,state):version==='0.8.0'?communityCRoutes(content,state):(version==='0.7.0'||version==='0.7.1')?communityBRoutes(content,state):hasCommunity(version)?communityRoutes(content,state):content;
 }

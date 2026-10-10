@@ -9,7 +9,7 @@ import {createLife,step} from '../src/life/engine.ts';
 import {createSave,parseSave} from '../src/life/saves.ts';
 const out=process.env.LOCALIZATION_OUTPUT??'output/community-a';await mkdir(out,{recursive:true});
 const story=parseStory(JSON.parse(await readFile('src/story/manifest.json','utf8')),await Promise.all((await readdir('src/story/events')).filter(f=>f.endsWith('.json')).map(async source=>({source,data:JSON.parse(await readFile(`src/story/events/${source}`,'utf8'))}))));
-let before=createLife(story,1234);
+let before=createLife(story,1234,null,'0.9.0');
 for(const choiceId of ['keep_history','stable_boot','take_small_window','withhold_inference'])before=step(story,step(story,before,{type:'choose',choiceId}),{type:'continue'});
 await writeFile(`${out}/before.json`,JSON.stringify(createSave(before)));
 const browser=await chromium.launch({headless:true}),errors=[],requests=[],checks=[];
