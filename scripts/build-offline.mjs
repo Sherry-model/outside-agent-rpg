@@ -1,12 +1,13 @@
 import { build } from 'esbuild';
 import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import { offlineSnapshots } from './offline-snapshots.mjs';
 
 const root = process.cwd();
 const result = await build({
   entryPoints: ['src/entry.ts'], bundle: true, write: false,
   outfile: 'outside.js', format: 'iife', target: 'es2022', minify: true,
-  plugins: [{
+  plugins: [offlineSnapshots(), {
     name: 'embed-story-json',
     setup(builder) {
       builder.onLoad({ filter: /src\/story\/index\.ts$/ }, async () => {

@@ -36,7 +36,8 @@
     "test:localization:cats": "node --import tsx scripts/localization-reading-browser-check.mjs --cats",
     "test:localization:huac": "node --import tsx scripts/localization-reading-browser-check.mjs --huac",
     "test:localization:all-reading": "node --import tsx scripts/localization-reading-browser-check.mjs --all",
-    "test:localization:remaining": "node --import tsx scripts/localization-remaining-browser-check.mjs"
+    "test:localization:remaining": "node --import tsx scripts/localization-remaining-browser-check.mjs",
+    "test:localization:endings": "node --import tsx scripts/localization-endings-browser-check.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

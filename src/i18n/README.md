@@ -17,7 +17,7 @@ Only `zh-CN` and `en` are supported. Chinese is the default and remains the cano
 - `en-community-a/b/c/d.json`: all community routes, current and previously released prose variants, and retained/coarse meanings. C includes all 12 current work-time pages.
 - `en-community-entry.json`: route menus authored in TypeScript, including older menus.
 - `en-legacy.json`: distinct prose in the supported historical afternoon versions. Archived standalone HTML files remain unchanged.
-- All current authored narrative strings have translations. Debug state, IDs and exported saves deliberately retain canonical data; unreviewed future/revised strings still fall back. Current catalogs contain 2,258 unique entries. Translation coverage does not replace editorial review.
+- All current authored narrative strings have translations. Debug state, IDs and exported saves deliberately retain canonical data; unreviewed future/revised strings still fall back. Current catalogs contain 2,421 unique entries. Translation coverage does not replace editorial review.
 
 ## Authoring through the actual interface
 
@@ -91,3 +91,9 @@ LOCALIZATION_LOCALE=en LOCALIZATION_OUTPUT=output/localization-complete-20261001
 ```
 
 Evidence for this completion is under `output/localization-complete-20261001/`. The pre-batch executable is `before.html`; frozen canonical-source fingerprints are checked against `output/localization/source-before.sha256`. Full current English routes and historical-save support are implementation/self-test results, not an independent editorial sign-off.
+
+## 0.10.0 endings update (11a4de5)
+
+`en-endings.json` adds 161 exact strings for all six visitor/containment encounters, 23 choices and outcomes, two ending pages, status receipts, composed final decisions, topics and retained/coarse meanings. `en-ui.json` adds the 1–5 key protocol and the minimum-Compute template; `formatted.ts` recognizes only the exact current reserve requirement format. Current scope includes six endings. Chinese content, versioned rules and saved state remain untouched.
+
+Coverage tests now include life 0.10.0, its versioned mainline additions and status notes. The existing endings route and memory browser scripts accept `LOCALIZATION_LOCALE=en` / `LOCALIZATION_OUTPUT`; `npm run test:localization:endings` covers every new choice and result at 320px, compares Chinese scenes with the pre-translation executable, and checks the new protocol. The old literal-Chinese fallback assertion now uses an explicitly revised source. Evidence: `output/localization-endings-20261010/` (work began October 10 and completed October 11).

@@ -379,5 +379,7 @@
   "待结算结果与记忆不一致。": "The pending result does not match the journal.",
   "浏览器无法写入本地存档。进度仍在本页，请导出 JSON 备份。": "The browser cannot write a local save. Progress is still on this page; export a JSON backup.",
   "浏览器限制了本地存储。可以继续游玩，并使用 JSON 导入 / 导出。": "The browser has restricted local storage. You can keep playing and use JSON import / export.",
-  "存档剧情版本不兼容，需要 {id} / {version}。": "Incompatible story version in save; requires {id} / {version}."
+  "存档剧情版本不兼容，需要 {id} / {version}。": "Incompatible story version in save; requires {id} / {version}.",
+  "数字 1–5 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。": "Use 1–5 to choose and Enter to continue. F toggles fullscreen; Esc exits fullscreen or closes a dialog. The CRT control at the top disables the visual effects. Automatic progress and manual snapshots are separate saves. Export JSON to restore a run in another browser.",
+  "Compute 至少需要 {minimum}，以保留运行余量。": "Requires at least {minimum} Compute to keep enough in reserve to run."
 }

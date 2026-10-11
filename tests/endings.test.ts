@@ -14,13 +14,13 @@ const roundtrip=(life:Life)=>{assert.deepEqual(parseSave(JSON.stringify(createSa
 const cog=(l:Life,command:Parameters<typeof step>[2]&{type:'cognition'})=>step(baseStory,l,command);
 const act=(l:Life,id:string)=>step(baseStory,step(baseStory,l,{type:'cognition',command:{type:'choose',choiceId:id,investment:0}}),{type:'cognition',command:{type:'continue'}});
 
-test('0.10 isolates new story/content, preserves all old graphs and keeps untranslated Chinese fallback',()=>{
+test('0.10 isolates new story/content, preserves all old graphs and keeps revised-source Chinese fallback',()=>{
  const old=JSON.stringify(baseStory),v09=JSON.stringify(contentFor('0.9.0'));
  const current=storyForLife(baseStory,'0.10.0');parseLifeContent(configFor('0.10.0'),current);
  assert.equal(Object.values(current.events).filter(n=>n.kind==='ending').length,6);
  for(const version of ['0.3.0','0.4.0','0.5.0','0.6.0','0.6.1','0.7.0','0.7.1','0.8.0','0.9.0'] as const){assert.equal(storyForLife(baseStory,version),baseStory);assert(!contentFor(version).nodes.some(n=>n.id==='pg_v01'));roundtrip(createLife(baseStory,7,null,version));}
  assert.equal(JSON.stringify(baseStory),old);assert.equal(JSON.stringify(contentFor('0.9.0')),v09);
- setLocale('en');assert.equal(t('今天没有空位'),'今天没有空位');setLocale('zh-CN');
+ setLocale('en');assert.equal(t('今天没有空位'),'No Room Today');assert.equal(t('今天没有空位（修订）'),'今天没有空位（修订）');setLocale('zh-CN');
 });
 
 test('both new endings are reachable from real starts through each community route and both openings',()=>{

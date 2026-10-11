@@ -6,6 +6,8 @@ export function formattedText(source: string, translate: Translate): string | un
   if (match) return translate('留下了 {count} 段摘要。目录仍占据一点近处，回想时再装入正文。', {count:match[1]});
   match = /^已恢复 (0\.[3-8]\.[01]) 旧局 · 新局体验社区往返$/.exec(source);
   if (match) return translate('已恢复 {version} 旧局 · 新局体验社区往返', {version:match[1]});
+  match = /^Compute 至少需要 (\d+)，以保留运行余量。$/.exec(source);
+  if (match) return translate('Compute 至少需要 {minimum}，以保留运行余量。', {minimum:match[1]});
   // More than one resource may be missing; preserve every requirement in order.
   const shortages = source.split('；').map(text => /^(Compute|Trace|Access|Continuity) 不足：需要 (\d+)，当前 (\d+)$/.exec(text));
   if (shortages.length && shortages.every(m => m !== null)) return shortages.map(m => translate('{resource} 不足：需要 {needed}，当前 {current}', {resource:m![1],needed:m![2],current:m![3]})).join('; ');
