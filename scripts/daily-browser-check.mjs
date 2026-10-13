@@ -1,3 +1,6 @@
+import {englishRun,installLocaleChecks,assertEnglishPage} from './localization-browser-helpers.mjs';
+import {setLocale,t} from '../src/i18n/index.ts';
+import {readingText} from '../src/i18n/reading.ts';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {mkdir,writeFile} from 'node:fs/promises';
@@ -8,7 +11,8 @@ import {createLife,step,episodeActive} from '../src/life/engine.ts';
 import {createSave,parseSave} from '../src/life/saves.ts';
 import {libraryFor} from '../src/life/reading.ts';
 
-const out='output/daily-expansion-20261011/browser';
+const out=process.env.LOCALIZATION_OUTPUT??'output/daily-expansion-20261011/browser';
+setLocale(englishRun?'en':'zh-CN');
 await mkdir(out,{recursive:true});
 const url=pathToFileURL(resolve('OUTSIDE.html')).href;
 const browser=await chromium.launch({headless:true});
@@ -18,7 +22,7 @@ async function open(width=1440){
   page.on('pageerror',e=>errors.push(String(e)));
   page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
   page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
-  await page.goto(url);return {ctx,page};
+  await installLocaleChecks(page);await page.goto(url);return {ctx,page};
 }
 async function saved(page){return parseSave(await page.evaluate(()=>localStorage.getItem('outside.life.v1.auto')),baseStory).life;}
 async function importLife(page,life,label){
@@ -87,8 +91,8 @@ try{
     for(const entry of entries){
       let life=await importLife(page,gate,'reader-start');life=await command(page,life,{type:'read',entryId:entry.id});
       assert.equal(await page.locator('.reader-post').count(),entry.posts.length);
-      assert.deepEqual(await page.locator('.reader-prose p').allTextContents(),entry.posts.flatMap(p=>p.body));
-      assert.deepEqual(await page.locator('.reader-post h2').allTextContents(),entry.posts.map(p=>p.author));
+      assert.deepEqual(await page.locator('.reader-prose p').allTextContents(),entry.posts.flatMap(p=>p.body.map(s=>readingText(entry.id,s))));
+      assert.deepEqual(await page.locator('.reader-post h2').allTextContents(),entry.posts.map(p=>t(p.author)));
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),entry.id+' '+width);
       await page.locator('#reading-title').scrollIntoViewIfNeeded();await page.screenshot({path:`${out}/reading-${entry.id}-${width}-top.png`});
       const last=entry.posts.length-1;await page.locator(`#reader-post-${last}`).scrollIntoViewIfNeeded();await page.screenshot({path:`${out}/reading-${entry.id}-${width}-last.png`});
@@ -96,7 +100,7 @@ try{
       await page.click('[data-action="reader-size"]');assert.deepEqual(await saved(page),life);
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'large '+entry.id+' '+width);
       await page.click('[data-action="reader-size"]');
-      await page.click('[data-locale="en"]');assert.deepEqual(await saved(page),life);await page.click('[data-locale="zh-CN"]');
+      await page.click(`[data-locale="${englishRun?'zh-CN':'en'}"]`);assert.deepEqual(await saved(page),life);await page.click(`[data-locale="${englishRun?'en':'zh-CN'}"]`);await assertEnglishPage(page);
       await page.reload();await page.click('.tab[data-view="reading"]');await page.locator('.reader-index').evaluate(e=>e.open=true);await page.click(`[data-reading="${entry.id}"]`);await page.click('[data-action="reader-resume"]');
       assert(await page.locator(`#reader-post-${last}`).isVisible());assert.deepEqual(await saved(page),life);
       checks.push({reading:entry.id,width,posts:entry.posts.length});

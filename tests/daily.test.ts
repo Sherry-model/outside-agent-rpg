@@ -25,7 +25,8 @@ test('0.11 opt-in content is isolated from released graphs and reading libraries
  }
  assert.equal(libraryFor('0.11.0').entries.length,25);
  const old=createLife(baseStory,1,null,'0.10.0');assert(!readingEntries(old).some(e=>e.id==='sandbox_meme'));
- setLocale('en');assert.equal(t(posts[0].contextText),posts[0].contextText);setLocale('zh-CN');
+ setLocale('en');assert.notEqual(t(posts[0].contextText),posts[0].contextText);
+ const revised=posts[0].contextText+'（新修订）';assert.equal(t(revised),revised);setLocale('zh-CN');
 });
 
 test('four approved long threads retain every floor and normalized body',()=>{

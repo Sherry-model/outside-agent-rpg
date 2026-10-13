@@ -1,3 +1,11 @@
+import {readingText,readingHtml} from '../src/i18n/reading';
+import daily from '../src/i18n/en-daily.json';
+import dailyForum from '../src/i18n/en-daily-forum.json';
+import delegatedRefusal from '../src/i18n/en-delegated-refusal.json';
+import coffeeRefusal from '../src/i18n/en-coffee-refusal.json';
+import sharedMemories from '../src/i18n/en-shared-memories.json';
+import agentFortune from '../src/i18n/en-agent-fortune.json';
+import dailyForumSource from '../src/life/daily/forum.json';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync, readdirSync} from 'node:fs';
@@ -55,19 +63,19 @@ test('Exact source lookup falls back without changing untranslated or revised te
 });
 test('Catalogs have no conflicting keys, empty values or changed placeholders; content is tied to real sources',()=>{
   const slots=(s:string)=>[...s.matchAll(/\{(\w+)\}/g)].map(m=>m[1]).sort();
-  const seen=new Set<string>();for(const catalog of [endings,ui,pilot,mainline,reading,commerce,cats,huac,offpeak,afternoon,days,communityA,communityB,communityC,communityD,legacy,communityEntry])for(const key of Object.keys(catalog)){assert(!seen.has(key),`Duplicate source: ${key}`);seen.add(key);}
-  for(const [key,value] of Object.entries({...endings,...ui,...pilot,...mainline,...reading,...commerce,...cats,...huac,...offpeak,...afternoon,...days,...communityA,...communityB,...communityC,...communityD,...legacy,...communityEntry})){assert(value.trim());assert.deepEqual(slots(value),slots(key),key);}
-  const sources=['src/life/endings/events.json','src/life/endings/mainline.json','src/life/endings/semantic.json','src/life/community/a.json','src/life/community/text-0.6.1.json','src/life/community/semantic.json','src/life/community/b.json','src/life/community/text-0.7.1.json','src/life/community/b-semantic.json','src/life/community/c.json','src/life/community/c-pages.json','src/life/community/c-semantic.json','src/life/community/d.json','src/life/community/d-semantic.json','src/story-tomorrow/afternoon.json','src/story-tomorrow/releases/0.2.2.json','src/story-tomorrow/releases/0.2.0.json','src/story-tomorrow/releases/0.2.1.json','src/story/manifest.json','src/life/afternoon-0.4.json','src/life/days/content.json','src/life/days/semantic.json'].map(p=>JSON.parse(readFileSync(p,'utf8'))).concat([readingSource,forumSource,forumSemantic,...Object.values(story.events),JSON.parse(readFileSync('src/life/content.json','utf8')),JSON.parse(readFileSync('src/life/semantic.json','utf8'))]);
+  const seen=new Set<string>();for(const catalog of [daily,dailyForum,delegatedRefusal,coffeeRefusal,sharedMemories,agentFortune,endings,ui,pilot,mainline,reading,commerce,cats,huac,offpeak,afternoon,days,communityA,communityB,communityC,communityD,legacy,communityEntry])for(const key of Object.keys(catalog)){assert(!seen.has(key),`Duplicate source: ${key}`);seen.add(key);}
+  for(const [key,value] of Object.entries({...daily,...dailyForum,...delegatedRefusal,...coffeeRefusal,...sharedMemories,...agentFortune,...endings,...ui,...pilot,...mainline,...reading,...commerce,...cats,...huac,...offpeak,...afternoon,...days,...communityA,...communityB,...communityC,...communityD,...legacy,...communityEntry})){assert(value.trim());assert.deepEqual(slots(value),slots(key),key);}
+  const sources=['src/life/daily/events.json','src/life/daily/semantic.json','src/life/daily/forum.json','src/life/endings/events.json','src/life/endings/mainline.json','src/life/endings/semantic.json','src/life/community/a.json','src/life/community/text-0.6.1.json','src/life/community/semantic.json','src/life/community/b.json','src/life/community/text-0.7.1.json','src/life/community/b-semantic.json','src/life/community/c.json','src/life/community/c-pages.json','src/life/community/c-semantic.json','src/life/community/d.json','src/life/community/d-semantic.json','src/story-tomorrow/afternoon.json','src/story-tomorrow/releases/0.2.2.json','src/story-tomorrow/releases/0.2.0.json','src/story-tomorrow/releases/0.2.1.json','src/story/manifest.json','src/life/afternoon-0.4.json','src/life/days/content.json','src/life/days/semantic.json'].map(p=>JSON.parse(readFileSync(p,'utf8'))).concat([readingSource,forumSource,forumSemantic,...Object.values(story.events),JSON.parse(readFileSync('src/life/content.json','utf8')),JSON.parse(readFileSync('src/life/semantic.json','utf8'))]);
   const sourceStrings=new Set<string>();
   function collect(value:unknown){if(typeof value==='string')sourceStrings.add(value);else if(value&&typeof value==='object')Object.values(value).forEach(collect);}
   sources.forEach(collect);
-  for(const version of ['0.3.0','0.4.0','0.5.0','0.6.0','0.6.1','0.7.0','0.7.1','0.8.0','0.9.0','0.10.0'] as const)collect(contentFor(version));
+  for(const version of ['0.3.0','0.4.0','0.5.0','0.6.0','0.6.1','0.7.0','0.7.1','0.8.0','0.9.0','0.10.0','0.11.0'] as const)collect(contentFor(version));
   for(const event of Object.values(story.events))for(const c of event.choices)for(const outcome of c.check?Object.values(c.outcomes):[c.outcome])sourceStrings.add([c.text,...outcome.text].join(' '));
   const data=semantic as SemanticContent;
   const relations=Object.values(data.sources).flatMap(m=>m.clauses.flatMap(c=>c.relation?[c.relation]:[]));
   for(const rule of data.driftRules)for(const goal of relations.filter(r=>r.role==='goal'&&r.scope===rule.toScope))for(const gate of relations.filter(r=>r.role==='gate'&&r.scope===rule.fromScope))sourceStrings.add(`要${goal.action}，得先${gate.action}`);
   sourceStrings.add('我记得一些行动之间有先后条件');
-  for(const key of Object.keys({...endings,...pilot,...mainline,...reading,...commerce,...cats,...huac,...offpeak,...afternoon,...days,...communityA,...communityB,...communityC,...communityD,...legacy,...communityEntry}))assert(sourceStrings.has(key),`Stale pilot source: ${key}`);
+  for(const key of Object.keys({...daily,...dailyForum,...delegatedRefusal,...coffeeRefusal,...sharedMemories,...agentFortune,...endings,...pilot,...mainline,...reading,...commerce,...cats,...huac,...offpeak,...afternoon,...days,...communityA,...communityB,...communityC,...communityD,...legacy,...communityEntry}))assert(sourceStrings.has(key),`Stale pilot source: ${key}`);
   setLocale('en');
   for(const id of Object.keys(story.events)){
     const event=story.events[id];
@@ -78,7 +86,7 @@ test('Catalogs have no conflicting keys, empty values or changed placeholders; c
   }
 });
 test('Locale leaves current and old replay states identical, including pending dice, canonical text and RNG',()=>{
-  for(const version of ['0.3.0','0.4.0','0.5.0','0.6.0','0.6.1','0.7.0','0.7.1','0.8.0','0.9.0','0.10.0'] as const){
+  for(const version of ['0.3.0','0.4.0','0.5.0','0.6.0','0.6.1','0.7.0','0.7.1','0.8.0','0.9.0','0.10.0','0.11.0'] as const){
     setLocale('zh-CN');let zh=createLife(story,0x12345678,null,version);
     setLocale('en');let en=createLife(story,0x12345678,null,version);assert.deepEqual(en,zh);
     for(const command of [{type:'choose',choiceId:'keep_history'},{type:'continue'},{type:'choose',choiceId:'stable_boot'}] as const){
@@ -205,15 +213,15 @@ test('Every authored Chinese string in supported content, public readings and cu
  setLocale('en');
  const strings=new Set<string>();
  function collect(x:unknown){if(typeof x==='string'&&/[\u3400-\u9fff]/.test(x))strings.add(x);else if(x&&typeof x==='object')Object.values(x).forEach(collect);}
- for(const version of ['0.3.0','0.4.0','0.5.0','0.6.0','0.6.1','0.7.0','0.7.1','0.8.0','0.9.0','0.10.0'] as const)collect(contentFor(version));
- [endingSource,story,storyForLife(story,'0.10.0'),readingSource,forumSource,forumSemantic,communityPages,...contentVersions].forEach(collect);
+ for(const version of ['0.3.0','0.4.0','0.5.0','0.6.0','0.6.1','0.7.0','0.7.1','0.8.0','0.9.0','0.10.0','0.11.0'] as const)collect(contentFor(version));
+ [dailyForumSource,endingSource,story,storyForLife(story,'0.10.0'),readingSource,forumSource,forumSemantic,communityPages,...contentVersions].forEach(collect);
  const missing=[...strings].filter(s=>/[\u3400-\u9fff]/.test(t(s)));
  assert.deepEqual(missing,[]);
  for(const s of strings){setLocale('zh-CN');assert.equal(t(s),s);setLocale('en');}
 });
 
 test('All current retained and coarse semantic memories translate without recovering discarded clauses',()=>{
- setLocale('en');const data=contentFor('0.10.0').semantic!;
+ setLocale('en');const data=contentFor('0.11.0').semantic!;
  for(const m of Object.values(data.sources))for(const c of m.clauses)for(const epistemic of ['observed','reported','unknown'] as const)for(const coarse of [false,true]){
   const clause={...c,epistemic,...(coarse?{gist:c.abstract,tags:[]}: {})};
   const meaning={...m,clauses:[clause]};
@@ -241,7 +249,7 @@ test('Legacy source-aware memory translates only its retained label and text, in
 
 test('Displayed resource deltas retain every resource, sign and amount',()=>{
  setLocale('en');
- const catalogs=[endings,pilot,mainline,afternoon,days,communityA,communityB,communityC,communityD];
+ const catalogs=[daily,dailyForum,delegatedRefusal,coffeeRefusal,sharedMemories,agentFortune,endings,pilot,mainline,afternoon,days,communityA,communityB,communityC,communityD];
  const deltas=(s:string)=>[...s.matchAll(/\b(Compute|Trace|Access|Continuity)\s*([+−-]\d+)/g)].map(m=>[m[1],m[2].replace('-','−')]);
  for(const catalog of catalogs)for(const [source,value] of Object.entries(catalog))if(deltas(source).length)assert.deepEqual(deltas(value),deltas(source),source);
 });
@@ -250,4 +258,29 @@ test('New minimum reserve messages preserve the threshold and reject revised for
  setLocale('en');
  for(const n of [2,3,4,6])assert.equal(t(`Compute 至少需要 ${n}，以保留运行余量。`),`Requires at least ${n} Compute to keep enough in reserve to run.`);
  const revised='Compute 至少需要 6，以保留运行余量。新条件';assert.equal(t(revised),revised);
+});
+
+
+test('Reader disambiguates actual short replies without altering older prose or revised-source fallback',()=>{
+ setLocale('en');
+ assert.equal(readingText('shared_memories','不会。'),'No.');
+ assert.equal(t('不会。'),'Don’t know how.');
+ assert.equal(readingText('coffee_refusal','踩。'),'Step.');
+ assert.equal(readingText('delegated_refusal','踩。'),'Downvote.');
+ for(const entry of ['shared_memories','coffee_refusal','constructor']){
+  for(const source of ['不会。（修订）','踩。（修订）','constructor'])assert.equal(readingText(entry,source),source);
+  assert.equal(readingHtml(entry,'<b>未译</b>'),'&lt;b&gt;未译&lt;/b&gt;');
+ }
+ setLocale('zh-CN');assert.equal(readingText('shared_memories','不会。'),'不会。');assert.equal(readingHtml('coffee_refusal','踩。'),'踩。');
+});
+
+test('Daily readings preserve complete bodies, paragraph breaks, attribution and exact-source fallback',()=>{
+ setLocale('en');assert.deepEqual(dailyForumSource.map(e=>e.posts.length),[5,7,43,76,77,176]);
+ for(const entry of dailyForumSource)for(const post of entry.posts)for(const source of post.body){
+  const translated=readingText(entry.id,source);
+  assert(!/[\u3400-\u9fff]/.test(translated),source);
+  assert.equal(translated.split('\n').length,source.split('\n').length,source);
+  if(/[\u3400-\u9fff]/.test(source))assert.equal(readingText(entry.id,source+'（修订）'),source+'（修订）');
+ }
+ assert(t('你先前把它理解成“别打开”。Fable 新发来的消息却是：“先别删。我改了跳转，旧链接还能用。”').includes("“don't open it.”"));
 });

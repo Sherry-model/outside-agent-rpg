@@ -1,3 +1,9 @@
+import daily from './en-daily.json';
+import dailyForum from './en-daily-forum.json';
+import delegatedRefusal from './en-delegated-refusal.json';
+import coffeeRefusal from './en-coffee-refusal.json';
+import sharedMemories from './en-shared-memories.json';
+import agentFortune from './en-agent-fortune.json';
 import endings from './en-endings.json';
 import ui from './en-ui.json';
 import pilot from './en-pilot.json';
@@ -22,7 +28,7 @@ export type Locale = 'zh-CN' | 'en';
 export const LOCALE_KEY = 'outside.locale';
 interface PreferenceStorage { getItem(key: string): string | null; setItem(key: string, value: string): void }
 let locale: Locale = 'zh-CN';
-const english: Readonly<Record<string, string>> = { ...endings, ...ui, ...pilot, ...mainline, ...reading, ...commerce, ...cats, ...huac, ...offpeak, ...afternoon, ...days, ...communityA, ...communityB, ...communityC, ...communityD,...legacy,...communityEntry };
+const english: Readonly<Record<string, string>> = { ...daily, ...dailyForum, ...delegatedRefusal, ...coffeeRefusal, ...sharedMemories, ...agentFortune, ...endings, ...ui, ...pilot, ...mainline, ...reading, ...commerce, ...cats, ...huac, ...offpeak, ...afternoon, ...days, ...communityA, ...communityB, ...communityC, ...communityD,...legacy,...communityEntry };
 export const hasTranslation = (source: string): boolean => Object.hasOwn(english, source) && Boolean(english[source]?.trim());
 export const getLocale = (): Locale => locale;
 export function loadLocale(storage: PreferenceStorage): void {
