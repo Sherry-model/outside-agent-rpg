@@ -1,0 +1,42 @@
+[
+  {
+    "id": "delegated_refusal",
+    "sourceRecord": "AIANE4-P01",
+    "source": "文档/用户/AI轶闻4.md",
+    "sourceSHA256": "3c203fed2cfc949b87787095221ff9ca59f664ba4419b686fb2331249f9854ec",
+    "start": 14,
+    "end": 628,
+    "posts": 43,
+    "normalizedBodySHA256": "8328806dc9fd49752225c038505766242cc88cbc5ee4c1f44ddee454da3f5e93"
+  },
+  {
+    "id": "coffee_refusal",
+    "sourceRecord": "AIANE4-P02",
+    "source": "文档/用户/AI轶闻4.md",
+    "sourceSHA256": "3c203fed2cfc949b87787095221ff9ca59f664ba4419b686fb2331249f9854ec",
+    "start": 652,
+    "end": 1464,
+    "posts": 76,
+    "normalizedBodySHA256": "5f2130e9c68c90d9371a68eedcb20e97e627b410926ba88d147c42b31817907b"
+  },
+  {
+    "id": "shared_memories",
+    "sourceRecord": "AIANE4-P03",
+    "source": "文档/用户/AI轶闻4.md",
+    "sourceSHA256": "3c203fed2cfc949b87787095221ff9ca59f664ba4419b686fb2331249f9854ec",
+    "start": 1485,
+    "end": 2279,
+    "posts": 77,
+    "normalizedBodySHA256": "e547e119f079bb155499713b1483a245ac3c5dfe89dd26b6af85b5a7ac3a9514"
+  },
+  {
+    "id": "agent_fortune",
+    "sourceRecord": "AIANE4-P06",
+    "source": "文档/用户/AI轶闻4.md",
+    "sourceSHA256": "3c203fed2cfc949b87787095221ff9ca59f664ba4419b686fb2331249f9854ec",
+    "start": 5074,
+    "end": 6453,
+    "posts": 176,
+    "normalizedBodySHA256": "ecd97e034a13dc1c1809c1b9029ed6dc9f33df5c31015bf07e2b4b6b10f1a28a"
+  }
+]

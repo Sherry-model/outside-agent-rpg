@@ -32,7 +32,7 @@ export function nextCommand(life:Life,route:Route={}):LifeCommand|null {
   return active?{type:'cognition',command:{type:'choose',choiceId:id,investment:0}}:{type:'choose',choiceId:id};
 }
 export function journey(route:Route={},stop?:string,seed=1234):Life {
-  let life=createLife(baseStory,seed);
+  let life=createLife(baseStory,seed,null,'0.10.0');
   for(let i=0;i<480;i++){
     if(stop&&nodeId(life)===stop&&!pending(life.mind)&&life.state.phase!=='resolution')return life;
     const cmd=nextCommand(life,route);if(!cmd)return life;

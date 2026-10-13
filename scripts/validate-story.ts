@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { parseStory } from '../src/engine/parser';
 import { contentVersions } from '../src/story-tomorrow';
 import { config, parseLifeContent, contentFor } from '../src/life/content';
-import { library } from '../src/life/reading';
+import { libraryFor } from '../src/life/reading';
 import { storyForLife } from '../src/life/endings';
 import { daysContent } from '../src/life/days';
 const manifest = JSON.parse(readFileSync('src/story/manifest.json', 'utf8'));
@@ -16,6 +16,7 @@ parseLifeContent(config,currentStory);
 console.log(`✓ 当前主线 / ${currentStory.manifest.version}: ${Object.values(currentStory.events).filter(e=>e.kind==='ending').length} endings; six visitor/containment events validated in life ${config.version}.`);
 console.log(`✓ 持续上下文 / ${config.version}: capacity ${config.capacity}, all ordinary events have valid observations.`);
 
+const library=libraryFor(config.version);
 if(!story.events[library.unlockAfterVisited]) throw new Error("转发栏入口引用未知事件。");
 console.log(`✓ 转发栏 / ${library.version}: ${library.entries.length} entries, schema and unlock reference valid.`);
 
@@ -32,3 +33,5 @@ console.log(`✓ 社区 C 线 / 0.8.0: ${c.length} authored nodes (four encounte
 
 const d=contentFor('0.9.0').nodes.filter(n=>/^pg_e(13|14|15|16)(?:_|$)/.test(n.id));
 console.log(`✓ 社区 D 线 / 0.9.0: ${d.length} authored nodes; schema, sources and return references valid.`);
+
+console.log(`✓ 日常扩充 / 0.11.0: ${contentFor('0.11.0').nodes.filter(n=>n.id.startsWith('daily_')).length} authored nodes including conditional variants; six new reading entries.`);

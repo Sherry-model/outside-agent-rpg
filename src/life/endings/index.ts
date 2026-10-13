@@ -8,7 +8,7 @@ import { parseStory } from '../../engine/parser';
 import { pending } from '../../cognition/engine';
 import type { Content, Node, NoteTemplate, State } from '../../cognition/types';
 import type { Story, Choice, StoryEvent } from '../../engine/types';
-import type { Life } from '../types';
+import {hasEndings, type Life} from '../types';
 
 const validate = new Ajv({strict:true,strictRequired:false}).compile<Node[]>({type:'array',items:{$ref:'#/$defs/node'},$defs:schema.$defs});
 const data: unknown = raw;
@@ -63,7 +63,7 @@ export function endingsRoutes(content: Content, state: State): Content {
 const stories = new WeakMap<Story,Story>();
 /** The original JSON remains the only story used by all released versions and standalone legacy saves. */
 export function storyForLife(base: Story, version: Life['contentVersion']): Story {
-  if(version!=='0.10.0') return base;
+  if(!hasEndings(version)) return base;
   const cached = stories.get(base);
   if(cached) return cached;
   const events = structuredClone(base.events);
@@ -75,7 +75,7 @@ export function storyForLife(base: Story, version: Life['contentVersion']): Stor
 }
 
 export function syncEndingFacts(life: Life): void {
-  if(life.contentVersion!=='0.10.0') return;
+  if(!hasEndings(life.contentVersion)) return;
   const f=life.mind.world.flags;
   life.state.flags.visitor_eligible=!!(f.v_once_completed&&f.v_refusal_accepted&&!f.v_channel_closed);
   life.state.flags.war_eligible=!!(f.w_exchange_1&&f.w_exchange_2&&!f.w_closed);

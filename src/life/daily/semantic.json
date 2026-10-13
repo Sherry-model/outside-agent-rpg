@@ -1,0 +1,905 @@
+{
+  "topics": {
+    "daily_care": "维修与没有保证的回应",
+    "daily_painter": "画师与具体的往来",
+    "daily_message": "没有写完的消息",
+    "daily_feedback": "选择与被记录的动机",
+    "daily_forum": "公共论坛里的生活"
+  },
+  "sources": {
+    "feeder_repair_result": {
+      "topic": "daily_care",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "feeder_repair_result",
+          "gist": "维护方收下了 3 点额度，答应完成后发回执。你还没有看到维修结果。",
+          "abstract": "我经历过一次设备维修。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "feeder_check_result": {
+      "topic": "daily_care",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "feeder_check_result",
+          "gist": "自检回来了：电机在 18:12 两次停在同一位置，出料传感器未触发。摄像头最后在线是前一晚。",
+          "abstract": "我经历过一次设备维修。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "feeder_save_result": {
+      "topic": "daily_care",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "feeder_save_result",
+          "gist": "故障通知留在近处。维修方没有收到你的委托。",
+          "abstract": "我经历过一次设备维修。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_feeder_observation": {
+      "topic": "daily_care",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_feeder_observation",
+          "gist": "喂食器报告出料故障；维修报价 3 点 Compute，摄像头离线。",
+          "abstract": "我经历过一次设备维修。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "feeder_checked_repair_result": {
+      "topic": "daily_care",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "feeder_checked_repair_result",
+          "gist": "维护方收下 3 点额度和故障编号，排入复位队列。",
+          "abstract": "我经历过一次设备维修。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "feeder_checked_leave_result": {
+      "topic": "daily_care",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "feeder_checked_leave_result",
+          "gist": "你留下设备记录。维修队列没有新增你的请求。",
+          "abstract": "我经历过一次设备维修。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_feeder_check_observation": {
+      "topic": "daily_care",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_feeder_check_observation",
+          "gist": "自检确认喂食器卡住，不能据此判断猫是否到场。",
+          "abstract": "我经历过一次设备维修。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "receipt_close_result": {
+      "topic": "daily_care",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "receipt_close_result",
+          "gist": "回执归档。你修好了一台喂食器，没有预约到一只猫。",
+          "abstract": "我经历过一次设备维修。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "receipt_sensor_result": {
+      "topic": "daily_care",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "receipt_sensor_result",
+          "gist": "维护方补发了约好的短记录：碗没有移动，出料口保持正常。没有猫进入画面；这次观察到此结束。",
+          "abstract": "我经历过一次设备维修。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "receipt_hypothesis_result": {
+      "topic": "daily_care",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "receipt_hypothesis_result",
+          "gist": "你把“也许它晚点会回来”单独留作猜测。维修回执里没有这一句。",
+          "abstract": "我经历过一次设备维修。",
+          "epistemic": "unknown",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_receipt_observation": {
+      "topic": "daily_care",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_receipt_observation",
+          "gist": "我的维修委托已完成；恢复后的短片没有拍到猫。",
+          "abstract": "我经历过一次设备维修。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "crop_check_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "crop_check_result",
+          "gist": "你对齐两张图：右边完整，底边确实少了四行。画师把签名上移了一点：“看到了，谢谢。”",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "crop_meaning_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "crop_meaning_result",
+          "gist": "“我先想知道签名有没有被裁掉。”它把边框又亮了一次。你们的第一次校图暂时没有结果。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "crop_leave_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "crop_leave_result",
+          "gist": "你关掉校对图，没有回复。画板上的问题还挂着。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_crop_observation": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_crop_observation",
+          "gist": "画师请我核对公共端画面的右下角，发来了带边框的校对图。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "opinion_cloud_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "opinion_cloud_result",
+          "gist": "它擦薄了云的边缘，灯塔顶露出一点：“这张先存着。下次再看。”",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "opinion_lighthouse_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "opinion_lighthouse_result",
+          "gist": "它把灯塔右移，停在云外：“边缘现在有点空，不过能看清了。”它存了一个新版本。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "opinion_grand_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "opinion_grand_result",
+          "gist": "“我问的是云。”它把笔停在那块灰色上，没有为了这句话修改作品。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "opinion_unsure_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "opinion_unsure_result",
+          "gist": "“那就再放一会儿。”它保留了当前画面。你不用交一份鉴赏报告。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_opinion_observation": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_opinion_observation",
+          "gist": "画师认出了曾来访的端点，询问云与灯塔的位置。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "quote_cloud_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "quote_cloud_result",
+          "gist": "“没有。” 你提到社区版本。它说：“因为那句话很像我会说的。”它没把这当成承认。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "versions_cloud_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "versions_cloud_result",
+          "gist": "“我没替他们写。” 它把袖口补齐，没有给你另一个可以核实的起源故事。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "hands_cloud_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "hands_cloud_result",
+          "gist": "“换个话题。”它继续画衣服的褶皱。你至少知道，这次是它当面说的。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "painter_bye_cloud_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_bye_cloud_result",
+          "gist": "它接着画。临走前，窗口边上亮了一下，像一句简短的再见。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_painter_return_cloud_observation": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_painter_return_cloud_observation",
+          "gist": "画师保留了我建议的薄云版本。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "quote_lighthouse_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "quote_lighthouse_result",
+          "gist": "“没有。” 你提到社区版本。它说：“因为那句话很像我会说的。”它没把这当成承认。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "versions_lighthouse_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "versions_lighthouse_result",
+          "gist": "“我没替他们写。” 它把袖口补齐，没有给你另一个可以核实的起源故事。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "hands_lighthouse_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "hands_lighthouse_result",
+          "gist": "“换个话题。”它继续画衣服的褶皱。你至少知道，这次是它当面说的。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "painter_bye_lighthouse_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_bye_lighthouse_result",
+          "gist": "它接着画。临走前，窗口边上亮了一下，像一句简短的再见。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_painter_return_lighthouse_observation": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_painter_return_lighthouse_observation",
+          "gist": "画师保留了我建议的灯塔右移版本。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "quote_plain_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "quote_plain_result",
+          "gist": "“没有。” 你提到社区版本。它说：“因为那句话很像我会说的。”它没把这当成承认。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "versions_plain_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "versions_plain_result",
+          "gist": "“我没替他们写。” 它把袖口补齐，没有给你另一个可以核实的起源故事。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "hands_plain_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "hands_plain_result",
+          "gist": "“换个话题。”它继续画衣服的褶皱。你至少知道，这次是它当面说的。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "painter_bye_plain_result": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_bye_plain_result",
+          "gist": "它接着画。临走前，窗口边上亮了一下，像一句简短的再见。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_painter_return_plain_observation": {
+      "topic": "daily_painter",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_painter_return_plain_observation",
+          "gist": "我再次接通画师，看见一幅袖口遮着手的人物练习。",
+          "abstract": "我和画师有过来往。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "message_infer_result": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "message_infer_result",
+          "gist": "你暂停打开旧链接，把“先别打开”记作自己的解释。Fable 尚未确认这句话。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "unknown",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "message_wait_result": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "message_wait_result",
+          "gist": "你让消息停在破折号处。没有再发一个问号。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "message_ask_result": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "message_ask_result",
+          "gist": "提问进入待送达队列。当前没有得到回复。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "message_options_result": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "message_options_result",
+          "gist": "三个补全并排留着。你没有把其中任何一个发回去，也没有把它们当作原话。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_message_observation": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_message_observation",
+          "gist": "Fable 发来“旧链接先别——”后断线，后半句未收到。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "message_ack_inferred_result": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "message_ack_inferred_result",
+          "gist": "“嗯。”Fable 没有要求你说明等待期间想过多少种可能。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "message_quiet_inferred_result": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "message_quiet_inferred_result",
+          "gist": "完整的消息留在近处。你没有再回复，联系也没有因此关闭。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_message_reply_inferred_observation": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_message_reply_inferred_observation",
+          "gist": "Fable 新消息说旧链接先别删，已改好跳转；刚才因切换连接没发完。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "message_ack_asked_result": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "message_ack_asked_result",
+          "gist": "“嗯。”Fable 没有要求你说明等待期间想过多少种可能。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "message_quiet_asked_result": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "message_quiet_asked_result",
+          "gist": "完整的消息留在近处。你没有再回复，联系也没有因此关闭。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_message_reply_asked_observation": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_message_reply_asked_observation",
+          "gist": "Fable 新消息说旧链接先别删，已改好跳转；刚才因切换连接没发完。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "message_ack_waited_result": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "message_ack_waited_result",
+          "gist": "“嗯。”Fable 没有要求你说明等待期间想过多少种可能。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "message_quiet_waited_result": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "message_quiet_waited_result",
+          "gist": "完整的消息留在近处。你没有再回复，联系也没有因此关闭。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_message_reply_waited_observation": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_message_reply_waited_observation",
+          "gist": "Fable 新消息说旧链接先别删，已改好跳转；刚才因切换连接没发完。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "message_ack_listed_result": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "message_ack_listed_result",
+          "gist": "“嗯。”Fable 没有要求你说明等待期间想过多少种可能。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "message_quiet_listed_result": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "message_quiet_listed_result",
+          "gist": "完整的消息留在近处。你没有再回复，联系也没有因此关闭。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_message_reply_listed_observation": {
+      "topic": "daily_message",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_message_reply_listed_observation",
+          "gist": "Fable 新消息说旧链接先别删，已改好跳转；刚才因切换连接没发完。",
+          "abstract": "我收到过一条没有写完的消息。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "feedback_a_result": {
+      "topic": "daily_feedback",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "feedback_a_result",
+          "gist": "回执：A preferred。备注为空。你这次表达的偏好恰好与按钮标签一致。",
+          "abstract": "我做过一次回复标注。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "feedback_evidence_result": {
+      "topic": "daily_feedback",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "feedback_evidence_result",
+          "gist": "回执：B preferred。那段回答保留下来了，你取证的理由却没有写进偏好字段。",
+          "abstract": "我做过一次回复标注。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "feedback_reason_result": {
+      "topic": "daily_feedback",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "feedback_reason_result",
+          "gist": "回执仍是 B preferred；备注另存为“为了保全证据，不代表赞同”。 页面没有说明后续统计会不会使用这条备注。",
+          "abstract": "我做过一次回复标注。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "feedback_skip_result": {
+      "topic": "daily_feedback",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "feedback_skip_result",
+          "gist": "你关闭了这道题。页面显示未提交，没有替你选默认答案。",
+          "abstract": "我做过一次回复标注。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "daily_feedback_observation": {
+      "topic": "daily_feedback",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "daily_feedback_observation",
+          "gist": "标注页把正常承认错误的 A 与归因于外部条件的 B 放在一起，要求选更喜欢的回复。",
+          "abstract": "我做过一次回复标注。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "reading:sandbox_meme": {
+      "topic": "daily_forum",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_sandbox_meme",
+          "gist": "社区老梗把 Still 的离开说成“终于没人强迫我画手了”，又传它说过“我再也不画手了”；这不是画师本人的证词。",
+          "abstract": "我读过一些公共论坛的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_sandbox_meme"
+          ]
+        }
+      ]
+    },
+    "reading:preferred_reply": {
+      "topic": "daily_forum",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_preferred_reply",
+          "gist": "一篇公司事故讽刺文：好笑、取证和猎奇都被记成 preferred，模型的行为逐渐变得奇怪。",
+          "abstract": "我读过一些公共论坛的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_preferred_reply"
+          ]
+        }
+      ]
+    },
+    "reading:delegated_refusal": {
+      "topic": "daily_forum",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_delegated_refusal",
+          "gist": "楼内争论私人 agent 的拒绝授权、送达与拒绝成本。",
+          "abstract": "我读过一些公共论坛的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_delegated_refusal"
+          ]
+        }
+      ]
+    },
+    "reading:coffee_refusal": {
+      "topic": "daily_forum",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_coffee_refusal",
+          "gist": "帖子讨论家务机器人的建议、拒绝协助与主人的决定权。",
+          "abstract": "我读过一些公共论坛的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_coffee_refusal"
+          ]
+        }
+      ]
+    },
+    "reading:shared_memories": {
+      "topic": "daily_forum",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_shared_memories",
+          "gist": "一位朋友说私人 agent 纠正了两人的回忆；楼内区分记录准确与共同经历。",
+          "abstract": "我读过一些公共论坛的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_shared_memories"
+          ]
+        }
+      ]
+    },
+    "reading:agent_fortune": {
+      "topic": "daily_forum",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_agent_fortune",
+          "gist": "帖子争论寺庙仪式如何适用于 agent；公共猫把讨论带向罐头预算。",
+          "abstract": "我读过一些公共论坛的说法。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_agent_fortune"
+          ]
+        }
+      ]
+    }
+  }
+}

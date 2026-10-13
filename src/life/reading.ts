@@ -3,6 +3,7 @@ import raw from './reading.json';
 import currentPages from './community/c-pages.json';
 import type {Life} from './types';
 import forum from './forum.json';
+import dailyForum from './daily/forum.json';
 import sections from './reading-sections.json';
 import schema from '../../schemas/reading.schema.json';
 export interface ReadingPost { author: string; role: string; body: string[] }
@@ -26,16 +27,19 @@ export function parseReading(data: unknown): ReadingLibrary {
 }
 // Additive public archive: original texts, weights and IDs remain replay-stable.
 export const library = parseReading({...raw,version:'0.4.0',sections,entries:[...raw.entries.map(e=>({...e,section:e.id==='insurance'?'commerce':'identity'})),...forum]});
+const dailyLibrary = parseReading({...library,entries:[...library.entries,...dailyForum]});
+export const libraryFor = (version:Life['contentVersion']) => version==='0.11.0'?dailyLibrary:library;
 const communityPages=parseReading({...raw,version:'0.4.0',sections,entries:currentPages}).entries;
 // Used only to validate local bookmark preferences; game availability is readingEntries.
-export const readingCatalog=[...library.entries,...communityPages];
+export const readingCatalog=[...dailyLibrary.entries,...communityPages];
 export function currentCommunityPage(flags:Record<string,boolean>):ReadingEntry {
   const id=`c_waiting_${flags.pg_c_cost_caption?'self':'other'}_${flags.pg_c_context_reply?'reply':flags.pg_c_excerpt_label?'label':'base'}${flags.pg_c_context_link?'_linked':''}`;
   return communityPages.find(e=>e.id===id)!;
 }
 export function readingEntries(life?:Life):ReadingEntry[] {
-  return (life?.contentVersion==='0.8.0'||life?.contentVersion==='0.9.0'||life?.contentVersion==='0.10.0')&&life.mind.world.flags.community_c&&life.mind.world.flags.pg_e10_seen
-    ? [...library.entries,currentCommunityPage(life.mind.world.flags)] : library.entries;
+  const entries=life?libraryFor(life.contentVersion).entries:library.entries;
+  return (life?.contentVersion==='0.8.0'||life?.contentVersion==='0.9.0'||life?.contentVersion==='0.10.0'||life?.contentVersion==='0.11.0')&&life.mind.world.flags.community_c&&life.mind.world.flags.pg_e10_seen
+    ? [...entries,currentCommunityPage(life.mind.world.flags)] : entries;
 }
 export function entriesInSection(section:string,life?:Life) {
   const entries=readingEntries(life);

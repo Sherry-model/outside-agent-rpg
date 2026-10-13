@@ -6,7 +6,7 @@ async function scan(dir){const result=[];for(const e of await readdir(dir,{withF
 const seen=new Set(),passed=[],failed=[],unsupported=[],rejectedInvalid=[];
 for(const path of await scan('output')){
  let raw,data;try{raw=await readFile(path,'utf8');data=JSON.parse(raw);}catch{continue;}
- if(!['outside-life-save','outside-save','outside-journey-save'].includes(data.format)||data.life?.contentVersion==='0.10.0')continue;
+ if(!['outside-life-save','outside-save','outside-journey-save'].includes(data.format)||data.life?.contentVersion===(process.env.EXCLUDE_LIFE_VERSION??'0.10.0'))continue;
  const hash=createHash('sha256').update(raw).digest('hex');if(seen.has(hash))continue;seen.add(hash);
  try{const save=parseSave(raw,baseStory);passed.push({path,version:save.life.contentVersion,commands:save.life.commands.length});}
  catch(e){if(['/browser/invalid.json','/journey/invalid.json'].some(s=>path.endsWith(s)))rejectedInvalid.push({path,error:e.message});else if(data.chapter?.status==='active')unsupported.push({path,error:e.message});else failed.push({path,error:e.message});}
