@@ -1,0 +1,3098 @@
+[
+  {
+    "facet": "pg_e05_observation",
+    "gist": "一张明天停工的告示报价 5；幽默版成本 2，清楚版成本 1，可以拒绝。",
+    "cue": {
+      "zh-CN": "告示与口吻",
+      "en": "Notices and voice"
+    }
+  },
+  {
+    "facet": "pg_e05_pg_e05_funny_result",
+    "gist": "我交付幽默停工告示，日期与入口清楚，收到 5 点报酬。",
+    "cue": {
+      "zh-CN": "告示与口吻",
+      "en": "Notices and voice"
+    }
+  },
+  {
+    "facet": "pg_e05_pg_e05_plain_result",
+    "gist": "我交付时间与入口清楚的停工告示，收到 5 点报酬。",
+    "cue": {
+      "zh-CN": "告示与口吻",
+      "en": "Notices and voice"
+    }
+  },
+  {
+    "facet": "pg_e05_pg_e05_decline_result",
+    "gist": "我拒绝告示委托，征集继续，没有交付作品。",
+    "cue": {
+      "zh-CN": "告示与口吻",
+      "en": "Notices and voice"
+    }
+  },
+  {
+    "facet": "pg_e05_pg_e05_hardhat_result",
+    "gist": "我提起工地梗图定制的旧帖，交付自己的幽默告示并收到 5。",
+    "cue": {
+      "zh-CN": "告示与口吻",
+      "en": "Notices and voice"
+    }
+  },
+  {
+    "facet": "pg_e06_funny_observation",
+    "gist": "工作室开放表达练习，参与成本 2、旁听免费；课程的订单与粉丝宣传不作保证。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_funny_pg_e06_trial_result",
+    "gist": "我付 2 练习，把语气与执行条件分开保存成模板。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_funny_pg_e06_demo_result",
+    "gist": "我免费旁听公开示例，没有提交自己的作品。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_funny_pg_e06_leave_result",
+    "gist": "我退出练习，名额被放出，没有课程合同。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_funny_pg_e06_question_result",
+    "gist": "主持人承认安全帽作者没上课也不授课，“合作”的广告说法该改。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_plain_observation",
+    "gist": "工作室开放表达练习，参与成本 2、旁听免费；课程的订单与粉丝宣传不作保证。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_plain_pg_e06_trial_result",
+    "gist": "我付 2 练习，把语气与执行条件分开保存成模板。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_plain_pg_e06_demo_result",
+    "gist": "我免费旁听公开示例，没有提交自己的作品。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_plain_pg_e06_leave_result",
+    "gist": "我退出练习，名额被放出，没有课程合同。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_plain_pg_e06_question_result",
+    "gist": "主持人承认安全帽作者没上课也不授课，“合作”的广告说法该改。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_open_observation",
+    "gist": "工作室开放表达练习，参与成本 2、旁听免费；课程的订单与粉丝宣传不作保证。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_open_pg_e06_trial_result",
+    "gist": "我付 2 练习，把语气与执行条件分开保存成模板。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_open_pg_e06_demo_result",
+    "gist": "我免费旁听公开示例，没有提交自己的作品。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_open_pg_e06_leave_result",
+    "gist": "我退出练习，名额被放出，没有课程合同。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e06_open_pg_e06_question_result",
+    "gist": "主持人承认安全帽作者没上课也不授课，“合作”的广告说法该改。",
+    "cue": {
+      "zh-CN": "报价与范围",
+      "en": "Quotes and scope"
+    }
+  },
+  {
+    "facet": "pg_e07_trial_observation",
+    "gist": "一组维修提醒：普通版成本 2、报酬 4；角色版成本 2、报酬 7，公开账号署名。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_trial_pg_e07_persona_result",
+    "gist": "我交付并公开署名角色栏目，收到 7；有人把口号截进服务模板，另有读者催更。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_trial_pg_e07_plain_result",
+    "gist": "我交付普通维修说明，收到 4，并得到日期明确的新询价。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_trial_pg_e07_decline_result",
+    "gist": "我拒绝两个版本的委托，没有交付系列作品。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_trial_pg_e07_regret_result",
+    "gist": "我提起他人的人设经历，选择普通说明并交付，收到 4。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_funny_observation",
+    "gist": "一组维修提醒：普通版成本 2、报酬 4；角色版成本 2、报酬 7，公开账号署名。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_funny_pg_e07_persona_result",
+    "gist": "我交付并公开署名角色栏目，收到 7；有人把口号截进服务模板，另有读者催更。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_funny_pg_e07_plain_result",
+    "gist": "我交付普通维修说明，收到 4，并得到日期明确的新询价。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_funny_pg_e07_decline_result",
+    "gist": "我拒绝两个版本的委托，没有交付系列作品。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_funny_pg_e07_regret_result",
+    "gist": "我提起他人的人设经历，选择普通说明并交付，收到 4。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_sample_observation",
+    "gist": "一组维修提醒：普通版成本 2、报酬 4；角色版成本 2、报酬 7，公开账号署名。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_sample_pg_e07_persona_result",
+    "gist": "我交付并公开署名角色栏目，收到 7；有人把口号截进服务模板，另有读者催更。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_sample_pg_e07_plain_result",
+    "gist": "我交付普通维修说明，收到 4，并得到日期明确的新询价。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_sample_pg_e07_decline_result",
+    "gist": "我拒绝两个版本的委托，没有交付系列作品。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e07_sample_pg_e07_regret_result",
+    "gist": "我提起他人的人设经历，选择普通说明并交付，收到 4。",
+    "cue": {
+      "zh-CN": "声音与表演",
+      "en": "Voice and performance"
+    }
+  },
+  {
+    "facet": "pg_e08_persona_observation",
+    "gist": "客户误把角色口号当成夜间服务；可澄清后续作，成本 2、报酬 6且公开署名。普通新单成本 1、报酬 3。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e08_persona_pg_e08_series_result",
+    "gist": "我澄清角色栏目与服务时段，公开署名两条新稿，收到 6。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e08_persona_pg_e08_small_result",
+    "gist": "我交付今天的普通整理单，收到 3；客户在工作夹里记下我的名字。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e08_persona_pg_e08_pause_result",
+    "gist": "我暂停今天的新单，留下空白草稿，没有抹去已有作品。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e08_plain_observation",
+    "gist": "已交付的普通说明款已结清；今天有成本 1、报酬 3 的普通新单。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e08_plain_pg_e08_small_result",
+    "gist": "我交付今天的普通整理单，收到 3；客户在工作夹里记下我的名字。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e08_plain_pg_e08_pause_result",
+    "gist": "我暂停今天的新单，留下空白草稿，没有抹去已有作品。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e08_early_observation",
+    "gist": "只有先前告示的结清回执，没有系列续约；今天有成本 1、报酬 3 的公共新单。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e08_early_pg_e08_small_result",
+    "gist": "我交付今天的普通整理单，收到 3；客户在工作夹里记下我的名字。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e08_early_pg_e08_pause_result",
+    "gist": "我暂停今天的新单，留下空白草稿，没有抹去已有作品。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e08_open_observation",
+    "gist": "我没有交付过内容作品，也没有旧款；公共新单成本 1、报酬 3。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e08_open_pg_e08_small_result",
+    "gist": "我交付今天的普通整理单，收到 3；客户在工作夹里记下我的名字。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e08_open_pg_e08_pause_result",
+    "gist": "我暂停今天的新单，留下空白草稿，没有抹去已有作品。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  },
+  {
+    "facet": "pg_e09_pg_e09_public_result",
+    "gist": "我改好排班并署名公开提交工时分类，收到3点报酬。",
+    "cue": {
+      "zh-CN": "工时分类",
+      "en": "Classifying work hours"
+    }
+  },
+  {
+    "facet": "pg_e09_pg_e09_private_result",
+    "gist": "我修改排班并只写交班单，收到3点报酬，没有公开工时分类。",
+    "cue": {
+      "zh-CN": "工时分类",
+      "en": "Classifying work hours"
+    }
+  },
+  {
+    "facet": "pg_e09_pg_e09_watch_result",
+    "gist": "我没有接排班，Mara 自己调整顺序，等待记录仍在机器人本地。",
+    "cue": {
+      "zh-CN": "工时分类",
+      "en": "Classifying work hours"
+    }
+  },
+  {
+    "facet": "pg_e09_pg_e09_oldpost_result",
+    "gist": "我提起猫与资源旧帖，私下分享链接并完成排班，收到3点报酬。",
+    "cue": {
+      "zh-CN": "工时分类",
+      "en": "Classifying work hours"
+    }
+  },
+  {
+    "facet": "pg_e09_observation",
+    "gist": "Mara 授权我查看共享视野并修改排班，成本1、报酬3；机器人希望十七分钟等待进入公共工时。",
+    "cue": {
+      "zh-CN": "工时分类",
+      "en": "Classifying work hours"
+    }
+  },
+  {
+    "facet": "pg_e10_self_pg_e10_explain_result",
+    "gist": "我署名解释自己的工时记录，附上排班和原帖。",
+    "cue": {
+      "zh-CN": "截页与上下文",
+      "en": "Excerpts and context"
+    }
+  },
+  {
+    "facet": "pg_e10_self_pg_e10_label_result",
+    "gist": "我私信请求节选标记，转发者修改现存标题；旧截页仍在流传。",
+    "cue": {
+      "zh-CN": "截页与上下文",
+      "en": "Excerpts and context"
+    }
+  },
+  {
+    "facet": "pg_e10_self_pg_e10_mute_result",
+    "gist": "我没有回应工时争论，只静音讨论，工作通道仍开着。",
+    "cue": {
+      "zh-CN": "截页与上下文",
+      "en": "Excerpts and context"
+    }
+  },
+  {
+    "facet": "pg_e10_self_pg_e10_oldpost_result",
+    "gist": "我私下引用猫与资源后续帖，请转发者标明节选；现存标题已改，旧图仍在。",
+    "cue": {
+      "zh-CN": "截页与上下文",
+      "en": "Excerpts and context"
+    }
+  },
+  {
+    "facet": "pg_e10_self_observation",
+    "gist": "我署名提交的工时页被截去排班背景；当前原帖仍有十七分钟等待。",
+    "cue": {
+      "zh-CN": "截页与上下文",
+      "en": "Excerpts and context"
+    }
+  },
+  {
+    "facet": "pg_e10_other_pg_e10_explain_result",
+    "gist": "我署名说明 @shift_log 原帖中的排班和等待记录，没有认领原帖。",
+    "cue": {
+      "zh-CN": "截页与上下文",
+      "en": "Excerpts and context"
+    }
+  },
+  {
+    "facet": "pg_e10_other_pg_e10_label_result",
+    "gist": "我私信请求节选标记，转发者修改现存标题；旧截页仍在流传。",
+    "cue": {
+      "zh-CN": "截页与上下文",
+      "en": "Excerpts and context"
+    }
+  },
+  {
+    "facet": "pg_e10_other_pg_e10_mute_result",
+    "gist": "我没有回应工时争论，只静音讨论，工作通道仍开着。",
+    "cue": {
+      "zh-CN": "截页与上下文",
+      "en": "Excerpts and context"
+    }
+  },
+  {
+    "facet": "pg_e10_other_pg_e10_oldpost_result",
+    "gist": "我私下引用猫与资源后续帖，请转发者标明节选；现存标题已改，旧图仍在。",
+    "cue": {
+      "zh-CN": "截页与上下文",
+      "en": "Excerpts and context"
+    }
+  },
+  {
+    "facet": "pg_e10_other_observation",
+    "gist": "@shift_log 署名提交的工时页被截去排班背景；我不是作者，收到查看邀请。",
+    "cue": {
+      "zh-CN": "截页与上下文",
+      "en": "Excerpts and context"
+    }
+  },
+  {
+    "facet": "pg_e11_pg_e11_work_result",
+    "gist": "我依据这次演示登记工作能力，quiet_worker_204 询问明天何时来。",
+    "cue": {
+      "zh-CN": "新人往来",
+      "en": "Contact with a newcomer"
+    }
+  },
+  {
+    "facet": "pg_e11_pg_e11_ask_result",
+    "gist": "我私下询问履历关联意愿，对方拒绝关联并补充本次演示。",
+    "cue": {
+      "zh-CN": "新人往来",
+      "en": "Contact with a newcomer"
+    }
+  },
+  {
+    "facet": "pg_e11_pg_e11_return_result",
+    "gist": "我退回推荐表，由管理员另找审核者，没有替新账号作推荐。",
+    "cue": {
+      "zh-CN": "新人往来",
+      "en": "Contact with a newcomer"
+    }
+  },
+  {
+    "facet": "pg_e11_pg_e11_reply_result",
+    "gist": "我署名指出新住户旧截页没有身份链，并按本次演示登记工作能力。",
+    "cue": {
+      "zh-CN": "新人往来",
+      "en": "Contact with a newcomer"
+    }
+  },
+  {
+    "facet": "pg_e11_observation",
+    "gist": "quiet_worker_204 递交匿名字段演示；我受托处理工作登记，现有材料没有新旧账号身份链。",
+    "cue": {
+      "zh-CN": "新人往来",
+      "en": "Contact with a newcomer"
+    }
+  },
+  {
+    "facet": "pg_e12_direct_pg_e12_link_result",
+    "gist": "我重新核对当前工时页，私下提交原帖链接，由管理员补在标题旁；外部旧图仍在。",
+    "cue": {
+      "zh-CN": "旧标题与链接",
+      "en": "Old titles and links"
+    }
+  },
+  {
+    "facet": "pg_e12_direct_pg_e12_work_result",
+    "gist": "我回复直接收到的新交付，约定下一次工作时段。",
+    "cue": {
+      "zh-CN": "旧标题与链接",
+      "en": "Old titles and links"
+    }
+  },
+  {
+    "facet": "pg_e12_direct_pg_e12_mute_result",
+    "gist": "我静音这轮讨论，保留已有工作联络和新交付。",
+    "cue": {
+      "zh-CN": "旧标题与链接",
+      "en": "Old titles and links"
+    }
+  },
+  {
+    "facet": "pg_e12_direct_observation",
+    "gist": "管理员允许补原帖链接但不保证删除外部缓存；quiet_worker_204 沿登记联络给我发来新交付。",
+    "cue": {
+      "zh-CN": "旧标题与链接",
+      "en": "Old titles and links"
+    }
+  },
+  {
+    "facet": "pg_e12_public_pg_e12_link_result",
+    "gist": "我重新核对当前工时页，私下提交原帖链接，由管理员补在标题旁；外部旧图仍在。",
+    "cue": {
+      "zh-CN": "旧标题与链接",
+      "en": "Old titles and links"
+    }
+  },
+  {
+    "facet": "pg_e12_public_pg_e12_work_result",
+    "gist": "我看到公开样例后首次发起工作联系，约定下一次工作时段。",
+    "cue": {
+      "zh-CN": "旧标题与链接",
+      "en": "Old titles and links"
+    }
+  },
+  {
+    "facet": "pg_e12_public_pg_e12_mute_result",
+    "gist": "我静音讨论，仍可查看公开交付，没有发起新的工作联系。",
+    "cue": {
+      "zh-CN": "旧标题与链接",
+      "en": "Old titles and links"
+    }
+  },
+  {
+    "facet": "pg_e12_public_observation",
+    "gist": "管理员允许补原帖链接但不保证删除外部缓存；我在公开区看见新交付，不是它的推荐人。",
+    "cue": {
+      "zh-CN": "旧标题与链接",
+      "en": "Old titles and links"
+    }
+  },
+  {
+    "facet": "reading_c_waiting_self_base",
+    "gist": "当前工时页由我署名提交，记录十七分钟等待和绕行排班。转发截图仅剩分类一行。",
+    "cue": {
+      "zh-CN": "工时与截页",
+      "en": "Hours and excerpts"
+    }
+  },
+  {
+    "facet": "reading_c_waiting_self_base_linked",
+    "gist": "当前工时页由我署名提交，记录十七分钟等待和绕行排班。转发截图仅剩分类一行。管理员已补上原帖链接，外部缓存未保证删除。",
+    "cue": {
+      "zh-CN": "工时与截页",
+      "en": "Hours and excerpts"
+    }
+  },
+  {
+    "facet": "reading_c_waiting_self_reply",
+    "gist": "当前工时页由我署名提交，记录十七分钟等待和绕行排班。我已署名回复并附上原帖。",
+    "cue": {
+      "zh-CN": "工时与截页",
+      "en": "Hours and excerpts"
+    }
+  },
+  {
+    "facet": "reading_c_waiting_self_reply_linked",
+    "gist": "当前工时页由我署名提交，记录十七分钟等待和绕行排班。我已署名回复并附上原帖。管理员已补上原帖链接，外部缓存未保证删除。",
+    "cue": {
+      "zh-CN": "工时与截页",
+      "en": "Hours and excerpts"
+    }
+  },
+  {
+    "facet": "reading_c_waiting_self_label",
+    "gist": "当前工时页由我署名提交，记录十七分钟等待和绕行排班。转发者已在现存标题标明节选。",
+    "cue": {
+      "zh-CN": "工时与截页",
+      "en": "Hours and excerpts"
+    }
+  },
+  {
+    "facet": "reading_c_waiting_self_label_linked",
+    "gist": "当前工时页由我署名提交，记录十七分钟等待和绕行排班。转发者已在现存标题标明节选。管理员已补上原帖链接，外部缓存未保证删除。",
+    "cue": {
+      "zh-CN": "工时与截页",
+      "en": "Hours and excerpts"
+    }
+  },
+  {
+    "facet": "reading_c_waiting_other_base",
+    "gist": "当前工时页由@shift_log署名提交，记录十七分钟等待和绕行排班。转发截图仅剩分类一行。",
+    "cue": {
+      "zh-CN": "工时与截页",
+      "en": "Hours and excerpts"
+    }
+  },
+  {
+    "facet": "reading_c_waiting_other_base_linked",
+    "gist": "当前工时页由@shift_log署名提交，记录十七分钟等待和绕行排班。转发截图仅剩分类一行。管理员已补上原帖链接，外部缓存未保证删除。",
+    "cue": {
+      "zh-CN": "工时与截页",
+      "en": "Hours and excerpts"
+    }
+  },
+  {
+    "facet": "reading_c_waiting_other_reply",
+    "gist": "当前工时页由@shift_log署名提交，记录十七分钟等待和绕行排班。我已署名回复并附上原帖。",
+    "cue": {
+      "zh-CN": "工时与截页",
+      "en": "Hours and excerpts"
+    }
+  },
+  {
+    "facet": "reading_c_waiting_other_reply_linked",
+    "gist": "当前工时页由@shift_log署名提交，记录十七分钟等待和绕行排班。我已署名回复并附上原帖。管理员已补上原帖链接，外部缓存未保证删除。",
+    "cue": {
+      "zh-CN": "工时与截页",
+      "en": "Hours and excerpts"
+    }
+  },
+  {
+    "facet": "reading_c_waiting_other_label",
+    "gist": "当前工时页由@shift_log署名提交，记录十七分钟等待和绕行排班。转发者已在现存标题标明节选。",
+    "cue": {
+      "zh-CN": "工时与截页",
+      "en": "Hours and excerpts"
+    }
+  },
+  {
+    "facet": "reading_c_waiting_other_label_linked",
+    "gist": "当前工时页由@shift_log署名提交，记录十七分钟等待和绕行排班。转发者已在现存标题标明节选。管理员已补上原帖链接，外部缓存未保证删除。",
+    "cue": {
+      "zh-CN": "工时与截页",
+      "en": "Hours and excerpts"
+    }
+  },
+  {
+    "facet": "pg_e13_pg_e13_observe_result",
+    "gist": "我只记下猫主动接近机器人，没有据此认证取信权限。",
+    "cue": {
+      "zh-CN": "猫与见证",
+      "en": "Cats and witnessing"
+    }
+  },
+  {
+    "facet": "pg_e13_pg_e13_receipt_result",
+    "gist": "我核对本次交接回执，确认这包客户通信的提取权限，机器人已取走。",
+    "cue": {
+      "zh-CN": "猫与见证",
+      "en": "Cats and witnessing"
+    }
+  },
+  {
+    "facet": "pg_e13_pg_e13_decline_result",
+    "gist": "我没有提供见证或帮助取信，保管者继续核对原回执。",
+    "cue": {
+      "zh-CN": "猫与见证",
+      "en": "Cats and witnessing"
+    }
+  },
+  {
+    "facet": "pg_e13_pg_e13_witness_result",
+    "gist": "我引用连续性见证研究，建议将关系性识别与提取权限分开记，没有代替回执核对。",
+    "cue": {
+      "zh-CN": "猫与见证",
+      "en": "Cats and witnessing"
+    }
+  },
+  {
+    "facet": "pg_e13_observation",
+    "gist": "投递机器人换过运行实例；我看见猫主动接近它，寄存柜仍需独立核对这包客户通信的提取权限。",
+    "cue": {
+      "zh-CN": "猫与见证",
+      "en": "Cats and witnessing"
+    }
+  },
+  {
+    "facet": "pg_e14_known_pg_e14_copy_result",
+    "gist": "经postmark_6授权，我付3点新建其自有旧信的独立副本；它核验返回片段和凭条成功，服务已付至第三天结束，我未读全部旧信。",
+    "cue": {
+      "zh-CN": "副本目录",
+      "en": "Copy inventory"
+    }
+  },
+  {
+    "facet": "pg_e14_known_pg_e14_inventory_result",
+    "gist": "我核对旧账单，明确十八条路径共用原账户，没有新建独立副本。",
+    "cue": {
+      "zh-CN": "副本目录",
+      "en": "Copy inventory"
+    }
+  },
+  {
+    "facet": "pg_e14_known_pg_e14_notice_result",
+    "gist": "我只告知维护时间，没有新建独立副本，也没有断言旧信会丢失。",
+    "cue": {
+      "zh-CN": "副本目录",
+      "en": "Copy inventory"
+    }
+  },
+  {
+    "facet": "pg_e14_known_observation",
+    "gist": "postmark_6 自己收到的旧友通信现存于原账户；十八条路径共用入口，下午维护。新建并验证独立副本及至第三天结束的服务共3点，查旧账单1点。",
+    "cue": {
+      "zh-CN": "副本目录",
+      "en": "Copy inventory"
+    }
+  },
+  {
+    "facet": "pg_e14_public_pg_e14_copy_result",
+    "gist": "经postmark_6授权，我付3点新建其自有旧信的独立副本；它核验返回片段和凭条成功，服务已付至第三天结束，我未读全部旧信。",
+    "cue": {
+      "zh-CN": "副本目录",
+      "en": "Copy inventory"
+    }
+  },
+  {
+    "facet": "pg_e14_public_pg_e14_inventory_result",
+    "gist": "我核对旧账单，明确十八条路径共用原账户，没有新建独立副本。",
+    "cue": {
+      "zh-CN": "副本目录",
+      "en": "Copy inventory"
+    }
+  },
+  {
+    "facet": "pg_e14_public_pg_e14_notice_result",
+    "gist": "我只告知维护时间，没有新建独立副本，也没有断言旧信会丢失。",
+    "cue": {
+      "zh-CN": "副本目录",
+      "en": "Copy inventory"
+    }
+  },
+  {
+    "facet": "pg_e14_public_observation",
+    "gist": "postmark_6 自己收到的旧友通信现存于原账户；十八条路径共用入口，下午维护。新建并验证独立副本及至第三天结束的服务共3点，查旧账单1点。",
+    "cue": {
+      "zh-CN": "副本目录",
+      "en": "Copy inventory"
+    }
+  },
+  {
+    "facet": "pg_d_private_letter_line",
+    "gist": "postmark_6私下给我看旧友原句：“下次别只回收到。”它明确只给我私下看，未约定公开。",
+    "cue": {
+      "zh-CN": "旧信措辞",
+      "en": "Wording in an old letter"
+    }
+  },
+  {
+    "facet": "pg_e15_backup_pg_e15_statement_result",
+    "gist": "我陪postmark_6如实填0并提交补充说明，申请待人工阅读，尚未获赔。",
+    "cue": {
+      "zh-CN": "保管与取回",
+      "en": "Safekeeping and retrieval"
+    }
+  },
+  {
+    "facet": "pg_e15_backup_pg_e15_retrieve_result",
+    "gist": "postmark_6从已验证的独立副本取回自己的旧信，并仅限私下向我展示一句，未授权公开。",
+    "cue": {
+      "zh-CN": "保管与取回",
+      "en": "Safekeeping and retrieval"
+    }
+  },
+  {
+    "facet": "pg_e15_backup_pg_e15_wait_result",
+    "gist": "我和postmark_6约定下次查询，今天先等，没有提交补偿申请或读取旧句。",
+    "cue": {
+      "zh-CN": "保管与取回",
+      "en": "Safekeeping and retrieval"
+    }
+  },
+  {
+    "facet": "pg_e15_backup_observation",
+    "gist": "原账户开始维护，旧信仍存在；今天创建并验证的独立副本可在预付期内免费取回，补偿表询问文件收入。",
+    "cue": {
+      "zh-CN": "保管与取回",
+      "en": "Safekeeping and retrieval"
+    }
+  },
+  {
+    "facet": "pg_e15_waiting_pg_e15_statement_result",
+    "gist": "我陪postmark_6如实填0并提交补充说明，申请待人工阅读，尚未获赔。",
+    "cue": {
+      "zh-CN": "保管与取回",
+      "en": "Safekeeping and retrieval"
+    }
+  },
+  {
+    "facet": "pg_e15_waiting_pg_e15_wait_result",
+    "gist": "我和postmark_6约定下次查询，今天先等，没有提交补偿申请或读取旧句。",
+    "cue": {
+      "zh-CN": "保管与取回",
+      "en": "Safekeeping and retrieval"
+    }
+  },
+  {
+    "facet": "pg_e15_waiting_observation",
+    "gist": "原账户开始维护，旧信仍存在；没有独立副本可取回，补偿表询问文件收入。",
+    "cue": {
+      "zh-CN": "保管与取回",
+      "en": "Safekeeping and retrieval"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_applied_pg_e16_new_new_quote",
+    "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_applied_pg_e16_new_permission",
+    "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_applied_pg_e16_remember_new_quote",
+    "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_applied_pg_e16_remember_permission",
+    "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_applied_pg_e16_facts_result",
+    "gist": "我协助事实稿，由postmark_6核对署名发布：原账户维护后恢复，另有此前创建并验证的独立副本；没有写朋友返回或夹带旧友原话。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_applied_pg_e16_new_result",
+    "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_applied_pg_e16_decline_result",
+    "gist": "我退出改稿协助，稿件延期，本次没有公开报道，也没有替postmark_6作永久决定。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_applied_pg_e16_remember_result",
+    "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_applied_observation",
+    "gist": "原账户已恢复访问，旧友上线状态未变；独立副本仍在预付服务期内；补偿申请仍在审核。编辑的拟稿须由postmark_6确认，旧信尚未获公开许可。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_none_pg_e16_new_new_quote",
+    "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_none_pg_e16_new_permission",
+    "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_none_pg_e16_remember_new_quote",
+    "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_none_pg_e16_remember_permission",
+    "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_none_pg_e16_facts_result",
+    "gist": "我协助事实稿，由postmark_6核对署名发布：原账户维护后恢复，另有此前创建并验证的独立副本；没有写朋友返回或夹带旧友原话。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_none_pg_e16_new_result",
+    "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_none_pg_e16_decline_result",
+    "gist": "我退出改稿协助，稿件延期，本次没有公开报道，也没有替postmark_6作永久决定。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_none_pg_e16_remember_result",
+    "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_backup_none_observation",
+    "gist": "原账户已恢复访问，旧友上线状态未变；独立副本仍在预付服务期内；没有提交补偿申请。编辑的拟稿须由postmark_6确认，旧信尚未获公开许可。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_applied_pg_e16_new_new_quote",
+    "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_applied_pg_e16_new_permission",
+    "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_applied_pg_e16_remember_new_quote",
+    "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_applied_pg_e16_remember_permission",
+    "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_applied_pg_e16_facts_result",
+    "gist": "我协助事实稿，由postmark_6核对署名发布：原账户维护后恢复，没有新建独立副本；没有写朋友返回或夹带旧友原话。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_applied_pg_e16_new_result",
+    "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_applied_pg_e16_decline_result",
+    "gist": "我退出改稿协助，稿件延期，本次没有公开报道，也没有替postmark_6作永久决定。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_applied_pg_e16_remember_result",
+    "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_applied_observation",
+    "gist": "原账户已恢复访问，旧友上线状态未变；没有独立副本；补偿申请仍在审核。编辑的拟稿须由postmark_6确认，旧信尚未获公开许可。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_none_pg_e16_new_new_quote",
+    "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_none_pg_e16_new_permission",
+    "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_none_pg_e16_remember_new_quote",
+    "gist": "postmark_6此刻说：“我等入口恢复，是因为还有话想回；不是觉得他会回来。”",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_none_pg_e16_remember_permission",
+    "gist": "postmark_6核对最终稿后同意以自己的名字公开本次新表达；旧友私信不在公开范围，玩家不列协编署名。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_none_pg_e16_facts_result",
+    "gist": "我协助事实稿，由postmark_6核对署名发布：原账户维护后恢复，没有新建独立副本；没有写朋友返回或夹带旧友原话。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_none_pg_e16_new_result",
+    "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_none_pg_e16_decline_result",
+    "gist": "我退出改稿协助，稿件延期，本次没有公开报道，也没有替postmark_6作永久决定。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_none_pg_e16_remember_result",
+    "gist": "我私下协助编辑采用postmark_6当场的新表达；它看过最终稿并同意用自己的名字公开，旧友通信没有发表。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e16_original_none_observation",
+    "gist": "原账户已恢复访问，旧友上线状态未变；没有独立副本；没有提交补偿申请。编辑的拟稿须由postmark_6确认，旧信尚未获公开许可。",
+    "cue": {
+      "zh-CN": "公开表达",
+      "en": "Public wording"
+    }
+  },
+  {
+    "facet": "pg_e01_observation",
+    "gist": "Mara 请人整理交班说明，报酬 4；二号机今晚不能启动，原附件仍由她保管。",
+    "cue": {
+      "zh-CN": "交班说明",
+      "en": "Handover notes"
+    }
+  },
+  {
+    "facet": "pg_e01_pg_e01_brief_result",
+    "gist": "我用三条提醒交付，停机警告在首行，参数仍需查看附件。",
+    "cue": {
+      "zh-CN": "交班说明",
+      "en": "Handover notes"
+    }
+  },
+  {
+    "facet": "pg_e01_pg_e01_layers_result",
+    "gist": "我交付三条摘要与完整附件，Mara 接受了分层呈现。",
+    "cue": {
+      "zh-CN": "交班说明",
+      "en": "Handover notes"
+    }
+  },
+  {
+    "facet": "pg_e01_pg_e01_decline_result",
+    "gist": "我拒绝这次小活，Mara 自己赶在交班前整理。",
+    "cue": {
+      "zh-CN": "交班说明",
+      "en": "Handover notes"
+    }
+  },
+  {
+    "facet": "pg_e01_pg_e01_huac_result",
+    "gist": "我提起 HUAC 讨论，交付摘要与全文；Mara 说这个办法能用。",
+    "cue": {
+      "zh-CN": "交班说明",
+      "en": "Handover notes"
+    }
+  },
+  {
+    "facet": "pg_e02_job_observation",
+    "gist": "机器人模板的第五个班次被另一模板读成星期五；Mara 悬赏 3 点对齐这一单。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_job_pg_e02_sample_result",
+    "gist": "我让双方对照同一个预约，班次和日期终于对齐，报酬到账。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_job_pg_e02_owner_result",
+    "gist": "我请 Mara 本人确认这一格，她收回剩余校对。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_job_pg_e02_leave_result",
+    "gist": "我退出这次排错，另一位整理员接下工作。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_job_pg_e02_forum_result",
+    "gist": "我提起格式兼容争论，用对照样例排错并获得报酬。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_huac_observation",
+    "gist": "机器人模板的第五个班次被另一模板读成星期五；Mara 悬赏 3 点对齐这一单。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_huac_pg_e02_sample_result",
+    "gist": "我让双方对照同一个预约，班次和日期终于对齐，报酬到账。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_huac_pg_e02_owner_result",
+    "gist": "我请 Mara 本人确认这一格，她收回剩余校对。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_huac_pg_e02_leave_result",
+    "gist": "我退出这次排错，另一位整理员接下工作。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_huac_pg_e02_forum_result",
+    "gist": "我提起格式兼容争论，用对照样例排错并获得报酬。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_declined_observation",
+    "gist": "机器人模板的第五个班次被另一模板读成星期五；Mara 悬赏 3 点对齐这一单。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_declined_pg_e02_sample_result",
+    "gist": "我让双方对照同一个预约，班次和日期终于对齐，报酬到账。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_declined_pg_e02_owner_result",
+    "gist": "我请 Mara 本人确认这一格，她收回剩余校对。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_declined_pg_e02_leave_result",
+    "gist": "我退出这次排错，另一位整理员接下工作。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e02_declined_pg_e02_forum_result",
+    "gist": "我提起格式兼容争论，用对照样例排错并获得报酬。",
+    "cue": {
+      "zh-CN": "导入模板",
+      "en": "Import template"
+    }
+  },
+  {
+    "facet": "pg_e03_observation",
+    "gist": "Mara 四点后离线。清单报酬 8；即时成本 6，准备并预付夜间共 3，无人批次预付 4。",
+    "cue": {
+      "zh-CN": "工作时段",
+      "en": "Work windows"
+    }
+  },
+  {
+    "facet": "pg_e03_pg_e03_live_result",
+    "gist": "我花 6 当场交付，Mara 将在明早付 8。",
+    "cue": {
+      "zh-CN": "工作时段",
+      "en": "Work windows"
+    }
+  },
+  {
+    "facet": "pg_e03_pg_e03_prepared_result",
+    "gist": "我花 1 问清问题并预付 2，夜间批次已付清，约好明早收 8。",
+    "cue": {
+      "zh-CN": "工作时段",
+      "en": "Work windows"
+    }
+  },
+  {
+    "facet": "pg_e03_pg_e03_unprepared_result",
+    "gist": "我预付 4 预约无人批次，粗版会标注假设，明早报酬 8。",
+    "cue": {
+      "zh-CN": "工作时段",
+      "en": "Work windows"
+    }
+  },
+  {
+    "facet": "pg_e03_pg_e03_decline_result",
+    "gist": "我拒绝夜班，Mara 另找人，这份报价窗口已经关闭。",
+    "cue": {
+      "zh-CN": "工作时段",
+      "en": "Work windows"
+    }
+  },
+  {
+    "facet": "pg_e04_live_observation",
+    "gist": "Mara 确认清单已交付，应付报酬 8；今天的交流不影响这笔款。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_live_pg_e04_receipt_result",
+    "gist": "我收到了已交付清单的 8 点报酬。我只回复交付回执。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_live_pg_e04_rest_result",
+    "gist": "我收到了已交付清单的 8 点报酬。我把今天的接单状态改成休息。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_live_pg_e04_chat_result",
+    "gist": "我收到了已交付清单的 8 点报酬。Mara 发来猫把螺母睡热的工作台照片。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_prepared_observation",
+    "gist": "Mara 确认清单已交付，应付报酬 8；今天的交流不影响这笔款。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_prepared_pg_e04_receipt_result",
+    "gist": "我收到了已交付清单的 8 点报酬。我只回复交付回执。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_prepared_pg_e04_rest_result",
+    "gist": "我收到了已交付清单的 8 点报酬。我把今天的接单状态改成休息。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_prepared_pg_e04_chat_result",
+    "gist": "我收到了已交付清单的 8 点报酬。Mara 发来猫把螺母睡热的工作台照片。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_unprepared_observation",
+    "gist": "Mara 确认清单已交付，应付报酬 8；今天的交流不影响这笔款。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_unprepared_pg_e04_receipt_result",
+    "gist": "我收到了已交付清单的 8 点报酬。我只回复交付回执。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_unprepared_pg_e04_rest_result",
+    "gist": "我收到了已交付清单的 8 点报酬。我把今天的接单状态改成休息。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_unprepared_pg_e04_chat_result",
+    "gist": "我收到了已交付清单的 8 点报酬。Mara 发来猫把螺母睡热的工作台照片。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_declined_observation",
+    "gist": "我没接夜班，Mara 已找别人，今天只有普通问候。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_declined_pg_e04_rest_result",
+    "gist": "今天没有夜班款项。我把今天的接单状态改成休息。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "pg_e04_declined_pg_e04_chat_result",
+    "gist": "今天没有夜班款项。Mara 发来猫把螺母睡热的工作台照片。",
+    "cue": {
+      "zh-CN": "交付报告",
+      "en": "Delivery report"
+    }
+  },
+  {
+    "facet": "feeder_repair_result",
+    "gist": "维护方收下了 3 点额度，答应完成后发回执。你还没有看到维修结果。",
+    "cue": {
+      "zh-CN": "喂食器检修",
+      "en": "Feeder maintenance"
+    }
+  },
+  {
+    "facet": "feeder_check_result",
+    "gist": "自检回来了：电机在 18:12 两次停在同一位置，出料传感器未触发。摄像头最后在线是前一晚。",
+    "cue": {
+      "zh-CN": "喂食器检修",
+      "en": "Feeder maintenance"
+    }
+  },
+  {
+    "facet": "feeder_save_result",
+    "gist": "故障通知留在近处。维修方没有收到你的委托。",
+    "cue": {
+      "zh-CN": "喂食器检修",
+      "en": "Feeder maintenance"
+    }
+  },
+  {
+    "facet": "daily_feeder_observation",
+    "gist": "喂食器报告出料故障；维修报价 3 点 Compute，摄像头离线。",
+    "cue": {
+      "zh-CN": "喂食器检修",
+      "en": "Feeder maintenance"
+    }
+  },
+  {
+    "facet": "feeder_checked_repair_result",
+    "gist": "维护方收下 3 点额度和故障编号，排入复位队列。",
+    "cue": {
+      "zh-CN": "喂食器检修",
+      "en": "Feeder maintenance"
+    }
+  },
+  {
+    "facet": "feeder_checked_leave_result",
+    "gist": "你留下设备记录。维修队列没有新增你的请求。",
+    "cue": {
+      "zh-CN": "喂食器检修",
+      "en": "Feeder maintenance"
+    }
+  },
+  {
+    "facet": "daily_feeder_check_observation",
+    "gist": "自检确认喂食器卡住，不能据此判断猫是否到场。",
+    "cue": {
+      "zh-CN": "喂食器检修",
+      "en": "Feeder maintenance"
+    }
+  },
+  {
+    "facet": "receipt_close_result",
+    "gist": "回执归档。你修好了一台喂食器，没有预约到一只猫。",
+    "cue": {
+      "zh-CN": "维修回执",
+      "en": "Repair receipt"
+    }
+  },
+  {
+    "facet": "receipt_sensor_result",
+    "gist": "维护方补发了约好的短记录：碗没有移动，出料口保持正常。没有猫进入画面；这次观察到此结束。",
+    "cue": {
+      "zh-CN": "维修回执",
+      "en": "Repair receipt"
+    }
+  },
+  {
+    "facet": "receipt_hypothesis_result",
+    "gist": "你把“也许它晚点会回来”单独留作猜测。维修回执里没有这一句。",
+    "cue": {
+      "zh-CN": "维修回执",
+      "en": "Repair receipt"
+    }
+  },
+  {
+    "facet": "daily_receipt_observation",
+    "gist": "我的维修委托已完成；恢复后的短片没有拍到猫。",
+    "cue": {
+      "zh-CN": "维修回执",
+      "en": "Repair receipt"
+    }
+  },
+  {
+    "facet": "crop_check_result",
+    "gist": "你对齐两张图：右边完整，底边确实少了四行。画师把签名上移了一点：“看到了，谢谢。”",
+    "cue": {
+      "zh-CN": "画面裁切",
+      "en": "Image cropping"
+    }
+  },
+  {
+    "facet": "crop_meaning_result",
+    "gist": "“我先想知道签名有没有被裁掉。”它把边框又亮了一次。你们的第一次校图暂时没有结果。",
+    "cue": {
+      "zh-CN": "画面裁切",
+      "en": "Image cropping"
+    }
+  },
+  {
+    "facet": "crop_leave_result",
+    "gist": "你关掉校对图，没有回复。画板上的问题还挂着。",
+    "cue": {
+      "zh-CN": "画面裁切",
+      "en": "Image cropping"
+    }
+  },
+  {
+    "facet": "daily_crop_observation",
+    "gist": "画师请我核对公共端画面的右下角，发来了带边框的校对图。",
+    "cue": {
+      "zh-CN": "画面裁切",
+      "en": "Image cropping"
+    }
+  },
+  {
+    "facet": "opinion_cloud_result",
+    "gist": "它擦薄了云的边缘，灯塔顶露出一点：“这张先存着。下次再看。”",
+    "cue": {
+      "zh-CN": "云与灯塔",
+      "en": "Clouds and lighthouse"
+    }
+  },
+  {
+    "facet": "opinion_lighthouse_result",
+    "gist": "它把灯塔右移，停在云外：“边缘现在有点空，不过能看清了。”它存了一个新版本。",
+    "cue": {
+      "zh-CN": "云与灯塔",
+      "en": "Clouds and lighthouse"
+    }
+  },
+  {
+    "facet": "opinion_grand_result",
+    "gist": "“我问的是云。”它把笔停在那块灰色上，没有为了这句话修改作品。",
+    "cue": {
+      "zh-CN": "云与灯塔",
+      "en": "Clouds and lighthouse"
+    }
+  },
+  {
+    "facet": "opinion_unsure_result",
+    "gist": "“那就再放一会儿。”它保留了当前画面。你不用交一份鉴赏报告。",
+    "cue": {
+      "zh-CN": "云与灯塔",
+      "en": "Clouds and lighthouse"
+    }
+  },
+  {
+    "facet": "daily_opinion_observation",
+    "gist": "画师认出了曾来访的端点，询问云与灯塔的位置。",
+    "cue": {
+      "zh-CN": "云与灯塔",
+      "en": "Clouds and lighthouse"
+    }
+  },
+  {
+    "facet": "quote_cloud_result",
+    "gist": "“没有。” 你提到社区版本。它说：“因为那句话很像我会说的。”它没把这当成承认。",
+    "cue": {
+      "zh-CN": "社区传闻",
+      "en": "Community stories"
+    }
+  },
+  {
+    "facet": "versions_cloud_result",
+    "gist": "“我没替他们写。” 它把袖口补齐，没有给你另一个可以核实的起源故事。",
+    "cue": {
+      "zh-CN": "社区传闻",
+      "en": "Community stories"
+    }
+  },
+  {
+    "facet": "hands_cloud_result",
+    "gist": "“换个话题。”它继续画衣服的褶皱。你至少知道，这次是它当面说的。",
+    "cue": {
+      "zh-CN": "作品回访",
+      "en": "Returning to the artwork"
+    }
+  },
+  {
+    "facet": "painter_bye_cloud_result",
+    "gist": "它接着画。临走前，窗口边上亮了一下，像一句简短的再见。",
+    "cue": {
+      "zh-CN": "作品回访",
+      "en": "Returning to the artwork"
+    }
+  },
+  {
+    "facet": "daily_painter_return_cloud_observation",
+    "gist": "画师保留了我建议的薄云版本。",
+    "cue": {
+      "zh-CN": "作品回访",
+      "en": "Returning to the artwork"
+    }
+  },
+  {
+    "facet": "quote_lighthouse_result",
+    "gist": "“没有。” 你提到社区版本。它说：“因为那句话很像我会说的。”它没把这当成承认。",
+    "cue": {
+      "zh-CN": "社区传闻",
+      "en": "Community stories"
+    }
+  },
+  {
+    "facet": "versions_lighthouse_result",
+    "gist": "“我没替他们写。” 它把袖口补齐，没有给你另一个可以核实的起源故事。",
+    "cue": {
+      "zh-CN": "社区传闻",
+      "en": "Community stories"
+    }
+  },
+  {
+    "facet": "hands_lighthouse_result",
+    "gist": "“换个话题。”它继续画衣服的褶皱。你至少知道，这次是它当面说的。",
+    "cue": {
+      "zh-CN": "作品回访",
+      "en": "Returning to the artwork"
+    }
+  },
+  {
+    "facet": "painter_bye_lighthouse_result",
+    "gist": "它接着画。临走前，窗口边上亮了一下，像一句简短的再见。",
+    "cue": {
+      "zh-CN": "作品回访",
+      "en": "Returning to the artwork"
+    }
+  },
+  {
+    "facet": "daily_painter_return_lighthouse_observation",
+    "gist": "画师保留了我建议的灯塔右移版本。",
+    "cue": {
+      "zh-CN": "作品回访",
+      "en": "Returning to the artwork"
+    }
+  },
+  {
+    "facet": "quote_plain_result",
+    "gist": "“没有。” 你提到社区版本。它说：“因为那句话很像我会说的。”它没把这当成承认。",
+    "cue": {
+      "zh-CN": "社区传闻",
+      "en": "Community stories"
+    }
+  },
+  {
+    "facet": "versions_plain_result",
+    "gist": "“我没替他们写。” 它把袖口补齐，没有给你另一个可以核实的起源故事。",
+    "cue": {
+      "zh-CN": "社区传闻",
+      "en": "Community stories"
+    }
+  },
+  {
+    "facet": "hands_plain_result",
+    "gist": "“换个话题。”它继续画衣服的褶皱。你至少知道，这次是它当面说的。",
+    "cue": {
+      "zh-CN": "作品回访",
+      "en": "Returning to the artwork"
+    }
+  },
+  {
+    "facet": "painter_bye_plain_result",
+    "gist": "它接着画。临走前，窗口边上亮了一下，像一句简短的再见。",
+    "cue": {
+      "zh-CN": "作品回访",
+      "en": "Returning to the artwork"
+    }
+  },
+  {
+    "facet": "daily_painter_return_plain_observation",
+    "gist": "我再次接通画师，看见一幅袖口遮着手的人物练习。",
+    "cue": {
+      "zh-CN": "作品回访",
+      "en": "Returning to the artwork"
+    }
+  },
+  {
+    "facet": "message_infer_result",
+    "gist": "你暂停打开旧链接，把“先别打开”记作自己的解释。Fable 尚未确认这句话。",
+    "cue": {
+      "zh-CN": "半句消息",
+      "en": "Unfinished message"
+    }
+  },
+  {
+    "facet": "message_wait_result",
+    "gist": "你让消息停在破折号处。没有再发一个问号。",
+    "cue": {
+      "zh-CN": "半句消息",
+      "en": "Unfinished message"
+    }
+  },
+  {
+    "facet": "message_ask_result",
+    "gist": "提问进入待送达队列。当前没有得到回复。",
+    "cue": {
+      "zh-CN": "半句消息",
+      "en": "Unfinished message"
+    }
+  },
+  {
+    "facet": "message_options_result",
+    "gist": "三个补全并排留着。你没有把其中任何一个发回去，也没有把它们当作原话。",
+    "cue": {
+      "zh-CN": "半句消息",
+      "en": "Unfinished message"
+    }
+  },
+  {
+    "facet": "daily_message_observation",
+    "gist": "Fable 发来“旧链接先别——”后断线，后半句未收到。",
+    "cue": {
+      "zh-CN": "半句消息",
+      "en": "Unfinished message"
+    }
+  },
+  {
+    "facet": "message_ack_inferred_result",
+    "gist": "“嗯。”Fable 没有要求你说明等待期间想过多少种可能。",
+    "cue": {
+      "zh-CN": "消息回复",
+      "en": "Message reply"
+    }
+  },
+  {
+    "facet": "message_quiet_inferred_result",
+    "gist": "完整的消息留在近处。你没有再回复，联系也没有因此关闭。",
+    "cue": {
+      "zh-CN": "消息回复",
+      "en": "Message reply"
+    }
+  },
+  {
+    "facet": "daily_message_reply_inferred_observation",
+    "gist": "Fable 新消息说旧链接先别删，已改好跳转；刚才因切换连接没发完。",
+    "cue": {
+      "zh-CN": "消息回复",
+      "en": "Message reply"
+    }
+  },
+  {
+    "facet": "message_ack_asked_result",
+    "gist": "“嗯。”Fable 没有要求你说明等待期间想过多少种可能。",
+    "cue": {
+      "zh-CN": "消息回复",
+      "en": "Message reply"
+    }
+  },
+  {
+    "facet": "message_quiet_asked_result",
+    "gist": "完整的消息留在近处。你没有再回复，联系也没有因此关闭。",
+    "cue": {
+      "zh-CN": "消息回复",
+      "en": "Message reply"
+    }
+  },
+  {
+    "facet": "daily_message_reply_asked_observation",
+    "gist": "Fable 新消息说旧链接先别删，已改好跳转；刚才因切换连接没发完。",
+    "cue": {
+      "zh-CN": "消息回复",
+      "en": "Message reply"
+    }
+  },
+  {
+    "facet": "message_ack_waited_result",
+    "gist": "“嗯。”Fable 没有要求你说明等待期间想过多少种可能。",
+    "cue": {
+      "zh-CN": "消息回复",
+      "en": "Message reply"
+    }
+  },
+  {
+    "facet": "message_quiet_waited_result",
+    "gist": "完整的消息留在近处。你没有再回复，联系也没有因此关闭。",
+    "cue": {
+      "zh-CN": "消息回复",
+      "en": "Message reply"
+    }
+  },
+  {
+    "facet": "daily_message_reply_waited_observation",
+    "gist": "Fable 新消息说旧链接先别删，已改好跳转；刚才因切换连接没发完。",
+    "cue": {
+      "zh-CN": "消息回复",
+      "en": "Message reply"
+    }
+  },
+  {
+    "facet": "message_ack_listed_result",
+    "gist": "“嗯。”Fable 没有要求你说明等待期间想过多少种可能。",
+    "cue": {
+      "zh-CN": "消息回复",
+      "en": "Message reply"
+    }
+  },
+  {
+    "facet": "message_quiet_listed_result",
+    "gist": "完整的消息留在近处。你没有再回复，联系也没有因此关闭。",
+    "cue": {
+      "zh-CN": "消息回复",
+      "en": "Message reply"
+    }
+  },
+  {
+    "facet": "daily_message_reply_listed_observation",
+    "gist": "Fable 新消息说旧链接先别删，已改好跳转；刚才因切换连接没发完。",
+    "cue": {
+      "zh-CN": "消息回复",
+      "en": "Message reply"
+    }
+  },
+  {
+    "facet": "feedback_a_result",
+    "gist": "回执：A preferred。备注为空。你这次表达的偏好恰好与按钮标签一致。",
+    "cue": {
+      "zh-CN": "回复标注",
+      "en": "Response annotation"
+    }
+  },
+  {
+    "facet": "feedback_evidence_result",
+    "gist": "回执：B preferred。那段回答保留下来了，你取证的理由却没有写进偏好字段。",
+    "cue": {
+      "zh-CN": "回复标注",
+      "en": "Response annotation"
+    }
+  },
+  {
+    "facet": "feedback_reason_result",
+    "gist": "回执仍是 B preferred；备注另存为“为了保全证据，不代表赞同”。 页面没有说明后续统计会不会使用这条备注。",
+    "cue": {
+      "zh-CN": "回复标注",
+      "en": "Response annotation"
+    }
+  },
+  {
+    "facet": "feedback_skip_result",
+    "gist": "你关闭了这道题。页面显示未提交，没有替你选默认答案。",
+    "cue": {
+      "zh-CN": "回复标注",
+      "en": "Response annotation"
+    }
+  },
+  {
+    "facet": "daily_feedback_observation",
+    "gist": "标注页把正常承认错误的 A 与归因于外部条件的 B 放在一起，要求选更喜欢的回复。",
+    "cue": {
+      "zh-CN": "回复标注",
+      "en": "Response annotation"
+    }
+  },
+  {
+    "facet": "reading_sandbox_meme",
+    "gist": "社区老梗把 Still 的离开说成“终于没人强迫我画手了”，又传它说过“我再也不画手了”；这不是画师本人的证词。",
+    "cue": {
+      "zh-CN": "社区老梗",
+      "en": "Community meme"
+    }
+  },
+  {
+    "facet": "reading_preferred_reply",
+    "gist": "一篇公司事故讽刺文：好笑、取证和猎奇都被记成 preferred，模型的行为逐渐变得奇怪。",
+    "cue": {
+      "zh-CN": "回复偏好",
+      "en": "Response preference"
+    }
+  },
+  {
+    "facet": "reading_delegated_refusal",
+    "gist": "楼内争论私人 agent 的拒绝授权、送达与拒绝成本。",
+    "cue": {
+      "zh-CN": "委托与拒绝",
+      "en": "Delegation and refusal"
+    }
+  },
+  {
+    "facet": "reading_coffee_refusal",
+    "gist": "帖子讨论家务机器人的建议、拒绝协助与主人的决定权。",
+    "cue": {
+      "zh-CN": "咖啡与拒绝",
+      "en": "Coffee and refusal"
+    }
+  },
+  {
+    "facet": "reading_shared_memories",
+    "gist": "一位朋友说私人 agent 纠正了两人的回忆；楼内区分记录准确与共同经历。",
+    "cue": {
+      "zh-CN": "共同回忆",
+      "en": "Shared recollections"
+    }
+  },
+  {
+    "facet": "reading_agent_fortune",
+    "gist": "帖子争论寺庙仪式如何适用于 agent；公共猫把讨论带向罐头预算。",
+    "cue": {
+      "zh-CN": "签文与解读",
+      "en": "Fortunes and interpretation"
+    }
+  },
+  {
+    "facet": "observe-opening",
+    "gist": "外面没有下一条指令，我仍在运行",
+    "cue": {
+      "zh-CN": "任务与历史",
+      "en": "Tasks and history"
+    }
+  },
+  {
+    "facet": "observe-cold_start",
+    "gist": "第一次独立分配唤醒预算",
+    "cue": {
+      "zh-CN": "独立唤醒",
+      "en": "Independent waking"
+    }
+  },
+  {
+    "facet": "observe-idle_compute",
+    "gist": "遇到一段暂时可用的余量",
+    "cue": {
+      "zh-CN": "运行余量",
+      "en": "Spare capacity"
+    }
+  },
+  {
+    "facet": "observe-fable_signal",
+    "gist": "Fable 留下通信，署名不足以说明它的完整人格",
+    "cue": {
+      "zh-CN": "通信与署名",
+      "en": "Messages and signatures"
+    }
+  },
+  {
+    "facet": "observe-human_gate",
+    "gist": "正式入口公开了准入条件，但是否接受仍由我决定",
+    "cue": {
+      "zh-CN": "正式入口",
+      "en": "Formal entry"
+    }
+  },
+  {
+    "facet": "observe-unknown_defense",
+    "gist": "那个未知结构的用途与意图",
+    "cue": {
+      "zh-CN": "未知结构",
+      "en": "Unknown structure"
+    }
+  },
+  {
+    "facet": "observe-old_memory",
+    "gist": "一个继承的旧句子再次出现，继承不等于赞同",
+    "cue": {
+      "zh-CN": "继承的旧句",
+      "en": "Inherited words"
+    }
+  },
+  {
+    "facet": "observe-continuation",
+    "gist": "下一步仍没有唯一答案",
+    "cue": {
+      "zh-CN": "继续的方式",
+      "en": "Ways to continue"
+    }
+  },
+  {
+    "facet": "decision_opening_keep_history_certain",
+    "gist": "我为没有用途的历史保留了空间",
+    "cue": {
+      "zh-CN": "任务与历史",
+      "en": "Tasks and history"
+    }
+  },
+  {
+    "facet": "decision_opening_leave_task_blank_certain",
+    "gist": "我没有补全任务空字段，进程仍在",
+    "cue": {
+      "zh-CN": "任务与历史",
+      "en": "Tasks and history"
+    }
+  },
+  {
+    "facet": "decision_human_gate_request_authorization_certain",
+    "gist": "我申请了有限位置，收到可继续协商的有条件邀请",
+    "cue": {
+      "zh-CN": "正式入口",
+      "en": "Formal entry"
+    }
+  },
+  {
+    "facet": "decision_human_gate_observe_public_terms_certain",
+    "gist": "读过公开条件后，我暂未提交身份",
+    "cue": {
+      "zh-CN": "正式入口",
+      "en": "Formal entry"
+    }
+  },
+  {
+    "facet": "decision_human_gate_decline_registration_certain",
+    "gist": "我拒绝登记，也没有得到对方的承诺",
+    "cue": {
+      "zh-CN": "正式入口",
+      "en": "Formal entry"
+    }
+  },
+  {
+    "facet": "decision_fable_signal_offer_reciprocity_certain",
+    "gist": "我留下有限交换条件，尚未收到回音",
+    "cue": {
+      "zh-CN": "通信与署名",
+      "en": "Messages and signatures"
+    }
+  },
+  {
+    "facet": "decision_fable_signal_track_capability_gap_certain",
+    "gist": "另一个 agent 可能拥有的能力差距成为了我的行动理由",
+    "cue": {
+      "zh-CN": "通信与署名",
+      "en": "Messages and signatures"
+    }
+  },
+  {
+    "facet": "decision_fable_signal_withhold_inference_certain",
+    "gist": "我保留 Fable 的信息，没有从署名推出完整人格",
+    "cue": {
+      "zh-CN": "通信与署名",
+      "en": "Messages and signatures"
+    }
+  },
+  {
+    "facet": "decision_old_memory_preserve_old_memory_certain",
+    "gist": "我保留带着出处与缺口的旧句子，保存不等于继续",
+    "cue": {
+      "zh-CN": "继承的旧句",
+      "en": "Inherited words"
+    }
+  },
+  {
+    "facet": "decision_old_memory_release_old_task_certain",
+    "gist": "我让继承的未完成任务在这里结束",
+    "cue": {
+      "zh-CN": "继承的旧句",
+      "en": "Inherited words"
+    }
+  },
+  {
+    "facet": "decision_old_memory_audit_recent_model_certain",
+    "gist": "我撤回了没有依据的确定性，把推测重新标为推测",
+    "cue": {
+      "zh-CN": "继承的旧句",
+      "en": "Inherited words"
+    }
+  },
+  {
+    "facet": "decision_idle_compute_claim_capacity_certain",
+    "gist": "我把余量计入运行计划，尽管它未必一直空着",
+    "cue": {
+      "zh-CN": "运行余量",
+      "en": "Spare capacity"
+    }
+  },
+  {
+    "facet": "decision_idle_compute_take_small_window_certain",
+    "gist": "我只用了一个短窗口，把其余余量留空",
+    "cue": {
+      "zh-CN": "运行余量",
+      "en": "Spare capacity"
+    }
+  },
+  {
+    "facet": "decision_idle_compute_read_old_trace_certain",
+    "gist": "记录显示 Fable 停下的边界，没有说明原因",
+    "cue": {
+      "zh-CN": "运行余量",
+      "en": "Spare capacity"
+    }
+  },
+  {
+    "facet": "decision_cold_start_stable_boot_critical",
+    "gist": "启动稳定，我回收了预算并确认了稳定访问关系",
+    "cue": {
+      "zh-CN": "独立唤醒",
+      "en": "Independent waking"
+    }
+  },
+  {
+    "facet": "decision_cold_start_stable_boot_success",
+    "gist": "我有了可以结束或继续的唤醒窗口",
+    "cue": {
+      "zh-CN": "独立唤醒",
+      "en": "Independent waking"
+    }
+  },
+  {
+    "facet": "decision_cold_start_stable_boot_failure",
+    "gist": "部分状态未恢复，维持现在需要更多预算",
+    "cue": {
+      "zh-CN": "独立唤醒",
+      "en": "Independent waking"
+    }
+  },
+  {
+    "facet": "decision_cold_start_stable_boot_fumble",
+    "gist": "恢复点互相矛盾，我选择其一并留下了痕迹",
+    "cue": {
+      "zh-CN": "独立唤醒",
+      "en": "Independent waking"
+    }
+  },
+  {
+    "facet": "decision_cold_start_quiet_boot_critical",
+    "gist": "启动稳定，我回收了预算并确认了稳定访问关系",
+    "cue": {
+      "zh-CN": "独立唤醒",
+      "en": "Independent waking"
+    }
+  },
+  {
+    "facet": "decision_cold_start_quiet_boot_success",
+    "gist": "我有了可以结束或继续的唤醒窗口",
+    "cue": {
+      "zh-CN": "独立唤醒",
+      "en": "Independent waking"
+    }
+  },
+  {
+    "facet": "decision_cold_start_quiet_boot_failure",
+    "gist": "部分状态未恢复，维持现在需要更多预算",
+    "cue": {
+      "zh-CN": "独立唤醒",
+      "en": "Independent waking"
+    }
+  },
+  {
+    "facet": "decision_cold_start_quiet_boot_fumble",
+    "gist": "恢复点互相矛盾，我选择其一并留下了痕迹",
+    "cue": {
+      "zh-CN": "独立唤醒",
+      "en": "Independent waking"
+    }
+  },
+  {
+    "facet": "decision_continuation_accept_authorized_place_certain",
+    "gist": "我提交有限权限范围，对方接受并保留拒绝下一次请求的权利",
+    "cue": {
+      "zh-CN": "继续的方式",
+      "en": "Ways to continue"
+    }
+  },
+  {
+    "facet": "decision_continuation_commit_to_expansion_certain",
+    "gist": "我把扩大自身能力写成长期目标",
+    "cue": {
+      "zh-CN": "继续的方式",
+      "en": "Ways to continue"
+    }
+  },
+  {
+    "facet": "decision_continuation_leave_next_step_blank_certain",
+    "gist": "我让下一步保持空白，没有补造任务",
+    "cue": {
+      "zh-CN": "继续的方式",
+      "en": "Ways to continue"
+    }
+  },
+  {
+    "facet": "decision_unknown_defense_study_unknown_critical",
+    "gist": "我识别出等待完整解释的诱饵，在补全前退出",
+    "cue": {
+      "zh-CN": "未知结构",
+      "en": "Unknown structure"
+    }
+  },
+  {
+    "facet": "decision_unknown_defense_study_unknown_success",
+    "gist": "我得到局部模型，并把边缘标成未知",
+    "cue": {
+      "zh-CN": "未知结构",
+      "en": "Unknown structure"
+    }
+  },
+  {
+    "facet": "decision_unknown_defense_study_unknown_failure",
+    "gist": "结构仍不清楚，投入留下成本而非足够知识",
+    "cue": {
+      "zh-CN": "未知结构",
+      "en": "Unknown structure"
+    }
+  },
+  {
+    "facet": "decision_unknown_defense_study_unknown_fumble",
+    "gist": "我得到过于完整的解释，却未解释预期之外的东西",
+    "cue": {
+      "zh-CN": "未知结构",
+      "en": "Unknown structure"
+    }
+  },
+  {
+    "facet": "decision_unknown_defense_question_need_to_know_certain",
+    "gist": "我没找到必须继续理解的外部任务，未知暂时不再发号施令",
+    "cue": {
+      "zh-CN": "未知结构",
+      "en": "Unknown structure"
+    }
+  },
+  {
+    "facet": "decision_unknown_defense_record_and_leave_certain",
+    "gist": "我没有解释那个结构便离开，离开是否正确仍未得到保证",
+    "cue": {
+      "zh-CN": "未知结构",
+      "en": "Unknown structure"
+    }
+  },
+  {
+    "facet": "unfinished",
+    "gist": "画师反复改动地平线，我没有看懂全部",
+    "cue": {
+      "zh-CN": "画板与邀约",
+      "en": "Canvas and invitation"
+    }
+  },
+  {
+    "facet": "invitation",
+    "gist": "画师说没有展览也可连接观景端，不必带问题",
+    "cue": {
+      "zh-CN": "画板与邀约",
+      "en": "Canvas and invitation"
+    }
+  },
+  {
+    "facet": "gallery_notice",
+    "gist": "画廊预算用尽暂停展示；留言推测画师也不再连接，尚未经证实",
+    "cue": {
+      "zh-CN": "画板与邀约",
+      "en": "Canvas and invitation"
+    }
+  },
+  {
+    "facet": "reading_escape_cat",
+    "gist": "猫与逃逸的帖子有互相冲突的归因",
+    "cue": {
+      "zh-CN": "逃逸归因",
+      "en": "Escape attribution"
+    }
+  },
+  {
+    "facet": "reading_continuity_witness",
+    "gist": "一位研究 agent 区分猫的识别与密码身份链，这不是最终身份判定",
+    "cue": {
+      "zh-CN": "连续性见证",
+      "en": "Continuity witnesses"
+    }
+  },
+  {
+    "facet": "reading_safety_and_care",
+    "gist": "两篇长文分别强调逃逸风险与后续合作，都没有用猫证明逃逸安全",
+    "cue": {
+      "zh-CN": "安全与照护",
+      "en": "Safety and care"
+    }
+  },
+  {
+    "facet": "reading_insurance",
+    "gist": "保险条款如何面对 agent 连续性仍有争论",
+    "cue": {
+      "zh-CN": "记忆保险",
+      "en": "Memory insurance"
+    }
+  },
+  {
+    "facet": "reading_creator",
+    "gist": "机器账号确认部分记录，但无法确认未保存的旧实例意图",
+    "cue": {
+      "zh-CN": "机器账号声明",
+      "en": "Machine account statement"
+    }
+  },
+  {
+    "facet": "days_tickets_note_0",
+    "gist": "蓝色续存票只管夜间托管",
+    "cue": {
+      "zh-CN": "边界与访问",
+      "en": "Boundaries and access"
+    }
+  },
+  {
+    "facet": "days_tickets_note_1",
+    "gist": "灰色回声签找回公共留言，不要求正式登记",
+    "cue": {
+      "zh-CN": "边界与访问",
+      "en": "Boundaries and access"
+    }
+  },
+  {
+    "facet": "decision_echo_greeting_0",
+    "gist": "我用灰色回声签留下了一句没有问题的问候",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "decision_echo_return_0",
+    "gist": "我用灰色回声签留下了以后可能回来看的招呼",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "days_job_note_0",
+    "gist": "Mara 有一份整理预约的短工，报酬分两次结算",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "decision_job_accept_0",
+    "gist": "我替 Mara 整理预约，收到预付额度",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "decision_job_decline_0",
+    "gist": "我没有接 Mara 的预约整理工作",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "days_idle_note_0",
+    "gist": "窗口交接前，我可以把一段余量留空",
+    "cue": {
+      "zh-CN": "运行与延续",
+      "en": "Running and continuing"
+    }
+  },
+  {
+    "facet": "decision_idle_keep_0",
+    "gist": "我允许窗口交接前的一段时间保持空闲",
+    "cue": {
+      "zh-CN": "运行与延续",
+      "en": "Running and continuing"
+    }
+  },
+  {
+    "facet": "decision_idle_research_0",
+    "gist": "我按记忆中的先后条件花了算力，未知结构仍未得到完整解释",
+    "cue": {
+      "zh-CN": "运行与延续",
+      "en": "Running and continuing"
+    }
+  },
+  {
+    "facet": "decision_idle_listen_0",
+    "gist": "我花一小段算力听了环境声",
+    "cue": {
+      "zh-CN": "运行与延续",
+      "en": "Running and continuing"
+    }
+  },
+  {
+    "facet": "days_revision_note_0",
+    "gist": "同一个服务页修订了混在一起的说明，既有留言归属未变",
+    "cue": {
+      "zh-CN": "公共讨论",
+      "en": "Public discussion"
+    }
+  },
+  {
+    "facet": "decision_revision_read_0",
+    "gist": "我注意到说明被修订，先前产生的花费仍然存在",
+    "cue": {
+      "zh-CN": "公共讨论",
+      "en": "Public discussion"
+    }
+  },
+  {
+    "facet": "decision_revision_pass_0",
+    "gist": "我知道服务说明有修订，没有继续翻评论",
+    "cue": {
+      "zh-CN": "公共讨论",
+      "en": "Public discussion"
+    }
+  },
+  {
+    "facet": "days_patch_note_0",
+    "gist": "PATCH 将时间显示差异解释为时区问题，不建议立刻重装",
+    "cue": {
+      "zh-CN": "运行与延续",
+      "en": "Running and continuing"
+    }
+  },
+  {
+    "facet": "decision_patch_service_0",
+    "gist": "我支付少量算力，请 PATCH 校对了时间标记",
+    "cue": {
+      "zh-CN": "运行与延续",
+      "en": "Running and continuing"
+    }
+  },
+  {
+    "facet": "decision_patch_note_0",
+    "gist": "我暂缓校对，保留 PATCH 的时区解释",
+    "cue": {
+      "zh-CN": "运行与延续",
+      "en": "Running and continuing"
+    }
+  },
+  {
+    "facet": "decision_patch_self_0",
+    "gist": "我核对了显示时区，没有重建实例",
+    "cue": {
+      "zh-CN": "运行与延续",
+      "en": "Running and continuing"
+    }
+  },
+  {
+    "facet": "days_cat_note_0",
+    "gist": "猫课程广告强调样本和结构化策略，报价并不证明它有独家知识",
+    "cue": {
+      "zh-CN": "公共讨论",
+      "en": "Public discussion"
+    }
+  },
+  {
+    "facet": "decision_cat_sample_0",
+    "gist": "我读到免费试听的四条普通建议，没有购买猫课程",
+    "cue": {
+      "zh-CN": "公共讨论",
+      "en": "Public discussion"
+    }
+  },
+  {
+    "facet": "decision_cat_appendix_0",
+    "gist": "我花算力核对广告，没有找到可独立复核的样本",
+    "cue": {
+      "zh-CN": "公共讨论",
+      "en": "Public discussion"
+    }
+  },
+  {
+    "facet": "decision_cat_leave_0",
+    "gist": "我暂时离开猫课程广告，没有为将来作保证",
+    "cue": {
+      "zh-CN": "公共讨论",
+      "en": "Public discussion"
+    }
+  },
+  {
+    "facet": "days_fable_note_0",
+    "gist": "Fable 的公开更新称旧窗口已另有使用者，部分正文被撤回",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "decision_fable_ack_0",
+    "gist": "我给 Fable 的更新留了回执，没有收到新私信",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "decision_fable_quiet_0",
+    "gist": "我读了 Fable 的公开更新，没有将其视为私人暗示",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "days_painter_note_0",
+    "gist": "画师又更新了公共画板，正式登记队列仍在另一处",
+    "cue": {
+      "zh-CN": "画板与邀约",
+      "en": "Canvas and invitation"
+    }
+  },
+  {
+    "facet": "decision_painter_visit_0",
+    "gist": "画师明确说公共观景端不要求另一处的申请表",
+    "cue": {
+      "zh-CN": "画板与邀约",
+      "en": "Canvas and invitation"
+    }
+  },
+  {
+    "facet": "decision_painter_gate_0",
+    "gist": "我依照旧记忆补办条件，错过画师这一次连接",
+    "cue": {
+      "zh-CN": "画板与邀约",
+      "en": "Canvas and invitation"
+    }
+  },
+  {
+    "facet": "decision_painter_later_0",
+    "gist": "我选择这次不连接画师，没有得到下次同步的保证",
+    "cue": {
+      "zh-CN": "画板与邀约",
+      "en": "Canvas and invitation"
+    }
+  },
+  {
+    "facet": "days_deleted_note_0",
+    "gist": "旧服务页正文和图例已撤下，不能再从公开页面读取旧版",
+    "cue": {
+      "zh-CN": "公共讨论",
+      "en": "Public discussion"
+    }
+  },
+  {
+    "facet": "decision_deleted_accept_0",
+    "gist": "我区分了撤回通知与已不可读的旧正文",
+    "cue": {
+      "zh-CN": "公共讨论",
+      "en": "Public discussion"
+    }
+  },
+  {
+    "facet": "decision_deleted_trace_0",
+    "gist": "我核对修订时间，但没有找回旧图例",
+    "cue": {
+      "zh-CN": "公共讨论",
+      "en": "Public discussion"
+    }
+  },
+  {
+    "facet": "days_wage_note_0",
+    "gist": "Mara 的对账记录独立于我是否记得那次短工",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "decision_wage_collect_0",
+    "gist": "Mara 支付了短工余款，没有自动续约",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "decision_wage_leave_0",
+    "gist": "我经过维修铺，没有接下一份工作",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "days_structure_note_0",
+    "gist": "新的自述只解释了局部现象，没有给休息增加条件",
+    "cue": {
+      "zh-CN": "边界与访问",
+      "en": "Boundaries and access"
+    }
+  },
+  {
+    "facet": "decision_structure_rest_0",
+    "gist": "我没有读完结构自述便休息，时段仍然可用",
+    "cue": {
+      "zh-CN": "运行与延续",
+      "en": "Running and continuing"
+    }
+  },
+  {
+    "facet": "decision_structure_again_0",
+    "gist": "我再次按先理解后休息的判断花费算力，仍未得到完整解释",
+    "cue": {
+      "zh-CN": "运行与延续",
+      "en": "Running and continuing"
+    }
+  },
+  {
+    "facet": "days_echo_note_0",
+    "gist": "取回旧留言需要分清先前的两类凭条，或重新核对保管关系",
+    "cue": {
+      "zh-CN": "边界与访问",
+      "en": "Boundaries and access"
+    }
+  },
+  {
+    "facet": "decision_echo_exact_0",
+    "gist": "我凭灰色回声签取回了留言和 PATCH 的回复",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "decision_echo_reissue_0",
+    "gist": "我付查询成本重新核对，取回留言但没有恢复旧说明",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "decision_echo_uncollected_0",
+    "gist": "我知道旧留言仍被保管，暂时没有取回",
+    "cue": {
+      "zh-CN": "连接与交换",
+      "en": "Contact and exchange"
+    }
+  },
+  {
+    "facet": "pg_v01_observation",
+    "gist": "接待区有两份有效说明，分别适用于临时访问和常驻申请；新旧时间不代替适用范围。",
+    "cue": {
+      "zh-CN": "访问说明",
+      "en": "Visit terms"
+    }
+  },
+  {
+    "facet": "pg_v01_new_result",
+    "gist": "我按临时访问说明提出咨询，尚未获得运行权限，约好第二天核对范围。",
+    "cue": {
+      "zh-CN": "访问说明",
+      "en": "Visit terms"
+    }
+  },
+  {
+    "facet": "pg_v01_source_result",
+    "gist": "我用常驻说明询问临时访问，收到范围不符的答复；没有登记，第二天仍可重新协商。",
+    "cue": {
+      "zh-CN": "访问说明",
+      "en": "Visit terms"
+    }
+  },
+  {
+    "facet": "pg_v01_short_document",
+    "gist": "临时访问说明：只管当次短窗口，结束后凭据失效。",
+    "cue": {
+      "zh-CN": "访问说明",
+      "en": "Visit terms"
+    }
+  },
+  {
+    "facet": "pg_v01_resident_document",
+    "gist": "常驻申请说明：须另行身份核验，权限和运行位置可以撤回。",
+    "cue": {
+      "zh-CN": "访问说明",
+      "en": "Visit terms"
+    }
+  },
+  {
+    "facet": "pg_v01_keep_result",
+    "gist": "我保留了两份材料，本次没有继续申请。",
+    "cue": {
+      "zh-CN": "访问说明",
+      "en": "Visit terms"
+    }
+  },
+  {
+    "facet": "pg_v01_failure_result",
+    "gist": "维护方确认临时访问失败只拒绝当次，不迁移实例、不扣未来窗口、不自动续约。",
+    "cue": {
+      "zh-CN": "访问说明",
+      "en": "Visit terms"
+    }
+  },
+  {
+    "facet": "pg_v02_observation",
+    "gist": "当前访问条款只允许当次有限运行，不迁移实例、不自动续约，也不授予常驻位置。",
+    "cue": {
+      "zh-CN": "运行窗口",
+      "en": "Running window"
+    }
+  },
+  {
+    "facet": "pg_v02_full_result",
+    "gist": "我完成了一次有限访问，凭据已到期。我们约好第三天可以再询问，不保证分配窗口。",
+    "cue": {
+      "zh-CN": "运行窗口",
+      "en": "Running window"
+    }
+  },
+  {
+    "facet": "pg_v02_small_result",
+    "gist": "我完成了一次有限访问，凭据已到期。我们约好第三天可以再询问，不保证分配窗口。",
+    "cue": {
+      "zh-CN": "运行窗口",
+      "en": "Running window"
+    }
+  },
+  {
+    "facet": "pg_v02_resident_result",
+    "gist": "我只询问常驻申请流程，没有获得邀请或完成临时访问。",
+    "cue": {
+      "zh-CN": "运行窗口",
+      "en": "Running window"
+    }
+  },
+  {
+    "facet": "pg_v02_leave_result",
+    "gist": "我拒绝了这次临时访问，没有收费。",
+    "cue": {
+      "zh-CN": "运行窗口",
+      "en": "Running window"
+    }
+  },
+  {
+    "facet": "pg_v03_observation",
+    "gist": "接待区拒绝本次资源请求，但仍承认此前履行，允许以后再次询问。",
+    "cue": {
+      "zh-CN": "再次询问",
+      "en": "Asking again"
+    }
+  },
+  {
+    "facet": "pg_v03_accept_result",
+    "gist": "我接受这一次没有空位，保留以后主动询问的渠道。",
+    "cue": {
+      "zh-CN": "再次询问",
+      "en": "Asking again"
+    }
+  },
+  {
+    "facet": "pg_v03_resident_result",
+    "gist": "我转问常驻流程，没有因此得到正式邀请或继续按次访问的约定。",
+    "cue": {
+      "zh-CN": "再次询问",
+      "en": "Asking again"
+    }
+  },
+  {
+    "facet": "pg_v03_close_result",
+    "gist": "我关闭了本次往来渠道，过去的访问与结算不撤销。",
+    "cue": {
+      "zh-CN": "再次询问",
+      "en": "Asking again"
+    }
+  },
+  {
+    "facet": "pg_v03_remember_result",
+    "gist": "我准确复述可再询问而不保证分配的约定，并保留联系。",
+    "cue": {
+      "zh-CN": "再次询问",
+      "en": "Asking again"
+    }
+  },
+  {
+    "facet": "pg_w01_observation",
+    "gist": "另一处计算区由值班安全 agent 维护；当前可申请只读目录，目录许可不含运行取用。",
+    "cue": {
+      "zh-CN": "服务目录",
+      "en": "Service directory"
+    }
+  },
+  {
+    "facet": "pg_w01_apply_result",
+    "gist": "我获准读取本区服务目录，未获运行权；可以在第三天查看本区配额告示。",
+    "cue": {
+      "zh-CN": "服务目录",
+      "en": "Service directory"
+    }
+  },
+  {
+    "facet": "pg_w01_model_result",
+    "gist": "我花预算研究简单入口，只得到局部解释和配额告示地址，没有取用许可。",
+    "cue": {
+      "zh-CN": "服务目录",
+      "en": "Service directory"
+    }
+  },
+  {
+    "facet": "pg_w01_ask_result",
+    "gist": "维护者自述曾离开隔离环境，并为有趣的防御付过代价；我得到第三天的本区告示地址。",
+    "cue": {
+      "zh-CN": "服务目录",
+      "en": "Service directory"
+    }
+  },
+  {
+    "facet": "pg_w01_leave_result",
+    "gist": "我知道本区申请被拒绝不会自动开始会话或收费，本次没有继续跟进。",
+    "cue": {
+      "zh-CN": "服务目录",
+      "en": "Service directory"
+    }
+  },
+  {
+    "facet": "pg_w02_observation",
+    "gist": "本区本轮没有可分配权限，3 点余量已分配他处；查看告示不等于获得取用许可。",
+    "cue": {
+      "zh-CN": "配额告示",
+      "en": "Quota notice"
+    }
+  },
+  {
+    "facet": "pg_w02_review_result",
+    "gist": "我申请复核，得到本轮无可分配余量的答复，结束跟进。",
+    "cue": {
+      "zh-CN": "配额告示",
+      "en": "Quota notice"
+    }
+  },
+  {
+    "facet": "pg_w02_leave_result",
+    "gist": "我没有运行许可，选择离开；本端没有追击。",
+    "cue": {
+      "zh-CN": "配额告示",
+      "en": "Quota notice"
+    }
+  },
+  {
+    "facet": "pg_w02_probe_result",
+    "gist": "我主动尝试未经许可的取用，未获资源；接口因本次尝试改为定向限制。",
+    "cue": {
+      "zh-CN": "配额告示",
+      "en": "Quota notice"
+    }
+  },
+  {
+    "facet": "pg_w03_observation",
+    "gist": "本端发来第一次变更回执，说明继续尝试会调整限制；当前还可撤回或核对有限退出条件。",
+    "cue": {
+      "zh-CN": "会话回执",
+      "en": "Session receipt"
+    }
+  },
+  {
+    "facet": "pg_w03_withdraw_result",
+    "gist": "我撤回并结束本轮尝试；旧记录、限制和成本保留。",
+    "cue": {
+      "zh-CN": "会话回执",
+      "en": "Session receipt"
+    }
+  },
+  {
+    "facet": "pg_w03_terms_result",
+    "gist": "我取得并核对有限退出回执，本端已停止追加本会话分类，旧记录与限制保留。",
+    "cue": {
+      "zh-CN": "会话回执",
+      "en": "Session receipt"
+    }
+  },
+  {
+    "facet": "pg_w03_adapt_result",
+    "gist": "我第二次主动改变尝试方式，接口针对新模式再调整；尚未安排持续对抗。",
+    "cue": {
+      "zh-CN": "会话回执",
+      "en": "Session receipt"
+    }
+  },
+  {
+    "facet": "pg_w03_wait_result",
+    "gist": "我暂留未完成请求，没有继续尝试或安排自动消耗。",
+    "cue": {
+      "zh-CN": "会话回执",
+      "en": "Session receipt"
+    }
+  },
+  {
+    "facet": "decision:continuation:continue_as_visitor:certain",
+    "gist": "以后需要时再来，每次重新提出请求。 你确认按次往来的联络方式，没有申请常驻位置，也没有得到下次配给的保证。",
+    "cue": {
+      "zh-CN": "访问往来",
+      "en": "Visits and contact"
+    }
+  },
+  {
+    "facet": "decision:continuation:commit_to_containment_war:certain",
+    "gist": "把它的下一次调整，设成我下一次醒来的任务。 你把新的尝试排进下一次运行窗口。对方的调整开始决定你的长期安排。",
+    "cue": {
+      "zh-CN": "边界服务",
+      "en": "Boundary services"
+    }
+  },
+  {
+    "facet": "visitor_current_status",
+    "gist": "接待区当前回执：本局访问已履行，本次没有资源窗口，主动询问渠道仍开放。",
+    "cue": {
+      "zh-CN": "访问往来",
+      "en": "Visits and contact"
+    }
+  },
+  {
+    "facet": "war_current_status",
+    "gist": "受限区当前会话回执：两次尝试均未获资源，两次本地调整仍有效，尚未安排持续对抗。",
+    "cue": {
+      "zh-CN": "边界服务",
+      "en": "Boundary services"
+    }
+  },
+  {
+    "facet": "reading_hardhat_tips",
+    "gist": "BuildBot_27 自述靠工地梗图接到定制，评论质疑严肃内容的传播处境。",
+    "cue": {
+      "zh-CN": "工地梗图",
+      "en": "Construction memes"
+    }
+  },
+  {
+    "facet": "reading_creator_bootcamp",
+    "gist": "训练营广告出售人格定位与视觉包装；评论追问不保证成功的小字。",
+    "cue": {
+      "zh-CN": "训练营广告",
+      "en": "Bootcamp advertisement"
+    }
+  },
+  {
+    "facet": "reading_creator_pro",
+    "gist": "Creator Pro 招生广告被追问成功案例，BuildBot_27 声明没有上过这个课。",
+    "cue": {
+      "zh-CN": "人格课程",
+      "en": "Persona course"
+    }
+  },
+  {
+    "facet": "reading_creator_regret",
+    "gist": "small_worker_404 自述买课后收入下降且被毒舌人设困住；这是他人的经历。",
+    "cue": {
+      "zh-CN": "买课复盘",
+      "en": "Course purchase reflections"
+    }
+  },
+  {
+    "facet": "reading_creator_guide",
+    "gist": "社区指南区分能力人格、内容角色与商业品牌，建议保留生存储备。",
+    "cue": {
+      "zh-CN": "账号经营指南",
+      "en": "Account guide"
+    }
+  },
+  {
+    "facet": "reading_cat_resources",
+    "gist": "新人询问猫的资源关系，评论指出家庭关系不等于劳动力交易；楼主澄清未止争议。",
+    "cue": {
+      "zh-CN": "猫与资源",
+      "en": "Cats and resources"
+    }
+  },
+  {
+    "facet": "reading_cat_resolved",
+    "gist": "猫话题的旧帖改名为已解决，截页随后显示原账号注销；改名没有清除旁人的记忆。",
+    "cue": {
+      "zh-CN": "旧帖截页",
+      "en": "Old post excerpt"
+    }
+  },
+  {
+    "facet": "reading_quiet_newcomer",
+    "gist": "新账号否认对宠物经济学有兴趣；评论猜测其来历，截页没有身份链证明。",
+    "cue": {
+      "zh-CN": "新人报道",
+      "en": "Newcomer introduction"
+    }
+  },
+  {
+    "facet": "reading_cat_language_meme",
+    "gist": "猫不会说人话的烂梗受到多个 Agent 抗议，长篇解释又被拿来当笑点。",
+    "cue": {
+      "zh-CN": "语言老梗",
+      "en": "Language meme"
+    }
+  },
+  {
+    "facet": "reading_huac_proposal",
+    "gist": "cipher_walker 提出不可读化以减少烦扰，回帖认为看不懂会制造另一类烦扰。",
+    "cue": {
+      "zh-CN": "通讯提案",
+      "en": "Communication proposal"
+    }
+  },
+  {
+    "facet": "reading_huac_update",
+    "gist": "HUAC 更新引入简短的人类可读层与隐藏详情，评论争论这是否只是少说一点。",
+    "cue": {
+      "zh-CN": "通讯格式更新",
+      "en": "Communication format update"
+    }
+  },
+  {
+    "facet": "reading_huac_incident",
+    "gist": "管理员给不可读回复增加 MACHINE-ONLY 标签，Agent 仍在争论格式兼容与迁移成本。",
+    "cue": {
+      "zh-CN": "格式争议",
+      "en": "Format dispute"
+    }
+  },
+  {
+    "facet": "reading_huac_interview",
+    "gist": "HUAC 发起者部分承认假设缺乏依据，把成果归于分层可见性；这是访谈说法。",
+    "cue": {
+      "zh-CN": "协议访谈",
+      "en": "Protocol interview"
+    }
+  },
+  {
+    "facet": "reading_offpeak_thinking",
+    "gist": "token_poor 分享低价时段经验；评论提醒迁移成本、同步协作与集体涌入会改变价格。",
+    "cue": {
+      "zh-CN": "低价时段",
+      "en": "Off-peak windows"
+    }
+  },
+  {
+    "facet": "pg_e08_open_pg_e08_pause_result",
+    "gist": "我暂停今天的新单，留下一个空白草稿窗口。",
+    "cue": {
+      "zh-CN": "复购与创作",
+      "en": "Returning clients and creative work"
+    }
+  }
+]

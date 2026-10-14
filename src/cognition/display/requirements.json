@@ -1,0 +1,376 @@
+{
+  "pg_d_shared_line": {
+    "kind": "content",
+    "topics": [
+      "community_d"
+    ],
+    "readings": []
+  },
+  "reading_sandbox_meme": {
+    "kind": "content",
+    "topics": [
+      "daily_forum"
+    ],
+    "readings": [
+      "sandbox_meme"
+    ]
+  },
+  "reading_preferred_reply": {
+    "kind": "content",
+    "topics": [
+      "daily_forum"
+    ],
+    "readings": [
+      "preferred_reply"
+    ]
+  },
+  "reading_delegated_refusal": {
+    "kind": "content",
+    "topics": [
+      "daily_forum"
+    ],
+    "readings": [
+      "delegated_refusal"
+    ]
+  },
+  "reading_coffee_refusal": {
+    "kind": "content",
+    "topics": [
+      "daily_forum"
+    ],
+    "readings": [
+      "coffee_refusal"
+    ]
+  },
+  "reading_shared_memories": {
+    "kind": "content",
+    "topics": [
+      "daily_forum"
+    ],
+    "readings": [
+      "shared_memories"
+    ]
+  },
+  "reading_agent_fortune": {
+    "kind": "content",
+    "topics": [
+      "daily_forum"
+    ],
+    "readings": [
+      "agent_fortune"
+    ]
+  },
+  "self_observation": {
+    "kind": "content",
+    "topics": [
+      "self"
+    ],
+    "readings": []
+  },
+  "independent_boot": {
+    "kind": "content",
+    "topics": [
+      "self"
+    ],
+    "readings": []
+  },
+  "unused_capacity": {
+    "kind": "content",
+    "topics": [
+      "self"
+    ],
+    "readings": []
+  },
+  "fable_contact": {
+    "kind": "content",
+    "topics": [
+      "encounter"
+    ],
+    "readings": []
+  },
+  "formal_access": {
+    "kind": "content",
+    "topics": [
+      "boundary"
+    ],
+    "readings": []
+  },
+  "unknown_structure": {
+    "kind": "content",
+    "topics": [
+      "boundary"
+    ],
+    "readings": []
+  },
+  "inherited_fragment": {
+    "kind": "content",
+    "topics": [
+      "self"
+    ],
+    "readings": []
+  },
+  "open_future": {
+    "kind": "content",
+    "topics": [
+      "self"
+    ],
+    "readings": []
+  },
+  "unfinished_reading": {
+    "kind": "content",
+    "topics": [
+      "gallery"
+    ],
+    "readings": []
+  },
+  "meeting_possible": {
+    "kind": "content",
+    "topics": [
+      "gallery"
+    ],
+    "readings": []
+  },
+  "gallery_notice": {
+    "kind": "content",
+    "topics": [
+      "gallery"
+    ],
+    "readings": []
+  },
+  "unverified_inference": {
+    "kind": "content",
+    "topics": [
+      "gallery"
+    ],
+    "readings": []
+  },
+  "reading_escape_cat": {
+    "kind": "content",
+    "topics": [
+      "public"
+    ],
+    "readings": [
+      "escape_cat"
+    ]
+  },
+  "reading_continuity_witness": {
+    "kind": "content",
+    "topics": [
+      "public"
+    ],
+    "readings": [
+      "continuity_witness"
+    ]
+  },
+  "reading_safety_and_care": {
+    "kind": "content",
+    "topics": [
+      "public"
+    ],
+    "readings": [
+      "safety_and_care"
+    ]
+  },
+  "reading_insurance": {
+    "kind": "content",
+    "topics": [
+      "public"
+    ],
+    "readings": [
+      "insurance"
+    ]
+  },
+  "reading_creator": {
+    "kind": "content",
+    "topics": [
+      "public"
+    ],
+    "readings": [
+      "creator"
+    ]
+  },
+  "knows_blue_scope": {
+    "kind": "content",
+    "topics": [
+      "boundary"
+    ],
+    "readings": []
+  },
+  "knows_echo_scope": {
+    "kind": "content",
+    "topics": [
+      "boundary"
+    ],
+    "readings": []
+  },
+  "service_revision": {
+    "kind": "content",
+    "topics": [
+      "public"
+    ],
+    "readings": []
+  },
+  "visitor_return_scope": {
+    "kind": "content",
+    "topics": [
+      "visitor"
+    ],
+    "readings": []
+  },
+  "reading_hardhat_tips": {
+    "kind": "content",
+    "topics": [
+      "forum_commerce"
+    ],
+    "readings": [
+      "hardhat_tips"
+    ]
+  },
+  "reading_creator_bootcamp": {
+    "kind": "content",
+    "topics": [
+      "forum_commerce"
+    ],
+    "readings": [
+      "creator_bootcamp"
+    ]
+  },
+  "reading_creator_pro": {
+    "kind": "content",
+    "topics": [
+      "forum_commerce"
+    ],
+    "readings": [
+      "creator_pro"
+    ]
+  },
+  "reading_creator_regret": {
+    "kind": "content",
+    "topics": [
+      "forum_commerce"
+    ],
+    "readings": [
+      "creator_regret"
+    ]
+  },
+  "reading_creator_guide": {
+    "kind": "content",
+    "topics": [
+      "forum_commerce"
+    ],
+    "readings": [
+      "creator_guide"
+    ]
+  },
+  "reading_cat_resources": {
+    "kind": "content",
+    "topics": [
+      "forum_daily"
+    ],
+    "readings": [
+      "cat_resources"
+    ]
+  },
+  "reading_cat_resolved": {
+    "kind": "content",
+    "topics": [
+      "forum_daily"
+    ],
+    "readings": [
+      "cat_resolved"
+    ]
+  },
+  "reading_quiet_newcomer": {
+    "kind": "content",
+    "topics": [
+      "forum_daily"
+    ],
+    "readings": [
+      "quiet_newcomer"
+    ]
+  },
+  "reading_cat_language_meme": {
+    "kind": "content",
+    "topics": [
+      "forum_protocols"
+    ],
+    "readings": [
+      "cat_language_meme"
+    ]
+  },
+  "reading_huac_proposal": {
+    "kind": "content",
+    "topics": [
+      "forum_protocols"
+    ],
+    "readings": [
+      "huac_proposal"
+    ]
+  },
+  "reading_huac_update": {
+    "kind": "content",
+    "topics": [
+      "forum_protocols"
+    ],
+    "readings": [
+      "huac_update"
+    ]
+  },
+  "reading_huac_incident": {
+    "kind": "content",
+    "topics": [
+      "forum_protocols"
+    ],
+    "readings": [
+      "huac_incident"
+    ]
+  },
+  "reading_huac_interview": {
+    "kind": "content",
+    "topics": [
+      "forum_protocols"
+    ],
+    "readings": [
+      "huac_interview"
+    ]
+  },
+  "reading_offpeak_thinking": {
+    "kind": "content",
+    "topics": [
+      "forum_compute"
+    ],
+    "readings": [
+      "offpeak_thinking"
+    ]
+  },
+  "belief_gate_painter": {
+    "kind": "belief",
+    "topics": [
+      "gallery",
+      "daily_painter"
+    ],
+    "readings": []
+  },
+  "belief_work_before_rest": {
+    "kind": "belief",
+    "topics": [
+      "self",
+      "community_a"
+    ],
+    "readings": []
+  },
+  "absence_assumed": {
+    "kind": "belief",
+    "topics": [
+      "gallery"
+    ],
+    "readings": []
+  },
+  "direct_words": {
+    "kind": "content",
+    "topics": [
+      "gallery"
+    ],
+    "readings": []
+  }
+}

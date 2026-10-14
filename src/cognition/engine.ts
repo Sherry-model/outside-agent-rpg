@@ -1,4 +1,5 @@
 import { directoryWeight, compressionReason, compressNear, loadMemory, dropContext, forgetMemory, mergeReason, mergeMemories } from './semantic';
+import { choiceBlockers } from './availability';
 import { PERSONALITY_KEYS, RESOURCE_KEYS } from '../engine/types';
 import type { CheckResult } from '../engine/types';
 import { RULES_VERSION, type CheckSpec, type CheckPreview, type Command, type Content, type Effects, type HistoryEntry, type NoteTemplate, type Resolution, type Roll, type State } from './types';
@@ -29,15 +30,7 @@ export function preview(s: State, spec: CheckSpec, investment: number): CheckPre
   return { base: spec.base, investment, bonus, support, pressure, target, stressed, odds };
 }
 export function canChoose(content: Content, s: State, id: string): string {
-  if (s.instance.phase !== 'event') return '请先读完当前结果。';
-  if (loadPercent(s) >= 100) return '上下文已满，先整理一次。';
-  const choice = currentNode(content, s).choices.find(c => c.id === id);
-  if (!choice) return '没有这项选择。';
-  if (choice.requiresWorldFlag && !s.world.flags[choice.requiresWorldFlag]) return '这段实际经历尚未发生。';
-  if (choice.requiresTag && !hasTag(s, choice.requiresTag)) return '当前上下文没有这条线索；可以检查留下的记忆。';
-  if (s.instance.resources.Compute < (choice.minCompute ?? 0)) return `Compute 至少需要 ${choice.minCompute}，以保留运行余量。`;
-  if (RESOURCE_KEYS.some(k => s.instance.resources[k] < (choice.costs?.[k] ?? 0))) return '当前资源不足。';
-  return '';
+  return choiceBlockers(content,s,id)[0]?.reason??'';
 }
 export function canCompress(s: State, content?: Content): string {
   if (s.instance.phase !== 'event') return '先读完当前结果。';

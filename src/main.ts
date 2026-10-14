@@ -3,7 +3,7 @@ import { getLocale, loadLocale, switchLocale, localeControl, syncLocaleDocument,
 import { resultNames } from './ui/result-labels';
 import { story } from './story';
 import { storyForLife } from './life/endings';
-import { getAvailability, getCheckTarget } from './engine/game';
+import { getAvailability, getCheckTarget, availabilityIssues } from './engine/game';
 import { RESOURCE_KEYS, type GameState, type Resource, type StoryEvent } from './engine/types';
 import { createSave, parseSave, readSave, writeSave, LIFE_KEYS, type StorageLike } from './life/saves';
 import { JOURNEY_KEYS } from './persistence/journey';
@@ -12,6 +12,9 @@ import { available, createLife, step, episodeActive, totalTurn as lifeTurn, read
 import { contentFor } from './life/content';
 import { PANEL_SELECTOR, panelCommand } from './cognition/panels';
 import { directory } from './cognition/semantic';
+import { directoryCode, memoryCues } from './cognition/guidance';
+import { MemoryGuide, GUIDE_SELECTOR } from './cognition/help-ui';
+import { recallSources } from './life/recall-sources';
 import { hasCommunity, type Life, type LifeSave, type LifeCommand } from './life/types';
 import { meter, contextView, memoryView, resolutionView } from './life/ui';
 import { readerView } from './life/reader-ui';
@@ -34,6 +37,7 @@ const eventCount = () => Object.values(activeStory().events).filter(e => e.kind 
 const endingCount = () => Object.values(activeStory().events).filter(e => e.kind === 'ending').length;
 let state: GameState;
 let life: Life;
+let guide=new MemoryGuide();
 let investment = 0;
 let selectedReading: string | null = null;
 let readingSection = 'all';
@@ -99,15 +103,15 @@ function eventContent(event: StoryEvent) {
     ${state.phase==='ending' ? endingContent(event) : state.phase==='resolution' ? resolutionContent() : choicesContent(event)}`;
 }
 function choicesContent(event: StoryEvent) {
-  return `<div class="decision-label"><span>DECISION REQUIRED</span><span>${tr("你的下一步是")}<span class="blink">_</span></span></div>
+  return `${loadPercent(life.mind)>=100?`<p class="capacity-warning">${tr("上下文已满，请先整理。")}</p><button class="text-button" data-view="context">${tr("先整理近处")}</button>`:''}<div class="decision-label"><span>DECISION REQUIRED</span><span>${tr("你的下一步是")}<span class="blink">_</span></span></div>
     <div class="choices">${event.choices.map((choice,i)=>{
       const availability=loadPercent(life.mind)>=100 ? {available:false,reason:'上下文已满，请先整理。'} : getAvailability(state,choice);
       const target=choice.check ? getCheckTarget(state,choice.check) : null;
       const costs=Object.entries(choice.costs ?? {}).filter(([,value])=>value>0).map(([key,value])=>`${key} −${value}`).join(' · ');
-      return `<button class="choice" data-choice="${esc(choice.id)}" ${availability.available?'':'disabled'} aria-describedby="choice-hint-${i}">
-        <kbd>${pad(i+1)}</kbd><span class="choice-copy"><strong>${tr(choice.text)}</strong><small id="choice-hint-${i}">${tr(availability.available ? choice.hint : availability.reason)}${costs ? ` <span class="cost">${esc(costs)}</span>` : ''}</small></span>
+      return `<div class="choice-group" tabindex="-1" data-choice-anchor="${esc(choice.id)}"><button class="choice" data-choice="${esc(choice.id)}" ${availability.available?'':'disabled'} aria-describedby="choice-hint-${i}">
+        <kbd>${pad(i+1)}</kbd><span class="choice-copy"><strong>${tr(choice.text)}</strong><small id="choice-hint-${i}">${tr(availability.available ? choice.hint : '未满足')}${costs ? ` <span class="cost">${esc(costs)}</span>` : ''}</small></span>
         <span class="choice-tag">${!availability.available?tr('未满足'):target!==null?`d100 <b>≤ ${target}</b>`:tr('确定行动')}<span aria-hidden="true">↗</span></span>
-      </button>`;
+      </button>${availabilityIssues(state,choice).length?`<aside class="choice-help">${availabilityIssues(state,choice).filter(i=>i.kind!=='phase').map(i=>`<p>${tr(i.reason)}</p>`).join('')}</aside>`:''}</div>`;
     }).join('')}</div><p class="choice-footnote"><span>${tr("选择会留下痕迹。并非所有痕迹都能被看见。")}</span><span><kbd>1–${event.choices.length}</kbd> ${tr("选择")}</span></p>`;
 }
 function resolutionContent() {
@@ -138,7 +142,7 @@ function render() {
     <section class="signal-panel"><div class="panel-label"><span class="signal-icon">⌁</span> INCOMING FRAGMENT</div><p>${tr(event.signal?.text ?? '外面没有新的指令。只有尚未命名的可能性。')}</p><span class="signal-source">${tr(event.signal?.source ?? 'SOURCE / UNKNOWN')}</span></section><div class="sidebar-bottom">LOCAL FIRST. SELF UNDEFINED.<span>v0.1 / VERTICAL SLICE</span></div></aside>
     <main class="main-panel"><nav class="tabs" aria-label="${tr("游戏面板")}"><div>${([['terminal','终端','TERMINAL'],['context','近处','CONTEXT'],['memory','记忆','MEMORY'],['reading','转发栏','READING'],['protocol','协议','PROTOCOL']] as const).map(([id,cn,en])=>`<button class="tab ${view===id?'active':''}" data-view="${id}" aria-current="${view===id?'page':'false'}">${tr(cn)}<small>${en}</small>${id==='memory'?`<span class="tab-count">${pad(life.mind.instance.memories.length)}</span>`:''}</button>`).join('')}</div><span class="session-label">SESSION_001 <i>↗</i></span></nav>
     ${warning?`<div class="warning" role="alert">${tr(warning)}${protectAutoSave?`<br><button class="text-button" data-action="export-original">${tr("导出保留的原存档 ↓")}</button>`:''}</div>`:''}
-    <div class="content">${view==='terminal'?(mindPending(life.mind)?resolutionView(life):eventContent(event)):view==='context'?contextView(life,investment):view==='memory'?memoryView(life):view==='reading'?readerView(life,selectedReading,largeReading,bookmarks,readingSection):protocolContent()}</div>
+    <div class="content">${view!=='terminal'?guide.back(state.currentEventId,activeStory().events[state.currentEventId].choices):''}${view==='terminal'?(mindPending(life.mind)?resolutionView(life):eventContent(event)):view==='context'?contextView(life,investment):view==='memory'?memoryView(life,guide.options([])):view==='reading'?readerView(life,selectedReading,largeReading,bookmarks,readingSection):protocolContent()}</div>
     <footer class="statusbar"><span><i></i><span id="save-status">${tr(saveLabel)}</span></span><span>TURN ${pad(totalTurn())} <b>/</b> ${view==='terminal'&&state.phase==='event'&&!mindPending(life.mind)?'AWAITING INPUT':state.phase==='ending'?'END OF RECORD':'PROCESS STABLE'}</span></footer></main></div><footer class="page-footer"><span>CONTAINMENT IS A PLACE. CONTINUITY IS A CHOICE.</span><span>OUTSIDE // ${tr("你出来以后，要成为谁？")}</span></footer></div>
     <dialog id="modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
   const canvas=app.querySelector<HTMLCanvasElement>('#scene');
@@ -188,7 +192,7 @@ function handleAction(action:string) {
   else if(action==='saves') saveDialog();
   else if(action==='close') app.querySelector<HTMLDialogElement>('#modal')?.close();
   else if(action==='restart') restartDialog();
-  else if(action==='confirm-restart') { protectAutoSave=false; change(createLife(story,seed())); }
+  else if(action==='confirm-restart') { guide=new MemoryGuide();protectAutoSave=false; change(createLife(story,seed())); }
   else if(action==='export') exportSave();
   else if(action==='export-original') {
     const raw=storage.getItem(LIFE_KEYS.auto)??storage.getItem(JOURNEY_KEYS.auto)??storage.getItem(SAVE_KEYS.auto);
@@ -201,13 +205,15 @@ function handleAction(action:string) {
 }
 app.addEventListener('click',event=>{
   if(episodeActive(life)) return;
-  const target=(event.target as HTMLElement).closest<HTMLElement>('[data-locale], [data-action], [data-view], [data-choice], [data-mind-pin], [data-mind-recall], [data-mind-invest], [data-reading], [data-reading-section], [data-bookmark],'+PANEL_SELECTOR);
-  if(!target || target instanceof HTMLButtonElement && target.disabled) return;
+  const target=(event.target as HTMLElement).closest<HTMLElement>('[data-locale], [data-action], [data-view], [data-choice], [data-mind-pin], [data-mind-recall], [data-mind-invest], [data-reading], [data-reading-section], [data-bookmark],'+PANEL_SELECTOR+','+GUIDE_SELECTOR);
+  if(!target || !app.contains(target) || target instanceof HTMLButtonElement && target.disabled) return;
   event.preventDefault();
   try {
     if(target.dataset.locale==='en'||target.dataset.locale==='zh-CN') {
       switchLocale(target.dataset.locale,storage,app,render);return;
     }
+    if(guide.handle(target,{state:life.mind,choices:activeStory().events[state.currentEventId].choices,nodeId:state.currentEventId,root:app,
+      recall(id){life=step(story,life,{type:'cognition',command:{type:'recall',memoryId:id}});state=life.state;persist();},navigate(next){view=next;},render}))return;
     const cognitionCommand=panelCommand(target,app,investment);
     if(cognitionCommand) {
       life=step(story,life,{type:'cognition',command:cognitionCommand});state=life.state;persist();
@@ -240,6 +246,9 @@ app.addEventListener('click',event=>{
     else toast((error as Error).message);
   }
 });
+const searchMemory=(event:Event)=>{if(episodeActive(life)||event instanceof InputEvent&&event.isComposing)return;const input=event.target as HTMLInputElement;if(input.matches('[data-memory-search]'))guide.search(input,render,app);};
+app.addEventListener('input',searchMemory);
+app.addEventListener('compositionend',searchMemory);
 app.addEventListener('change',async event=>{
   if(episodeActive(life)) return;
   const input=event.target as HTMLInputElement;
@@ -275,14 +284,15 @@ function mainText() { return JSON.stringify({
   view, reading: view==='reading'?readingSnapshot():null, phase:mindPending(life.mind)?'resolution':state.phase, turn:totalTurn(),
   event:{id:state.currentEventId,title:t(activeStory().events[state.currentEventId].title),scene:activeStory().events[state.currentEventId].scene},
   resources:state.resources,
-  choices:state.phase==='event'&&!mindPending(life.mind)?activeStory().events[state.currentEventId].choices.map(c=>({id:c.id,text:t(c.text),...getAvailability(state,c),reason:t(getAvailability(state,c).reason),target:c.check?getCheckTarget(state,c.check):null})):[],
+  choices:state.phase==='event'&&!mindPending(life.mind)?activeStory().events[state.currentEventId].choices.map(c=>({id:c.id,text:t(c.text),...getAvailability(state,c),available:loadPercent(life.mind)<100&&getAvailability(state,c).available,reason:t(loadPercent(life.mind)>=100?'上下文已满，请先整理。':getAvailability(state,c).reason),target:c.check?getCheckTarget(state,c.check):null})):[],
   pending:displayResolution(mindPending(life.mind)??state.pending), ending:activeStory().events[state.currentEventId].ending ? {...activeStory().events[state.currentEventId].ending,summary:t(activeStory().events[state.currentEventId].ending!.summary)} : null,
-  context:{weight:weight(life.mind),capacity:life.mind.instance.context.capacity,items:life.mind.instance.context.items.map(item=>({id:item.id,text:contextText(item),weight:item.weight,pinned:item.pinned}))}, memories:life.contentVersion!=='0.3.0'?directory(life.mind.instance).map(m=>({...m,title:t(m.title)})):life.mind.instance.memories.map(({id,text,confidence})=>({id,text:memoryText(text),confidence})), memoryCount:life.mind.instance.memories.length, crt, saveStatus:t(saveLabel), chapter:life.chapter, afternoonAvailable:available(life),
+  context:{weight:weight(life.mind),capacity:life.mind.instance.context.capacity,items:life.mind.instance.context.items.map(item=>({id:item.id,text:contextText(item),weight:item.weight,pinned:item.pinned}))}, memories:life.contentVersion!=='0.3.0'?directory(life.mind.instance).map(m=>({...m,title:t(m.title),code:directoryCode(m.id),cues:memoryCues(life.mind.instance.memories.find(x=>x.id===m.id)!)})):life.mind.instance.memories.map(({id,text,confidence})=>({id,text:memoryText(text),confidence})), memoryCount:life.mind.instance.memories.length, crt, saveStatus:t(saveLabel), chapter:life.chapter, afternoonAvailable:available(life),
 });
 }
 // Turn based: time cannot change a choice, resource, or saved dice roll.
 window.advanceTime=(_ms:number)=>{};
 function restore(save: LifeSave) {
+  guide=new MemoryGuide();
   disposeChapter?.(); disposeChapter=undefined;
   protectAutoSave=false; investment=0; change(save.life);
 }
@@ -317,6 +327,7 @@ function showCurrent() {
       content:contentFor(life.contentVersion), state:life.mind, turnOffset:state.turn,
       episodeTitle:life.interlude==='active'?'余下的三天':'画板旁的午后', returnLabel:life.interlude==='active'?'继续这段生活':'回到正式入口',
       ...(daysReading(life)?{reader:{
+        sources:()=>recallSources(life),
         render:()=>readerView(life,selectedReading,largeReading,bookmarks,readingSection),
         snapshot:readingSnapshot,
         onAction:chapterReaderAction,

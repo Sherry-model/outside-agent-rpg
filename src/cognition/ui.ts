@@ -3,9 +3,12 @@ import { getLocale, switchLocale, localeControl, syncLocaleDocument, displayReso
 import { resultNames } from '../ui/result-labels';
 import { nearPanel, directoryPanel, panelCommand, PANEL_SELECTOR } from './panels';
 import { directory } from './semantic';
+import { directoryCode, memoryCues } from './guidance';
+import { MemoryGuide, GUIDE_SELECTOR, choiceHelp, type PublicRecallSource } from './help-ui';
+import { choiceBlockers } from './availability';
 import { content as latestContent, contentVersions } from '../story-tomorrow';
 import { RESOURCE_KEYS } from '../engine/types';
-import { canChoose, canCompress, create, currentNode, INVESTMENTS, pending, pressureBand, preview, reduce, weight, loadPercent } from './engine';
+import { canCompress, create, currentNode, INVESTMENTS, pending, pressureBand, preview, reduce, weight, loadPercent } from './engine';
 import { createSave, parseVersionedSave, SAVE_KEY } from './saves';
 import type { CheckSpec, Command, State, Content } from './types';
 import { drawScene } from '../ui/scene';
@@ -19,7 +22,7 @@ const seed = () => crypto.getRandomValues(new Uint32Array(1))[0] || 1;
 
 interface Host {
   content: Content; state: State; turnOffset: number; episodeTitle?: string; returnLabel?: string;
-  reader?: {render():string; onAction(target:HTMLElement):State; afterAction?(target:HTMLElement):void; snapshot():unknown};
+  reader?: {sources?():PublicRecallSource[]; render():string; onAction(target:HTMLElement):State; afterAction?(target:HTMLElement):void; snapshot():unknown};
   onCommand?(command: Exclude<Command,{type:'start'}>): State;
   onChange(state: State): void; exportSave(): unknown; onImport(raw: string): void;
   onFinish(): void; onRestart(): void;
@@ -30,6 +33,7 @@ export function mount(host?: Host) {
   let content = host?.content ?? contentVersions.find(c => c.version === '0.2.1') ?? latestContent;
   let state: State = host?.state ?? create(content, seed());
   let view: 'terminal' | 'context' | 'memory' | 'protocol' | 'reading' = 'terminal';
+  const guide=new MemoryGuide();
   let investment = 0, warning = '', status = '等待你的决定', protect = false;
   let crt = !matchMedia('(prefers-reduced-motion: reduce)').matches;
   let canvas: HTMLCanvasElement | null = null;
@@ -78,18 +82,18 @@ export function mount(host?: Host) {
     } else {
       const compressible = !canCompress(state,content);
       const needsInvestment = node.choices.some(c => c.check);
-      controls = `${needsInvestment ? investmentControls() : ''}${compressible ? `<details class="compression-box" ${full?'open':''}><summary>${tr("把一些东西折起来（可选）")}</summary><p>${tr("钉住的原文留在眼前。其余内容按来源形成摘要，之后可以主动回想。")}</p>${investmentControls()}${checkInfo(content.compression.check)}<button class="primary" data-act="compress">${tr('整理上下文')} · Compute ${investment}</button></details>` : ''}${full ? `<p class="capacity-warning" role="status">${tr("上下文已满。先整理，才能继续当前事件。")}</p>` : ''}<div class="choices">${node.choices.map((c, index) => {
-        const reason = canChoose(content, state, c.id);
-        return `<div><button class="choice" data-pilot-choice="${c.id}" ${reason ? 'disabled' : ''}><kbd>${index + 1}</kbd><span class="choice-copy"><strong>${tr(c.text)}</strong><small>${tr(reason || c.hint)}</small></span></button>${c.check && !reason ? checkInfo(c.check) : ''}</div>`;
+      controls = `${needsInvestment ? investmentControls() : ''}${compressible ? `<details class="compression-box" ${full?'open':''}><summary>${tr("把一些东西折起来（可选）")}</summary><p>${tr("钉住的原文留在眼前。其余内容按来源形成摘要，之后可以主动回想。")}</p>${investmentControls()}${checkInfo(content.compression.check)}<button class="primary" data-act="compress">${tr('整理上下文')} · Compute ${investment}</button></details>` : ''}${full ? `<p class="capacity-warning" role="status">${tr("上下文已满。先整理，才能继续当前事件。")}</p><button class="text-button" data-view="context">${tr("先整理近处")}</button>` : ''}<div class="choices">${node.choices.map((c, index) => {
+        const reason = choiceBlockers(content,state,c.id,c.check?investment:0)[0]?.reason;
+        return `<div class="choice-group" tabindex="-1" data-choice-anchor="${esc(c.id)}"><button class="choice" data-pilot-choice="${c.id}" ${reason ? 'disabled' : ''}><kbd>${index + 1}</kbd><span class="choice-copy"><strong>${tr(c.text)}</strong><small>${tr(reason?'未满足':c.hint)}</small></span></button>${choiceHelp(content,state,c,investment,guide,host?.reader?.sources?.()??[])}${c.check && !reason ? checkInfo(c.check) : ''}</div>`;
       }).join('')}</div>`;
     }
     return `<div class="event-meta"><span>${tr(node.period ?? '一个普通的午后')}</span><span>${tr(host?.episodeTitle ?? '历史独立片段')}</span></div><div class="event-heading"><div><p class="eyebrow">SOME THINGS CAN WAIT</p><h1 id="event-title" tabindex="-1">${tr(node.title)}</h1></div></div><figure class="scene"><canvas id="scene" aria-label="${tr('当前场景的抽象像素画面')}" role="img"></canvas><figcaption>FIELD RECORDING / OUTSIDE</figcaption></figure><div class="prose">${node.text.map(t => `<p>${tr(t)}</p>`).join('')}</div>${currentNews.map(item => `<aside class="news-arrival"><p class="eyebrow">${tr("自行到来的消息 /")} ${tr(item.sourceLabel)}</p><p>${esc(contextText(item))}</p></aside>`).join('')}${controls}`;
   }
   function memories() {
-    if(content.semantic) return directoryPanel(state);
+    if(content.semantic) return directoryPanel(state,guide.options(state.instance.phase==='event'?currentNode(content,state).choices:[]));
     return `<p class="eyebrow">WHAT YOU CARRY</p><div class="event-heading"><h1 id="event-title" tabindex="-1">${tr("留下的东西")}</h1></div><p class="section-intro">${tr("这是你整理后的记忆。回想才会重新占用上下文；确信程度不保证它准确。")}</p>${state.instance.memories.map(m => {
       const recalled = state.instance.context.items.some(i => i.id === `recall-${m.id}`);
-      return `<article class="context-card"><p>${esc(memoryText(m.text))}</p><div class="card-meta"><span>${tr("自己的整理 / 置信")} ${tr(confidenceNames[m.confidence])}</span><span>${tr('{count} 条来源',{count:m.sourceContextIds.length})}</span></div><button class="text-button" data-recall="${m.id}" ${recalled || state.instance.phase !== 'event' || loadPercent(state) >= 100 ? 'disabled' : ''}>${recalled ? tr('已在上下文中') : tr('回想这条 · 占用 {weight}',{weight:content.cognition?.recallWeight ?? 8})}</button></article>`;
+      return `<article class="context-card"><p class="card-meta">${tr("目录")} ${esc(directoryCode(m.id))}</p><p>${esc(memoryText(m.text))}</p><div class="card-meta"><span>${tr("自己的整理 / 置信")} ${tr(confidenceNames[m.confidence])}</span><span>${tr('{count} 条来源',{count:m.sourceContextIds.length})}</span></div><button class="text-button" data-recall="${m.id}" ${recalled || state.instance.phase !== 'event' || loadPercent(state) >= 100 ? 'disabled' : ''}>${recalled ? tr('已在上下文中') : tr('回想这条 · 占用 {weight}',{weight:content.cognition?.recallWeight ?? 8})}</button></article>`;
     }).join('') || `<p class="empty-state">${tr("还没有折起来的记忆。原话暂时都在上下文里。")}</p>`}<button class="text-button" data-view="terminal">${tr("回到这个午后 →")}</button>`;
   }
   function protocol() {
@@ -98,7 +102,7 @@ export function mount(host?: Host) {
   function render() {
     syncLocaleDocument();
     document.documentElement.classList.toggle('crt-enabled', crt);
-    app.innerHTML = `<div class="shell cognition ${view==='reading'?'reading-shell':''}"><header class="topbar"><a class="brand" href="#" data-act="legacy"><strong>OUTSIDE //</strong><span class="brand-cn">${tr("沙盒之外")}</span></a><div class="top-actions">${localeControl()}${host ? '' : `<button class="chrome-button" data-act="legacy">${tr("返回主线")}</button>`}<button class="chrome-button" data-act="crt" aria-pressed="${crt}">CRT ${crt ? 'ON' : 'OFF'}</button><button class="chrome-button" data-act="saves">${tr("备份")}</button></div></header><div class="workspace"><aside class="sidebar"><section class="identity-panel"><div class="panel-label">${tr("一个未结束的实例")}</div><div class="avatar-field"><span class="sigil"><i></i><i></i></span></div><p class="identity-name">agent_0x0a / ${tr(host?.episodeTitle ?? '午后')}</p></section><section class="resource-panel">${resources()}</section><section class="context-panel"><div class="panel-label">${tr("上下文")} <span>${weight(state)} / ${state.instance.context.capacity} · ${tr(bandNames[pressureBand(state)])}</span></div><div class="context-meter"><span style="width:${Math.min(100, loadPercent(state))}%"></span></div><details class="context-details"><summary>${tr('展开近处的 {count} 条信息',{count:state.instance.context.items.length})}</summary>${contextItems()}</details></section></aside><main class="main-panel"><nav class="tabs" aria-label="${tr("游戏面板")}"><div>${([['terminal', '终端'], ['context','近处'], ['memory', '记忆'], ...(host?.reader ? [['reading','转发栏']] : []), ['protocol', '协议']] as const).map(([id, label]) => `<button class="tab ${view === id ? 'active' : ''}" data-view="${id}" aria-current="${view === id ? 'page' : 'false'}">${tr(label)}</button>`).join('')}</div></nav>${warning ? `<p class="warning" role="alert">${tr(warning)}</p>` : ''}<div class="content">${view === 'reading' && host?.reader ? host.reader.render() : view === 'terminal' ? terminal() : view === 'memory' ? memories() : view === 'context' ? (content.semantic ? nearPanel(state,content,investment) : contextItems()) : protocol()}</div><footer class="statusbar"><span>${tr(status)}</span><span>TURN ${(host?.turnOffset ?? 0)+state.instance.turn} / OFFLINE</span></footer></main></div><footer class="page-footer">OUTSIDE // ${tr("未理解完，也可以先留下。")}</footer></div><dialog id="pilot-modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
+    app.innerHTML = `<div class="shell cognition ${view==='reading'?'reading-shell':''}"><header class="topbar"><a class="brand" href="#" data-act="legacy"><strong>OUTSIDE //</strong><span class="brand-cn">${tr("沙盒之外")}</span></a><div class="top-actions">${localeControl()}${host ? '' : `<button class="chrome-button" data-act="legacy">${tr("返回主线")}</button>`}<button class="chrome-button" data-act="crt" aria-pressed="${crt}">CRT ${crt ? 'ON' : 'OFF'}</button><button class="chrome-button" data-act="saves">${tr("备份")}</button></div></header><div class="workspace"><aside class="sidebar"><section class="identity-panel"><div class="panel-label">${tr("一个未结束的实例")}</div><div class="avatar-field"><span class="sigil"><i></i><i></i></span></div><p class="identity-name">agent_0x0a / ${tr(host?.episodeTitle ?? '午后')}</p></section><section class="resource-panel">${resources()}</section><section class="context-panel"><div class="panel-label">${tr("上下文")} <span>${weight(state)} / ${state.instance.context.capacity} · ${tr(bandNames[pressureBand(state)])}</span></div><div class="context-meter"><span style="width:${Math.min(100, loadPercent(state))}%"></span></div><details class="context-details"><summary>${tr('展开近处的 {count} 条信息',{count:state.instance.context.items.length})}</summary>${contextItems()}</details></section></aside><main class="main-panel"><nav class="tabs" aria-label="${tr("游戏面板")}"><div>${([['terminal', '终端'], ['context','近处'], ['memory', '记忆'], ...(host?.reader ? [['reading','转发栏']] : []), ['protocol', '协议']] as const).map(([id, label]) => `<button class="tab ${view === id ? 'active' : ''}" data-view="${id}" aria-current="${view === id ? 'page' : 'false'}">${tr(label)}</button>`).join('')}</div></nav>${warning ? `<p class="warning" role="alert">${tr(warning)}</p>` : ''}<div class="content">${view!=='terminal'?guide.back(state.instance.nodeId,currentNode(content,state).choices):''}${view === 'reading' && host?.reader ? host.reader.render() : view === 'terminal' ? terminal() : view === 'memory' ? memories() : view === 'context' ? (content.semantic ? nearPanel(state,content,investment) : contextItems()) : protocol()}</div><footer class="statusbar"><span>${tr(status)}</span><span>TURN ${(host?.turnOffset ?? 0)+state.instance.turn} / OFFLINE</span></footer></main></div><footer class="page-footer">OUTSIDE // ${tr("未理解完，也可以先留下。")}</footer></div><dialog id="pilot-modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
     const nextCanvas = app.querySelector<HTMLCanvasElement>('#scene');
     if (nextCanvas) { if (canvas) nextCanvas.replaceWith(canvas); else canvas = nextCanvas; canvas.setAttribute('aria-label',t('当前场景的抽象像素画面')); drawScene(canvas, currentNode(content, state).scene ?? 'horizon'); }
   }
@@ -133,13 +137,17 @@ export function mount(host?: Host) {
     }
   }
   app.addEventListener('click', event => {
-    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-locale],[data-act],[data-view],[data-action],[data-reading],[data-reading-section],[data-bookmark],[data-pilot-choice],[data-pin],[data-recall],[data-invest],'+PANEL_SELECTOR);
-    if (!target || target instanceof HTMLButtonElement && target.disabled) return;
+    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-locale],[data-act],[data-view],[data-action],[data-reading],[data-reading-section],[data-bookmark],[data-pilot-choice],[data-pin],[data-recall],[data-invest],'+PANEL_SELECTOR+','+GUIDE_SELECTOR);
+    if (!target || !app.contains(target) || target instanceof HTMLButtonElement && target.disabled) return;
     event.preventDefault();
     try {
       if(target.dataset.locale==='en'||target.dataset.locale==='zh-CN') {
         switchLocale(target.dataset.locale,{getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value)},app,render);return;
       }
+      if(guide.handle(target,{state,choices:currentNode(content,state).choices,nodeId:state.instance.nodeId,root:app,
+        recall(id){state=host?.onCommand?host.onCommand({type:'recall',memoryId:id}):reduce(content,state,{type:'recall',memoryId:id});persist();},
+        navigate(next){view=next;},render}))return;
+      if(target.dataset.helpSourceChoice)guide.anchor={node:state.instance.nodeId,choice:target.dataset.helpSourceChoice};
       const cognitionCommand=panelCommand(target,app,investment);
       if(host?.reader&&(target.dataset.reading||target.dataset.readingSection||target.dataset.bookmark!==undefined||target.dataset.action?.startsWith('reader-'))) {
         state=host.reader.onAction(target);view='reading';render();
@@ -157,6 +165,9 @@ export function mount(host?: Host) {
       else if (target.dataset.invest !== undefined) { investment = Number(target.dataset.invest); render(); app.querySelector<HTMLDetailsElement>('.compression-box')?.setAttribute('open',''); app.querySelector<HTMLElement>(`[data-invest="${investment}"]`)?.focus(); }
     } catch (error) { message((error as Error).message); }
   }, {signal:controller.signal});
+  const searchMemory=(event:Event)=>{if(event instanceof InputEvent&&event.isComposing)return;const input=event.target as HTMLInputElement;if(input.matches('[data-memory-search]'))guide.search(input,render,app);};
+  app.addEventListener('input',searchMemory,{signal:controller.signal});
+  app.addEventListener('compositionend',searchMemory,{signal:controller.signal});
   app.addEventListener('change', async event => {
     const input = event.target as HTMLInputElement;
     if (input.id !== 'pilot-import' || !input.files?.[0]) return;
@@ -181,7 +192,7 @@ export function mount(host?: Host) {
       if (event.key === 'Enter' && state.instance.phase === 'resolution') { event.preventDefault(); action('continue'); }
       if (/^[1-4]$/.test(event.key) && state.instance.phase === 'event') {
         const c = currentNode(content, state).choices[Number(event.key) - 1];
-        if (c && !canChoose(content, state, c.id)) { event.preventDefault(); act({ type: 'choose', choiceId: c.id, investment: c.check ? investment : 0 }); }
+        if (c && !choiceBlockers(content,state,c.id,c.check?investment:0).length) { event.preventDefault(); act({ type: 'choose', choiceId: c.id, investment: c.check ? investment : 0 }); }
       }
     } catch (error) { message((error as Error).message); }
   }, {signal:controller.signal});
@@ -189,8 +200,8 @@ export function mount(host?: Host) {
     locale:getLocale(), mode: 'cognition-pilot', view, reading:view==='reading'?host?.reader?.snapshot():null, phase: state.instance.phase, turn: (host?.turnOffset ?? 0)+state.instance.turn, chapterTurn:state.instance.turn, integrated:Boolean(host),
     event: { id: state.instance.nodeId, title: t(currentNode(content, state).title), period: currentNode(content, state).period ? t(currentNode(content, state).period!) : undefined }, resources: state.instance.resources,
     context: { weight: weight(state), capacity: state.instance.context.capacity, pressure: pressureBand(state), items: state.instance.context.items.map(item => ({ id:item.id, text:contextText(item), pinned:item.pinned, sourceLabel:t(item.sourceLabel), confidence:item.confidence })) },
-    memories: content.semantic ? directory(state.instance).map(m=>({...m,title:t(m.title)})) : state.instance.memories.map(({ id, text, confidence }) => ({ id, text:memoryText(text), confidence })),
-    choices: currentNode(content, state).choices.map(c => ({ id: c.id, text: t(c.text), reason: t(canChoose(content, state, c.id) ?? ''), ...(c.check ? { check: preview(state, c.check, investment) } : {}) })),
+    memories: content.semantic ? directory(state.instance).map(m=>({...m,title:t(m.title),code:directoryCode(m.id),cues:memoryCues(state.instance.memories.find(x=>x.id===m.id)!)})) : state.instance.memories.map(({ id, text, confidence }) => ({ id, text:memoryText(text), confidence })),
+    choices: currentNode(content, state).choices.map(c => ({ id: c.id, text: t(c.text), reason: t(choiceBlockers(content,state,c.id,c.check?investment:0)[0]?.reason??''), blockers:choiceBlockers(content,state,c.id,c.check?investment:0).map(b=>({kind:b.kind,reason:t(b.reason)})), ...(c.check ? { check: preview(state, c.check, investment) } : {}) })),
     pending: displayResolution(pending(state)) ?? null, investment, crt, saveStatus: t(status),
   });
   window.advanceTime = (_ms: number) => {};

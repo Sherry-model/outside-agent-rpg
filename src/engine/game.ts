@@ -21,15 +21,19 @@ export function matches(state: GameState, condition: Condition): boolean {
   return !matches(state, condition.not);
 }
 
-export function getAvailability(state: GameState, choice: Choice): ChoiceAvailability {
-  if (state.phase !== 'event') return { available: false, reason: state.phase === 'ending' ? '本轮旅程已经结束。' : '请先确认当前结算。' };
-  if (choice.condition && !matches(state, choice.condition)) return { available: false, reason: choice.lockedReason ?? '尚未满足此选择的条件。' };
+export function availabilityIssues(state: GameState, choice: Choice): {kind:'phase'|'condition'|'resources';reason:string}[] {
+  const issues:{kind:'phase'|'condition'|'resources';reason:string}[]=[];
+  if (state.phase !== 'event') issues.push({kind:'phase',reason:state.phase === 'ending' ? '本轮旅程已经结束。' : '请先确认当前结算。'});
+  if (choice.condition && !matches(state, choice.condition)) issues.push({kind:'condition',reason:choice.lockedReason ?? '尚未满足此选择的条件。'});
   const missing = RESOURCE_KEYS.filter((resource) => state.resources[resource] < (choice.costs?.[resource] ?? 0));
-  if (missing.length) return {
-    available: false,
+  if (missing.length) issues.push({kind:'resources',
     reason: missing.map((resource) => `${resource} 不足：需要 ${choice.costs![resource]}，当前 ${state.resources[resource]}`).join('；'),
-  };
-  return { available: true, reason: '' };
+  });
+  return issues;
+}
+export function getAvailability(state: GameState, choice: Choice): ChoiceAvailability {
+  const issue=availabilityIssues(state,choice)[0];
+  return {available:!issue,reason:issue?.reason??''};
 }
 
 function checkModifier(state: GameState, check: Check): number {
