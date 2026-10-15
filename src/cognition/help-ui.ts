@@ -1,6 +1,6 @@
 import { tr } from '../i18n';
 import { contextText } from '../i18n/memory';
-import { knowledgeHelp, recallStatus, requirement, type DirectoryOptions } from './guidance';
+import { knowledgeHelp, recallStatus, requirement, usedContext, type DirectoryOptions } from './guidance';
 import { choiceBlockers, type ChoiceBlocker } from './availability';
 import type { Choice, Content, State } from './types';
 
@@ -88,7 +88,13 @@ export function choiceHelp(content:Content,s:State,c:Choice,investment:number,gu
       blocks.push(`<p>${tr(h.belief?'当前没有持有这种判断；现有摘要也不能通过回想带回它。':h.status==='insufficient'?'现有相关摘要未保留这项引用需要的内容。回想这些摘要不能补齐。':'当前近处和记忆目录中没有可用于这项引用的内容。')}</p>`);
       if(h.related.length)blocks.push(helperButton('data-help-directory',c.id,'查看相关目录'));
       blocks.push(`<p>${tr('当前没有可用的回想入口。')}</p>`);
-      for(const entry of readings.filter(r=>r.tag===tag&&requirement(tag)?.readings.includes(r.id)))blocks.push(`<p>${tr('打开公开材料另占 {count} Context。',{count:entry.cost})}</p><button class="text-button" data-help-source-choice="${escapeHtml(c.id)}" data-reading="${escapeHtml(entry.id)}" ${entry.allowed?'':'disabled'}>${tr('打开')}《${escapeHtml(entry.title)}》</button>${!entry.allowed?`<p>${tr('先确认结果或整理近处，再打开公开材料。')}</p>`:''}`);
+      for(const entry of readings.filter(r=>r.tag===tag&&requirement(tag)?.readings.includes(r.id))) {
+        const used=usedContext(s),capacity=s.instance.context.capacity,next=used+entry.cost;
+        const fullAfter=next>=capacity;
+        blocks.push(`<p>${tr('打开公开材料另占 {cost} Context：{used} → {next} / {capacity}。',{cost:entry.cost,used,next,capacity})}</p>
+          ${fullAfter?`<p>${tr(next>capacity?'读取后将超限，继续行动前需腾出至少 {count} Context。':'读取后将满载，继续行动前需腾出至少 {count} Context。',{count:next-capacity+1})}</p>${helperButton('data-help-context',c.id,'先整理近处')}`:''}
+          <button class="text-button" data-help-source-choice="${escapeHtml(c.id)}" data-reading="${escapeHtml(entry.id)}" ${entry.allowed?'':'disabled'}>${tr('打开')}《${escapeHtml(entry.title)}》</button>${!entry.allowed?`<p>${tr('先确认结果或整理近处，再打开公开材料。')}</p>`:''}`);
+      }
     }
   }
   if(content.semantic) {

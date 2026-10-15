@@ -9,7 +9,7 @@ import {createSave,parseSave} from '../src/life/saves.ts';
 import {knowledgeHelp,usedContext,directoryCode} from '../src/cognition/guidance.ts';
 import {recallCost} from '../src/cognition/semantic.ts';
 import {readingEntries} from '../src/life/reading.ts';
-const out='output/memory-guidance-20261014';await mkdir(out,{recursive:true});
+const out=process.env.MEMORY_GUIDANCE_OUTPUT??'output/memory-guidance-20261014';await mkdir(out,{recursive:true});
 const cog=(life,command)=>step(baseStory,life,{type:'cognition',command});
 const start=dailyJourney({},'daily_painter_return_cloud');
 let fixture=start;
@@ -28,6 +28,8 @@ function fillTo(target){
   assert.equal(usedContext(life.mind),target);return life;
 }
 snapshots.full=fillTo(100-candidate.cost);snapshots.short=fillTo(101-candidate.cost);
+snapshots.publicFull=cog(fillTo(98),{type:'forget',memoryId:candidate.id});
+snapshots.publicExact=cog(fillTo(95),{type:'forget',memoryId:candidate.id});
 let three=cog(fixture,{type:'recall',memoryId:candidate.id});
 three=cog(cog(three,{type:'choose',choiceId:'quote_cloud',investment:0}),{type:'continue'});
 three=cog(cog(three,{type:'compress',investment:0}),{type:'continue'});snapshots.threePainters=three;
@@ -42,6 +44,23 @@ async function saved(page){return parseSave(await page.evaluate(()=>localStorage
 async function load(page,name){await page.locator('[data-action="saves"],[data-act="saves"]').click();await page.locator('#import-save,#pilot-import').setInputFiles(resolve(out,name+'.json'));await page.waitForFunction(n=>JSON.parse(localStorage.getItem('outside.life.v1.auto'))?.life.commands.length===n,snapshots[name].commands.length);assert.deepEqual(await saved(page),snapshots[name]);}
 async function shot(page,name,locator){assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),name+' overflow');if(locator)await locator.screenshot({path:`${out}/${name}.png`});else await page.screenshot({path:`${out}/${name}.png`});await writeFile(`${out}/${name}-state.json`,await page.evaluate(()=>window.render_game_to_text()));}
 const group=page=>page.locator('[data-choice-anchor="quote_cloud"]');
+async function keyboardSearch(page) {
+  const before=await saved(page);
+  for(const query of ['fable','Fable','K1F-N0']) {
+    await page.locator('[data-memory-search]').fill('');
+    await page.locator('[data-memory-search]').focus();await page.keyboard.type(query);
+    assert.equal(await page.locator('[data-memory-search]').inputValue(),query);
+    assert.equal(await page.evaluate(()=>!!document.fullscreenElement),false);
+  }
+  // Composition keys must neither cancel the IME nor invoke global actions.
+  assert.equal(await page.locator('[data-memory-search]').evaluate(input=>input.dispatchEvent(new KeyboardEvent('keydown',{key:'f',isComposing:true,bubbles:true,cancelable:true}))),true);
+  await page.locator('[data-memory-search]').evaluate(input=>input.blur());
+  assert.equal(await page.evaluate(()=>document.body.dispatchEvent(new KeyboardEvent('keydown',{key:'f',isComposing:true,bubbles:true,cancelable:true}))),true);
+  await page.keyboard.press('f');await page.waitForFunction(()=>!!document.fullscreenElement);
+  await page.keyboard.press('f');await page.waitForFunction(()=>!document.fullscreenElement);
+  assert.deepEqual(await saved(page),before);
+  checks.push({keyboard:'f/F and directory codes type intact; composition ignored; fullscreen still works outside input'});
+}
 try{
   for(const width of [1440,390,320]){
     const {ctx,page}=await open(width);await load(page,'recall');
@@ -49,6 +68,7 @@ try{
     await shot(page,`candidate-${width}`,group(page));
     await group(page).locator('[data-help-directory]').focus();await page.keyboard.press('Enter');assert.equal(await page.locator('.memory-index').count(),1);assert.equal(await page.locator('.memory-index').getAttribute('data-memory-code'),candidate.code);
     await page.locator('[data-memory-filter="all"]').click();assert.equal(await page.locator('.memory-index').count(),24);
+    await keyboardSearch(page);
     await page.locator('[data-memory-search]').evaluate(input=>{input.value='社区';input.dispatchEvent(new InputEvent('input',{bubbles:true,isComposing:true}));if(!input.isConnected)throw Error('IME composition detached');input.dispatchEvent(new CompositionEvent('compositionend',{bubbles:true}));});
     await page.locator('[data-memory-search]').fill(candidate.code);assert.equal(await page.locator('.memory-index').count(),1);await shot(page,`directory-${width}`);
     await page.locator('[data-help-return]').click();assert.equal(await page.locator(':focus').getAttribute('data-choice-anchor'),'quote_cloud');
@@ -73,6 +93,19 @@ try{
     const {ctx,page}=await open(390);await load(page,'forgotten');assert.equal(await group(page).locator('[data-help-recall]').count(),0);assert.match(await group(page).innerText(),/当前没有可用的回想入口/);await group(page).locator('[data-reading="sandbox_meme"]').click();const expected=step(baseStory,snapshots.forgotten,{type:'read',entryId:'sandbox_meme'});assert.deepEqual(await saved(page),expected);assert(await page.locator('#reading-title').isVisible());await page.locator('[data-help-return]').click();assert(await page.locator('[data-pilot-choice="quote_cloud"]').isEnabled());await shot(page,'public-reread',group(page));checks.push({public:'forgotten memory stays absent; current edition reread pays actual Context and returns'});await ctx.close();
   }
   {
+    for(const [name,start,end,free] of [['publicFull',97,103,4],['publicExact',94,100,1]]) {
+      const {ctx,page}=await open(320);await load(page,name);
+      const text=await group(page).innerText();assert(text.includes(`${start} → ${end} / 100`));assert(text.includes(`继续行动前需腾出至少 ${free} Context`));
+      assert(await group(page).locator('[data-reading="sandbox_meme"]').isEnabled());
+      await shot(page,`${name}-zh`,group(page));
+      await group(page).locator('[data-help-context]').click();assert.deepEqual(await saved(page),snapshots[name]);await page.locator('[data-help-return]').click();
+      await page.locator('[data-locale="en"]').click();assert.match(await group(page).innerText(),new RegExp(`Free at least ${free} Context`));await shot(page,`${name}-en`,group(page));
+      await group(page).locator('[data-reading="sandbox_meme"]').click();const expected=step(baseStory,snapshots[name],{type:'read',entryId:'sandbox_meme'});
+      assert.deepEqual(await saved(page),expected);assert.equal(usedContext(expected.mind),end);await page.locator('[data-help-return]').click();assert(await page.locator('[data-pilot-choice="quote_cloud"]').isDisabled());
+      checks.push({publicCapacity:`${start}+6=${end}; warning frees ${free}; original read and blocked action preserved`});await ctx.close();
+    }
+  }
+  {
     const {ctx,page}=await open(390);await load(page,'threePainters');await page.locator('[data-view="memory"]').click();await page.locator('[data-memory-search]').fill('画师与具体的往来');assert.equal(await page.locator('.memory-index').count(),3);const cues=await page.locator('.memory-cues').allTextContents();assert.equal(new Set(cues).size,3);await shot(page,'three-painters');
     await load(page,'recall');await page.locator('[data-view="memory"]').click();await page.locator('[data-memory-search]').fill(candidate.code);
     const card=page.locator('.memory-index');assert.equal(await card.locator('.memory-management').evaluate(e=>e.open),false);
@@ -81,7 +114,7 @@ try{
     const selected=fixture.mind.instance.memories.slice(-2).map(m=>m.id);
     for(const id of selected){const checkbox=page.locator(`[data-merge-memory="${id}"]`);await checkbox.locator('xpath=..').locator('xpath=..').locator('summary').first().click();await checkbox.check();}
     await page.locator('.content > .compression-box > summary').click();await page.locator('[data-cog-merge]').click();let merged=cog(fixture,{type:'merge',memoryIds:[...selected].reverse(),investment:0});assert.deepEqual(await saved(page),merged);await page.locator('[data-act="continue"]').click();merged=cog(merged,{type:'continue'});assert.deepEqual(await saved(page),merged);checks.push({management:'folded destructive controls; forget and merge use original commands; export strictly replayed'});
-    await load(page,'main');await page.locator('[data-view="memory"]').click();assert(await page.locator('[data-memory-search]').isVisible());assert.deepEqual(await saved(page),snapshots.main);await page.locator('[data-locale="en"]').click();assert.deepEqual(await saved(page),snapshots.main);await shot(page,'main-directory');
+    await load(page,'main');await page.locator('[data-view="memory"]').click();assert(await page.locator('[data-memory-search]').isVisible());assert.deepEqual(await saved(page),snapshots.main);await page.locator('[data-locale="en"]').click();assert.deepEqual(await saved(page),snapshots.main);await keyboardSearch(page);await page.locator('[data-memory-search]').fill('');await page.keyboard.type('Fable');await shot(page,'main-search-keyboard');await page.locator('[data-memory-search]').fill('');await shot(page,'main-directory');
     await load(page,'legacy');await page.locator('[data-view="memory"]').click();assert.equal(await page.locator('[data-memory-search]').count(),0);assert.deepEqual(await saved(page),snapshots.legacy);checks.push({sameTitle:'three painter entries distinguishable',main:'shared directory and English',legacy:'0.3 original display preserved'});await ctx.close();
   }
   assert.deepEqual(errors,[]);assert.deepEqual(requests,[]);

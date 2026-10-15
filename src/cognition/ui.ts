@@ -179,13 +179,13 @@ export function mount(host?: Host) {
     } catch (error) { saves(`导入失败：${(error as Error).message}`); }
   }, {signal:controller.signal});
   document.addEventListener('keydown', event => {
-    if (event.repeat || event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.repeat || event.isComposing || event.metaKey || event.ctrlKey || event.altKey) return;
     const target = event.target as HTMLElement;
     if (app.querySelector<HTMLDialogElement>('#pilot-modal')?.open) {
       if (target.classList.contains('file-label') && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); target.querySelector<HTMLInputElement>('input')?.click(); }
       return;
     }
-    if (target.closest('button,a,input,select,textarea,label,summary')) return;
+    if (target.closest('button,a,input,select,textarea,label,summary,[role="button"],[contenteditable]:not([contenteditable="false"])')) return;
     if (event.key.toLowerCase() === 'f') { event.preventDefault(); void (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen()).catch(() => message('此浏览器未允许全屏。')); }
     if (view !== 'terminal') return;
     try {

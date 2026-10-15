@@ -259,14 +259,14 @@ app.addEventListener('change',async event=>{
 });
 document.addEventListener('keydown',event=>{
   if(episodeActive(life)) return;
-  if(event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
+  if(event.repeat || event.isComposing || event.ctrlKey || event.metaKey || event.altKey) return;
   const target=event.target as HTMLElement;
   if(app.querySelector<HTMLDialogElement>('#modal')?.open) {
     if(target.classList.contains('file-label') && (event.key==='Enter'||event.key===' ')) { event.preventDefault(); target.querySelector<HTMLInputElement>('input')?.click(); }
     return;
   }
+  if(target.closest('button,a,input,select,textarea,label,summary,[role="button"],[contenteditable]:not([contenteditable="false"])')) return;
   if(event.key.toLowerCase()==='f') { event.preventDefault(); const operation=document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); operation.catch(()=>toast('此浏览器未允许全屏。')); return; }
-  if(target.closest('button,a,input,select,textarea,label,[role="button"]')) return;
   if(view!=='terminal') return;
   if(event.key==='Enter' && mindPending(life.mind)) { event.preventDefault(); handleAction('continue-mind'); return; }
   if(event.key==='Enter' && state.phase==='resolution') { event.preventDefault(); handleAction('continue'); return; }

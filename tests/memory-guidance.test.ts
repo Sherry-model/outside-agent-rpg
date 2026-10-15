@@ -85,6 +85,18 @@ test('knowledge, world permission and actual Compute needs remain simultaneously
   const loaded=reduce(local,s,{type:'recall',memoryId:s.instance.memories[0].id});
   assert.deepEqual(choiceBlockers(local,loaded,c.id).map(i=>i.kind),['world','minimum']);
 });
+test('public reading previews exact capacity and action headroom without changing reading permission',()=>{
+  const s=empty(),local=scenario(s),sources=[{id:'sandbox_meme',tag:'reading_sandbox_meme',title:'社区老梗',cost:6,allowed:true}];
+  for(const [used,expected] of [[93,0],[94,1],[97,4]] as const) {
+    s.instance.context.items=[{id:'nearby',text:'nearby',tags:[],weight:used,confidence:'HIGH',sourceLabel:'here',sourceId:'here',historyId:'h1',pinned:false}];
+    const before=JSON.stringify(s),html=choiceHelp(local,s,choice,0,new MemoryGuide(),sources);
+    assert.match(html,new RegExp(`${used} → ${used+6} / 100`));
+    if(expected)assert.match(html,new RegExp(`读取后将${used===94?'满载':'超限'}，继续行动前需腾出至少 ${expected} Context`));
+    else assert(!html.includes('读取后将'));
+    assert.match(html,/data-reading="sandbox_meme" >打开/);
+    assert.equal(JSON.stringify(s),before);
+  }
+});
 test('investment is included in displayed affordability; support alone does not lock choice',()=>{
   const s=empty();s.instance.resources.Compute=6;
   const c={id:'check',text:'check',hint:'',costs:{Compute:3},check:{base:50,supportTag:'reading_sandbox_meme',supportBonus:10}};
