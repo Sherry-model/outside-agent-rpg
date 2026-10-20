@@ -27,7 +27,7 @@ try{
  for(const [label,width,route] of [['desktop-visitor',1440,{line:'c',blank:false,ending:'continue_as_visitor'}],['mobile-war',390,{line:'d',ending:'commit_to_containment_war'}]]){
   const ctx=await browser.newContext({offline:true,viewport:{width,height:1000}}),page=await ctx.newPage();
   page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});
-  let life=createLife(baseStory,1234);const fixture=resolve(out,`${label}-start.json`);await writeFile(fixture,JSON.stringify(createSave(life)));
+  let life=createLife(baseStory,1234,null,'0.11.0');const fixture=resolve(out,`${label}-start.json`);await writeFile(fixture,JSON.stringify(createSave(life)));
   await installLocaleChecks(page);await page.goto(pathToFileURL(resolve('OUTSIDE.html')).href);await page.click('[data-action="saves"]');await page.locator('#import-save').setInputFiles(fixture);await page.waitForFunction(()=>JSON.parse(window.render_game_to_text()).event.id==='opening');
   const saved=async()=>parseSave(await page.evaluate(()=>localStorage.getItem('outside.life.v1.auto')),baseStory).life;
   const screens=new Set();

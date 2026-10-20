@@ -1,0 +1,286 @@
+{
+  "version": 1,
+  "phases": {
+    "arrival": {
+      "budget": 2
+    },
+    "settled": {
+      "budget": 2
+    },
+    "open": {
+      "budget": 2
+    }
+  },
+  "windows": {
+    "days_job": {
+      "phase": "arrival",
+      "hours": 6,
+      "channel": "public",
+      "chance": 0.65
+    },
+    "days_idle": {
+      "phase": "arrival",
+      "hours": 2,
+      "channel": "public",
+      "chance": 0.65
+    },
+    "days_revision": {
+      "phase": "arrival",
+      "hours": 16,
+      "channel": "public",
+      "chance": 0.65
+    },
+    "days_cat": {
+      "phase": "settled",
+      "hours": 4,
+      "channel": "public",
+      "chance": 0.65
+    },
+    "days_fable": {
+      "phase": "settled",
+      "hours": 4,
+      "channel": "public",
+      "chance": 0.65
+    },
+    "days_wage": {
+      "phase": "settled",
+      "hours": 16,
+      "channel": "public",
+      "chance": 0.65
+    },
+    "days_echo": {
+      "phase": "open",
+      "hours": 4,
+      "channel": "public",
+      "chance": 0.65
+    }
+  },
+  "encounters": [
+    {
+      "id": "chance_idle",
+      "nodeId": "chance_idle",
+      "sourceIds": [
+        "WORLD_EVENT_003"
+      ],
+      "role": "daily",
+      "weight": 3,
+      "phases": [
+        "arrival",
+        "settled",
+        "open"
+      ],
+      "channels": [
+        "public",
+        "mail"
+      ]
+    },
+    {
+      "id": "chance_art",
+      "nodeId": "chance_art",
+      "sourceIds": [
+        "WORLD_EVENT_009"
+      ],
+      "role": "daily",
+      "weight": 3,
+      "phases": [
+        "arrival",
+        "settled",
+        "open"
+      ],
+      "channels": [
+        "public",
+        "mail"
+      ]
+    },
+    {
+      "id": "chance_application",
+      "nodeId": "chance_application",
+      "sourceIds": [
+        "WORLD_EVENT_036"
+      ],
+      "role": "branch",
+      "weight": 4,
+      "phases": [
+        "arrival",
+        "settled",
+        "open"
+      ],
+      "channels": [
+        "public",
+        "mail"
+      ]
+    }
+  ],
+  "promises": {
+    "application_nearest": [
+      {
+        "id": "application_receipt",
+        "title": "申请登记回执",
+        "afterHours": 2,
+        "afterScenes": 0,
+        "mode": "summary",
+        "channels": [
+          "mail"
+        ],
+        "receipt": "申请已登记；尚未录用。你提交的内容仍附在申请上。",
+        "receiptSource": "receipt_application_receipt",
+        "role": "branch"
+      },
+      {
+        "id": "application_review",
+        "title": "确认是否继续申请",
+        "afterHours": 0,
+        "afterScenes": 0,
+        "deadlineHours": 48,
+        "mode": "choice",
+        "eventId": "response_application",
+        "fallbackEventId": "response_application",
+        "channels": [
+          "public",
+          "mail"
+        ],
+        "role": "branch"
+      }
+    ],
+    "application_blank": [
+      {
+        "id": "application_receipt",
+        "title": "申请登记回执",
+        "afterHours": 2,
+        "afterScenes": 0,
+        "mode": "summary",
+        "channels": [
+          "mail"
+        ],
+        "receipt": "申请已登记；尚未录用。你提交的内容仍附在申请上。",
+        "receiptSource": "receipt_application_receipt",
+        "role": "branch"
+      },
+      {
+        "id": "application_review",
+        "title": "确认是否继续申请",
+        "afterHours": 0,
+        "afterScenes": 0,
+        "deadlineHours": 48,
+        "mode": "choice",
+        "eventId": "response_application",
+        "fallbackEventId": "response_application",
+        "channels": [
+          "public",
+          "mail"
+        ],
+        "role": "branch"
+      }
+    ],
+    "application_explain": [
+      {
+        "id": "application_receipt",
+        "title": "申请登记回执",
+        "afterHours": 2,
+        "afterScenes": 0,
+        "mode": "summary",
+        "channels": [
+          "mail"
+        ],
+        "receipt": "申请已登记；尚未录用。你提交的内容仍附在申请上。",
+        "receiptSource": "receipt_application_receipt",
+        "role": "branch"
+      },
+      {
+        "id": "application_review",
+        "title": "确认是否继续申请",
+        "afterHours": 0,
+        "afterScenes": 0,
+        "deadlineHours": 48,
+        "mode": "choice",
+        "eventId": "response_application",
+        "fallbackEventId": "response_application",
+        "channels": [
+          "public",
+          "mail"
+        ],
+        "role": "branch"
+      }
+    ],
+    "review_accept": [
+      {
+        "id": "application_appointment",
+        "title": "招聘窗口的远程短谈",
+        "afterHours": 12,
+        "afterScenes": 0,
+        "deadlineHours": 36,
+        "mode": "missable",
+        "eventId": "response_interview",
+        "fallbackEventId": "response_interview",
+        "channels": [
+          "public",
+          "mail"
+        ],
+        "missedReceipt": "你确认跨过了预约期限。该申请已撤回，远程窗口已释放；没有记录一场未发生的面谈。",
+        "receiptSource": "receipt_appointment_missed",
+        "role": "branch",
+        "missedPreview": "这次等待将跨过预约期限：申请会撤回，远程窗口会释放，不会生成面谈记录。"
+      }
+    ],
+    "review_withdraw": [
+      {
+        "id": "application_closed",
+        "title": "申请处理结果",
+        "afterHours": 2,
+        "afterScenes": 0,
+        "mode": "summary",
+        "channels": [
+          "mail"
+        ],
+        "receipt": "申请按你的请求关闭。没有替你登记另一种工作经历。",
+        "receiptSource": "receipt_application_closed",
+        "role": "branch"
+      }
+    ],
+    "interview_attend": [
+      {
+        "id": "application_result",
+        "title": "申请处理结果",
+        "afterHours": 72,
+        "afterScenes": 0,
+        "mode": "summary",
+        "channels": [
+          "mail"
+        ],
+        "receipt": "复核结束：说明已保留，本批没有适合的职位。若以后再申请，可以重新提交当前情况；这次没有自动续投。",
+        "receiptSource": "receipt_application_result",
+        "role": "branch"
+      }
+    ],
+    "interview_leave": [
+      {
+        "id": "application_closed",
+        "title": "申请处理结果",
+        "afterHours": 2,
+        "afterScenes": 0,
+        "mode": "summary",
+        "channels": [
+          "mail"
+        ],
+        "receipt": "申请按你的请求关闭。没有替你登记另一种工作经历。",
+        "receiptSource": "receipt_application_closed",
+        "role": "branch"
+      }
+    ]
+  },
+  "safeNodes": [
+    "days_idle",
+    "days_cat",
+    "days_fable",
+    "days_wage",
+    "days_echo",
+    "continuation",
+    "old_memory"
+  ],
+  "hoursByChoice": {
+    "idle_find": 1,
+    "idle_learn": 1,
+    "idle_sleep": 1,
+    "idle_allow": 1
+  }
+}

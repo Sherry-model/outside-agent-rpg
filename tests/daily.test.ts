@@ -17,7 +17,7 @@ const roundtrip=(l:Life)=>{assert.deepEqual(parseSave(JSON.stringify(createSave(
 const act=(l:Life,id:string)=>step(baseStory,roundtrip(step(baseStory,l,{type:'cognition',command:{type:'choose',choiceId:id,investment:0}})),{type:'cognition',command:{type:'continue'}});
 
 test('0.11 opt-in content is isolated from released graphs and reading libraries',()=>{
- assert.equal(createLife(baseStory,1).contentVersion,'0.11.0');
+ assert.equal(createLife(baseStory,1,null,'0.11.0').contentVersion,'0.11.0');
  for(const version of ['0.3.0','0.4.0','0.5.0','0.6.0','0.6.1','0.7.0','0.7.1','0.8.0','0.9.0','0.10.0'] as const){
   assert.equal(configFor(version).version,version);
   assert(!contentFor(version).nodes.some(n=>n.id==='daily_crop'));
@@ -112,10 +112,10 @@ test('quoted meme requires retained wording; recall restores it, forgetting cann
 });
 
 test('all additions can be skipped, and an actual afternoon meeting counts without calibration',()=>{
- let l=createLife(baseStory,1234);
+ let l=createLife(baseStory,1234,null,'0.11.0');
  for(let i=0;i<400;i++){const cmd=nextCommand(l);if(!cmd)break;l=step(baseStory,l,cmd);}
  assert.equal(l.state.currentEventId,'ending_visitor');assert(!Object.keys(l.mind.world.flags).some(k=>k.startsWith('daily_')));roundtrip(l);
- l=createLife(baseStory,1234);
+ l=createLife(baseStory,1234,null,'0.11.0');
  for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference'])l=step(baseStory,step(baseStory,l,{type:'choose',choiceId:id}),{type:'continue'});
  l=step(baseStory,l,{type:'enter-afternoon'});
  for(const id of ['look','stay','leave_board','walk_out','visit'])l=act(l,id);

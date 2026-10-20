@@ -35,3 +35,6 @@ const d=contentFor('0.9.0').nodes.filter(n=>/^pg_e(13|14|15|16)(?:_|$)/.test(n.i
 console.log(`✓ 社区 D 线 / 0.9.0: ${d.length} authored nodes; schema, sources and return references valid.`);
 
 console.log(`✓ 日常扩充 / 0.11.0: ${contentFor('0.11.0').nodes.filter(n=>n.id.startsWith('daily_')).length} authored nodes including conditional variants; six new reading entries.`);
+
+const scheduled=contentFor('0.12.0').nodes.filter(n=>/^(chance_|response_)/.test(n.id));
+console.log(`✓ 生活调度 / 0.12.0: ${scheduled.length} playable scenes; manifest, semantics, safe nodes and return references validated.`);

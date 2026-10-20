@@ -14,7 +14,7 @@ const catIds=['cat_resources','cat_resolved','quiet_newcomer','cat_language_meme
 const out=process.env.LOCALIZATION_OUTPUT??(huac?'output/localization-huac-20261001':cats?'output/localization-cats-20261001':commerce?'output/localization-commerce-20261001':'output/localization-reading-20261001');await mkdir(out,{recursive:true});
 const entries=all?[...JSON.parse(await readFile('src/life/reading.json','utf8')).entries,...JSON.parse(await readFile('src/life/forum.json','utf8'))]:huac?JSON.parse(await readFile('src/life/forum.json','utf8')).filter(e=>e.id.startsWith('huac_')):cats?JSON.parse(await readFile('src/life/forum.json','utf8')).filter(e=>catIds.includes(e.id)):commerce?JSON.parse(await readFile('src/life/forum.json','utf8')).filter(e=>e.section==='commerce'):JSON.parse(await readFile('src/life/reading.json','utf8')).entries;
 const story=parseStory(JSON.parse(await readFile('src/story/manifest.json','utf8')),await Promise.all((await readdir('src/story/events')).filter(f=>f.endsWith('.json')).map(async source=>({source,data:JSON.parse(await readFile(`src/story/events/${source}`,'utf8'))}))));
-let gate=createLife(story,0x12345678);for(const choiceId of ['keep_history','stable_boot','take_small_window','withhold_inference'])gate=step(story,step(story,gate,{type:'choose',choiceId}),{type:'continue'});
+let gate=createLife(story,0x12345678,null,'0.11.0');for(const choiceId of ['keep_history','stable_boot','take_small_window','withhold_inference'])gate=step(story,step(story,gate,{type:'choose',choiceId}),{type:'continue'});
 const raw=page=>page.evaluate(key=>localStorage.getItem(key),LIFE_KEYS.auto);
 const saved=async page=>parseSave(await raw(page),story).life;
 const cog=(life,command)=>step(story,life,{type:'cognition',command});

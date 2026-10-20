@@ -1,3 +1,4 @@
+import {afterScheduledChoice,createSchedule,finishedScheduled,finishScheduled,intercept,scheduleCommand,scheduled} from './scheduler/integration';
 import { advance, choose, createGame } from '../engine/game';
 import { PERSONALITY_KEYS, type Story } from '../engine/types';
 import { create, reduce, loadPercent, pending } from '../cognition/engine';
@@ -8,11 +9,11 @@ import { hasCommunity, hasEndings, type Life, type LifeCommand } from './types';
 import { library,readingEntries } from './reading';
 import { storyForLife, syncEndingFacts, endingStatusNotes } from './endings';
 
-export const episodeActive = (life:Life) => life.chapter==='active' || life.interlude==='active';
+export const episodeActive = (life:Life) => life.chapter==='active' || life.interlude==='active'||scheduled(life);
 export const totalTurn = (life: Life) => life.state.turn + life.mind.instance.turn + (life.baseline?.chapter?.state.instance.turn ?? 0);
 export const readIds = (life: Life) => life.commands.flatMap(c=>c.type==='read'?[c.entryId]:[]);
 export const readingAvailable = (life: Life) => life.state.visited.includes(library.unlockAfterVisited);
-export const daysReading = (life:Life) => hasCommunity(life.contentVersion)&&life.interlude==='active';
+export const daysReading = (life:Life) => hasCommunity(life.contentVersion)&&(life.interlude==='active'||scheduled(life));
 export function newReadingAllowed(life:Life):boolean {
   const phase=episodeActive(life)?life.mind.instance.phase:life.state.phase;
   return readingAvailable(life)&&(!episodeActive(life)||daysReading(life))&&phase==='event'&&!pending(life.mind)&&loadPercent(life.mind)<100;
@@ -43,7 +44,7 @@ function toMain(life: Life) {
   life.state.resources = {...life.mind.instance.resources}; life.state.rngState = life.mind.rngState;
   for (const key of PERSONALITY_KEYS) life.state.personality[key] = Math.round((life.mind.instance.hidden[key]-50)/5);
 }
-export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.11.0'): Life {
+export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.12.0'): Life {
   story = storyForLife(story,version);
   parseLifeContent(configFor(version),story);
   if (baseline?.chapter?.status === 'active') throw new Error('这是旧版进行中的午后，请用 versions/OUTSIDE-journey-content-0.2.2.html 继续；本文件未被覆盖。');
@@ -52,20 +53,32 @@ export function createLife(story: Story, seed: number, baseline: JourneySave | n
   content.initial.resources = {...state.resources};
   for (const key of PERSONALITY_KEYS) content.initial.hidden[key] = 50 + 5*state.personality[key];
   const life: Life = {contentVersion:version,seed,baseline:structuredClone(baseline),state,mind:create(content,seed),chapter:baseline?.chapter ? 'complete' : 'unvisited',commands:[],...((version==='0.5.0'||hasCommunity(version))?{interlude:'unvisited' as const}:{})};
+  if(version==='0.12.0')life.schedule=createSchedule(seed);
   fromMain(life);
   syncEndingFacts(life);
   if (state.phase !== 'ending' && !beginDays(life)) observe(life);
   return life;
 }
-export function step(story: Story, before: Life, command: LifeCommand): Life {
+function applyStep(story: Story, before: Life, command: LifeCommand, replaying=false): Life {
   story = storyForLife(story,before.contentVersion);
-  if (before.commands.length >= 500) throw new Error('本原型记录已达上限，请导出本局。');
-  const life = structuredClone(before);
+  if (before.commands.length >= (before.schedule?4096:500)) throw new Error('本原型记录已达上限，请导出本局。');
+  const life = structuredClone(replaying?{...before,commands:[],mind:{...before.mind,history:[]}}:before);
+  if(replaying){life.commands=[...before.commands];life.mind.history=[...before.mind.history];}
   life.commands.push(structuredClone(command));
-  if (command.type === 'cognition') {
+  if(command.type==='wait'||command.type==='respond'){scheduleCommand(life,command);return life;}
+  if(finishedScheduled(life,command)){
+    const driver=finishScheduled(life,replaying);toMain(life);
+    if(driver!=='idle')resume(life,story,driver,replaying);
+  } else if(intercept(life,command)){
+    return life;
+  } else if (command.type === 'cognition') {
     if (!episodeActive(life) && command.command.type === 'choose') throw new Error('请使用当前主线的选项。');
     if (!episodeActive(life) && command.command.type === 'continue' && !pending(life.mind)) throw new Error('没有待确认的整理结果。');
-    life.mind = reduce(routedContent(life.contentVersion,life.mind),life.mind,command.command);
+    life.mind = reduce(routedContent(life.contentVersion,life.mind),life.mind,command.command,life.schedule?8192:500,replaying);
+    if(scheduled(before)&&command.command.type==='continue'&&pending(before.mind)?.next){
+      life.schedule!.scenes++;life.schedule!.scheduledScenes[life.schedule!.active!.role]++;
+    }
+    afterScheduledChoice(life,command);
     toMain(life);
     syncEndingFacts(life);
     if(hasEndings(life.contentVersion)&&life.interlude==='active'&&life.mind.instance.nodeId==='endings_return'&&life.mind.instance.phase==='ending') finishDays(life);
@@ -105,6 +118,7 @@ export function step(story: Story, before: Life, command: LifeCommand): Life {
     if(life.chapter==='active')life.chapter='complete';
     life.state.currentEventId='ending_ghost';life.state.phase='ending';life.state.pending=null;
     if(!life.state.visited.includes('ending_ghost'))life.state.visited.push('ending_ghost');
+    if(life.schedule)delete life.schedule.active;
     fromMain(life);
   }
   return life;
@@ -130,3 +144,13 @@ function beginDays(life:Life):boolean {
   for(const note of node.inject??[])add(life,note,'days_tickets');
   return true;
 }
+
+/** Resume the suspended result exactly once; no second scheduler window or Life command. */
+function resume(life:Life,story:Story,driver:'main'|'mind',replaying:boolean) {
+  if(driver==='mind'){life.mind=reduce(routedContent(life.contentVersion,life.mind),life.mind,{type:'continue'},8192,replaying);toMain(life);syncEndingFacts(life);if(life.interlude==='active'&&life.mind.instance.nodeId==='endings_return'&&life.mind.instance.phase==='ending')finishDays(life);}
+  else {life.state=advance(story,life.state);fromMain(life);if(life.state.phase!=='ending'&&!beginDays(life))observe(life);}
+}
+
+export const step=(story:Story,before:Life,command:LifeCommand)=>applyStep(story,before,command);
+/** Only the save validator owns this chain; never expose its intermediate states to UI callers. */
+export const replayStep=(story:Story,before:Life,command:LifeCommand)=>applyStep(story,before,command,true);

@@ -44,3 +44,14 @@ html[lang="en"] .brand-cn{letter-spacing:1px}
 
 /* Keep unavailable choices readable; their explanations remain at full contrast. */
 .choice-group > .choice:disabled { opacity: .75; }
+
+/* Readable scheduling notes share the terminal's typography without crowding headings. */
+.schedule-panel { line-height:1.7; }
+.schedule-panel h1 { margin:.4rem 0 1rem; }
+.schedule-panel h2 { margin:1.5rem 0 .65rem; font-size:1.1rem; }
+.schedule-panel p { margin:.5rem 0; }
+.schedule-panel .memory-filters { margin:.75rem 0; }
+.schedule-panel label.context-card { display:block; cursor:pointer; }
+.schedule-panel input[type=checkbox] { accent-color:var(--amber); margin-right:.5rem; }
+.schedule-panel>.primary { margin:.75rem 0; }
+.schedule-notice { padding:.8rem; border-left:2px solid #d8ac6a; line-height:1.7; margin-bottom:1rem; }

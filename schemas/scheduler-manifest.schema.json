@@ -1,0 +1,267 @@
+{
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "phases": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "budget": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "budget"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "windows": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "phase": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "hours": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "channel": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "chance": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "protected": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "phase",
+          "hours",
+          "channel",
+          "chance"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "encounters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "nodeId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "sourceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "maxItems": 4096
+          },
+          "role": {
+            "enum": [
+              "daily",
+              "branch"
+            ]
+          },
+          "weight": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "phases": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "maxItems": 4096
+          },
+          "channels": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "maxItems": 4096
+          },
+          "requiresFlags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "maxItems": 4096
+          },
+          "excludesFlags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "maxItems": 4096
+          }
+        },
+        "required": [
+          "id",
+          "nodeId",
+          "sourceIds",
+          "role",
+          "weight",
+          "phases",
+          "channels"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 4096
+    },
+    "promises": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "eventId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "afterHours": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "afterScenes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "deadlineHours": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mode": {
+              "enum": [
+                "choice",
+                "summary",
+                "missable"
+              ]
+            },
+            "channels": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 12000
+              },
+              "maxItems": 10
+            },
+            "fallbackEventId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "receipt": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "missedReceipt": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "receiptSource": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "role": {
+              "enum": [
+                "daily",
+                "branch"
+              ]
+            },
+            "missedPreview": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            }
+          },
+          "required": [
+            "id",
+            "title",
+            "afterHours",
+            "afterScenes",
+            "mode",
+            "channels",
+            "role"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 4096
+      }
+    },
+    "safeNodes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 12000
+      },
+      "maxItems": 4096
+    },
+    "hoursByChoice": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    }
+  },
+  "required": [
+    "version",
+    "phases",
+    "windows",
+    "encounters",
+    "promises",
+    "safeNodes",
+    "hoursByChoice"
+  ],
+  "additionalProperties": false
+}

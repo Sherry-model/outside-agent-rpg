@@ -11,7 +11,7 @@ import { createLife } from '../src/life/engine.ts';
 import { createSave } from '../src/life/saves.ts';
 const out=process.env.LOCALIZATION_OUTPUT??'output/journey';await mkdir(out,{recursive:true});
 const story=parseStory(JSON.parse(await readFile('src/story/manifest.json','utf8')),await Promise.all((await readdir('src/story/events')).filter(f=>f.endsWith('.json')).map(async source=>({source,data:JSON.parse(await readFile(`src/story/events/${source}`,'utf8'))}))));
-const initial=resolve(out,'initial.json');await writeFile(initial,JSON.stringify(createSave(createLife(story,0x12345678))));
+const initial=resolve(out,'initial.json');await writeFile(initial,JSON.stringify(createSave(createLife(story,0x12345678,null,'0.11.0'))));
 const browser=await chromium.launch({headless:true});const errors=[],requests=[];
 const stateOf=async p=>{await assertEnglishPage(p);return JSON.parse(await p.evaluate(()=>window.render_game_to_text()));};
 const saveOf=async p=>p.evaluate(()=>JSON.parse(localStorage.getItem('outside.life.v1.auto')));

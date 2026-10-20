@@ -1,0 +1,395 @@
+{
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "hour": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "scenes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "coreScenes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "rng": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4294967295
+    },
+    "phase": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 12000
+    },
+    "channel": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 12000
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "spent": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "overdraft": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "expired": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "limit",
+          "spent",
+          "overdraft",
+          "expired"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "processed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 12000
+      },
+      "maxItems": 4096
+    },
+    "seen": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 12000
+      },
+      "maxItems": 4096
+    },
+    "commitments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "eventId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "afterHours": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "afterScenes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "deadlineHours": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "mode": {
+            "enum": [
+              "choice",
+              "summary",
+              "missable"
+            ]
+          },
+          "channels": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "maxItems": 10
+          },
+          "fallbackEventId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "receipt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "missedReceipt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "receiptSource": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "createdHour": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "dueHour": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "dueScene": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "deadlineHour": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "delivered",
+              "missed"
+            ]
+          },
+          "role": {
+            "enum": [
+              "daily",
+              "branch"
+            ]
+          },
+          "deferredHours": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "missedPreview": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "afterHours",
+          "afterScenes",
+          "mode",
+          "channels",
+          "sequence",
+          "createdHour",
+          "dueHour",
+          "dueScene",
+          "status",
+          "role",
+          "deferredHours"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 4096
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "window": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "hour": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "scene": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "selected": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          }
+        },
+        "required": [
+          "window",
+          "hour",
+          "scene",
+          "selected",
+          "reason"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 4096
+    },
+    "receipts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "hour": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "text",
+          "hour"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 4096
+    },
+    "active": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        },
+        "kind": {
+          "enum": [
+            "encounter",
+            "commitment"
+          ]
+        },
+        "role": {
+          "enum": [
+            "daily",
+            "branch"
+          ]
+        },
+        "resume": {
+          "type": "object",
+          "properties": {
+            "driver": {
+              "enum": [
+                "main",
+                "mind",
+                "idle"
+              ]
+            },
+            "nodeId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 12000
+            },
+            "phase": {
+              "enum": [
+                "event",
+                "resolution",
+                "ending"
+              ]
+            },
+            "pendingId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "driver",
+            "nodeId",
+            "phase",
+            "pendingId"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "role",
+        "resume"
+      ],
+      "additionalProperties": false
+    },
+    "waited": {
+      "type": "boolean"
+    },
+    "scheduledScenes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "daily",
+        "branch"
+      ],
+      "properties": {
+        "daily": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "branch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "required": [
+    "version",
+    "hour",
+    "scenes",
+    "coreScenes",
+    "rng",
+    "phase",
+    "channel",
+    "budgets",
+    "processed",
+    "seen",
+    "commitments",
+    "decisions",
+    "receipts",
+    "waited",
+    "scheduledScenes"
+  ],
+  "additionalProperties": false
+}

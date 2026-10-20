@@ -13,7 +13,7 @@ const browser=await chromium.launch({headless:true}),errors=[],requests=[],check
 const stateOf=async page=>JSON.parse(await page.evaluate(()=>window.render_game_to_text()));
 const rawOf=page=>page.evaluate(key=>localStorage.getItem(key),LIFE_KEYS.auto);
 const lifeOf=async page=>parseSave(await rawOf(page),story).life;
-async function open({life=createLife(story,1234),locale=null,width=1440,file='OUTSIDE.html',blocked=false}={}){
+async function open({life=createLife(story,1234,null,'0.11.0'),locale=null,width=1440,file='OUTSIDE.html',blocked=false}={}){
  const context=await browser.newContext({offline:true,viewport:{width,height:width<760?844:1100}});
  await context.addInitScript(({raw,key,locale,blocked})=>{
   if(!sessionStorage.getItem('localization-test-ready')){
@@ -67,7 +67,7 @@ try{
   await page.click('[data-action="continue"]');assert.equal(await page.locator('#event-title').innerText(),'Spare Capacity with No Name');assert.notEqual(await page.locator('.prose p').first().innerText(),story.events.idle_compute.text[0]);await page.screenshot({path:`${out}/fallback-${width}.png`,fullPage:true});
   await context.close();checks.push(`${width}px: switches, context, deterministic pending roll, reload, export/import, next translated event`);
  }
- let gate=createLife(story,1234);for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference'])gate=main(gate,id);
+ let gate=createLife(story,1234,null,'0.11.0');for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference'])gate=main(gate,id);
  const afternoon=step(story,gate,{type:'enter-afternoon'});
  let days=gate;for(const id of ['observe_public_terms','record_and_leave'])days=main(days,id);
  for(const fixture of [{name:'afternoon',life:afternoon},{name:'days',life:days}]){
@@ -86,7 +86,7 @@ try{
  const firstMemory=memoryPage.page.locator('[data-merge-memory]').first();await firstMemory.check();await memoryPage.page.locator('#merge-investment').evaluate(el=>{el.closest('details').open=true;});await memoryPage.page.selectOption('#merge-investment','4');
  await switchTo(memoryPage.page,'zh-CN');await switchTo(memoryPage.page,'en');assert(await firstMemory.isChecked());assert.equal(await memoryPage.page.locator('#merge-investment').inputValue(),'4');await memoryPage.context.close();checks.push('Open details, memory checkboxes and investment survive switching');
  // A real compressed/recalled pilot memory is translated from retained clauses only.
- let pilotMemory=main(createLife(story,1234),'keep_history');pilotMemory=step(story,pilotMemory,{type:'cognition',command:{type:'compress',investment:0}});pilotMemory=step(story,pilotMemory,{type:'cognition',command:{type:'continue'}});
+ let pilotMemory=main(createLife(story,1234,null,'0.11.0'),'keep_history');pilotMemory=step(story,pilotMemory,{type:'cognition',command:{type:'compress',investment:0}});pilotMemory=step(story,pilotMemory,{type:'cognition',command:{type:'continue'}});
  const recalled=await open({life:pilotMemory,locale:'en'});await recalled.page.click('.tab[data-view="memory"]');await recalled.page.locator('[data-cog-recall]').first().click();
  const card=recalled.page.locator('.context-card').filter({has:recalled.page.locator('[data-cog-drop^="recall-"]')}).first();
  assert(!/[\u3400-\u9fff]/.test(await card.locator('p').first().innerText()));

@@ -28,7 +28,8 @@
             "0.8.0",
             "0.9.0",
             "0.10.0",
-        "0.11.0"
+            "0.11.0",
+            "0.12.0"
           ]
         },
         "seed": {
@@ -57,7 +58,7 @@
         },
         "commands": {
           "type": "array",
-          "maxItems": 500,
+          "maxItems": 4096,
           "items": {
             "oneOf": [
               {
@@ -317,6 +318,48 @@
                   "type"
                 ],
                 "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "wait"
+                  },
+                  "hours": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "missed": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 64,
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "type",
+                  "hours",
+                  "missed"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "respond"
+                  },
+                  "promiseId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "promiseId"
+                ],
+                "additionalProperties": false
               }
             ]
           }
@@ -327,6 +370,9 @@
             "active",
             "complete"
           ]
+        },
+        "schedule": {
+          "type": "object"
         }
       },
       "required": [

@@ -10,7 +10,7 @@ export const dailyChoices: Record<string,string> = {
   days_deleted:'daily_open_feedback',daily_feedback:'feedback_evidence',days_echo:'daily_open_painter',
 };
 export function dailyJourney(overrides:Record<string,string>={},stop?:string,route:Route={}):Life {
-  let life=createLife(baseStory,1234);
+  let life=createLife(baseStory,1234,null,'0.11.0');
   const plan={...route,overrides:{...dailyChoices,...route.overrides,...overrides}};
   for(let i=0;i<480;i++) {
     if(stop&&nodeId(life)===stop&&!pending(life.mind)&&life.state.phase!=='resolution')return life;

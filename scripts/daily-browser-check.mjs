@@ -60,7 +60,7 @@ try{
     ['desktop',1440,'c','continue_as_visitor',{daily_message:'message_infer'}],
     ['mobile',390,'d','commit_to_containment_war',{daily_feeder:'feeder_check',daily_feeder_check:'feeder_checked_repair',daily_opinion:'opinion_lighthouse',daily_message:'message_ask',daily_feedback:'feedback_reason'}],
   ]){
-    const {ctx,page}=await open(width);let life=await importLife(page,createLife(baseStory,1234),label+'-start');
+    const {ctx,page}=await open(width);let life=await importLife(page,createLife(baseStory,1234,null,'0.11.0'),label+'-start');
     const plan={line,ending,overrides:{...dailyChoices,...variants}};const screenshots=new Set();
     for(let i=0;i<480;i++){
       const node=nodeId(life),ready=!life.mind.instance.pendingId&&life.state.phase!=='resolution';
@@ -85,7 +85,7 @@ try{
   }
   // Read all six complete texts on desktop and narrow screens. UI text must match every authored paragraph.
   const entries=libraryFor('0.11.0').entries.slice(-6);
-  let gate=createLife(baseStory,1234);for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference'])gate=step(baseStory,step(baseStory,gate,{type:'choose',choiceId:id}),{type:'continue'});
+  let gate=createLife(baseStory,1234,null,'0.11.0');for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference'])gate=step(baseStory,step(baseStory,gate,{type:'choose',choiceId:id}),{type:'continue'});
   for(const width of [1440,390,320]){
     const {ctx,page}=await open(width);
     for(const entry of entries){

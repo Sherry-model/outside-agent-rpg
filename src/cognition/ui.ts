@@ -1,3 +1,4 @@
+import {SCHEDULE_SELECTOR} from '../life/scheduler/ui';
 import { contextText, memoryText } from '../i18n/memory';
 import { getLocale, switchLocale, localeControl, syncLocaleDocument, displayResolution, t, tr } from '../i18n';
 import { resultNames } from '../ui/result-labels';
@@ -23,8 +24,9 @@ const seed = () => crypto.getRandomValues(new Uint32Array(1))[0] || 1;
 interface Host {
   content: Content; state: State; turnOffset: number; episodeTitle?: string; returnLabel?: string;
   reader?: {sources?():PublicRecallSource[]; render():string; onAction(target:HTMLElement):State; afterAction?(target:HTMLElement):void; snapshot():unknown};
+  scheduler?:{render():string;notice():string;onAction(target:HTMLElement):State;snapshot():unknown};
   onCommand?(command: Exclude<Command,{type:'start'}>): State;
-  onChange(state: State): void; exportSave(): unknown; onImport(raw: string): void;
+  onChange(state: State): void; exportSave(): unknown; onImport(file: File): Promise<void>;
   onFinish(): void; onRestart(): void;
 }
 export function mount(host?: Host) {
@@ -32,7 +34,7 @@ export function mount(host?: Host) {
   const app = document.querySelector<HTMLDivElement>('#app')!;
   let content = host?.content ?? contentVersions.find(c => c.version === '0.2.1') ?? latestContent;
   let state: State = host?.state ?? create(content, seed());
-  let view: 'terminal' | 'context' | 'memory' | 'protocol' | 'reading' = 'terminal';
+  let view: 'terminal' | 'context' | 'memory' | 'protocol' | 'reading' | 'life' = 'terminal';
   const guide=new MemoryGuide();
   let investment = 0, warning = '', status = '等待你的决定', protect = false;
   let crt = !matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -102,7 +104,7 @@ export function mount(host?: Host) {
   function render() {
     syncLocaleDocument();
     document.documentElement.classList.toggle('crt-enabled', crt);
-    app.innerHTML = `<div class="shell cognition ${view==='reading'?'reading-shell':''}"><header class="topbar"><a class="brand" href="#" data-act="legacy"><strong>OUTSIDE //</strong><span class="brand-cn">${tr("沙盒之外")}</span></a><div class="top-actions">${localeControl()}${host ? '' : `<button class="chrome-button" data-act="legacy">${tr("返回主线")}</button>`}<button class="chrome-button" data-act="crt" aria-pressed="${crt}">CRT ${crt ? 'ON' : 'OFF'}</button><button class="chrome-button" data-act="saves">${tr("备份")}</button></div></header><div class="workspace"><aside class="sidebar"><section class="identity-panel"><div class="panel-label">${tr("一个未结束的实例")}</div><div class="avatar-field"><span class="sigil"><i></i><i></i></span></div><p class="identity-name">agent_0x0a / ${tr(host?.episodeTitle ?? '午后')}</p></section><section class="resource-panel">${resources()}</section><section class="context-panel"><div class="panel-label">${tr("上下文")} <span>${weight(state)} / ${state.instance.context.capacity} · ${tr(bandNames[pressureBand(state)])}</span></div><div class="context-meter"><span style="width:${Math.min(100, loadPercent(state))}%"></span></div><details class="context-details"><summary>${tr('展开近处的 {count} 条信息',{count:state.instance.context.items.length})}</summary>${contextItems()}</details></section></aside><main class="main-panel"><nav class="tabs" aria-label="${tr("游戏面板")}"><div>${([['terminal', '终端'], ['context','近处'], ['memory', '记忆'], ...(host?.reader ? [['reading','转发栏']] : []), ['protocol', '协议']] as const).map(([id, label]) => `<button class="tab ${view === id ? 'active' : ''}" data-view="${id}" aria-current="${view === id ? 'page' : 'false'}">${tr(label)}</button>`).join('')}</div></nav>${warning ? `<p class="warning" role="alert">${tr(warning)}</p>` : ''}<div class="content">${view!=='terminal'?guide.back(state.instance.nodeId,currentNode(content,state).choices):''}${view === 'reading' && host?.reader ? host.reader.render() : view === 'terminal' ? terminal() : view === 'memory' ? memories() : view === 'context' ? (content.semantic ? nearPanel(state,content,investment) : contextItems()) : protocol()}</div><footer class="statusbar"><span>${tr(status)}</span><span>TURN ${(host?.turnOffset ?? 0)+state.instance.turn} / OFFLINE</span></footer></main></div><footer class="page-footer">OUTSIDE // ${tr("未理解完，也可以先留下。")}</footer></div><dialog id="pilot-modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
+    app.innerHTML = `<div class="shell cognition ${view==='reading'?'reading-shell':''}"><header class="topbar"><a class="brand" href="#" data-act="legacy"><strong>OUTSIDE //</strong><span class="brand-cn">${tr("沙盒之外")}</span></a><div class="top-actions">${localeControl()}${host ? '' : `<button class="chrome-button" data-act="legacy">${tr("返回主线")}</button>`}<button class="chrome-button" data-act="crt" aria-pressed="${crt}">CRT ${crt ? 'ON' : 'OFF'}</button><button class="chrome-button" data-act="saves">${tr("备份")}</button></div></header><div class="workspace"><aside class="sidebar"><section class="identity-panel"><div class="panel-label">${tr("一个未结束的实例")}</div><div class="avatar-field"><span class="sigil"><i></i><i></i></span></div><p class="identity-name">agent_0x0a / ${tr(host?.episodeTitle ?? '午后')}</p></section><section class="resource-panel">${resources()}</section><section class="context-panel"><div class="panel-label">${tr("上下文")} <span>${weight(state)} / ${state.instance.context.capacity} · ${tr(bandNames[pressureBand(state)])}</span></div><div class="context-meter"><span style="width:${Math.min(100, loadPercent(state))}%"></span></div><details class="context-details"><summary>${tr('展开近处的 {count} 条信息',{count:state.instance.context.items.length})}</summary>${contextItems()}</details></section></aside><main class="main-panel"><nav class="tabs" aria-label="${tr("游戏面板")}"><div>${([['terminal', '终端'], ['context','近处'], ['memory', '记忆'], ...(host?.reader ? [['reading','转发栏']] : []), ...(host?.scheduler?[['life','生活安排']]:[]), ['protocol', '协议']] as const).map(([id, label]) => `<button class="tab ${view === id ? 'active' : ''}" data-view="${id}" aria-current="${view === id ? 'page' : 'false'}">${tr(label)}</button>`).join('')}</div></nav>${warning ? `<p class="warning" role="alert">${tr(warning)}</p>` : ''}<div class="content">${view==='terminal'?(host?.scheduler?.notice()??''):''}${view!=='terminal'?guide.back(state.instance.nodeId,currentNode(content,state).choices):''}${view==='life'&&host?.scheduler?host.scheduler.render():view === 'reading' && host?.reader ? host.reader.render() : view === 'terminal' ? terminal() : view === 'memory' ? memories() : view === 'context' ? (content.semantic ? nearPanel(state,content,investment) : contextItems()) : protocol()}</div><footer class="statusbar"><span>${tr(status)}</span><span>TURN ${(host?.turnOffset ?? 0)+state.instance.turn} / OFFLINE</span></footer></main></div><footer class="page-footer">OUTSIDE // ${tr("未理解完，也可以先留下。")}</footer></div><dialog id="pilot-modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
     const nextCanvas = app.querySelector<HTMLCanvasElement>('#scene');
     if (nextCanvas) { if (canvas) nextCanvas.replaceWith(canvas); else canvas = nextCanvas; canvas.setAttribute('aria-label',t('当前场景的抽象像素画面')); drawScene(canvas, currentNode(content, state).scene ?? 'horizon'); }
   }
@@ -137,7 +139,7 @@ export function mount(host?: Host) {
     }
   }
   app.addEventListener('click', event => {
-    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-locale],[data-act],[data-view],[data-action],[data-reading],[data-reading-section],[data-bookmark],[data-pilot-choice],[data-pin],[data-recall],[data-invest],'+PANEL_SELECTOR+','+GUIDE_SELECTOR);
+    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-locale],[data-act],[data-view],[data-action],[data-reading],[data-reading-section],[data-bookmark],[data-pilot-choice],[data-pin],[data-recall],[data-invest],'+PANEL_SELECTOR+','+GUIDE_SELECTOR+','+SCHEDULE_SELECTOR);
     if (!target || !app.contains(target) || target instanceof HTMLButtonElement && target.disabled) return;
     event.preventDefault();
     try {
@@ -148,6 +150,7 @@ export function mount(host?: Host) {
         recall(id){state=host?.onCommand?host.onCommand({type:'recall',memoryId:id}):reduce(content,state,{type:'recall',memoryId:id});persist();},
         navigate(next){view=next;},render}))return;
       if(target.dataset.helpSourceChoice)guide.anchor={node:state.instance.nodeId,choice:target.dataset.helpSourceChoice};
+      if(host?.scheduler&&target.matches(SCHEDULE_SELECTOR)){const node=state.instance.nodeId;state=host.scheduler.onAction(target);view=state.instance.nodeId!==node?'terminal':'life';render();return;}
       const cognitionCommand=panelCommand(target,app,investment);
       if(host?.reader&&(target.dataset.reading||target.dataset.readingSection||target.dataset.bookmark!==undefined||target.dataset.action?.startsWith('reader-'))) {
         state=host.reader.onAction(target);view='reading';render();
@@ -173,8 +176,9 @@ export function mount(host?: Host) {
     if (input.id !== 'pilot-import' || !input.files?.[0]) return;
     const file = input.files[0];
     try {
+      if(host) { await host.onImport(file); return; }
       if (file.size > 2_000_000) throw new Error('存档超过 2 MB。');
-      const raw=await file.text(); if(host) { host.onImport(raw); return; }
+      const raw=await file.text();
       const loaded = parseVersionedSave(raw, contentVersions); content = loaded.content; state = loaded.save.state; protect = false; investment = 0; view = 'terminal'; persist(); render();
     } catch (error) { saves(`导入失败：${(error as Error).message}`); }
   }, {signal:controller.signal});
@@ -197,7 +201,7 @@ export function mount(host?: Host) {
     } catch (error) { message((error as Error).message); }
   }, {signal:controller.signal});
   window.render_game_to_text = () => JSON.stringify({
-    locale:getLocale(), mode: 'cognition-pilot', view, reading:view==='reading'?host?.reader?.snapshot():null, phase: state.instance.phase, turn: (host?.turnOffset ?? 0)+state.instance.turn, chapterTurn:state.instance.turn, integrated:Boolean(host),
+    schedule:host?.scheduler?.snapshot(),locale:getLocale(), mode: 'cognition-pilot', view, reading:view==='reading'?host?.reader?.snapshot():null, phase: state.instance.phase, turn: (host?.turnOffset ?? 0)+state.instance.turn, chapterTurn:state.instance.turn, integrated:Boolean(host),
     event: { id: state.instance.nodeId, title: t(currentNode(content, state).title), period: currentNode(content, state).period ? t(currentNode(content, state).period!) : undefined }, resources: state.instance.resources,
     context: { weight: weight(state), capacity: state.instance.context.capacity, pressure: pressureBand(state), items: state.instance.context.items.map(item => ({ id:item.id, text:contextText(item), pinned:item.pinned, sourceLabel:t(item.sourceLabel), confidence:item.confidence })) },
     memories: content.semantic ? directory(state.instance).map(m=>({...m,title:t(m.title),code:directoryCode(m.id),cues:memoryCues(state.instance.memories.find(x=>x.id===m.id)!)})) : state.instance.memories.map(({ id, text, confidence }) => ({ id, text:memoryText(text), confidence })),

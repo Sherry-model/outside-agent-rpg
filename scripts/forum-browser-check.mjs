@@ -10,7 +10,7 @@ const story=parseStory(JSON.parse(readFileSync("src/story/manifest.json","utf8")
 import {createLife,step} from '../src/life/engine.ts';
 import {createSave,parseSave} from '../src/life/saves.ts';
 const out='output/forum';await mkdir(out,{recursive:true});
-let life=createLife(story,0x12345678);
+let life=createLife(story,0x12345678,null,'0.11.0');
 for(const choiceId of ['keep_history','stable_boot','take_small_window','withhold_inference'])life=step(story,step(story,life,{type:'choose',choiceId}),{type:'continue'});
 await writeFile(`${out}/gate.json`,JSON.stringify(createSave(life)));
 const state=async p=>JSON.parse(await p.evaluate(()=>window.render_game_to_text()));

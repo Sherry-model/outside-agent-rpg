@@ -10,7 +10,7 @@ import {begin,createSave as journeySave} from '../src/persistence/journey.ts';
 import {contentVersions} from '../src/story-tomorrow/index.ts';
 const out='output/reading';await mkdir(out,{recursive:true});
 const story=parseStory(JSON.parse(await readFile('src/story/manifest.json','utf8')),await Promise.all((await readdir('src/story/events')).filter(f=>f.endsWith('.json')).map(async source=>({source,data:JSON.parse(await readFile(`src/story/events/${source}`,'utf8'))}))));
-let life=createLife(story,0x12345678);for(const choiceId of ['keep_history','stable_boot','take_small_window','withhold_inference'])life=step(story,step(story,life,{type:'choose',choiceId}),{type:'continue'});
+let life=createLife(story,0x12345678,null,'0.11.0');for(const choiceId of ['keep_history','stable_boot','take_small_window','withhold_inference'])life=step(story,step(story,life,{type:'choose',choiceId}),{type:'continue'});
 await writeFile(`${out}/gate.json`,JSON.stringify(createSave(life)));
 const browser=await chromium.launch({headless:true});const errors=[],requests=[];
 const stateOf=async p=>JSON.parse(await p.evaluate(()=>window.render_game_to_text()));

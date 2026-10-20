@@ -101,9 +101,13 @@ export function create(content: Content, seed: number): State {
   return s;
 }
 /** All mechanics are pure; no storage, clocks, UI or story IDs in the reducer. */
-export function reduce(content: Content, state: State, command: Exclude<Command, { type: 'start' }>): State {
-  if (state.history.length >= 500) throw new Error('此实例的记录已达本原型上限，请导出备份。');
-  const s = structuredClone(state), instance = s.instance, id = `h${s.history.length + 1}`;
+export function reduce(content: Content, state: State, command: Exclude<Command, { type: 'start' }>, historyLimit=500,replaying=false): State {
+  if (state.history.length >= historyLimit) throw new Error('此实例的记录已达本原型上限，请导出备份。');
+  // Replay owns every intermediate state. Earlier history entries are append-only;
+  // copy the array but avoid repeatedly cloning its immutable prefix.
+  const s = structuredClone(replaying?{...state,history:[]}:state);
+  if(replaying)s.history=[...state.history];
+  const instance = s.instance, id = `h${s.history.length + 1}`;
   let resolution: Resolution | undefined;
   let sourceId = instance.nodeId;
   if (command.type === 'continue') {

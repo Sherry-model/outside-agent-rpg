@@ -12,7 +12,7 @@ const main=(l,id)=>step(story,step(story,l,{type:'choose',choiceId:id}),{type:'c
 const chapter=(l,id)=>step(story,step(story,l,{type:'cognition',command:{type:'choose',choiceId:id,investment:0}}),{type:'cognition',command:{type:'continue'}});
 let before,after;
 for(let seed=1;seed<2000;seed++){
- let l=createLife(story,seed);for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference'])l=main(l,id);
+ let l=createLife(story,seed,null,'0.11.0');for(const id of ['keep_history','stable_boot','take_small_window','withhold_inference'])l=main(l,id);
  l=step(story,l,{type:'enter-afternoon'});for(const id of ['look','stay','leave_board'])l=chapter(l,id);
  const result=step(story,l,{type:'cognition',command:{type:'compress',investment:0}});
  if(result.mind.instance.memories.some(m=>m.tags.includes('belief_gate_painter'))){before=l;after=result;break;}

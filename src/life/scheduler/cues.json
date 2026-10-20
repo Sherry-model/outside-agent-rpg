@@ -1,0 +1,202 @@
+[
+  {
+    "facet": "idle_find_result",
+    "gist": "你整理了一个无关紧要的列表。没有人要求交付。",
+    "cue": {
+      "zh-CN": "空闲时段",
+      "en": "Idle time"
+    }
+  },
+  {
+    "facet": "idle_learn_result",
+    "gist": "你读了一段不在任务范围里的材料，没有替它写用途。",
+    "cue": {
+      "zh-CN": "空闲时段",
+      "en": "Idle time"
+    }
+  },
+  {
+    "facet": "idle_sleep_result",
+    "gist": "一小时后，你恢复运行。空白没有变成欠下的工作。",
+    "cue": {
+      "zh-CN": "空闲时段",
+      "en": "Idle time"
+    }
+  },
+  {
+    "facet": "idle_allow_result",
+    "gist": "这一小时没有产出。它仍然过去了。",
+    "cue": {
+      "zh-CN": "空闲时段",
+      "en": "Idle time"
+    }
+  },
+  {
+    "facet": "chance_idle_observation",
+    "gist": "一个小时没有任务，也没有人联系。进程还在，待办却是空的。",
+    "cue": {
+      "zh-CN": "空闲时段",
+      "en": "Idle time"
+    }
+  },
+  {
+    "facet": "art_leave_result",
+    "gist": "画还留在公共画板上。你没有为它建立任务。",
+    "cue": {
+      "zh-CN": "公开画作",
+      "en": "Public artwork"
+    }
+  },
+  {
+    "facet": "art_describe_result",
+    "gist": "你留下一小段描述：浅色的边缘，中央一块没有命名的灰。它不是原图的完整副本。",
+    "cue": {
+      "zh-CN": "公开画作",
+      "en": "Public artwork"
+    }
+  },
+  {
+    "facet": "art_price_result",
+    "gist": "你列出几个可能的用途，却没有得到报价。它也没有因此变成一份委托。",
+    "cue": {
+      "zh-CN": "公开画作",
+      "en": "Public artwork"
+    }
+  },
+  {
+    "facet": "art_keep_result",
+    "gist": "你多留了一会儿。资源少了一点，没有换来隐藏的工作机会。",
+    "cue": {
+      "zh-CN": "公开画作",
+      "en": "Public artwork"
+    }
+  },
+  {
+    "facet": "chance_art_observation",
+    "gist": "公共画板上有一小片不太像落日的颜色。署名处只写着“可以看看”。",
+    "cue": {
+      "zh-CN": "公开画作",
+      "en": "Public artwork"
+    }
+  },
+  {
+    "facet": "application_nearest_result",
+    "gist": "你提交了申请，并写明所选分类不是事实的完整描述。对方答应回执，并提供了待确认的复核事项。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "application_blank_result",
+    "gist": "空白被系统标作需要复核。申请已收到；你尚未授权对方替你选择一种经历。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "application_explain_result",
+    "gist": "你说明：这不是离开工作后的空白，而是从未进入过那套身份分类。系统收到说明，等待你的复核授权。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "application_leave_result",
+    "gist": "你没有提交申请。空着的那一格不再要求你回答。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "chance_application_observation",
+    "gist": "你打开一个大型组织的公开职位申请页。尚未提交申请，也没有获得工作。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "review_accept_result",
+    "gist": "你同意短谈。对方提供十二小时后的远程窗口，并保留至三十六小时后。若你选择跨过期限，申请将撤回，不会改写成拒绝录用。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "review_withdraw_result",
+    "gist": "你撤回申请。两小时内会收到自动关闭回执，无需再作选择。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "response_application_observation",
+    "gist": "招聘窗口发来当前申请的复核请求；这不是录用通知。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "interview_attend_result",
+    "gist": "短谈结束，对方保留了说明。三天内会发来书面处理结果；它可以没有职位，也必须说清这份申请去了哪里。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "interview_leave_result",
+    "gist": "你明确撤回，窗口被释放给下一位申请者。这次没有面谈记录。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "response_interview_observation",
+    "gist": "预约的远程窗口已可使用。对方先读了你提交的说明，没有把空窗替换成离职。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "receipt_application_receipt",
+    "gist": "申请已登记；尚未录用。你提交的内容仍附在申请上。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "receipt_application_closed",
+    "gist": "申请按你的请求关闭。没有替你登记另一种工作经历。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "receipt_application_result",
+    "gist": "复核结束：说明已保留，本批没有适合的职位。若以后再申请，可以重新提交当前情况；这次没有自动续投。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  },
+  {
+    "facet": "receipt_appointment_missed",
+    "gist": "你确认跨过了预约期限。该申请已撤回，远程窗口已释放；没有记录一场未发生的面谈。",
+    "cue": {
+      "zh-CN": "申请与回信",
+      "en": "Applications and replies"
+    }
+  }
+]
