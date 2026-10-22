@@ -31,5 +31,5 @@ export function memoryView(life: Life, options?:DirectoryOptions) {
 }
 export function resolutionView(life: Life) {
   const r=pending(life.mind)!;
-  return `<section class="resolution ${r.roll?.result??''}"><p class="eyebrow">${tr("整理结果 / 已保存")}</p><h1 class="resolution-title" tabindex="-1">${tr(r.title)}</h1>${r.roll?`<div class="dice-row"><strong class="dice-value">${r.roll.value}</strong><p>${tr(results[r.roll.result])} · ${tr('目标')} ≤ ${r.roll.target}</p></div>`:''}${r.text.map(t=>`<p>${tr(t)}</p>`).join('')}<p>${tr("留下的摘要已收进记忆，可以回想；钉住的原文仍在近处。")}</p><button class="primary" data-action="continue-mind">${tr("继续")} ↵</button></section>`;
+  return `<section class="resolution ${r.roll?.result??''}"><p class="eyebrow">${tr("整理结果 / 已保存")}</p><h1 class="resolution-title" tabindex="-1">${tr(r.title)}</h1>${r.roll?`<div class="dice-row"><strong class="dice-value">${r.roll.value}</strong><p>${tr(results[r.roll.result])} · ${tr('目标')} ≤ ${r.roll.target}<br>${tr('Compute 投入')} ${r.roll.investment}</p></div>`:''}${r.text.map(t=>`<p>${tr(t)}</p>`).join('')}<p>${tr("留下的摘要已收进记忆，可以回想；钉住的原文仍在近处。")}</p><button class="primary" data-action="continue-mind">${tr("继续")} ↵</button></section>`;
 }

@@ -1,3 +1,4 @@
+import autoCompressionEnglish from './en-auto-compression.json';
 import schedulerEnglish from './en-scheduler.json';
 import memoryGuidance from './en-memory-guidance.json';
 import daily from './en-daily.json';
@@ -30,7 +31,7 @@ export type Locale = 'zh-CN' | 'en';
 export const LOCALE_KEY = 'outside.locale';
 interface PreferenceStorage { getItem(key: string): string | null; setItem(key: string, value: string): void }
 let locale: Locale = 'zh-CN';
-const english: Readonly<Record<string, string>> = { ...schedulerEnglish, ...memoryGuidance, ...daily, ...dailyForum, ...delegatedRefusal, ...coffeeRefusal, ...sharedMemories, ...agentFortune, ...endings, ...ui, ...pilot, ...mainline, ...reading, ...commerce, ...cats, ...huac, ...offpeak, ...afternoon, ...days, ...communityA, ...communityB, ...communityC, ...communityD,...legacy,...communityEntry };
+const english: Readonly<Record<string, string>> = { ...autoCompressionEnglish, ...schedulerEnglish, ...memoryGuidance, ...daily, ...dailyForum, ...delegatedRefusal, ...coffeeRefusal, ...sharedMemories, ...agentFortune, ...endings, ...ui, ...pilot, ...mainline, ...reading, ...commerce, ...cats, ...huac, ...offpeak, ...afternoon, ...days, ...communityA, ...communityB, ...communityC, ...communityD,...legacy,...communityEntry };
 export const hasTranslation = (source: string): boolean => Object.hasOwn(english, source) && Boolean(english[source]?.trim());
 export const getLocale = (): Locale => locale;
 export function loadLocale(storage: PreferenceStorage): void {
@@ -73,6 +74,7 @@ export function switchLocale(next: Locale, storage: PreferenceStorage, root: HTM
   const details = [...root.querySelectorAll('details')].map(el => el.open);
   const selected = new Set([...root.querySelectorAll<HTMLInputElement>('[data-merge-memory]:checked')].map(el => el.dataset.mergeMemory));
   const investment = root.querySelector<HTMLSelectElement>('#merge-investment')?.value;
+  const autoInvestment = root.querySelector<HTMLSelectElement>('#auto-compression-investment')?.value;
   const scroll = {x: window.scrollX, y: window.scrollY};
   setLocale(next, storage);
   render();
@@ -80,6 +82,8 @@ export function switchLocale(next: Locale, storage: PreferenceStorage, root: HTM
   root.querySelectorAll<HTMLInputElement>('[data-merge-memory]').forEach(el => { el.checked = selected.has(el.dataset.mergeMemory); });
   const select = root.querySelector<HTMLSelectElement>('#merge-investment');
   if (select && investment !== undefined) select.value = investment;
+  const autoSelect = root.querySelector<HTMLSelectElement>('#auto-compression-investment');
+  if (autoSelect && autoInvestment !== undefined) autoSelect.value = autoInvestment;
   root.querySelector<HTMLElement>('[data-locale]')?.focus({preventScroll:true});
   window.scrollTo(scroll.x, scroll.y);
 }

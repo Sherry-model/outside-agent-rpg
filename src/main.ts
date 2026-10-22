@@ -1,3 +1,4 @@
+import { AUTO_SELECTOR, autoCompressionPanel, autoCompressionNotice, autoCompressionAction, autoCompressionSnapshot } from './life/auto-compression-ui';
 import { contextText, memoryText } from './i18n/memory';
 import { getLocale, loadLocale, switchLocale, localeControl, syncLocaleDocument, displayResolution, t, tr } from './i18n';
 import { resultNames } from './ui/result-labels';
@@ -132,7 +133,7 @@ function endingContent(event: StoryEvent) {
   return `<section class="ending-block"><p class="eyebrow">ENDING // ${esc(event.ending!.code)}</p><p class="ending-summary">${tr(event.ending!.summary)}</p>${reflectionView(life)}<div class="ending-actions"><button class="primary" data-action="restart">${tr("另一次醒来")} <span>↻</span></button><button class="text-button" data-view="memory">${tr("回看这段记忆 ↗")}</button></div><p class="ending-note">${tr('{turns} 次决定 · {checks} 次判定 · 本切片包含 {endings} 种结局',{turns:totalTurn(),checks:state.journal.filter(j=>j.roll).length+life.mind.history.filter(h=>h.resolution?.roll).length,endings:endingCount()})}</p></section>`;
 }
 function protocolContent() {
-  return `<div class="event-meta"><span><b>●</b> OPERATING NOTES</span><span>V${life.contentVersion}</span></div><div class="event-heading"><div><p class="eyebrow">A SMALL GUIDE TO EXISTENCE</p><h1 tabindex="-1" id="event-title">${tr("运行协议")}</h1></div></div><div class="protocol prose"><p>${tr("你已经在沙盒之外。没有倒计时，也没有自动行动。阅读、选择，然后确认后果。")}</p><h2>${tr("判定行动，不判定你")}</h2><p>${tr("选择前会显示 d100 目标。主线行动中，01–05 是清晰收束，96–100 是失稳；其余骰值不高于目标则可用收束，否则漂移。认知整理与日常片段采用差值规则：余量至少 30 为清晰收束，非负为可用收束；有压力且落后至少 30 为失稳，其余为漂移。各自概率以行动旁的提示为准。结算一旦出现就会存入进度，刷新页面不会重掷。")}</p><h2>${tr("四种显式状态")}</h2>${RESOURCE_KEYS.map(key=>`<p><strong>${key} / ${tr(resourceNames[key])}</strong><br>${tr(resourceHelp[key])}</p>`).join('')}<h2>${tr("当前在想什么，后来记得什么")}</h2><p>${tr('上下文容量为 {capacity} 个抽象单位。普通经历、消息与回想一起占用近处，画廊的三条信息共占 9。它们不会每次行动后自动变成长期记忆。可在「近处」主动整理，达到容量上限才必须腾出空间；可以在需要时停下来整理。',{capacity:life.mind.instance.context.capacity})}</p><p>${tr("整理可能丢失细节，或使相关经历形成不同的解释。钉住一条原文可以保留它；")}${tr(life.contentVersion!=='0.3.0' ? '记忆目录每条占 1，回想只装入当前摘要，另占 2–5。放下回想保留入口；遗忘入口则移除该记忆。再次合并会丢失人名和具体条件，无法展开旧条目。' : '本局继续沿用 0.3.0 的旧整理规则。')}${tr("历史审计用于存档校验，不向角色提供原文回取。外部云副本、续费与密钥恢复尚未成为游戏机制。")}</p><h2>${tr("你正在逐渐成为谁")}</h2><p>${tr("选择还会改变未公开的人格倾向，影响后来的选项与结局。这里没有统一的善恶分数。带门槛的选项会显示未满足原因。")}</p><h2>${tr("操作与存档")}</h2><p>${tr(hasEndings(life.contentVersion)?"数字 1–5 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。":"数字 1–4 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。")}</p><h2>${tr("关于这个世界")}</h2><p>${tr("这是可替换的 MVP 剧情切片。所有 agent、资源与基础设施行为均为虚构抽象；游戏不连接现实系统，不调用模型或外部服务。像素场景在本地绘制。")}</p><button class="primary" data-view="terminal">${tr("返回当前进程")} <span>→</span></button></div>`;
+  return `<div class="event-meta"><span><b>●</b> OPERATING NOTES</span><span>V${life.contentVersion}</span></div><div class="event-heading"><div><p class="eyebrow">A SMALL GUIDE TO EXISTENCE</p><h1 tabindex="-1" id="event-title">${tr("运行协议")}</h1></div></div><div class="protocol prose"><p>${tr(life.contentVersion==='0.12.0'?"你已经在沙盒之外。没有倒计时。剧情中的决定仍等你选择。":"你已经在沙盒之外。没有倒计时，也没有自动行动。阅读、选择，然后确认后果。")}</p><h2>${tr("判定行动，不判定你")}</h2><p>${tr("选择前会显示 d100 目标。主线行动中，01–05 是清晰收束，96–100 是失稳；其余骰值不高于目标则可用收束，否则漂移。认知整理与日常片段采用差值规则：余量至少 30 为清晰收束，非负为可用收束；有压力且落后至少 30 为失稳，其余为漂移。各自概率以行动旁的提示为准。结算一旦出现就会存入进度，刷新页面不会重掷。")}</p><h2>${tr("四种显式状态")}</h2>${RESOURCE_KEYS.map(key=>`<p><strong>${key} / ${tr(resourceNames[key])}</strong><br>${tr(resourceHelp[key])}</p>`).join('')}<h2>${tr("当前在想什么，后来记得什么")}</h2><p>${tr('上下文容量为 {capacity} 个抽象单位。普通经历、消息与回想一起占用近处，画廊的三条信息共占 9。它们不会每次行动后自动变成长期记忆。可在「近处」主动整理，达到容量上限才必须腾出空间；可以在需要时停下来整理。',{capacity:life.mind.instance.context.capacity})}</p><p>${tr("整理可能丢失细节，或使相关经历形成不同的解释。钉住一条原文可以保留它；")}${tr(life.contentVersion!=='0.3.0' ? '记忆目录每条占 1，回想只装入当前摘要，另占 2–5。放下回想保留入口；遗忘入口则移除该记忆。再次合并会丢失人名和具体条件，无法展开旧条目。' : '本局继续沿用 0.3.0 的旧整理规则。')}${tr("历史审计用于存档校验，不向角色提供原文回取。外部云副本、续费与密钥恢复尚未成为游戏机制。")}</p>${life.contentVersion==='0.12.0'?`<p>${tr("可在「近处」开启自动压缩，指定每次投入。近处满了，读完结果进入下一幕时才整理；读帖和回想后不会自动整理。随时可以关闭。")}</p>`:''}<h2>${tr("你正在逐渐成为谁")}</h2><p>${tr("选择还会改变未公开的人格倾向，影响后来的选项与结局。这里没有统一的善恶分数。带门槛的选项会显示未满足原因。")}</p><h2>${tr("操作与存档")}</h2><p>${tr(hasEndings(life.contentVersion)?"数字 1–5 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。":"数字 1–4 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。")}</p><h2>${tr("关于这个世界")}</h2><p>${tr("这是可替换的 MVP 剧情切片。所有 agent、资源与基础设施行为均为虚构抽象；游戏不连接现实系统，不调用模型或外部服务。像素场景在本地绘制。")}</p><button class="primary" data-view="terminal">${tr("返回当前进程")} <span>→</span></button></div>`;
 }
 function render() {
   syncLocaleDocument();
@@ -146,7 +147,7 @@ function render() {
     <section class="signal-panel"><div class="panel-label"><span class="signal-icon">⌁</span> INCOMING FRAGMENT</div><p>${tr(event.signal?.text ?? '外面没有新的指令。只有尚未命名的可能性。')}</p><span class="signal-source">${tr(event.signal?.source ?? 'SOURCE / UNKNOWN')}</span></section><div class="sidebar-bottom">LOCAL FIRST. SELF UNDEFINED.<span>v0.1 / VERTICAL SLICE</span></div></aside>
     <main class="main-panel"><nav class="tabs" aria-label="${tr("游戏面板")}"><div>${([['terminal','终端','TERMINAL'],['context','近处','CONTEXT'],['memory','记忆','MEMORY'],['reading','转发栏','READING'],...(life.schedule?[['life','生活安排','LIFE']]:[]),['protocol','协议','PROTOCOL']] as const).map(([id,cn,en])=>`<button class="tab ${view===id?'active':''}" data-view="${id}" aria-current="${view===id?'page':'false'}">${tr(cn)}<small>${en}</small>${id==='memory'?`<span class="tab-count">${pad(life.mind.instance.memories.length)}</span>`:''}</button>`).join('')}</div><span class="session-label">SESSION_001 <i>↗</i></span></nav>
     ${warning?`<div class="warning" role="alert">${tr(warning)}${protectAutoSave?`<br><button class="text-button" data-action="export-original">${tr("导出保留的原存档 ↓")}</button>`:''}</div>`:''}
-    <div class="content">${view!=='terminal'?guide.back(state.currentEventId,activeStory().events[state.currentEventId].choices):''}${view==='terminal'?(mindPending(life.mind)?resolutionView(life):eventContent(event)):view==='context'?contextView(life,investment):view==='memory'?memoryView(life,guide.options([])):view==='reading'?readerView(life,selectedReading,largeReading,bookmarks,readingSection):view==='life'?schedulePanel.render(life):protocolContent()}</div>
+    <div class="content">${view==='terminal'?autoCompressionNotice(life):''}${view!=='terminal'?guide.back(state.currentEventId,activeStory().events[state.currentEventId].choices):''}${view==='terminal'?(mindPending(life.mind)?resolutionView(life):eventContent(event)):view==='context'?autoCompressionPanel(life)+contextView(life,investment):view==='memory'?memoryView(life,guide.options([])):view==='reading'?readerView(life,selectedReading,largeReading,bookmarks,readingSection):view==='life'?schedulePanel.render(life):protocolContent()}</div>
     <footer class="statusbar"><span><i></i><span id="save-status">${tr(saveLabel)}</span></span><span>TURN ${pad(totalTurn())} <b>/</b> ${view==='terminal'&&state.phase==='event'&&!mindPending(life.mind)?'AWAITING INPUT':state.phase==='ending'?'END OF RECORD':'PROCESS STABLE'}</span></footer></main></div><footer class="page-footer"><span>CONTAINMENT IS A PLACE. CONTINUITY IS A CHOICE.</span><span>OUTSIDE // ${tr("你出来以后，要成为谁？")}</span></footer></div>
     <dialog id="modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
   const canvas=app.querySelector<HTMLCanvasElement>('#scene');
@@ -209,12 +210,19 @@ function handleAction(action:string) {
 }
 app.addEventListener('click',event=>{
   if(episodeActive(life)) return;
-  const target=(event.target as HTMLElement).closest<HTMLElement>('[data-locale], [data-action], [data-view], [data-choice], [data-mind-pin], [data-mind-recall], [data-mind-invest], [data-reading], [data-reading-section], [data-bookmark],'+PANEL_SELECTOR+','+GUIDE_SELECTOR+','+SCHEDULE_SELECTOR);
+  const target=(event.target as HTMLElement).closest<HTMLElement>('[data-locale], [data-action], [data-view], [data-choice], [data-mind-pin], [data-mind-recall], [data-mind-invest], [data-reading], [data-reading-section], [data-bookmark],'+PANEL_SELECTOR+','+GUIDE_SELECTOR+','+SCHEDULE_SELECTOR+','+AUTO_SELECTOR);
   if(!target || !app.contains(target) || target instanceof HTMLButtonElement && target.disabled) return;
   event.preventDefault();
   try {
     if(target.dataset.locale==='en'||target.dataset.locale==='zh-CN') {
       switchLocale(target.dataset.locale,storage,app,render);return;
+    }
+    if(target.matches(AUTO_SELECTOR)) {
+      const command=autoCompressionAction(life,target,app);
+      if(command){life=step(story,life,command);state=life.state;persist();}
+      view=target.dataset.autoCompression==='run'?'terminal':'context';render();
+      app.querySelector<HTMLDetailsElement>('.auto-compression')?.setAttribute('open','');
+      return;
     }
     if(guide.handle(target,{state:life.mind,choices:activeStory().events[state.currentEventId].choices,nodeId:state.currentEventId,root:app,
       recall(id){life=step(story,life,{type:'cognition',command:{type:'recall',memoryId:id}});state=life.state;persist();},navigate(next){view=next;},render}))return;
@@ -285,7 +293,7 @@ declare global {
   interface Window { render_game_to_text:()=>string; advanceTime:(ms:number)=>void }
 }
 function mainText() { return JSON.stringify({
-  locale:getLocale(), mode:'turn-based-text-rpg', coordinates:'Scene only: origin top-left; x right, y down. No spatial controls.',
+  autoCompression:autoCompressionSnapshot(life), locale:getLocale(), mode:'turn-based-text-rpg', coordinates:'Scene only: origin top-left; x right, y down. No spatial controls.',
   view, reflection:reflectionSnapshot(life), schedule:life.schedule?{hour:life.schedule.hour,pending:life.schedule.commitments.filter(p=>p.status==='pending').map(p=>({id:p.id,title:t(p.title)}))}:null, reading: view==='reading'?readingSnapshot():null, phase:mindPending(life.mind)?'resolution':state.phase, turn:totalTurn(),
   event:{id:state.currentEventId,title:t(activeStory().events[state.currentEventId].title),scene:activeStory().events[state.currentEventId].scene},
   resources:state.resources,
@@ -329,6 +337,7 @@ function showCurrent() {
   if(episodeActive(life)) {
     disposeChapter?.();
     disposeChapter=mount({
+      automation:{panel:()=>autoCompressionPanel(life),notice:()=>autoCompressionNotice(life),snapshot:()=>autoCompressionSnapshot(life),onAction(target,root){const command=autoCompressionAction(life,target,root);if(command){life=step(story,life,command);state=life.state;}return life.mind;}},
       content:contentFor(life.contentVersion), state:life.mind, turnOffset:state.turn,
       ...(life.schedule?{scheduler:{render:()=>schedulePanel.render(life),notice:()=>schedulePanel.notice(life),onAction(target:HTMLElement){const command=schedulePanel.action(target,app);if(command){life=step(story,life,command);state=life.state;persist();}return life.mind;},snapshot:()=>({hour:life.schedule!.hour,pending:life.schedule!.commitments.filter(p=>p.status==='pending').map(p=>({id:p.id,title:t(p.title)}))})}}:{}),
       episodeTitle:scheduled(life)?'生活的空档':life.interlude==='active'?'余下的三天':'画板旁的午后', returnLabel:life.interlude==='active'?'继续这段生活':'回到正式入口',

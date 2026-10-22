@@ -2,8 +2,18 @@ import type {Schedule} from './scheduler/types';
 import type { GameState } from '../engine/types';
 import type { State, Command } from '../cognition/types';
 import type { JourneySave } from '../persistence/journey';
+import type { Roll } from '../cognition/types';
+
+export interface AutoCompression {
+  version: 1;
+  enabled: boolean;
+  investment: 0 | 4 | 8 | 12;
+  receipt?: { commandIndex: number; before: number; after: number; roll: Pick<Roll, 'value' | 'target' | 'result' | 'investment'> };
+}
 
 export type LifeCommand =
+  | { type: 'configure-compression'; enabled: boolean; investment: AutoCompression['investment'] }
+  | { type: 'auto-compress' }
   | { type: 'choose'; choiceId: string }
   | { type: 'continue' }
   | { type:'wait'; hours:number; missed:string[] }
@@ -22,6 +32,7 @@ export interface Life {
   interlude?: 'unvisited' | 'active' | 'complete';
   commands: LifeCommand[];
   schedule?:Schedule;
+  autoCompression?: AutoCompression;
 }
 export const hasCommunity = (version:Life['contentVersion']) => version==='0.6.0'||version==='0.6.1'||version==='0.7.0'||version==='0.7.1'||version==='0.8.0'||version==='0.9.0'||version==='0.10.0'||version==='0.11.0'||version==='0.12.0';
 export interface LifeSave {

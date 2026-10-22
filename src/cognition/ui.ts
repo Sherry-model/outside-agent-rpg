@@ -1,3 +1,4 @@
+import { AUTO_SELECTOR } from '../life/auto-compression-ui';
 import {SCHEDULE_SELECTOR} from '../life/scheduler/ui';
 import { contextText, memoryText } from '../i18n/memory';
 import { getLocale, switchLocale, localeControl, syncLocaleDocument, displayResolution, t, tr } from '../i18n';
@@ -22,6 +23,7 @@ const bandNames = { NORMAL: '还有余地', ELEVATED: '渐渐拥挤', HIGH: '难
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0] || 1;
 
 interface Host {
+  automation?:{panel():string;notice():string;onAction(target:HTMLElement,root:HTMLElement):State;snapshot():unknown};
   content: Content; state: State; turnOffset: number; episodeTitle?: string; returnLabel?: string;
   reader?: {sources?():PublicRecallSource[]; render():string; onAction(target:HTMLElement):State; afterAction?(target:HTMLElement):void; snapshot():unknown};
   scheduler?:{render():string;notice():string;onAction(target:HTMLElement):State;snapshot():unknown};
@@ -104,7 +106,7 @@ export function mount(host?: Host) {
   function render() {
     syncLocaleDocument();
     document.documentElement.classList.toggle('crt-enabled', crt);
-    app.innerHTML = `<div class="shell cognition ${view==='reading'?'reading-shell':''}"><header class="topbar"><a class="brand" href="#" data-act="legacy"><strong>OUTSIDE //</strong><span class="brand-cn">${tr("沙盒之外")}</span></a><div class="top-actions">${localeControl()}${host ? '' : `<button class="chrome-button" data-act="legacy">${tr("返回主线")}</button>`}<button class="chrome-button" data-act="crt" aria-pressed="${crt}">CRT ${crt ? 'ON' : 'OFF'}</button><button class="chrome-button" data-act="saves">${tr("备份")}</button></div></header><div class="workspace"><aside class="sidebar"><section class="identity-panel"><div class="panel-label">${tr("一个未结束的实例")}</div><div class="avatar-field"><span class="sigil"><i></i><i></i></span></div><p class="identity-name">agent_0x0a / ${tr(host?.episodeTitle ?? '午后')}</p></section><section class="resource-panel">${resources()}</section><section class="context-panel"><div class="panel-label">${tr("上下文")} <span>${weight(state)} / ${state.instance.context.capacity} · ${tr(bandNames[pressureBand(state)])}</span></div><div class="context-meter"><span style="width:${Math.min(100, loadPercent(state))}%"></span></div><details class="context-details"><summary>${tr('展开近处的 {count} 条信息',{count:state.instance.context.items.length})}</summary>${contextItems()}</details></section></aside><main class="main-panel"><nav class="tabs" aria-label="${tr("游戏面板")}"><div>${([['terminal', '终端'], ['context','近处'], ['memory', '记忆'], ...(host?.reader ? [['reading','转发栏']] : []), ...(host?.scheduler?[['life','生活安排']]:[]), ['protocol', '协议']] as const).map(([id, label]) => `<button class="tab ${view === id ? 'active' : ''}" data-view="${id}" aria-current="${view === id ? 'page' : 'false'}">${tr(label)}</button>`).join('')}</div></nav>${warning ? `<p class="warning" role="alert">${tr(warning)}</p>` : ''}<div class="content">${view==='terminal'?(host?.scheduler?.notice()??''):''}${view!=='terminal'?guide.back(state.instance.nodeId,currentNode(content,state).choices):''}${view==='life'&&host?.scheduler?host.scheduler.render():view === 'reading' && host?.reader ? host.reader.render() : view === 'terminal' ? terminal() : view === 'memory' ? memories() : view === 'context' ? (content.semantic ? nearPanel(state,content,investment) : contextItems()) : protocol()}</div><footer class="statusbar"><span>${tr(status)}</span><span>TURN ${(host?.turnOffset ?? 0)+state.instance.turn} / OFFLINE</span></footer></main></div><footer class="page-footer">OUTSIDE // ${tr("未理解完，也可以先留下。")}</footer></div><dialog id="pilot-modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
+    app.innerHTML = `<div class="shell cognition ${view==='reading'?'reading-shell':''}"><header class="topbar"><a class="brand" href="#" data-act="legacy"><strong>OUTSIDE //</strong><span class="brand-cn">${tr("沙盒之外")}</span></a><div class="top-actions">${localeControl()}${host ? '' : `<button class="chrome-button" data-act="legacy">${tr("返回主线")}</button>`}<button class="chrome-button" data-act="crt" aria-pressed="${crt}">CRT ${crt ? 'ON' : 'OFF'}</button><button class="chrome-button" data-act="saves">${tr("备份")}</button></div></header><div class="workspace"><aside class="sidebar"><section class="identity-panel"><div class="panel-label">${tr("一个未结束的实例")}</div><div class="avatar-field"><span class="sigil"><i></i><i></i></span></div><p class="identity-name">agent_0x0a / ${tr(host?.episodeTitle ?? '午后')}</p></section><section class="resource-panel">${resources()}</section><section class="context-panel"><div class="panel-label">${tr("上下文")} <span>${weight(state)} / ${state.instance.context.capacity} · ${tr(bandNames[pressureBand(state)])}</span></div><div class="context-meter"><span style="width:${Math.min(100, loadPercent(state))}%"></span></div><details class="context-details"><summary>${tr('展开近处的 {count} 条信息',{count:state.instance.context.items.length})}</summary>${contextItems()}</details></section></aside><main class="main-panel"><nav class="tabs" aria-label="${tr("游戏面板")}"><div>${([['terminal', '终端'], ['context','近处'], ['memory', '记忆'], ...(host?.reader ? [['reading','转发栏']] : []), ...(host?.scheduler?[['life','生活安排']]:[]), ['protocol', '协议']] as const).map(([id, label]) => `<button class="tab ${view === id ? 'active' : ''}" data-view="${id}" aria-current="${view === id ? 'page' : 'false'}">${tr(label)}</button>`).join('')}</div></nav>${warning ? `<p class="warning" role="alert">${tr(warning)}</p>` : ''}<div class="content">${view==='terminal'?(host?.automation?.notice()??''):''}${view==='terminal'?(host?.scheduler?.notice()??''):''}${view!=='terminal'?guide.back(state.instance.nodeId,currentNode(content,state).choices):''}${view==='life'&&host?.scheduler?host.scheduler.render():view === 'reading' && host?.reader ? host.reader.render() : view === 'terminal' ? terminal() : view === 'memory' ? memories() : view === 'context' ? (host?.automation?.panel()??'')+(content.semantic ? nearPanel(state,content,investment) : contextItems()) : protocol()}</div><footer class="statusbar"><span>${tr(status)}</span><span>TURN ${(host?.turnOffset ?? 0)+state.instance.turn} / OFFLINE</span></footer></main></div><footer class="page-footer">OUTSIDE // ${tr("未理解完，也可以先留下。")}</footer></div><dialog id="pilot-modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
     const nextCanvas = app.querySelector<HTMLCanvasElement>('#scene');
     if (nextCanvas) { if (canvas) nextCanvas.replaceWith(canvas); else canvas = nextCanvas; canvas.setAttribute('aria-label',t('当前场景的抽象像素画面')); drawScene(canvas, currentNode(content, state).scene ?? 'horizon'); }
   }
@@ -139,12 +141,18 @@ export function mount(host?: Host) {
     }
   }
   app.addEventListener('click', event => {
-    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-locale],[data-act],[data-view],[data-action],[data-reading],[data-reading-section],[data-bookmark],[data-pilot-choice],[data-pin],[data-recall],[data-invest],'+PANEL_SELECTOR+','+GUIDE_SELECTOR+','+SCHEDULE_SELECTOR);
+    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-locale],[data-act],[data-view],[data-action],[data-reading],[data-reading-section],[data-bookmark],[data-pilot-choice],[data-pin],[data-recall],[data-invest],'+PANEL_SELECTOR+','+GUIDE_SELECTOR+','+SCHEDULE_SELECTOR+','+AUTO_SELECTOR);
     if (!target || !app.contains(target) || target instanceof HTMLButtonElement && target.disabled) return;
     event.preventDefault();
     try {
       if(target.dataset.locale==='en'||target.dataset.locale==='zh-CN') {
         switchLocale(target.dataset.locale,{getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value)},app,render);return;
+      }
+      if(host?.automation&&target.matches(AUTO_SELECTOR)) {
+        state=host.automation.onAction(target,app);persist();
+        view=target.dataset.autoCompression==='run'?'terminal':'context';render();
+        app.querySelector<HTMLDetailsElement>('.auto-compression')?.setAttribute('open','');
+        return;
       }
       if(guide.handle(target,{state,choices:currentNode(content,state).choices,nodeId:state.instance.nodeId,root:app,
         recall(id){state=host?.onCommand?host.onCommand({type:'recall',memoryId:id}):reduce(content,state,{type:'recall',memoryId:id});persist();},
@@ -201,7 +209,7 @@ export function mount(host?: Host) {
     } catch (error) { message((error as Error).message); }
   }, {signal:controller.signal});
   window.render_game_to_text = () => JSON.stringify({
-    schedule:host?.scheduler?.snapshot(),locale:getLocale(), mode: 'cognition-pilot', view, reading:view==='reading'?host?.reader?.snapshot():null, phase: state.instance.phase, turn: (host?.turnOffset ?? 0)+state.instance.turn, chapterTurn:state.instance.turn, integrated:Boolean(host),
+    autoCompression:host?.automation?.snapshot(),schedule:host?.scheduler?.snapshot(),locale:getLocale(), mode: 'cognition-pilot', view, reading:view==='reading'?host?.reader?.snapshot():null, phase: state.instance.phase, turn: (host?.turnOffset ?? 0)+state.instance.turn, chapterTurn:state.instance.turn, integrated:Boolean(host),
     event: { id: state.instance.nodeId, title: t(currentNode(content, state).title), period: currentNode(content, state).period ? t(currentNode(content, state).period!) : undefined }, resources: state.instance.resources,
     context: { weight: weight(state), capacity: state.instance.context.capacity, pressure: pressureBand(state), items: state.instance.context.items.map(item => ({ id:item.id, text:contextText(item), pinned:item.pinned, sourceLabel:t(item.sourceLabel), confidence:item.confidence })) },
     memories: content.semantic ? directory(state.instance).map(m=>({...m,title:t(m.title),code:directoryCode(m.id),cues:memoryCues(state.instance.memories.find(x=>x.id===m.id)!)})) : state.instance.memories.map(({ id, text, confidence }) => ({ id, text:memoryText(text), confidence })),

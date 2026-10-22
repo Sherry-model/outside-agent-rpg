@@ -67,3 +67,11 @@ html[lang="en"] .brand-cn{letter-spacing:1px}
 .experience-comparison ol { padding-left:1.4rem; }
 .experience-comparison li { padding:.5rem 0; border-bottom:1px solid var(--line); }
 .experience-choice { font-weight:600; }
+
+/* Optional maintenance: a compact receipt, with deliberate controls in Nearby. */
+.auto-compression-notice { border-left: 2px solid var(--accent, #b88c53); padding: 6px 14px; margin: 0 0 22px; font-size: .9rem; line-height: 1.7; }
+.auto-compression-notice p { margin: 5px 0; }
+.auto-compression select { font: inherit; color: inherit; background: transparent; border: 1px solid currentColor; padding: 5px 12px; }
+.auto-compression label { display: inline-block; margin: 6px 8px 6px 0; }
+.auto-compression .secondary, .auto-compression-notice .secondary { max-width: 100%; white-space: normal; }
+.auto-receipt { font-variant-numeric: tabular-nums; }

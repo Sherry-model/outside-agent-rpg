@@ -360,6 +360,43 @@
                   "promiseId"
                 ],
                 "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "configure-compression"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "investment": {
+                    "enum": [
+                      0,
+                      4,
+                      8,
+                      12
+                    ]
+                  }
+                },
+                "required": [
+                  "type",
+                  "enabled",
+                  "investment"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "auto-compress"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
               }
             ]
           }
@@ -373,6 +410,94 @@
         },
         "schedule": {
           "type": "object"
+        },
+        "autoCompression": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "const": 1
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "investment": {
+              "enum": [
+                0,
+                4,
+                8,
+                12
+              ]
+            },
+            "receipt": {
+              "type": "object",
+              "properties": {
+                "commandIndex": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 4096
+                },
+                "before": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "after": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "roll": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100
+                    },
+                    "target": {
+                      "type": "integer",
+                      "minimum": 5,
+                      "maximum": 95
+                    },
+                    "result": {
+                      "enum": [
+                        "critical",
+                        "success",
+                        "failure",
+                        "fumble"
+                      ]
+                    },
+                    "investment": {
+                      "enum": [
+                        0,
+                        4,
+                        8,
+                        12
+                      ]
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "target",
+                    "result",
+                    "investment"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "commandIndex",
+                "before",
+                "after",
+                "roll"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "version",
+            "enabled",
+            "investment"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [

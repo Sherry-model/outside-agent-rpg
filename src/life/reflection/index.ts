@@ -41,7 +41,7 @@ export function playerExperience(life:Life) {
     }else if(c.type==='wait')entries.push({order:index+1,choice:t('等待 {hours} 小时',{hours:c.hours}),result:[],kind:'wait'});
   });
   const counts={choices:entries.filter(e=>e.kind==='action').length,readings:new Set(life.commands.filter(c=>c.type==='read').map(c=>c.entryId)).size,
-    compressions:life.commands.filter(c=>c.type==='cognition'&&c.command.type==='compress').length,
+    compressions:life.mind.history.filter(h=>h.command.type==='compress').length,
     recalls:life.commands.filter(c=>c.type==='cognition'&&c.command.type==='recall').length};
   const pending=life.schedule?.commitments.filter(p=>p.status==='pending').map(p=>({id:p.id,title:p.title}))??[];
   return {entries,counts,pending,hasEarlierRecord:Boolean(life.baseline)};

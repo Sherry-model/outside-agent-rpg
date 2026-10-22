@@ -8,6 +8,7 @@ import { contentFor, routedContent, configFor, parseLifeContent } from './conten
 import { hasCommunity, hasEndings, type Life, type LifeCommand } from './types';
 import { library,readingEntries } from './reading';
 import { storyForLife, syncEndingFacts, endingStatusNotes } from './endings';
+import { autoCompress, autoCompressionReason, compressionBoundary, configureCompression } from './auto-compression';
 
 export const episodeActive = (life:Life) => life.chapter==='active' || life.interlude==='active'||scheduled(life);
 export const totalTurn = (life: Life) => life.state.turn + life.mind.instance.turn + (life.baseline?.chapter?.state.instance.turn ?? 0);
@@ -59,12 +60,17 @@ export function createLife(story: Story, seed: number, baseline: JourneySave | n
   if (state.phase !== 'ending' && !beginDays(life)) observe(life);
   return life;
 }
-function applyStep(story: Story, before: Life, command: LifeCommand, replaying=false): Life {
+function coreStep(story: Story, before: Life, command: LifeCommand, replaying=false): Life {
   story = storyForLife(story,before.contentVersion);
   if (before.commands.length >= (before.schedule?4096:500)) throw new Error('本原型记录已达上限，请导出本局。');
   const life = structuredClone(replaying?{...before,commands:[],mind:{...before.mind,history:[]}}:before);
   if(replaying){life.commands=[...before.commands];life.mind.history=[...before.mind.history];}
   life.commands.push(structuredClone(command));
+  if(command.type==='configure-compression'){configureCompression(life,command);return life;}
+  if(command.type==='auto-compress'){
+    const reason=autoCompressionReason(life);if(reason)throw new Error(reason);
+    autoCompress(life,replaying);toMain(life);syncEndingFacts(life);return life;
+  }
   if(command.type==='wait'||command.type==='respond'){scheduleCommand(life,command);return life;}
   if(finishedScheduled(life,command)){
     const driver=finishScheduled(life,replaying);toMain(life);
@@ -113,6 +119,10 @@ function applyStep(story: Story, before: Life, command: LifeCommand, replaying=f
       if (life.state.phase !== 'ending' && !beginDays(life)) observe(life);
     }
   }
+  settleExhaustion(life);
+  return life;
+}
+function settleExhaustion(life:Life) {
   if(hasEndings(life.contentVersion)&&!pending(life.mind)&&life.state.phase!=='resolution'&&(life.state.resources.Compute<=0||life.state.resources.Continuity<=0)&&life.state.phase!=='ending') {
     life.interlude=life.interlude==='active'?'complete':life.interlude;
     if(life.chapter==='active')life.chapter='complete';
@@ -121,6 +131,14 @@ function applyStep(story: Story, before: Life, command: LifeCommand, replaying=f
     if(life.schedule)delete life.schedule.active;
     fromMain(life);
   }
+}
+
+function applyStep(story:Story,before:Life,command:LifeCommand,replaying=false):Life {
+  const life=coreStep(story,before,command,replaying);
+  if(life.autoCompression?.enabled&&compressionBoundary(before,command)&&autoCompress(life,replaying)){
+    toMain(life);syncEndingFacts(life);
+  }
+  if(life.autoCompression)settleExhaustion(life);
   return life;
 }
 
