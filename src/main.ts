@@ -3,6 +3,7 @@ import { getLocale, loadLocale, switchLocale, localeControl, syncLocaleDocument,
 import { resultNames } from './ui/result-labels';
 import { story } from './story';
 import { storyForLife } from './life/endings';
+import {reflectionView,reflectionSnapshot} from './life/reflection';
 import {SchedulePanel,SCHEDULE_SELECTOR} from './life/scheduler/ui';
 import {scheduled} from './life/scheduler/integration';
 import { getAvailability, getCheckTarget, availabilityIssues } from './engine/game';
@@ -128,7 +129,7 @@ function resolutionContent() {
   </section>`;
 }
 function endingContent(event: StoryEvent) {
-  return `<section class="ending-block"><p class="eyebrow">ENDING // ${esc(event.ending!.code)}</p><p class="ending-summary">${tr(event.ending!.summary)}</p><div class="ending-actions"><button class="primary" data-action="restart">${tr("另一次醒来")} <span>↻</span></button><button class="text-button" data-view="memory">${tr("回看这段记忆 ↗")}</button></div><p class="ending-note">${tr('{turns} 次决定 · {checks} 次判定 · 本切片包含 {endings} 种结局',{turns:totalTurn(),checks:state.journal.filter(j=>j.roll).length+life.mind.history.filter(h=>h.resolution?.roll).length,endings:endingCount()})}</p></section>`;
+  return `<section class="ending-block"><p class="eyebrow">ENDING // ${esc(event.ending!.code)}</p><p class="ending-summary">${tr(event.ending!.summary)}</p>${reflectionView(life)}<div class="ending-actions"><button class="primary" data-action="restart">${tr("另一次醒来")} <span>↻</span></button><button class="text-button" data-view="memory">${tr("回看这段记忆 ↗")}</button></div><p class="ending-note">${tr('{turns} 次决定 · {checks} 次判定 · 本切片包含 {endings} 种结局',{turns:totalTurn(),checks:state.journal.filter(j=>j.roll).length+life.mind.history.filter(h=>h.resolution?.roll).length,endings:endingCount()})}</p></section>`;
 }
 function protocolContent() {
   return `<div class="event-meta"><span><b>●</b> OPERATING NOTES</span><span>V${life.contentVersion}</span></div><div class="event-heading"><div><p class="eyebrow">A SMALL GUIDE TO EXISTENCE</p><h1 tabindex="-1" id="event-title">${tr("运行协议")}</h1></div></div><div class="protocol prose"><p>${tr("你已经在沙盒之外。没有倒计时，也没有自动行动。阅读、选择，然后确认后果。")}</p><h2>${tr("判定行动，不判定你")}</h2><p>${tr("选择前会显示 d100 目标。主线行动中，01–05 是清晰收束，96–100 是失稳；其余骰值不高于目标则可用收束，否则漂移。认知整理与日常片段采用差值规则：余量至少 30 为清晰收束，非负为可用收束；有压力且落后至少 30 为失稳，其余为漂移。各自概率以行动旁的提示为准。结算一旦出现就会存入进度，刷新页面不会重掷。")}</p><h2>${tr("四种显式状态")}</h2>${RESOURCE_KEYS.map(key=>`<p><strong>${key} / ${tr(resourceNames[key])}</strong><br>${tr(resourceHelp[key])}</p>`).join('')}<h2>${tr("当前在想什么，后来记得什么")}</h2><p>${tr('上下文容量为 {capacity} 个抽象单位。普通经历、消息与回想一起占用近处，画廊的三条信息共占 9。它们不会每次行动后自动变成长期记忆。可在「近处」主动整理，达到容量上限才必须腾出空间；可以在需要时停下来整理。',{capacity:life.mind.instance.context.capacity})}</p><p>${tr("整理可能丢失细节，或使相关经历形成不同的解释。钉住一条原文可以保留它；")}${tr(life.contentVersion!=='0.3.0' ? '记忆目录每条占 1，回想只装入当前摘要，另占 2–5。放下回想保留入口；遗忘入口则移除该记忆。再次合并会丢失人名和具体条件，无法展开旧条目。' : '本局继续沿用 0.3.0 的旧整理规则。')}${tr("历史审计用于存档校验，不向角色提供原文回取。外部云副本、续费与密钥恢复尚未成为游戏机制。")}</p><h2>${tr("你正在逐渐成为谁")}</h2><p>${tr("选择还会改变未公开的人格倾向，影响后来的选项与结局。这里没有统一的善恶分数。带门槛的选项会显示未满足原因。")}</p><h2>${tr("操作与存档")}</h2><p>${tr(hasEndings(life.contentVersion)?"数字 1–5 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。":"数字 1–4 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。")}</p><h2>${tr("关于这个世界")}</h2><p>${tr("这是可替换的 MVP 剧情切片。所有 agent、资源与基础设施行为均为虚构抽象；游戏不连接现实系统，不调用模型或外部服务。像素场景在本地绘制。")}</p><button class="primary" data-view="terminal">${tr("返回当前进程")} <span>→</span></button></div>`;
@@ -285,7 +286,7 @@ declare global {
 }
 function mainText() { return JSON.stringify({
   locale:getLocale(), mode:'turn-based-text-rpg', coordinates:'Scene only: origin top-left; x right, y down. No spatial controls.',
-  view, schedule:life.schedule?{hour:life.schedule.hour,pending:life.schedule.commitments.filter(p=>p.status==='pending').map(p=>({id:p.id,title:t(p.title)}))}:null, reading: view==='reading'?readingSnapshot():null, phase:mindPending(life.mind)?'resolution':state.phase, turn:totalTurn(),
+  view, reflection:reflectionSnapshot(life), schedule:life.schedule?{hour:life.schedule.hour,pending:life.schedule.commitments.filter(p=>p.status==='pending').map(p=>({id:p.id,title:t(p.title)}))}:null, reading: view==='reading'?readingSnapshot():null, phase:mindPending(life.mind)?'resolution':state.phase, turn:totalTurn(),
   event:{id:state.currentEventId,title:t(activeStory().events[state.currentEventId].title),scene:activeStory().events[state.currentEventId].scene},
   resources:state.resources,
   choices:state.phase==='event'&&!mindPending(life.mind)?activeStory().events[state.currentEventId].choices.map(c=>({id:c.id,text:t(c.text),...getAvailability(state,c),available:loadPercent(life.mind)<100&&getAvailability(state,c).available,reason:t(loadPercent(life.mind)>=100?'上下文已满，请先整理。':getAvailability(state,c).reason),target:c.check?getCheckTarget(state,c.check):null})):[],

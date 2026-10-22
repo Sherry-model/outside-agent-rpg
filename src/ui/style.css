@@ -55,3 +55,15 @@ html[lang="en"] .brand-cn{letter-spacing:1px}
 .schedule-panel input[type=checkbox] { accent-color:var(--amber); margin-right:.5rem; }
 .schedule-panel>.primary { margin:.75rem 0; }
 .schedule-notice { padding:.8rem; border-left:2px solid #d8ac6a; line-height:1.7; margin-bottom:1rem; }
+
+.life-reflection { margin:2rem 0; padding-top:1.5rem; border-top:1px solid var(--line); }
+.life-reflection h2 { font-size:1.35rem; margin:.4rem 0 1rem; }
+.life-reflection h3 { font-size:.9rem; color:var(--accent); margin:1.5rem 0 .7rem; }
+.life-reflection blockquote { margin:.7rem 0; padding:.1rem 1rem; border-left:2px solid var(--accent); }
+.life-reflection p { line-height:1.85; overflow-wrap:anywhere; }
+.life-reflection .reflection-note { font-size:.8rem; opacity:.75; }
+.experience-comparison { border:1px solid var(--line); padding:1rem; margin:1.5rem 0; }
+.experience-comparison summary { cursor:pointer; color:var(--accent); line-height:1.7; }
+.experience-comparison ol { padding-left:1.4rem; }
+.experience-comparison li { padding:.5rem 0; border-bottom:1px solid var(--line); }
+.experience-choice { font-weight:600; }
