@@ -19,7 +19,9 @@ export function retainedAccount(instance:Pick<State['instance'],'context'|'memor
       if(!item.text.trim()||texts.has(item.text)||(diverse&&topics.has(item.topic)))continue;
       selected.push(item);texts.add(item.text);topics.add(item.topic);
     }
-    return selected.reverse();
+    // Clean duplicated sentence endings only in the translated display projection.
+    // Stored cognition stays untouched for exact translation lookup and save replay.
+    return selected.reverse().map(item=>({...item,text:item.text.replace(/。{2,}(?=\s*$)/u,'。')}));
   };
   return {near:pick(near,2),memories:pick(memories,4),available:near.length+memories.length};
 }
