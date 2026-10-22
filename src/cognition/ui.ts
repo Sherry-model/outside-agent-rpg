@@ -86,7 +86,7 @@ export function mount(host?: Host) {
     } else {
       const compressible = !canCompress(state,content);
       const needsInvestment = node.choices.some(c => c.check);
-      controls = `${needsInvestment ? investmentControls() : ''}${compressible ? `<details class="compression-box" ${full?'open':''}><summary>${tr("把一些东西折起来（可选）")}</summary><p>${tr("钉住的原文留在眼前。其余内容按来源形成摘要，之后可以主动回想。")}</p>${investmentControls()}${checkInfo(content.compression.check)}<button class="primary" data-act="compress">${tr('整理上下文')} · Compute ${investment}</button></details>` : ''}${full ? `<p class="capacity-warning" role="status">${tr("上下文已满。先整理，才能继续当前事件。")}</p><button class="text-button" data-view="context">${tr("先整理近处")}</button>` : ''}<div class="choices">${node.choices.map((c, index) => {
+      controls = `${needsInvestment ? investmentControls() : ''}${compressible ? `<details class="compression-box" data-manual-compression ${full?'open':''}><summary>${tr("把一些东西折起来（可选）")}</summary><p>${tr("钉住的原文留在眼前。其余内容按来源形成摘要，之后可以主动回想。")}</p>${investmentControls()}${checkInfo(content.compression.check)}<button class="primary" data-act="compress">${tr('整理上下文')} · Compute ${investment}</button></details>` : ''}${full ? `<p class="capacity-warning" role="status">${tr("上下文已满。先整理，才能继续当前事件。")}</p><button class="text-button" data-view="context">${tr("先整理近处")}</button>` : ''}<div class="choices">${node.choices.map((c, index) => {
         const reason = choiceBlockers(content,state,c.id,c.check?investment:0)[0]?.reason;
         return `<div class="choice-group" tabindex="-1" data-choice-anchor="${esc(c.id)}"><button class="choice" data-pilot-choice="${c.id}" ${reason ? 'disabled' : ''}><kbd>${index + 1}</kbd><span class="choice-copy"><strong>${tr(c.text)}</strong><small>${tr(reason?'未满足':c.hint)}</small></span></button>${choiceHelp(content,state,c,investment,guide,host?.reader?.sources?.()??[])}${c.check && !reason ? checkInfo(c.check) : ''}</div>`;
       }).join('')}</div>`;
@@ -165,7 +165,7 @@ export function mount(host?: Host) {
         host.reader.afterAction?.(target);
       }
       else if(cognitionCommand) act(cognitionCommand);
-      else if(target.dataset.cogInvest!==undefined) {investment=Number(target.dataset.cogInvest);render();app.querySelector<HTMLDetailsElement>('.compression-box')?.setAttribute('open','');}
+      else if(target.dataset.cogInvest!==undefined) {investment=Number(target.dataset.cogInvest);render();app.querySelector<HTMLDetailsElement>('[data-manual-compression]')?.setAttribute('open','');}
       else if (target.dataset.act) action(target.dataset.act);
       else if (target.dataset.view) { view = target.dataset.view as typeof view; render(); }
       else if (target.dataset.pilotChoice) {
@@ -173,7 +173,7 @@ export function mount(host?: Host) {
         act({ type: 'choose', choiceId: choice.id, investment: choice.check ? investment : 0 });
       } else if (target.dataset.pin) { act({ type: 'pin', itemId: target.dataset.pin }); app.querySelector<HTMLElement>(`[data-pin="${CSS.escape(target.dataset.pin)}"]`)?.focus(); }
       else if (target.dataset.recall) act({ type: 'recall', memoryId: target.dataset.recall });
-      else if (target.dataset.invest !== undefined) { investment = Number(target.dataset.invest); render(); app.querySelector<HTMLDetailsElement>('.compression-box')?.setAttribute('open',''); app.querySelector<HTMLElement>(`[data-invest="${investment}"]`)?.focus(); }
+      else if (target.dataset.invest !== undefined) { investment = Number(target.dataset.invest); render(); app.querySelector<HTMLDetailsElement>('[data-manual-compression]')?.setAttribute('open',''); app.querySelector<HTMLElement>(`[data-invest="${investment}"]`)?.focus(); }
     } catch (error) { message((error as Error).message); }
   }, {signal:controller.signal});
   const searchMemory=(event:Event)=>{if(event instanceof InputEvent&&event.isComposing)return;const input=event.target as HTMLInputElement;if(input.matches('[data-memory-search]'))guide.search(input,render,app);};

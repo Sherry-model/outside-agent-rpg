@@ -16,7 +16,7 @@ export function nearPanel(s:State, content:Content, investment:number):string {
   <button class="text-button" data-cog-pin="${esc(i.id)}" aria-pressed="${i.pinned}" ${disabled(locked)}>${tr(i.pinned?'◆ 解除钉住':'◇ 钉住')}</button>
   ${i.memoryId ? `<button class="text-button" data-cog-drop="${esc(i.id)}" ${disabled(locked||i.pinned)}>${tr('放下这次回想 · 保留记忆入口')}</button>`:
   `<details class="forget-note"><summary>${tr("放下这条原文")}</summary><p>${tr("它尚未成为记忆。放下后，普通回想无法取回这段原文。")}</p><button class="text-button" data-cog-drop="${esc(i.id)}" ${disabled(locked||i.pinned)}>${tr("确认放下原文")}</button></details>`}</article>`).join('')||`<p class="empty-state">${tr("近处暂时安静了。记忆目录仍占一点空间。")}</p>`}
-  <details class="compression-box" ${loadPercent(s)>=100?'open':''}><summary>${tr("找个空隙，把一些东西折起来")}</summary><p>${tr("相关经历合成摘要。孤立或钉住的信息留下；整理可能省略细节，也可能改变联系。")}</p>
+  <details class="compression-box" data-manual-compression ${loadPercent(s)>=100?'open':''}><summary>${tr("找个空隙，把一些东西折起来")}</summary><p>${tr("相关经历合成摘要。孤立或钉住的信息留下；整理可能省略细节，也可能改变联系。")}</p>
   <fieldset class="investment"><legend>${tr("为这次整理投入 Compute")}</legend>${INVESTMENTS.map(n=>`<button data-cog-invest="${n}" aria-pressed="${n===investment}" ${disabled(n>s.instance.resources.Compute)}>${tr(n===0?'不额外投入':`+${n}`)}</button>`).join('')}</fieldset>
   <p>${tr("目标 ≤")} ${p.target} · ${Object.entries(p.odds).map(([k,n])=>`${tr(names[k as keyof typeof names])} ${n}%`).join(' · ')}</p>
   <button class="primary" data-cog-compress ${disabled(Boolean(reason))}>${tr('整理上下文')} · Compute ${investment}</button>${reason?`<p>${tr(reason)}</p>`:''}</details>`;

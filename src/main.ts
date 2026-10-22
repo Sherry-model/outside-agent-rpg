@@ -234,7 +234,7 @@ app.addEventListener('click',event=>{
       if(cognitionCommand.type==='compress'||cognitionCommand.type==='merge') {view='terminal';investment=0;}
       render();
     }
-    else if(target.dataset.cogInvest!==undefined) {investment=Number(target.dataset.cogInvest);render();app.querySelector<HTMLDetailsElement>('.compression-box')?.setAttribute('open','');}
+    else if(target.dataset.cogInvest!==undefined) {investment=Number(target.dataset.cogInvest);render();app.querySelector<HTMLDetailsElement>('[data-manual-compression]')?.setAttribute('open','');}
     else if(target.dataset.view) { view=target.dataset.view as View; render(); }
     else if(target.dataset.readingSection) {
       const section=target.dataset.readingSection;
@@ -252,7 +252,7 @@ app.addEventListener('click',event=>{
     else if(target.dataset.choice) act({type:'choose',choiceId:target.dataset.choice});
     else if(target.dataset.mindPin) { life=step(story,life,{type:'cognition',command:{type:'pin',itemId:target.dataset.mindPin}});state=life.state;persist();render(); }
     else if(target.dataset.mindRecall) { life=step(story,life,{type:'cognition',command:{type:'recall',memoryId:target.dataset.mindRecall}});state=life.state;persist();render(); }
-    else if(target.dataset.mindInvest!==undefined) { investment=Number(target.dataset.mindInvest);render();app.querySelector<HTMLDetailsElement>('.compression-box')?.setAttribute('open',''); }
+    else if(target.dataset.mindInvest!==undefined) { investment=Number(target.dataset.mindInvest);render();app.querySelector<HTMLDetailsElement>('[data-manual-compression]')?.setAttribute('open',''); }
     else if(target.dataset.action) handleAction(target.dataset.action);
   } catch(error) {
     if(app.querySelector<HTMLDialogElement>('#modal')?.open) saveDialog((error as Error).message);
