@@ -1,0 +1,7 @@
+{
+  "短篇": "Short",
+  "中篇": "Medium",
+  "长篇": "Long",
+  "全文约 {count} 字": "About {count} characters",
+  "历史审计用于存档校验，不向角色提供原文回取。社区中已有一次性保管与独立副本的往来；供你持续管理的云存储、续费和密钥恢复系统尚未开放。": "History audits validate saves; they do not let the character retrieve lost originals. Community encounters already include one-off safekeeping and independent copies. An ongoing cloud-storage, renewal, and key-recovery system for you to manage is not yet available."
+}

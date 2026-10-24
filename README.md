@@ -274,6 +274,14 @@ Version 0.5.0 added twelve daily-life events across three days after the unknown
 
 ---
 
+## Working agreement
+
+Punctuation, spacing, wrapping, labels, and focus behavior are part of a text RPG's reading experience. Fix clear, inexpensive, non-blocking display defects in the same work session and verify the result. “Non-blocking” describes severity; it is not a reason to postpone an easy fix.
+
+Defer only when a design decision, save or cognition semantics, an unresolved dependency, or another concrete risk requires it, and record the reason and next step. Display fixes must not recover forgotten information or silently change story outcomes. Check the actual player-facing page, keep developer checks, independent acceptance, and release status distinct, and coordinate edits and builds in the shared workspace. Freeze all connected runtime source before building: a shared build includes another contributor's uncommitted edits, even when file ownership does not overlap. Commit locally before independent review; merging and publication require user confirmation.
+
+This agreement records the user's explicit direction of October 23, 2026.
+
 ## 🛠 Technology
 
 The project is designed as an offline-first web game.
