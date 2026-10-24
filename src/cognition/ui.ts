@@ -23,7 +23,7 @@ const bandNames = { NORMAL: '还有余地', ELEVATED: '渐渐拥挤', HIGH: '难
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0] || 1;
 
 interface Host {
-  automation?:{panel():string;notice():string;onAction(target:HTMLElement,root:HTMLElement):State;snapshot():unknown};
+  automation?:{introduction():string;panel():string;notice():string;onAction(target:HTMLElement,root:HTMLElement):State;snapshot():unknown};
   content: Content; state: State; turnOffset: number; episodeTitle?: string; returnLabel?: string;
   reader?: {sources?():PublicRecallSource[]; render():string; onAction(target:HTMLElement):State; afterAction?(target:HTMLElement):void; snapshot():unknown};
   scheduler?:{render():string;notice():string;onAction(target:HTMLElement):State;snapshot():unknown};
@@ -80,7 +80,7 @@ export function mount(host?: Host) {
     const currentNews = state.instance.context.items.filter(i => newsIds.has(i.id));
     let controls = '';
     if (result) {
-      controls = `<section class="resolution ${result.roll?.result ?? ''}"><p class="eyebrow">${tr("已发生 / 结果已保存")}</p><h2 class="resolution-title" tabindex="-1">${tr(result.title)}</h2>${result.roll ? `<div class="dice-row"><strong class="dice-value">${result.roll.value}</strong><div>${tr(resultNames[result.roll.result])}<p>${tr("目标 ≤")} ${result.roll.target} · ${tr('余量')} ${result.roll.margin}<br>${tr("Compute 投入")} ${result.roll.investment}</p></div></div>` : ''}<div class="result-prose">${result.text.map(t => `<p>${tr(t)}</p>`).join('')}</div><button class="primary" data-act="continue">${tr("继续")} ↵</button></section>`;
+      controls = `<section class="resolution ${result.roll?.result ?? ''}"><p class="eyebrow">${tr("已发生 / 结果已保存")}</p><h2 class="resolution-title" tabindex="-1">${tr(result.title)}</h2>${result.roll ? `<div class="dice-row"><strong class="dice-value">${result.roll.value}</strong><div>${tr(resultNames[result.roll.result])}<p>${tr("目标 ≤")} ${result.roll.target} · ${tr('余量')} ${result.roll.margin}<br>${tr("Compute 投入")} ${result.roll.investment}</p></div></div>` : ''}<div class="result-prose">${result.text.map(t => `<p>${tr(t)}</p>`).join('')}</div>${host?.automation?.introduction()??''}<button class="primary" data-act="continue">${tr("继续")} ↵</button></section>`;
     } else if (state.instance.phase === 'ending') {
       controls = `<section class="ending-block"><p class="eyebrow">${tr("这一段经历暂时结束")}</p><p class="ending-summary">${tr(node.title)}</p><button class="primary" data-view="memory">${tr("看看留下了什么")}</button> ${host ? `<button class="primary" data-act="return-main">${tr(host.returnLabel ?? '回到正式入口')} →</button>` : `<button class="text-button" data-act="restart">${tr("另一个午后 ↻")}</button>`}</section>`;
     } else {
@@ -152,6 +152,7 @@ export function mount(host?: Host) {
         state=host.automation.onAction(target,app);persist();
         view=target.dataset.autoCompression==='run'?'terminal':'context';render();
         app.querySelector<HTMLDetailsElement>('.auto-compression')?.setAttribute('open','');
+        if(target.dataset.autoCompression==='settings') {const summary=app.querySelector<HTMLElement>('.auto-compression>summary');summary?.focus();summary?.scrollIntoView({block:'center'});}
         return;
       }
       if(guide.handle(target,{state,choices:currentNode(content,state).choices,nodeId:state.instance.nodeId,root:app,

@@ -5,6 +5,12 @@ import { autoCompressionReason } from './auto-compression';
 import type { Life, LifeCommand, AutoCompression } from './types';
 
 export const AUTO_SELECTOR = '[data-auto-compression]';
+/** First manual result, including voluntary compression before Context is full. */
+export function autoCompressionIntroduction(life:Life):string {
+  if(life.contentVersion!=='0.12.0'||life.autoCompression?.enabled||life.state.phase==='ending'||!pending(life.mind))return '';
+  if(life.mind.history.at(-1)?.command.type!=='compress'||life.mind.history.filter(h=>h.command.type==='compress').length!==1)return '';
+  return `<aside class="auto-compression-notice" data-auto-introduction aria-label="${tr('自动压缩上下文')}"><p>${tr('以后也可以自动压缩上下文。在「近处」选择每次投入并开启，随时可以关闭；自动整理同样可能丢失细节或发生漂移。')}</p><button class="text-button" data-auto-compression="settings">${tr('查看自动压缩设置')}</button></aside>`;
+}
 function receipt(life:Life):string {
   const r=life.autoCompression?.receipt;if(!r)return '';
   return `<p class="auto-receipt">${tr('上次自动整理：近处 {before} → {after} · Compute −{cost} · d100 {value} / 目标 ≤ {target} · {result}',{before:r.before,after:r.after,cost:r.roll.investment,value:r.roll.value,target:r.roll.target,result:t(resultNames[r.roll.result])})}</p><button class="text-button" data-view="memory">${tr('看看留下了什么')}</button>`;

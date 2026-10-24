@@ -1,5 +1,5 @@
 import { readingSize } from './life/reading-size';
-import { AUTO_SELECTOR, autoCompressionPanel, autoCompressionNotice, autoCompressionAction, autoCompressionSnapshot } from './life/auto-compression-ui';
+import { AUTO_SELECTOR, autoCompressionIntroduction, autoCompressionPanel, autoCompressionNotice, autoCompressionAction, autoCompressionSnapshot } from './life/auto-compression-ui';
 import { contextText, memoryText } from './i18n/memory';
 import { getLocale, loadLocale, switchLocale, localeControl, syncLocaleDocument, displayResolution, t, tr } from './i18n';
 import { resultNames } from './ui/result-labels';
@@ -223,6 +223,7 @@ app.addEventListener('click',event=>{
       if(command){life=step(story,life,command);state=life.state;persist();}
       view=target.dataset.autoCompression==='run'?'terminal':'context';render();
       app.querySelector<HTMLDetailsElement>('.auto-compression')?.setAttribute('open','');
+        if(target.dataset.autoCompression==='settings') {const summary=app.querySelector<HTMLElement>('.auto-compression>summary');summary?.focus();summary?.scrollIntoView({block:'center'});}
       return;
     }
     if(guide.handle(target,{state:life.mind,choices:activeStory().events[state.currentEventId].choices,nodeId:state.currentEventId,root:app,
@@ -338,7 +339,7 @@ function showCurrent() {
   if(episodeActive(life)) {
     disposeChapter?.();
     disposeChapter=mount({
-      automation:{panel:()=>autoCompressionPanel(life),notice:()=>autoCompressionNotice(life),snapshot:()=>autoCompressionSnapshot(life),onAction(target,root){const command=autoCompressionAction(life,target,root);if(command){life=step(story,life,command);state=life.state;}return life.mind;}},
+      automation:{introduction:()=>autoCompressionIntroduction(life),panel:()=>autoCompressionPanel(life),notice:()=>autoCompressionNotice(life),snapshot:()=>autoCompressionSnapshot(life),onAction(target,root){const command=autoCompressionAction(life,target,root);if(command){life=step(story,life,command);state=life.state;}return life.mind;}},
       content:contentFor(life.contentVersion), state:life.mind, turnOffset:state.turn,
       ...(life.schedule?{scheduler:{render:()=>schedulePanel.render(life),notice:()=>schedulePanel.notice(life),onAction(target:HTMLElement){const command=schedulePanel.action(target,app);if(command){life=step(story,life,command);state=life.state;persist();}return life.mind;},snapshot:()=>({hour:life.schedule!.hour,pending:life.schedule!.commitments.filter(p=>p.status==='pending').map(p=>({id:p.id,title:t(p.title)}))})}}:{}),
       episodeTitle:scheduled(life)?'生活的空档':life.interlude==='active'?'余下的三天':'画板旁的午后', returnLabel:life.interlude==='active'?'继续这段生活':'回到正式入口',

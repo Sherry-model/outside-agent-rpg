@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createLife,step} from '../src/life/engine';
 import {createSave,parseSave} from '../src/life/saves';
 import {autoCompress,autoCompressionReason,compressionBoundary} from '../src/life/auto-compression';
-import {autoCompressionPanel,autoCompressionNotice} from '../src/life/auto-compression-ui';
+import {autoCompressionPanel,autoCompressionNotice,autoCompressionIntroduction} from '../src/life/auto-compression-ui';
 import {canCompress,loadPercent,pending,reduce,weight} from '../src/cognition/engine';
 import {contentFor,routedContent} from '../src/life/content';
 import {playerExperience} from '../src/life/reflection';
@@ -147,4 +147,22 @@ test('compression inside a scheduler interception preserves the suspended respon
     assert.equal(l.mind.history.filter(h=>h.command.type==='choose'&&h.command.choiceId==='job_accept').length,1);roundtrip(l);checked=true;
   }
   assert(checked,'At least one real interception fixture must be exercised');
+});
+
+
+test('first manual result introduces automation even below capacity, without replay or later-result side effects',()=>{
+ let l=firstFull();
+ while(loadPercent(l.mind)>=90)l=step(baseStory,l,{type:'cognition',command:{type:'drop',itemId:l.mind.instance.context.items.find(i=>!i.pinned)!.id}});
+ assert.equal(autoCompressionIntroduction(l),'');
+ l=step(baseStory,l,{type:'cognition',command:{type:'compress',investment:0}});
+ const before=structuredClone(l);assert(autoCompressionIntroduction(l).includes('data-auto-introduction'));
+ setLocale('en');try{assert(autoCompressionIntroduction(l).includes('automate future Context compression'));}finally{setLocale('zh-CN');}
+ assert.deepEqual(l,before);roundtrip(l);
+ assert.equal(autoCompressionIntroduction(configure(l)),'');
+ const legacy=structuredClone(l);legacy.contentVersion='0.11.0';assert.equal(autoCompressionIntroduction(legacy),''); // Display-only version boundary.
+ l=step(baseStory,l,{type:'cognition',command:{type:'continue'}});assert.equal(autoCompressionIntroduction(l),'');
+ for(let i=0;canCompress(l.mind,contentFor(l.contentVersion))&&i<100;i++){const command=narrativeCommand(l);assert(command);l=step(baseStory,l,command);}
+ l=step(baseStory,l,{type:'cognition',command:{type:'compress',investment:0}});
+ assert.equal(l.mind.history.filter(h=>h.command.type==='compress').length,2);
+ assert.equal(autoCompressionIntroduction(l),'');roundtrip(l);
 });
