@@ -1,10 +1,11 @@
+import {hasScheduler} from './types';
 import { canCompress, INVESTMENTS, loadPercent, pending, reduce, weight } from '../cognition/engine';
 import { routedContent } from './content';
 import type { Life, LifeCommand } from './types';
 
 /** Version 1 is an opt-in replay rule, independent of the story content version. */
 export function configureCompression(life: Life, command: Extract<LifeCommand, {type:'configure-compression'}>) {
-  if (life.contentVersion !== '0.12.0') throw new Error('旧版经历保留手动整理规则。');
+  if (!hasScheduler(life.contentVersion)) throw new Error('旧版经历保留手动整理规则。');
   if (typeof command.enabled !== 'boolean' || !INVESTMENTS.includes(command.investment)) throw new Error('请选择有效的 Compute 投入。');
   life.autoCompression = {...life.autoCompression, version:1, enabled:command.enabled, investment:command.investment};
 }

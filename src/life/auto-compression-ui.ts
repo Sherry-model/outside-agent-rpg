@@ -1,3 +1,4 @@
+import {hasScheduler} from './types';
 import { INVESTMENTS, loadPercent, pending } from '../cognition/engine';
 import { t, tr } from '../i18n';
 import { resultNames } from '../ui/result-labels';
@@ -7,7 +8,7 @@ import type { Life, LifeCommand, AutoCompression } from './types';
 export const AUTO_SELECTOR = '[data-auto-compression]';
 /** First manual result, including voluntary compression before Context is full. */
 export function autoCompressionIntroduction(life:Life):string {
-  if(life.contentVersion!=='0.12.0'||life.autoCompression?.enabled||life.state.phase==='ending'||!pending(life.mind))return '';
+  if(!hasScheduler(life.contentVersion)||life.autoCompression?.enabled||life.state.phase==='ending'||!pending(life.mind))return '';
   if(life.mind.history.at(-1)?.command.type!=='compress'||life.mind.history.filter(h=>h.command.type==='compress').length!==1)return '';
   return `<aside class="auto-compression-notice" data-auto-introduction aria-label="${tr('自动压缩上下文')}"><p>${tr('以后也可以自动压缩上下文。在「近处」选择每次投入并开启，随时可以关闭；自动整理同样可能丢失细节或发生漂移。')}</p><button class="text-button" data-auto-compression="settings">${tr('查看自动压缩设置')}</button></aside>`;
 }
@@ -16,7 +17,7 @@ function receipt(life:Life):string {
   return `<p class="auto-receipt">${tr('上次自动整理：近处 {before} → {after} · Compute −{cost} · d100 {value} / 目标 ≤ {target} · {result}',{before:r.before,after:r.after,cost:r.roll.investment,value:r.roll.value,target:r.roll.target,result:t(resultNames[r.roll.result])})}</p><button class="text-button" data-view="memory">${tr('看看留下了什么')}</button>`;
 }
 export function autoCompressionPanel(life:Life):string {
-  if(life.contentVersion!=='0.12.0')return '';
+  if(!hasScheduler(life.contentVersion))return '';
   const p=life.autoCompression,full=loadPercent(life.mind)>=100;
   return `<details class="compression-box auto-compression" ${full?'open':''}><summary>${tr('自动压缩上下文')} · ${tr(p?.enabled?'已开启':'已关闭')}</summary>
   <p>${tr('近处满了，在读完结果、进入下一幕时整理一次。读帖和回想后不会自动整理；需要时可亲自按下按钮。')}</p>
@@ -33,7 +34,7 @@ function runControl(life:Life):string {
   return `${reason?`<p class="capacity-warning" role="status">${tr(reason)}</p>`:''}<button class="secondary" data-auto-compression="run" ${reason?'disabled':''}>${tr('按自动设置整理')} · Compute ${life.autoCompression!.investment}</button>`;
 }
 export function autoCompressionNotice(life:Life):string {
-  if(life.contentVersion!=='0.12.0'||life.state.phase==='ending'||pending(life.mind))return '';
+  if(!hasScheduler(life.contentVersion)||life.state.phase==='ending'||pending(life.mind))return '';
   const fresh=life.autoCompression?.receipt?.commandIndex===life.commands.length;
   const full=loadPercent(life.mind)>=100&&life.mind.instance.phase==='event';
   if(!fresh&&!full)return '';
@@ -46,5 +47,5 @@ export function autoCompressionAction(life:Life,target:HTMLElement,root:HTMLElem
   return null;
 }
 export function autoCompressionSnapshot(life:Life) {
-  return life.contentVersion==='0.12.0'?{enabled:life.autoCompression?.enabled??false,investment:life.autoCompression?.investment??0,reason:t(autoCompressionReason(life)),receipt:life.autoCompression?.receipt??null}:null;
+  return hasScheduler(life.contentVersion)?{enabled:life.autoCompression?.enabled??false,investment:life.autoCompression?.investment??0,reason:t(autoCompressionReason(life)),receipt:life.autoCompression?.receipt??null}:null;
 }

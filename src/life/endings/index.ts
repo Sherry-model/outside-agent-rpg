@@ -9,6 +9,8 @@ import { pending } from '../../cognition/engine';
 import type { Content, Node, NoteTemplate, State } from '../../cognition/types';
 import type { Story, Choice, StoryEvent } from '../../engine/types';
 import {hasEndings, type Life} from '../types';
+import {reviseContinuation,ghostForResources} from '../continuation';
+import type {GameState} from '../../engine/types';
 
 const validate = new Ajv({strict:true,strictRequired:false}).compile<Node[]>({type:'array',items:{$ref:'#/$defs/node'},$defs:schema.$defs});
 const data: unknown = raw;
@@ -61,9 +63,20 @@ export function endingsRoutes(content: Content, state: State): Content {
 }
 
 const stories = new WeakMap<Story,Story>();
+const continuationStories = new WeakMap<Story,Story>();
 /** The original JSON remains the only story used by all released versions and standalone legacy saves. */
-export function storyForLife(base: Story, version: Life['contentVersion']): Story {
+export function storyForLife(base: Story, version: Life['contentVersion'], state?:Pick<GameState,'resources'>): Story {
   if(!hasEndings(version)) return base;
+  if(version==='0.13.0') {
+    let story=continuationStories.get(base);
+    if(!story) {
+      const legacy=storyForLife(base,'0.12.0'),events=structuredClone(legacy.events);
+      reviseContinuation(events);
+      story=parseStory(legacy.manifest,Object.entries(events).map(([source,data])=>({source,data})));
+      continuationStories.set(base,story);
+    }
+    return state?{...story,events:{...story.events,ending_ghost:ghostForResources(story.events.ending_ghost,state)}}:story;
+  }
   const cached = stories.get(base);
   if(cached) return cached;
   const events = structuredClone(base.events);
@@ -79,4 +92,5 @@ export function syncEndingFacts(life: Life): void {
   const f=life.mind.world.flags;
   life.state.flags.visitor_eligible=!!(f.v_once_completed&&f.v_refusal_accepted&&!f.v_channel_closed);
   life.state.flags.war_eligible=!!(f.w_exchange_1&&f.w_exchange_2&&!f.w_closed);
+  if(life.contentVersion==='0.13.0')life.state.flags.lived_with_unfinished=!!(f.kept_unallocated_time&&f.rested_without_answer);
 }

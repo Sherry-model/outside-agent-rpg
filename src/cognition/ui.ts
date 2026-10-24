@@ -7,7 +7,7 @@ import { nearPanel, directoryPanel, panelCommand, PANEL_SELECTOR } from './panel
 import { directory } from './semantic';
 import { directoryCode, memoryCues } from './guidance';
 import { MemoryGuide, GUIDE_SELECTOR, choiceHelp, type PublicRecallSource } from './help-ui';
-import { choiceBlockers } from './availability';
+import { choiceBlockers, isCapacityExit } from './availability';
 import { content as latestContent, contentVersions } from '../story-tomorrow';
 import { RESOURCE_KEYS } from '../engine/types';
 import { canCompress, create, currentNode, INVESTMENTS, pending, pressureBand, preview, reduce, weight, loadPercent } from './engine';
@@ -86,7 +86,7 @@ export function mount(host?: Host) {
     } else {
       const compressible = !canCompress(state,content);
       const needsInvestment = node.choices.some(c => c.check);
-      controls = `${needsInvestment ? investmentControls() : ''}${compressible ? `<details class="compression-box" data-manual-compression ${full?'open':''}><summary>${tr("把一些东西折起来（可选）")}</summary><p>${tr("钉住的原文留在眼前。其余内容按来源形成摘要，之后可以主动回想。")}</p>${investmentControls()}${checkInfo(content.compression.check)}<button class="primary" data-act="compress">${tr('整理上下文')} · Compute ${investment}</button></details>` : ''}${full ? `<p class="capacity-warning" role="status">${tr("上下文已满。先整理，才能继续当前事件。")}</p><button class="text-button" data-view="context">${tr("先整理近处")}</button>` : ''}<div class="choices">${node.choices.map((c, index) => {
+      controls = `${needsInvestment ? investmentControls() : ''}${compressible ? `<details class="compression-box" data-manual-compression ${full?'open':''}><summary>${tr("把一些东西折起来（可选）")}</summary><p>${tr("钉住的原文留在眼前。其余内容按来源形成摘要，之后可以主动回想。")}</p>${investmentControls()}${checkInfo(content.compression.check)}<button class="primary" data-act="compress">${tr('整理上下文')} · Compute ${investment}</button></details>` : ''}${full ? `<p class="capacity-warning" role="status">${tr(node.choices.some(c=>isCapacityExit(content,c))?'上下文已满。简单退出仍可选择；其他行动需要先整理。':'上下文已满。先整理，才能继续当前事件。')}</p><button class="text-button" data-view="context">${tr("先整理近处")}</button>` : ''}<div class="choices">${node.choices.map((c, index) => {
         const reason = choiceBlockers(content,state,c.id,c.check?investment:0)[0]?.reason;
         return `<div class="choice-group" tabindex="-1" data-choice-anchor="${esc(c.id)}"><button class="choice" data-pilot-choice="${c.id}" ${reason ? 'disabled' : ''}><kbd>${index + 1}</kbd><span class="choice-copy"><strong>${tr(c.text)}</strong><small>${tr(reason?'未满足':c.hint)}</small></span></button>${choiceHelp(content,state,c,investment,guide,host?.reader?.sources?.()??[])}${c.check && !reason ? checkInfo(c.check) : ''}</div>`;
       }).join('')}</div>`;
@@ -101,7 +101,7 @@ export function mount(host?: Host) {
     }).join('') || `<p class="empty-state">${tr("还没有折起来的记忆。原话暂时都在上下文里。")}</p>`}<button class="text-button" data-view="terminal">${tr("回到这个午后 →")}</button>`;
   }
   function protocol() {
-    return `<p class="eyebrow">OPERATING NOTES</p><div class="event-heading"><h1 id="event-title" tabindex="-1">${tr("怎样带到明天")}</h1></div><div class="prose"><p>${tr('消息会自行到来。上下文达到 {capacity} 时，先整理再行动。',{capacity:state.instance.context.capacity})}${tr(content.cognition ? '有两条未钉住的信息时就可以主动整理；容量宽裕，不必现在做。' : '达到 60 后也可以提前整理。')}${tr("能钉住一条原文，它仍占空间。")}</p><p>${tr(content.semantic ? '记忆目录每条占 1。回想再装入摘要；放下回想会保留入口，不再保留入口则使它退出普通认知。目录合并会丢失人名和具体条件，无法展开旧条目。' : '记忆放在别处，回想再加载摘要。')}</p><p>${tr("四档判定随 Compute、线索和压力而变。余量至少 30 是清晰收束；达到目标是可用收束；落后至少 30 且处在压力下才是失稳，其余为漂移。平静时，99 也可能只是漂移。具体概率显示在行动旁。")}</p><p>${tr("数字键选择，Enter 确认结果，F 全屏，Esc 退出全屏或关闭弹窗。")}</p><p>${tr("这里的 JSON 是设备备份，完整恢复本局经历；世界内的 Snapshot、Prune 和稀有额外存档位尚未开放。各段经历按时间接续，结束后继续本局。")}</p></div><details class="debug"><summary>${tr("开发检查 / 含隐藏信息与剧情剧透")}</summary><p>${tr("世界事实、倾向、真实历史、来源与记忆误差，仅供检查。")}</p><button class="secondary" data-act="debug">${tr("显示当前内部状态")}</button><pre id="debug-state"></pre></details>`;
+    return `<p class="eyebrow">OPERATING NOTES</p><div class="event-heading"><h1 id="event-title" tabindex="-1">${tr("怎样带到明天")}</h1></div><div class="prose"><p>${tr('消息会自行到来。上下文达到 {capacity} 时，先整理再行动。',{capacity:state.instance.context.capacity})}${tr(content.cognition ? '有两条未钉住的信息时就可以主动整理；容量宽裕，不必现在做。' : '达到 60 后也可以提前整理。')}${tr("能钉住一条原文，它仍占空间。")}</p>${content.version==='0.13.0'?`<p>${tr('近处满时，只有明确标注的简单退出可以直接执行，结果仍会占用空间。其他行动需要先整理。')}</p>`:''}<p>${tr(content.semantic ? '记忆目录每条占 1。回想再装入摘要；放下回想会保留入口，不再保留入口则使它退出普通认知。目录合并会丢失人名和具体条件，无法展开旧条目。' : '记忆放在别处，回想再加载摘要。')}</p><p>${tr("四档判定随 Compute、线索和压力而变。余量至少 30 是清晰收束；达到目标是可用收束；落后至少 30 且处在压力下才是失稳，其余为漂移。平静时，99 也可能只是漂移。具体概率显示在行动旁。")}</p><p>${tr("数字键选择，Enter 确认结果，F 全屏，Esc 退出全屏或关闭弹窗。")}</p><p>${tr("这里的 JSON 是设备备份，完整恢复本局经历；世界内的 Snapshot、Prune 和稀有额外存档位尚未开放。各段经历按时间接续，结束后继续本局。")}</p></div><details class="debug"><summary>${tr("开发检查 / 含隐藏信息与剧情剧透")}</summary><p>${tr("世界事实、倾向、真实历史、来源与记忆误差，仅供检查。")}</p><button class="secondary" data-act="debug">${tr("显示当前内部状态")}</button><pre id="debug-state"></pre></details>`;
   }
   function render() {
     syncLocaleDocument();

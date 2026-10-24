@@ -1,3 +1,4 @@
+import {hasScheduler} from './types';
 import Ajv from 'ajv';
 import schema from '../../schemas/life-save.schema.json';
 import schedulerSchema from '../../schemas/scheduler-state.schema.json';
@@ -29,12 +30,12 @@ export function parseSave(raw: string, story: Story): LifeSave {
     return createSave(createLife(story,baseline.state.rngState,baseline,'0.9.0'),new Date(baseline.savedAt));
   }
   if (!validate(data) || !Number.isFinite(Date.parse(data.savedAt))) throw new Error('生活存档格式或版本不兼容。');
-  if(data.life.contentVersion==='0.12.0'){if(!validateSchedule(data.life.schedule))throw new Error('生活调度状态格式错误。');}
+  if(hasScheduler(data.life.contentVersion)){if(!validateSchedule(data.life.schedule))throw new Error('生活调度状态格式错误。');}
   else if(data.life.schedule!==undefined||data.life.commands.length>500||raw.length>2_000_000)throw new Error('旧版本存档超过原有边界。');
-  if (data.life.contentVersion !== '0.3.0' && !(data.life.contentVersion==='0.12.0'?validateLongMind:validateMind)({format:'outside-cognition-save',version:2,savedAt:data.savedAt,state:data.life.mind})) throw new Error('认知目录或摘要格式不兼容。');
+  if (data.life.contentVersion !== '0.3.0' && !(hasScheduler(data.life.contentVersion)?validateLongMind:validateMind)({format:'outside-cognition-save',version:2,savedAt:data.savedAt,state:data.life.mind})) throw new Error('认知目录或摘要格式不兼容。');
   const baseline = data.life.baseline === null ? null : parseJourney(JSON.stringify(data.life.baseline),story);
   let replay = createLife(story,data.life.seed,baseline,data.life.contentVersion);
-  for (const command of data.life.commands) replay = (data.life.contentVersion==='0.12.0'?replayStep:step)(story,replay,command);
+  for (const command of data.life.commands) replay = (hasScheduler(data.life.contentVersion)?replayStep:step)(story,replay,command);
   if (stable(replay) !== stable(data.life) || stable(replay.state) !== stable(data.state)) throw new Error('存档快照与本局经历不一致。');
   return data;
 }
@@ -44,7 +45,7 @@ export async function importSaveFile(file: Pick<File,'size'|'text'>, story: Stor
   // mistaking the parser's character limit for a byte limit on Chinese exports.
   if (file.size > MAX_IMPORT_CHARACTERS * 3) throw new Error('存档超过安全导入上限。');
   const save = parseSave(await file.text(),story);
-  if (save.life.contentVersion !== '0.12.0' && file.size > 2_000_000) throw new Error('存档超过 2 MB。');
+  if (!hasScheduler(save.life.contentVersion) && file.size > 2_000_000) throw new Error('存档超过 2 MB。');
   return save;
 }
 export function readSave(storage: StorageLike, slot: SaveSlot, story: Story): LifeSave | null {

@@ -453,6 +453,7 @@
     "choice": {
       "type": "object",
       "properties": {
+        "capacityExempt": { "const": "exit" },
         "id": {
           "type": "string",
           "pattern": "^[a-z][a-z0-9_-]*$",

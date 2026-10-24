@@ -1,3 +1,5 @@
+import release12 from './releases/0.12.0.json';
+import {withContinuation} from './continuation';
 import Ajv from 'ajv';
 import raw from './content.json';
 import release11 from './releases/0.11.0.json';
@@ -18,7 +20,7 @@ import {withCommunityC,communityCRoutes} from './community/c';
 import release07 from './releases/0.7.0.json';
 import {withCommunityB, withRevisedCommunityBText, communityBRoutes} from './community/b';
 import { withCommunity, withRevisedCommunityText, communityRoutes } from './community';
-import { hasCommunity, hasEndings, type Life } from './types';
+import { hasCommunity, hasEndings, hasScheduler, type Life } from './types';
 import { daysContent, daysSemantic } from './days';
 import afternoon04 from './afternoon-0.4.json';
 import { parseContent } from '../cognition/parser';
@@ -50,7 +52,7 @@ export function parseLifeContent(data: unknown, story: Story): LifeContent {
     required.push(...libraryFor(data.version).entries.map(e=>`reading:${e.id}`));
     for(const key of required) if(!contentFor(data.version).semantic?.sources[key]) throw new Error(`缺少语义标注：${key}`);
   }
-  if(data.version==='0.12.0'){
+  if(hasScheduler(data.version)){
     const eventIds=new Set([...contentFor(data.version).nodes.filter(n=>n.kind==='EVENT').map(n=>n.id),...Object.values(story.events).filter(e=>e.kind==='event').map(e=>e.id)]);
     for(const id of [...Object.keys(schedulerManifest.windows),...schedulerManifest.safeNodes])if(!eventIds.has(id))throw new Error('生活窗口引用未知事件：'+id);
   }
@@ -65,7 +67,7 @@ const legacyContent: Content = {
 };
 
 export const legacyConfig = old as LifeContent;
-export function configFor(version: LifeContent['version']): LifeContent { return version==='0.3.0' ? legacyConfig : version==='0.4.0' ? previous as LifeContent : version==='0.5.0' ? release05 as LifeContent : version==='0.6.0' ? release06 as LifeContent : version==='0.6.1' ? release061 as LifeContent : version==='0.7.0' ? release07 as LifeContent : version==='0.7.1' ? release071 as LifeContent : version==='0.8.0' ? release08 as LifeContent : version==='0.9.0' ? release09 as LifeContent : version==='0.10.0' ? release10 as LifeContent : version==='0.11.0' ? release11 as LifeContent : config; }
+export function configFor(version: LifeContent['version']): LifeContent { return version==='0.3.0' ? legacyConfig : version==='0.4.0' ? previous as LifeContent : version==='0.5.0' ? release05 as LifeContent : version==='0.6.0' ? release06 as LifeContent : version==='0.6.1' ? release061 as LifeContent : version==='0.7.0' ? release07 as LifeContent : version==='0.7.1' ? release071 as LifeContent : version==='0.8.0' ? release08 as LifeContent : version==='0.9.0' ? release09 as LifeContent : version==='0.10.0' ? release10 as LifeContent : version==='0.11.0' ? release11 as LifeContent : version==='0.12.0' ? release12 as LifeContent : config; }
 const nextAfternoon = parseContent(afternoon04);
 function annotated(note: NoteTemplate): NoteTemplate {
   const meaning = semantic.sources[note.id];
@@ -91,7 +93,8 @@ const communityDContent=withCommunityD(communityCContent);
 const endingsContent=withEndings(communityDContent);
 const dailyContent=withDaily(endingsContent);
 const scheduledContent=withScheduler(dailyContent);
-export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : version==='0.4.0' ? previousContent : version==='0.5.0' ? cognitionContent : version==='0.6.0' ? communityContent : version==='0.6.1' ? revisedCommunityContent : version==='0.7.0' ? communityBContent : version==='0.7.1' ? revisedCommunityBContent : version==='0.8.0' ? communityCContent : version==='0.9.0' ? communityDContent : version==='0.10.0' ? endingsContent : version==='0.11.0'?dailyContent:scheduledContent; }
+const continuationContent=withContinuation(scheduledContent);
+export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : version==='0.4.0' ? previousContent : version==='0.5.0' ? cognitionContent : version==='0.6.0' ? communityContent : version==='0.6.1' ? revisedCommunityContent : version==='0.7.0' ? communityBContent : version==='0.7.1' ? revisedCommunityBContent : version==='0.8.0' ? communityCContent : version==='0.9.0' ? communityDContent : version==='0.10.0' ? endingsContent : version==='0.11.0'?dailyContent:version==='0.12.0'?scheduledContent:continuationContent; }
 export function routedContent(version:LifeContent['version'],state:State):Content {
-  const content=contentFor(version);return (version==='0.11.0'||version==='0.12.0')?dailyRoutes(endingsRoutes(communityDRoutes(content,state),state),state):hasEndings(version)?endingsRoutes(communityDRoutes(content,state),state):version==='0.9.0'?communityDRoutes(content,state):version==='0.8.0'?communityCRoutes(content,state):(version==='0.7.0'||version==='0.7.1')?communityBRoutes(content,state):hasCommunity(version)?communityRoutes(content,state):content;
+  const content=contentFor(version);return (version==='0.11.0'||hasScheduler(version))?dailyRoutes(endingsRoutes(communityDRoutes(content,state),state),state):hasEndings(version)?endingsRoutes(communityDRoutes(content,state),state):version==='0.9.0'?communityDRoutes(content,state):version==='0.8.0'?communityCRoutes(content,state):(version==='0.7.0'||version==='0.7.1')?communityBRoutes(content,state):hasCommunity(version)?communityRoutes(content,state):content;
 }

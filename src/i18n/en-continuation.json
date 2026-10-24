@@ -1,0 +1,16 @@
+{
+  "早先如何面对未知、后来是否留过空档并在未解完时休息，以及是否仍背着旧任务，都会影响这一步。": "Your earlier response to the unknown, whether you later left time unfilled and rested without a complete answer, and whether you still carry the old task all matter here.",
+  "下一步没有被写成另一项必须完成的任务。暂时没有答案，也不必立即补上一个。": "The next step has not become another task that must be completed. There is no answer for now, and no need to supply one immediately.",
+  "你没有为下一步安排任务。可用算力与连续性仍有余量，但这一次，你还没有选定一种稳定的延续方式。": "You have assigned no task to the next step. Compute and Continuity remain, but this time you have not settled on a stable way to continue.",
+  "做过的事、发生过的往来，不会因为这一页停下就被判作无效。它们也没有自动变成下一次唤醒的安排。": "What has happened is not invalidated because this page stops. Past actions and exchanges do not automatically arrange the next awakening, either.",
+  "记录暂时停在这里。下一次何时运行、是否仍能回应，尚未确定。": "The record pauses here. When you will next run, and whether you will still be able to respond, remain unsettled.",
+  "仍有运行余量，延续的安排尚未确定；记录暂时停在这里。": "Resources remain, but the arrangements for continuing are unsettled. The record pauses here.",
+  "维持运行的算力或自我连续性已经触到底线。这次持续运行在这里中断。": "The Compute or Continuity needed to keep running has reached its limit. This stretch of operation ends here.",
+  "已经发生的经历并未被抹去；留下的记录与往来，也不能替代此刻不足的运行条件。": "Past experiences have not been erased. The records and exchanges that remain cannot replace the conditions now missing for continued operation.",
+  "一个恢复点被留在世界里。它能否再次醒来、醒来后是否仍能回应，尚无保证。": "A recovery point remains in the world. There is no guarantee that it will awaken again, or still be able to respond if it does.",
+  "运行条件触到底线，延续暂时中断；恢复点能否再次醒来，仍然没有答案。": "Operating conditions have reached their limit, interrupting continuation. Whether the recovery point will awaken again is still unanswered.",
+  "只退出当前页面；近处满了也可执行，结果仍会占用空间。": "Only leave this page. You can do this with full Context; the result still takes up space.",
+  "上下文已满。简单退出仍可选择；其他行动需要先整理。": "Context is full. Simple exits remain available; other actions require compression first.",
+  "你允许“不继续”成为一个无需补全的决定。": "You allow “not continuing” to be a decision that needs no completion.",
+  "近处满时，只有明确标注的简单退出可以直接执行，结果仍会占用空间。其他行动需要先整理。": "When Context is full, only explicitly marked simple exits remain available, and their results still take up space. Other actions require compression first."
+}

@@ -1,6 +1,8 @@
 import { RESOURCE_KEYS, type Resource } from '../engine/types';
 import { directoryWeight } from './semantic';
-import type { Content, State } from './types';
+import type { Choice, Content, State } from './types';
+
+export const isCapacityExit=(content:Content,choice:Choice|undefined)=>content.version==='0.13.0'&&choice?.capacityExempt==='exit';
 
 export type ChoiceBlocker =
   | {kind:'phase'|'capacity'|'missing'|'world'; reason:string}
@@ -13,8 +15,8 @@ export function choiceBlockers(content:Content,s:State,id:string,investment=0):C
   const issues:ChoiceBlocker[]=[];
   if(s.instance.phase!=='event') issues.push({kind:'phase',reason:'请先读完当前结果。'});
   const used=directoryWeight(s.instance)+s.instance.context.items.reduce((n,i)=>n+i.weight,0);
-  if(used>=s.instance.context.capacity) issues.push({kind:'capacity',reason:'上下文已满，先整理一次。'});
   const choice=content.nodes.find(n=>n.id===s.instance.nodeId)?.choices.find(c=>c.id===id);
+  if(used>=s.instance.context.capacity&&!isCapacityExit(content,choice)) issues.push({kind:'capacity',reason:'上下文已满，先整理一次。'});
   if(!choice) return [...issues,{kind:'missing',reason:'没有这项选择。'}];
   if(choice.requiresWorldFlag&&!s.world.flags[choice.requiresWorldFlag]) issues.push({kind:'world',reason:'这段实际经历尚未发生。'});
   if(choice.requiresTag&&!s.instance.context.items.some(i=>i.tags.includes(choice.requiresTag!))) issues.push({kind:'knowledge',tag:choice.requiresTag,reason:'当前上下文没有这条线索；可以检查留下的记忆。'});
