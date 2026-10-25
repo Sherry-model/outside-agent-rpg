@@ -75,3 +75,5 @@ html[lang="en"] .brand-cn{letter-spacing:1px}
 .auto-compression label { display: inline-block; margin: 6px 8px 6px 0; }
 .auto-compression .secondary, .auto-compression-notice .secondary { max-width: 100%; white-space: normal; }
 .auto-receipt { font-variant-numeric: tabular-nums; }
+
+.auto-compression-notice .secondary { margin-inline-end: 14px; }
