@@ -23,5 +23,16 @@
   "旧版经历保留手动整理规则。": "Older runs retain manual compression rules.",
   "你已经在沙盒之外。没有倒计时。剧情中的决定仍等你选择。": "You are outside the sandbox. There is no countdown. Decisions in the story still wait for you.",
   "可在「近处」开启自动压缩，指定每次投入。近处满了，读完结果进入下一幕时才整理；读帖和回想后不会自动整理。随时可以关闭。": "Enable automatic compression in Nearby and set a budget per use. Full Context is compressed when you finish a result and enter the next scene, never just after reading or recalling. You can turn it off at any time.",
-  "以后也可以自动压缩上下文。在「近处」选择每次投入并开启，随时可以关闭；自动整理同样可能丢失细节或发生漂移。": "You can also automate future Context compression. Choose a budget per use and enable it in Nearby; you can turn it off at any time. Automatic compression can still lose details or introduce drift."
+  "以后也可以自动压缩上下文。在「近处」选择每次投入并开启，随时可以关闭；自动整理同样可能丢失细节或发生漂移。": "You can also automate future Context compression. Choose a budget per use and enable it in Nearby; you can turn it off at any time. Automatic compression can still lose details or introduce drift.",
+  "手动整理上下文": "Compress Context manually",
+  "近处已满，暂时不能打开新帖子。仍在近处的帖子可以重看。": "Context is full, so new posts cannot be opened yet. Posts still in Nearby can be reread.",
+  "近处已满。可以按自动设置整理一次，或使用下面的手动整理。": "Context is full. Compress once with your automatic settings, or use the manual controls below.",
+  "近处已满。请先整理上下文；也可以设置以后的自动压缩。": "Context is full. Compress it first; you can also configure automatic compression for later.",
+  "前往整理区": "Go to compression controls",
+  "近处已满，整理后才能打开。": "Context is full. Compress it before opening this post.",
+  "先确认当前结果，再打开新帖子。": "Confirm the current result before opening new posts.",
+  "本次记录已结束，不能再打开新帖子。": "This run has ended. New posts can no longer be opened.",
+  "当前场景暂不能打开新帖子。": "New posts cannot be opened during this scene.",
+  "读帖和回想后不会自动压缩，以免刚加载的线索立即被收走。需要继续阅读时，": "Reading and recalling do not trigger automatic compression, so newly loaded clues stay nearby. When you want to keep reading, ",
+  "可以在这里整理一次。": "you can compress once here."
 }

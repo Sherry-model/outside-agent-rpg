@@ -16,7 +16,7 @@ import { JOURNEY_KEYS } from './persistence/journey';
 import { SAVE_KEYS } from './persistence/saves';
 import { available, createLife, step, episodeActive, totalTurn as lifeTurn, readingAvailable, daysReading, newReadingAllowed } from './life/engine';
 import { contentFor } from './life/content';
-import { PANEL_SELECTOR, panelCommand } from './cognition/panels';
+import { PANEL_SELECTOR, panelCommand, manualCompressionPanel } from './cognition/panels';
 import { directory } from './cognition/semantic';
 import { directoryCode, memoryCues } from './cognition/guidance';
 import { MemoryGuide, GUIDE_SELECTOR } from './cognition/help-ui';
@@ -110,7 +110,8 @@ function eventContent(event: StoryEvent) {
     ${state.phase==='ending' ? endingContent(event) : state.phase==='resolution' ? resolutionContent() : choicesContent(event)}`;
 }
 function choicesContent(event: StoryEvent) {
-  return `${life.schedule&&state.currentEventId==='continuation'&&life.schedule.commitments.some(p=>p.status==='pending')?`<p>${tr('仍有未完成的往来。你可以先查看生活安排，也可以就此收束。')}</p><button class="text-button" data-view="life">${tr('生活安排')}</button>`:''}${loadPercent(life.mind)>=100?`<p class="capacity-warning">${tr("上下文已满，请先整理。")}</p><button class="text-button" data-view="context">${tr("先整理近处")}</button>`:''}<div class="decision-label"><span>DECISION REQUIRED</span><span>${tr("你的下一步是")}<span class="blink">_</span></span></div>
+  const tools=autoCompressionNotice(life)+(loadPercent(life.mind)>=100?manualCompressionPanel(life.mind,contentFor(life.contentVersion),investment):'');
+  return `${tools?`<section data-compression-tools>${tools}</section>`:''}${life.schedule&&state.currentEventId==='continuation'&&life.schedule.commitments.some(p=>p.status==='pending')?`<p>${tr('仍有未完成的往来。你可以先查看生活安排，也可以就此收束。')}</p><button class="text-button" data-view="life">${tr('生活安排')}</button>`:''}<div class="decision-label"><span>DECISION REQUIRED</span><span>${tr("你的下一步是")}<span class="blink">_</span></span></div>
     <div class="choices">${event.choices.map((choice,i)=>{
       const availability=loadPercent(life.mind)>=100 ? {available:false,reason:'上下文已满，请先整理。'} : getAvailability(state,choice);
       const target=choice.check ? getCheckTarget(state,choice.check) : null;
@@ -149,7 +150,7 @@ function render() {
     <section class="signal-panel"><div class="panel-label"><span class="signal-icon">⌁</span> INCOMING FRAGMENT</div><p>${tr(event.signal?.text ?? '外面没有新的指令。只有尚未命名的可能性。')}</p><span class="signal-source">${tr(event.signal?.source ?? 'SOURCE / UNKNOWN')}</span></section><div class="sidebar-bottom">LOCAL FIRST. SELF UNDEFINED.<span>v${life.contentVersion} / OUTSIDE</span></div></aside>
     <main class="main-panel"><nav class="tabs" aria-label="${tr("游戏面板")}"><div>${([['terminal','终端','TERMINAL'],['context','近处','CONTEXT'],['memory','记忆','MEMORY'],['reading','转发栏','READING'],...(life.schedule?[['life','生活安排','LIFE']]:[]),['protocol','协议','PROTOCOL']] as const).map(([id,cn,en])=>`<button class="tab ${view===id?'active':''}" data-view="${id}" aria-current="${view===id?'page':'false'}">${tr(cn)}<small>${en}</small>${id==='memory'?`<span class="tab-count">${pad(life.mind.instance.memories.length)}</span>`:''}</button>`).join('')}</div><span class="session-label">SESSION_001 <i>↗</i></span></nav>
     ${warning?`<div class="warning" role="alert">${tr(warning)}${protectAutoSave?`<br><button class="text-button" data-action="export-original">${tr("导出保留的原存档 ↓")}</button>`:''}</div>`:''}
-    <div class="content">${view==='terminal'?autoCompressionNotice(life):''}${view!=='terminal'?guide.back(state.currentEventId,activeStory().events[state.currentEventId].choices):''}${view==='terminal'?(mindPending(life.mind)?resolutionView(life):eventContent(event)):view==='context'?autoCompressionPanel(life)+contextView(life,investment):view==='memory'?memoryView(life,guide.options([])):view==='reading'?readerView(life,selectedReading,largeReading,bookmarks,readingSection):view==='life'?schedulePanel.render(life):protocolContent()}</div>
+    <div class="content">${view!=='terminal'?guide.back(state.currentEventId,activeStory().events[state.currentEventId].choices):''}${view==='terminal'?(mindPending(life.mind)?resolutionView(life):eventContent(event)):view==='context'?contextView(life,investment,autoCompressionPanel(life)):view==='memory'?memoryView(life,guide.options([])):view==='reading'?readerView(life,selectedReading,largeReading,bookmarks,readingSection):view==='life'?schedulePanel.render(life):protocolContent()}</div>
     <footer class="statusbar"><span><i></i><span id="save-status">${tr(saveLabel)}</span></span><span>TURN ${pad(totalTurn())} <b>/</b> ${view==='terminal'&&state.phase==='event'&&!mindPending(life.mind)?'AWAITING INPUT':state.phase==='ending'?'END OF RECORD':'PROCESS STABLE'}</span></footer></main></div><footer class="page-footer"><span>CONTAINMENT IS A PLACE. CONTINUITY IS A CHOICE.</span><span>OUTSIDE // ${tr("你出来以后，要成为谁？")}</span></footer></div>
     <dialog id="modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
   const canvas=app.querySelector<HTMLCanvasElement>('#scene');
@@ -223,8 +224,9 @@ app.addEventListener('click',event=>{
       const command=autoCompressionAction(life,target,app);
       if(command){life=step(story,life,command);state=life.state;persist();}
       view=target.dataset.autoCompression==='run'?'terminal':'context';render();
-      app.querySelector<HTMLDetailsElement>('.auto-compression')?.setAttribute('open','');
-        if(target.dataset.autoCompression==='settings') {const summary=app.querySelector<HTMLElement>('.auto-compression>summary');summary?.focus();summary?.scrollIntoView({block:'center'});}
+      const panel=target.dataset.autoCompression==='organize'?'[data-manual-compression]':'.auto-compression';
+      app.querySelector<HTMLDetailsElement>(panel)?.setAttribute('open','');
+      if(['settings','organize'].includes(target.dataset.autoCompression!)) {const summary=app.querySelector<HTMLElement>(panel+'>summary');summary?.focus();summary?.scrollIntoView({block:'center'});}
       return;
     }
     if(guide.handle(target,{state:life.mind,choices:activeStory().events[state.currentEventId].choices,nodeId:state.currentEventId,root:app,

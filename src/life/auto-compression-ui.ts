@@ -18,8 +18,8 @@ function receipt(life:Life):string {
 }
 export function autoCompressionPanel(life:Life):string {
   if(!hasScheduler(life.contentVersion))return '';
-  const p=life.autoCompression,full=loadPercent(life.mind)>=100;
-  return `<details class="compression-box auto-compression" ${full?'open':''}><summary>${tr('自动压缩上下文')} · ${tr(p?.enabled?'已开启':'已关闭')}</summary>
+  const p=life.autoCompression;
+  return `${autoCompressionNotice(life,'context')}<details class="compression-box auto-compression"><summary>${tr('自动压缩上下文')} · ${tr(p?.enabled?'已开启':'已关闭')}</summary>
   <p>${tr('近处满了，在读完结果、进入下一幕时整理一次。读帖和回想后不会自动整理；需要时可亲自按下按钮。')}</p>
   <p>${tr('仍会掷骰，可能失去细节或发生漂移。钉住的原文保留；不代你回想、合并目录或遗忘入口。')}</p>
   <label for="auto-compression-investment">${tr('每次自动整理投入 Compute')}</label> <select id="auto-compression-investment">${INVESTMENTS.map(n=>`<option value="${n}" ${(p?.investment??0)===n?'selected':''}>${n}</option>`).join('')}</select>
@@ -27,18 +27,19 @@ export function autoCompressionPanel(life:Life):string {
   <button class="secondary" data-auto-compression="configure">${tr(p?.enabled?'保存自动设置':'开启自动压缩')}</button>
   ${p?.enabled?`<button class="text-button" data-auto-compression="disable">${tr('关闭，改为手动')}</button>`:''}
   <p>${tr('设置立即保存，开启本身不会整理。随时可在「近处」关闭，或照常手动整理。')}</p>
-  ${full&&p?.enabled?runControl(life):''}${receipt(life)}</details>`;
+  ${receipt(life)}</details>`;
 }
 function runControl(life:Life):string {
   const reason=autoCompressionReason(life);
   return `${reason?`<p class="capacity-warning" role="status">${tr(reason)}</p>`:''}<button class="secondary" data-auto-compression="run" ${reason?'disabled':''}>${tr('按自动设置整理')} · Compute ${life.autoCompression!.investment}</button>`;
 }
-export function autoCompressionNotice(life:Life):string {
+export function autoCompressionNotice(life:Life,place:'event'|'context'|'reading'='event'):string {
   if(!hasScheduler(life.contentVersion)||life.state.phase==='ending'||pending(life.mind))return '';
-  const fresh=life.autoCompression?.receipt?.commandIndex===life.commands.length;
+  const fresh=place==='event'&&life.autoCompression?.receipt?.commandIndex===life.commands.length;
   const full=loadPercent(life.mind)>=100&&life.mind.instance.phase==='event';
   if(!fresh&&!full)return '';
-  return `<aside class="auto-compression-notice" aria-label="${tr('自动压缩上下文')}">${fresh?receipt(life):''}${full?`<p>${tr(life.autoCompression?.enabled?'近处仍然满着。自动整理停在这里，等你决定。':'近处满了。可以继续手动整理，也可以开启自动压缩。')}</p>${life.autoCompression?.enabled?runControl(life):''}<button class="text-button" data-auto-compression="settings">${tr('查看自动压缩设置')}</button>`:''}</aside>`;
+  const message=place==='reading'?'近处已满，暂时不能打开新帖子。仍在近处的帖子可以重看。':life.autoCompression?.enabled?'近处已满。可以按自动设置整理一次，或使用下面的手动整理。':'近处已满。请先整理上下文；也可以设置以后的自动压缩。';
+  return `<aside class="auto-compression-notice" data-compression-notice aria-label="${tr('自动压缩上下文')}">${fresh?receipt(life):''}${full?`<p>${tr(message)}</p>${place==='reading'?`<p>${tr('读帖和回想后不会自动压缩，以免刚加载的线索立即被收走。需要继续阅读时，')}<span class="compression-reading-action">${tr('可以在这里整理一次。')}</span></p>`:''}${life.autoCompression?.enabled?runControl(life):''}${place==='reading'?`<button class="text-button" data-auto-compression="organize">${tr('前往整理区')}</button>`:place==='event'?`<button class="text-button" data-auto-compression="settings">${tr('查看自动压缩设置')}</button>`:''}`:''}</aside>`;
 }
 export function autoCompressionAction(life:Life,target:HTMLElement,root:HTMLElement):LifeCommand|null {
   if(target.dataset.autoCompression==='run')return {type:'auto-compress'};
