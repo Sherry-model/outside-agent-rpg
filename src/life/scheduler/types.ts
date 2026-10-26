@@ -1,5 +1,7 @@
+import type {ReadingState} from '../reading-threads/types';
 export type DeliveryMode='choice'|'summary'|'missable';
 export interface PromiseSpec {
+  readingThread?:string;
   id:string; role:'daily'|'branch'; eventId?:string; title:string; afterHours:number; afterScenes:number;
   deadlineHours?:number; mode:DeliveryMode; channels:string[]; fallbackEventId?:string;
   receipt?:string; missedReceipt?:string; missedPreview?:string; receiptSource?:string;
@@ -9,6 +11,7 @@ export interface Commitment extends PromiseSpec {
   status:'pending'|'delivered'|'missed';
 }
 export interface Encounter {
+  readingThread?:string;
   id:string; nodeId:string; sourceIds:string[]; role:'daily'|'branch'; weight:number;
   phases:string[]; channels:string[]; requiresFlags?:string[]; excludesFlags?:string[];
 }
@@ -19,6 +22,7 @@ export interface SchedulerManifest {
   safeNodes:string[]; hoursByChoice:Record<string,number>;
 }
 export interface Schedule {
+  reading?:ReadingState;
   version:1; hour:number; scenes:number; coreScenes:number; scheduledScenes:{daily:number;branch:number}; rng:number; phase:string; channel:string;
   budgets:Record<string,{limit:number;spent:number;overdraft:number;expired:number}>;
   processed:string[]; seen:string[]; commitments:Commitment[];

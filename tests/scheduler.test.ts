@@ -20,7 +20,7 @@ const promise=(id:string,deadlineHours=5):PromiseSpec=>({id,role:'branch',title:
 function queue(ps:PromiseSpec[],budget=0){const m:SchedulerManifest=structuredClone(manifest);m.phases.arrival.budget=budget;m.promises.test=ps;const s=createSchedule(1);addPromises(s,m,'test');return {s,m};}
 
 test('0.12 is opt-in by save version; default new runs use the scheduler and old graphs remain isolated',()=>{
- assert.equal(createLife(baseStory,1).contentVersion,'0.13.0');
+ assert.equal(createLife(baseStory,1).contentVersion,'0.14.0');
  for(const version of ['0.3.0','0.4.0','0.5.0','0.6.0','0.6.1','0.7.0','0.7.1','0.8.0','0.9.0','0.10.0','0.11.0'] as const){
   const l=createLife(baseStory,1,null,version);assert.equal(l.schedule,undefined);assert(!contentFor(version).nodes.some(n=>n.id==='chance_application'));roundtrip(l);
   assert.throws(()=>step(baseStory,l,{type:'wait',hours:24,missed:[]}));
@@ -74,7 +74,7 @@ test('insertion retains the suspended result and resumes exactly once without re
  assert.equal(nodeId(l),original.next);assert.deepEqual(l.state.resources,resources);assert.equal(l.schedule!.scheduledScenes.branch,1);roundtrip(l);
 });
 test('reading and cognition do not open windows, mutate the schedule RNG, or increase scene counts',()=>{
- let l=schedulerJourney(1234,'days_idle');const before=structuredClone(l.schedule);
+ let current=schedulerJourney(1234,'days_idle');let l=createLife(baseStory,1234,null,'0.13.0');for(const c of current.commands)l=step(baseStory,l,c);const before=structuredClone(l.schedule);
  l=step(baseStory,l,{type:'read',entryId:'sandbox_meme'});assert.deepEqual(l.schedule,before);
  l=cog(l,{type:'pin',itemId:l.mind.instance.context.items.at(-1)!.id});assert.deepEqual(l.schedule,before);roundtrip(l);
 });

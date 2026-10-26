@@ -1,4 +1,6 @@
-import {hasScheduler} from './types';
+import {createReadingState,opened} from './reading-threads/engine';
+import {readingProfile} from './reading-threads/profile';
+import {hasScheduler,hasReadingThreads} from './types';
 import {afterScheduledChoice,createSchedule,finishedScheduled,finishScheduled,intercept,scheduleCommand,scheduled} from './scheduler/integration';
 import { advance, choose, createGame } from '../engine/game';
 import { PERSONALITY_KEYS, type Story } from '../engine/types';
@@ -46,7 +48,7 @@ function toMain(life: Life) {
   life.state.resources = {...life.mind.instance.resources}; life.state.rngState = life.mind.rngState;
   for (const key of PERSONALITY_KEYS) life.state.personality[key] = Math.round((life.mind.instance.hidden[key]-50)/5);
 }
-export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.13.0'): Life {
+export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.14.0'): Life {
   story = storyForLife(story,version);
   parseLifeContent(configFor(version),story);
   if (baseline?.chapter?.status === 'active') throw new Error('这是旧版进行中的午后，请用 versions/OUTSIDE-journey-content-0.2.2.html 继续；本文件未被覆盖。');
@@ -56,6 +58,7 @@ export function createLife(story: Story, seed: number, baseline: JourneySave | n
   for (const key of PERSONALITY_KEYS) content.initial.hidden[key] = 50 + 5*state.personality[key];
   const life: Life = {contentVersion:version,seed,baseline:structuredClone(baseline),state,mind:create(content,seed),chapter:baseline?.chapter ? 'complete' : 'unvisited',commands:[],...((version==='0.5.0'||hasCommunity(version))?{interlude:'unvisited' as const}:{})};
   if(hasScheduler(version))life.schedule=createSchedule(seed);
+  if(hasReadingThreads(version))life.schedule!.reading=createReadingState(readingProfile.id);
   fromMain(life);
   syncEndingFacts(life);
   if (state.phase !== 'ending' && !beginDays(life)) observe(life);
@@ -95,6 +98,7 @@ function coreStep(story: Story, before: Life, command: LifeCommand, replaying=fa
     if (before.mind.instance.context.items.some(i=>i.sourceId===entry.id)) throw new Error('这条内容仍在上下文中，可以直接重看。');
     if (loadPercent(life.mind)>=100) throw new Error('上下文已满，请先整理。');
     add(life,{id:`reading-${entry.id}`,text:entry.contextText,weight:entry.weight,tags:[`reading_${entry.id}`],confidence:'LOW',sourceLabel:entry.source},entry.id,`reading:${entry.id}`);
+    if(life.schedule?.reading)opened(life.schedule,entry.id);
   } else if (command.type === 'leave-days') {
     if(life.interlude!=='active' || life.mind.instance.phase!=='ending') throw new Error('这几天还没有走完。');
     if(hasEndings(life.contentVersion)&&life.mind.world.flags.w_exchange_1&&!life.mind.world.flags.pg_w03_seen) enterDaysNode(life,'pg_w03');

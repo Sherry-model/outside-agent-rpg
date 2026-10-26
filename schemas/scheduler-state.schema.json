@@ -189,6 +189,10 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 12000
+          },
+          "readingThread": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "required": [
@@ -370,6 +374,89 @@
         "branch": {
           "type": "integer",
           "minimum": 0
+        }
+      }
+    },
+    "reading": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "opened",
+        "themes",
+        "shown",
+        "entrances",
+        "reserved",
+        "misses",
+        "closed"
+      ],
+      "properties": {
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "opened": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "themes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "shown": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "entrances": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "reserved": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "misses": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "closed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "maxItems": 5
+        },
+        "active": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "status"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "status": {
+              "enum": [
+                "offered",
+                "accepted"
+              ]
+            }
+          }
         }
       }
     }

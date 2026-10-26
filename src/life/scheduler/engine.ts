@@ -1,4 +1,6 @@
 import type {Commitment,Schedule,SchedulerManifest,WindowSpec} from './types';
+import type {ReadingWindow} from '../reading-threads/types';
+import {eligible,entered,fits} from '../reading-threads/engine';
 const compare=(a:string,b:string)=>a<b?-1:a>b?1:0;
 export function createSchedule(seed:number):Schedule {
   return {version:1,hour:0,scenes:0,coreScenes:0,scheduledScenes:{daily:0,branch:0},rng:((seed^0x6d2b79f5)>>>0)||1,phase:'arrival',channel:'public',budgets:{},processed:[],seen:[],commitments:[],decisions:[],receipts:[],waited:false};
@@ -43,7 +45,7 @@ function charge(s:Schedule,promised:boolean) {
   const b=s.budgets[s.phase];if(b.spent+b.expired<b.limit)b.spent++;else if(promised)b.overdraft++;else throw new Error('偶遇预算不足。');
 }
 /** One decision per declared transition. Rendering and ordinary cognitive commands never call this. */
-export function windowDecision(s:Schedule,m:SchedulerManifest,id:string,spec:WindowSpec,flags:Record<string,boolean>,allowNew=true) {
+export function windowDecision(s:Schedule,m:SchedulerManifest,id:string,spec:WindowSpec,flags:Record<string,boolean>,allowNew=true,reading?:ReadingWindow) {
   if(s.processed.includes(id))return null;
   setPhase(s,m,spec.phase,spec.channel);s.processed.push(id);
   const record=(selected:string|null,reason:string)=>{s.decisions.push({window:id,hour:s.hour,scene:s.scenes,selected,reason});};
@@ -52,28 +54,39 @@ export function windowDecision(s:Schedule,m:SchedulerManifest,id:string,spec:Win
   if(first){
     const nodeId=first.channels.includes(s.channel)?first.eventId:first.fallbackEventId;
     if(!nodeId)throw new Error('承诺缺少可送达的替代渠道。');
+    if(first.readingThread&&reading&&!fits(reading,nodeId)){record(null,'reading-capacity');return null;}
     first.status='delivered';charge(s,true);record(first.id,'commitment');
+    if(first.readingThread&&reading)entered(reading,first.readingThread,false);
     return {id:first.id,nodeId,kind:'commitment' as const,role:first.role};
   }
   if(!allowNew){record(null,'no-new-encounters');return null;}
   if(s.budgets[s.phase].spent+s.budgets[s.phase].expired>=s.budgets[s.phase].limit){record(null,'budget');return null;}
-  const pool=m.encounters.filter(e=>!s.seen.includes(e.id)&&e.phases.includes(s.phase)&&e.channels.includes(s.channel)&&(e.requiresFlags??[]).every(f=>flags[f])&&!(e.excludesFlags??[]).some(f=>flags[f]));
+  const pool=m.encounters.filter(e=>!s.seen.includes(e.id)&&e.phases.includes(s.phase)&&e.channels.includes(s.channel)&&(e.requiresFlags??[]).every(f=>flags[f])&&!(e.excludesFlags??[]).some(f=>flags[f])&&(!e.readingThread||!!reading&&eligible(s,reading,e.readingThread)));
   if(!pool.length){record(null,'no-candidate');return null;}
-  if(random(s)>=spec.chance){record(null,'quiet');return null;}
-  const total=pool.reduce((n,e)=>n+e.weight,0),pick=random(s)*total;let weight=0;
-  const selected=pool.find(e=>(weight+=e.weight)>pick)!;
+  const candidates=pool.filter(e=>e.readingThread);
+  const guarantee=!!reading&&reading.state.entrances===0&&candidates.length>0;
+  const forced=guarantee&&reading!.state.misses>=2;
+  const miss=()=>{if(guarantee)reading!.state.misses=Math.min(2,reading!.state.misses+1);};
+  if(!forced&&random(s)>=spec.chance){miss();record(null,'quiet');return null;}
+  // Do not reorder the released pool or consume a new draw when it has no reading candidates.
+  const drawPool=forced?candidates.sort((a,b)=>compare(a.id,b.id)):candidates.length?pool.sort((a,b)=>compare(a.id,b.id)):pool;
+  const total=drawPool.reduce((n,e)=>n+e.weight,0),pick=random(s)*total;let weight=0;
+  const selected=drawPool.find(e=>(weight+=e.weight)>pick)!;
+  if(selected.readingThread&&reading)entered(reading,selected.readingThread,true);else miss();
   s.seen.push(selected.id);charge(s,false);record(selected.id,'encounter');
   return {id:selected.id,nodeId:selected.nodeId,kind:'encounter' as const,role:selected.role};
 }
 /** Explicit handling obeys the same queue and actual availability as automatic delivery. */
-export function deliverBeforeJump(s:Schedule,m:SchedulerManifest,promiseId:string) {
+export function deliverBeforeJump(s:Schedule,m:SchedulerManifest,promiseId:string,reading?:ReadingWindow) {
   const p=s.commitments.find(p=>p.id===promiseId&&p.status==='pending'&&p.mode==='choice');
   if(!p)throw new Error('这项回应已不在待办中。');
   if(due(s).find(q=>q.mode!=='summary')?.id!==p.id)throw new Error('请先处理期限更早的回信。');
   if(p.dueHour>s.hour||p.dueScene>s.scenes)throw new Error('对方尚未提供可回应的事项。');
   const nodeId=p.channels.includes(s.channel)?p.eventId:p.fallbackEventId;
   if(!nodeId)throw new Error('承诺缺少可送达的替代渠道。');
+  if(p.readingThread&&reading&&!fits(reading,nodeId))throw new Error('上下文已满，请先整理。');
   setPhase(s,m,s.phase,s.channel);p.status='delivered';charge(s,true);
+  if(p.readingThread&&reading)entered(reading,p.readingThread,false);
   const id=`inbox:${p.id}`;s.processed.push(id);s.decisions.push({window:id,hour:s.hour,scene:s.scenes,selected:p.id,reason:'explicit-response'});
   return {id:p.id,nodeId,kind:'commitment' as const,role:p.role};
 }

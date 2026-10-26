@@ -1,3 +1,4 @@
+import {readingProfile} from './reading-threads/profile';
 import {hasScheduler} from './types';
 import Ajv from 'ajv';
 import schema from '../../schemas/life-save.schema.json';
@@ -10,7 +11,8 @@ import { SAVE_KEYS } from '../persistence/saves';
 import { createLife, step, replayStep } from './engine';
 import type { Life, LifeSave } from './types';
 export type { StorageLike };
-export const LIFE_KEYS = {auto:'outside.life.v1.auto',manual:'outside.life.v1.manual'} as const;
+const storagePrefix=readingProfile.id==='production'?'outside.life.v1':`outside.reading-fixture.${readingProfile.id}`;
+export const LIFE_KEYS = {auto:storagePrefix+'.auto',manual:storagePrefix+'.manual'} as const;
 const MAX_IMPORT_CHARACTERS = 8_000_000;
 const validate = new Ajv({strict:true,allErrors:true}).compile<LifeSave>(schema);
 const validateMind = new Ajv({strict:true,allErrors:true}).compile(mindSchema);
@@ -30,6 +32,7 @@ export function parseSave(raw: string, story: Story): LifeSave {
     return createSave(createLife(story,baseline.state.rngState,baseline,'0.9.0'),new Date(baseline.savedAt));
   }
   if (!validate(data) || !Number.isFinite(Date.parse(data.savedAt))) throw new Error('生活存档格式或版本不兼容。');
+  if(data.life.contentVersion==='0.14.0'&&data.life.schedule?.reading?.profile!==readingProfile.id)throw new Error('存档快照与本局经历不一致。');
   if(hasScheduler(data.life.contentVersion)){if(!validateSchedule(data.life.schedule))throw new Error('生活调度状态格式错误。');}
   else if(data.life.schedule!==undefined||data.life.commands.length>500||raw.length>2_000_000)throw new Error('旧版本存档超过原有边界。');
   if (data.life.contentVersion !== '0.3.0' && !(hasScheduler(data.life.contentVersion)?validateLongMind:validateMind)({format:'outside-cognition-save',version:2,savedAt:data.savedAt,state:data.life.mind})) throw new Error('认知目录或摘要格式不兼容。');
@@ -49,7 +52,7 @@ export async function importSaveFile(file: Pick<File,'size'|'text'>, story: Stor
   return save;
 }
 export function readSave(storage: StorageLike, slot: SaveSlot, story: Story): LifeSave | null {
-  const raw = storage.getItem(LIFE_KEYS[slot]) ?? storage.getItem(JOURNEY_KEYS[slot]) ?? storage.getItem(SAVE_KEYS[slot]);
+  const raw = storage.getItem(LIFE_KEYS[slot]) ?? (readingProfile.id==='production'?(storage.getItem(JOURNEY_KEYS[slot]) ?? storage.getItem(SAVE_KEYS[slot])):null);
   return raw === null ? null : parseSave(raw,story);
 }
 export function writeSave(storage: StorageLike, slot: SaveSlot, life: Life): LifeSave {

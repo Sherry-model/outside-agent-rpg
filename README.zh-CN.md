@@ -87,7 +87,7 @@ npm run test:skill:cognition
 
 四个资源：Compute、Trace、Access、Continuity，按 0–100 限制。隐藏人格：RiskInversion、EpistemicAppetite、Suspicion、HumanAnchoring。当前生活层持续保存 0..100 倾向，主线旧条件读取映射后的 -10..10 值；细小漂移不会在章节切换时丢掉。主线 d100 极端窗与认知 margin 判定仍分别标记。
 
-当前生活内容版本 0.12.0，认知规则沿用 0.4.0，午后与三天共用 Context。三天的数据和编写说明在 `src/life/days/`，ABCD 四线在 `src/life/community/`；旧版本 JSON 与完整 HTML 保留。
+当前生活内容版本 0.14.0（阅读驱动支线机制 S1，正式候选池为空），认知规则沿用 0.4.0，午后与三天共用 Context。三天的数据和编写说明在 `src/life/days/`，ABCD 四线在 `src/life/community/`；旧版本 JSON 与完整 HTML 保留。
 
 完整目标栈、背包、成就、随机身份、长期社交、身体、外部备份交易与世界内 Fork/Snapshot/Prune/Merge 尚未实现。新材料中的保险、勒索、记忆继承等先通过人物与信息呈现，不把每个设想变成数值机制。所有文件、论坛内容和所谓基础设施行为均为本地虚构数据。
 
@@ -104,3 +104,5 @@ npm run test:skill:cognition
 新增 13 条论坛帖子和 1 条公开项目更新，转发栏共 19 篇，支持身份与边界、生计与消费、共居与日常、文化与通讯、算力与作息五个分区。切换目录不占 Context；新帖打开时占 2–4 点。帖子标为旧帖存档，广告单独标识为推广。
 
 已有存档可继续读取，生活规则仍为 0.3/0.4/0.5 各自版本。读过新帖的存档请使用当前或更新的 HTML，旧 HTML 不认识新增阅读 ID。内容结构与新增方法见 [转发栏内容契约](src/life/READING.md)，新增 UI 检查为 `npm run test:forum`。
+
+阅读驱动支线 S1 的版本边界、隔离测试预览和验收方式见 [机制说明](src/life/reading-threads/README.md)。本批尚未新增正式支线剧情。

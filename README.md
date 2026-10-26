@@ -371,3 +371,5 @@ Run `npm run test:community:c` for four offline desktop/mobile routes, then `npm
 ### Community D validation
 
 Run `npm run test:community:d` for five offline desktop/mobile routes, then `npm run test:skill:community:d` for the skill client. Fixtures, screenshots and strictly replayed exports go to `output/community-d/`. The 0.8.0 configuration and C graph remain frozen. D uses authored service milestones, not a real clock or a general insurance/backup/identity service.
+
+Reading-driven branch infrastructure (Life 0.14, S1) currently has an empty production pool. No new narrative branches ship in this batch. See the [version and isolated-preview contract](src/life/reading-threads/README.md).
