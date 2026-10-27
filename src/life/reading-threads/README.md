@@ -63,3 +63,16 @@ the meaning of already-exported 0.14 runs.
 
 Independent acceptance uses the committed SHA. Passing S1 does not certify
 story quality, encounter density, natural play, or authorize publication.
+
+
+## Browser build regression
+
+The preview shares the production offline story-embedding plugin; direct esbuild
+cannot execute Vite's `import.meta.glob` in a browser. Keep the fixture profile
+replacement isolated, but do not omit the offline transforms.
+
+After `node scripts/test-reading-threads.mjs --preview`, run
+`node scripts/reading-preview-browser-check.mjs`. This offline Playwright smoke
+check requires the actual generated HTML to start, accepts one real fixture
+invitation, verifies the reserved follow-ups and storage isolation, then reloads.
+Node integration tests alone do not cover browser initialization.

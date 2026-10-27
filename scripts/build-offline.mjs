@@ -1,23 +1,12 @@
 import { build } from 'esbuild';
-import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
-import path from 'node:path';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { embedStory } from './embed-story.mjs';
 import { offlineSnapshots } from './offline-snapshots.mjs';
 
-const root = process.cwd();
 const result = await build({
   entryPoints: ['src/entry.ts'], bundle: true, write: false,
   outfile: 'outside.js', format: 'iife', target: 'es2022', minify: true,
-  plugins: [offlineSnapshots(), {
-    name: 'embed-story-json',
-    setup(builder) {
-      builder.onLoad({ filter: /src\/story\/index\.ts$/ }, async () => {
-        const manifest = JSON.parse(await readFile('src/story/manifest.json', 'utf8'));
-        const files = (await readdir('src/story/events')).filter(f => f.endsWith('.json')).sort();
-        const sources = await Promise.all(files.map(async source => ({ source, data: JSON.parse(await readFile(`src/story/events/${source}`, 'utf8')) })));
-        return { contents: `import {parseStory} from '../engine/parser'; export const story=parseStory(${JSON.stringify(manifest)},${JSON.stringify(sources)});`, loader: 'ts', resolveDir: path.join(root, 'src/story') };
-      });
-    },
-  }],
+  plugins: [offlineSnapshots(), embedStory()],
 });
 const script = result.outputFiles.find(f => f.path.endsWith('.js')).text.replace(/<\/script/gi, '<\\/script');
 const css = result.outputFiles.find(f => f.path.endsWith('.css'))?.text ?? '';
