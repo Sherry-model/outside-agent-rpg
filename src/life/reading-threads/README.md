@@ -76,3 +76,13 @@ After `node scripts/test-reading-threads.mjs --preview`, run
 check requires the actual generated HTML to start, accepts one real fixture
 invitation, verifies the reserved follow-ups and storage isolation, then reloads.
 Node integration tests alone do not cover browser initialization.
+
+## S1 acceptance checkpoint (2026-10-27)
+
+Implementation `d29b3db` was independently reviewed by Astra. Preview startup
+fix `bf91960` was rechecked by Product G: shared transforms preserve embedded
+story and frozen snapshots, all nine fixture integration checks and the build
+pass, and production HTML is byte-identical. Product G reviewed Astra's browser
+smoke evidence; it did not perform a new independent browser run. S1 is complete
+within this scope. Production narrative remains empty pending S2 content work;
+this checkpoint does not authorize a main merge or publication.
