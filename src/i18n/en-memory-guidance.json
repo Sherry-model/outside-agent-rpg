@@ -13,7 +13,7 @@
   "回想后可表达这种判断。": "Recalling this lets you express this belief.",
   "回想后将满载，继续行动还需腾出至少 1 Context。": "Recall will fill Context. Free at least 1 Context before taking a story action.",
   "回想这条": "Recall this",
-  "尚未回想 · 有 {count} 个可用入口": "Not recalled · {count} usable entries",
+  "尚未回想 · 有 {count} 个可用入口": "Not recalled · Usable entries: {count}",
   "已加载 {weight} Context": "Loaded: {weight} Context",
   "已回想；仍有上方所列阻碍。": "Recalled; the blockers listed above still apply.",
   "已回想；这项行动现可选择。": "Recalled; this action is now available.",
