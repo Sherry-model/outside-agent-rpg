@@ -28,7 +28,7 @@ function setup(seed=1){
 }
 test('S1 production is empty; new default records only successful opening facts and legacy graphs stay frozen',()=>{
   assert.equal(readingProfile.threads.length,0);assert.equal(contentFor('0.14.0').nodes.length,contentFor('0.13.0').nodes.length);
-  assert.equal(createLife(baseStory,1).contentVersion,'0.14.0');
+  assert.equal(createLife(baseStory,1).contentVersion,'0.15.0');
   const rows=JSON.parse(readFileSync('tests/fixtures/life-content-through-0.13.json','utf8')) as {version:Life['contentVersion'];sha256:string}[];
   for(const {version,sha256} of rows)assert.equal(createHash('sha256').update(JSON.stringify([configFor(version),contentFor(version),libraryFor(version),storyForLife(baseStory,version)])).digest('hex'),sha256,version);
   assert.equal(manifestFor('0.13.0'),manifest);assert.equal(manifestFor('0.12.0'),manifest);

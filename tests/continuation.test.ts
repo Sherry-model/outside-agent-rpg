@@ -22,10 +22,16 @@ const cog=(l:Life,command:Extract<LifeCommand,{type:'cognition'}>['command'])=>s
 const pick=(l:Life,id:string)=>cog(l,{type:'choose',choiceId:id,investment:0});
 const compressions=(l:Life)=>l.mind.history.filter(h=>h.command.type==='compress').length;
 function full(l:Life):Life {
-  while(weight(l.mind)<100) {
+  for(let attempts=0;weight(l.mind)<100;attempts++) {
+    assert(attempts<120,'Bounded legal preparation of full Context');
     const entry=readingEntries(l).find(e=>!l.mind.instance.context.items.some(i=>i.sourceId===e.id));
-    assert(entry,'Enough unread public entries to reach capacity legally');
-    l=step(baseStory,l,{type:'read',entryId:entry.id});
+    if(entry)l=step(baseStory,l,{type:'read',entryId:entry.id});
+    else {
+      // 0.15 hides future cat reports. Fold real reading, then read available
+      // posts again; the resulting memory directory also uses capacity.
+      assert.equal(canCompress(l.mind,contentFor(l.contentVersion)),'');
+      l=cog(l,{type:'compress',investment:0});l=cog(l,{type:'continue'});
+    }
   }
   roundtrip(l);return l;
 }
@@ -40,7 +46,7 @@ function replayB(version:Life['contentVersion']='0.13.0',replaceIdle=false):Life
 test('all twelve released content graphs and story/reading/config combinations retain exact fingerprints',()=>{
   const rows=JSON.parse(readFileSync('tests/fixtures/life-content-through-0.12.json','utf8')) as {version:Life['contentVersion'];sha256:string}[];
   for(const {version,sha256} of rows)assert.equal(createHash('sha256').update(JSON.stringify([configFor(version),contentFor(version),libraryFor(version),storyForLife(baseStory,version)])).digest('hex'),sha256,version);
-  assert.equal(createLife(baseStory,1).contentVersion,'0.14.0');
+  assert.equal(createLife(baseStory,1).contentVersion,'0.15.0');
   assert.equal(Object.values(storyForLife(baseStory,'0.13.0').events).filter(e=>e.kind==='ending').length,6);
 });
 

@@ -10,6 +10,8 @@ export interface ReadingThread {
 }
 export interface ReadingProfile {
   id:string; threads:ReadingThread[]; nodes:Node[];
+  /** Optional isolated fixture version. Production version selection lives in profiles.ts. */
+  fixtureVersion?:'0.14.0'|'0.15.0';
   semantic:Pick<SemanticContent,'topics'|'sources'>;
 }
 export interface ReadingState {

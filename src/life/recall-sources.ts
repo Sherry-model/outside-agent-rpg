@@ -1,5 +1,7 @@
 import { contentFor } from './content';
 import { readingEntries } from './reading';
+import {publications} from './publications/profile';
+import {hasPublications} from './publications/rules';
 import { readingAvailable, daysReading, newReadingAllowed } from './engine';
 import { requirement } from '../cognition/guidance';
 import { t } from '../i18n';
@@ -12,7 +14,7 @@ export function recallSources(life:Life):PublicRecallSource[] {
   const content=contentFor(life.contentVersion);
   return readingEntries(life).flatMap(entry=>{
     const tag=`reading_${entry.id}`;
-    if(!requirement(tag)?.readings.includes(entry.id))return [];
+    if(!requirement(tag)?.readings.includes(entry.id)&&!(hasPublications(life.contentVersion)&&publications.posts.some(p=>p.id===entry.id)))return [];
     const meaning=content.semantic?.sources[`reading:${entry.id}`];
     if(!meaning?.clauses.some(c=>c.tags.includes(tag)))return [];
     const present=life.mind.instance.context.items.some(i=>i.sourceId===entry.id);

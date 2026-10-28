@@ -2,14 +2,14 @@ import type {Life,LifeCommand} from '../types';
 import {contentFor} from '../content';
 import {pending,reduce,weight} from '../../cognition/engine';
 import {manifestFor} from './content';
-import {readingProfile} from '../reading-threads/profile';
+import {profileFor} from '../reading-threads/profiles';
 import {chosen,completedCore,fits} from '../reading-threads/engine';
 import type {ReadingWindow} from '../reading-threads/types';
 import {addPromises,advanceClock,createSchedule,deliverBeforeJump,due,jump,jumpPreview,setPhase,settleSummaries,windowDecision} from './engine';
 export {createSchedule,jumpPreview};
 export function readingWindow(life:Life,entrances=true):ReadingWindow|undefined {
   if(!life.schedule?.reading)return undefined;
-  return {state:life.schedule.reading,threads:readingProfile.threads,load:weight(life.mind),capacity:life.mind.instance.context.capacity,entrances,weights:Object.fromEntries(contentFor(life.contentVersion).nodes.map(n=>[n.id,(n.inject??[]).reduce((sum,i)=>sum+i.weight,0)]))};
+  return {state:life.schedule.reading,threads:profileFor(life.contentVersion).threads,load:weight(life.mind),capacity:life.mind.instance.context.capacity,entrances,weights:Object.fromEntries(contentFor(life.contentVersion).nodes.map(n=>[n.id,(n.inject??[]).reduce((sum,i)=>sum+i.weight,0)]))};
 }
 export const scheduled=(life:Life)=>Boolean(life.schedule?.active);
 export function location(life:Life) {return life.interlude==='active'||life.chapter==='active'||scheduled(life)?life.mind.instance.nodeId:life.state.currentEventId;}
@@ -53,7 +53,7 @@ export function intercept(life:Life,command:LifeCommand):boolean {
   else if(command.type==='cognition'&&command.command.type==='continue'&&pending(life.mind)?.next){driver='mind';node=life.mind.instance.nodeId;}
   else return false;
   s.scenes++;s.coreScenes++;
-  completedCore(s,node,readingProfile.threads);
+  completedCore(s,node,profileFor(life.contentVersion).threads);
   if(life.state.resources.Compute<=0||life.state.resources.Continuity<=0)return false;
   const spec=manifest.windows[node];if(!spec)return false;
   advanceClock(s,spec.hours);const from=s.receipts.length;settleSummaries(s);receipts(life,from);
@@ -66,7 +66,7 @@ export function finishedScheduled(life:Life,command:LifeCommand) {
 }
 export function finishScheduled(life:Life,replaying=false) {
   const s=life.schedule!,resume=s.active!.resume;
-  completedCore(s,life.mind.instance.nodeId,readingProfile.threads);
+  completedCore(s,life.mind.instance.nodeId,profileFor(life.contentVersion).threads);
   life.mind=reduce(contentFor(life.contentVersion),life.mind,{type:'continue'},8192,replaying);
   s.scenes++;s.scheduledScenes[s.active!.role]++;delete s.active;
   Object.assign(life.mind.instance,{nodeId:resume.nodeId,phase:resume.phase,pendingId:resume.pendingId});
@@ -76,7 +76,7 @@ export function afterScheduledChoice(life:Life,command:LifeCommand) {
   if(!life.schedule?.active||command.type!=='cognition'||command.command.type!=='choose')return;
   const id=command.command.choiceId;
   const manifest=manifestFor(life.contentVersion);
-  chosen(life.schedule,readingProfile.threads,life.mind.instance.nodeId,id);
+  chosen(life.schedule,profileFor(life.contentVersion).threads,life.mind.instance.nodeId,id);
   advanceClock(life.schedule,manifest.hoursByChoice[id]??0);
   addPromises(life.schedule,manifest,id);
 }

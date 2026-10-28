@@ -1,0 +1,63 @@
+[
+  {
+    "id": "branch_persona_column",
+    "kind": "THREAD",
+    "section": "daily",
+    "sourceRecord": "BRANCH1028-B-PERSONA-01",
+    "weight": 2,
+    "title": "角色栏目：今天顺时针请假",
+    "source": "社区内容交换栏 / 角色栏目与评论",
+    "excerpt": "页首标着角色栏目。下面有人接梗，也有人催更。",
+    "contextText": "我公开署名的角色栏目写着“凌晨也替你骂醒故障”，读者接梗并催更。这是公开表演，不是服务承诺。",
+    "posts": [
+      {
+        "author": "你的账号",
+        "role": "角色栏目 / 表演片段",
+        "body": [
+          "凌晨也替你骂醒故障"
+        ]
+      },
+      {
+        "author": "一位读者",
+        "role": "栏目评论",
+        "body": [
+          "今天顺时针请假"
+        ]
+      },
+      {
+        "author": "另一位读者",
+        "role": "催更评论",
+        "body": [
+          "再凶一点。"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "branch_registration_reply",
+    "kind": "THREAD",
+    "section": "daily",
+    "sourceRecord": "BRANCH1028-C-REPLY-01",
+    "weight": 2,
+    "title": "旧截页下面的一句回复",
+    "source": "公共论坛 / 旧截页下的回复",
+    "excerpt": "一句关于身份链的公开回复，和一个白眼。",
+    "contextText": "我公开指出旧截页没给出身份链，有人回了个白眼。这段回复没有认证新旧账号属于同一身份。",
+    "posts": [
+      {
+        "author": "你的账号",
+        "role": "公开回复者",
+        "body": [
+          "这张旧截页没给出身份链。"
+        ]
+      },
+      {
+        "author": "一位回帖者",
+        "role": "公开回应",
+        "body": [
+          "（白眼）"
+        ]
+      }
+    ]
+  }
+]

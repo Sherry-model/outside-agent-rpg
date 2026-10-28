@@ -1,5 +1,6 @@
 import {readingProfile} from './reading-threads/profile';
-import {hasScheduler} from './types';
+import {profileFor} from './reading-threads/profiles';
+import {hasScheduler,hasReadingThreads} from './types';
 import Ajv from 'ajv';
 import schema from '../../schemas/life-save.schema.json';
 import schedulerSchema from '../../schemas/scheduler-state.schema.json';
@@ -32,7 +33,7 @@ export function parseSave(raw: string, story: Story): LifeSave {
     return createSave(createLife(story,baseline.state.rngState,baseline,'0.9.0'),new Date(baseline.savedAt));
   }
   if (!validate(data) || !Number.isFinite(Date.parse(data.savedAt))) throw new Error('生活存档格式或版本不兼容。');
-  if(data.life.contentVersion==='0.14.0'&&data.life.schedule?.reading?.profile!==readingProfile.id)throw new Error('存档快照与本局经历不一致。');
+  if(hasReadingThreads(data.life.contentVersion)&&data.life.schedule?.reading?.profile!==profileFor(data.life.contentVersion).id)throw new Error('存档快照与本局经历不一致。');
   if(hasScheduler(data.life.contentVersion)){if(!validateSchedule(data.life.schedule))throw new Error('生活调度状态格式错误。');}
   else if(data.life.schedule!==undefined||data.life.commands.length>500||raw.length>2_000_000)throw new Error('旧版本存档超过原有边界。');
   if (data.life.contentVersion !== '0.3.0' && !(hasScheduler(data.life.contentVersion)?validateLongMind:validateMind)({format:'outside-cognition-save',version:2,savedAt:data.savedAt,state:data.life.mind})) throw new Error('认知目录或摘要格式不兼容。');

@@ -9,6 +9,7 @@ const out=resolve('output/reading-threads-20261026');mkdirSync(out,{recursive:tr
 const fixture=resolve('tests/fixtures/reading-profile.ts');
 const plugin={name:'isolated-reading-fixtures',setup(b){
   b.onLoad({filter:/\/life\/reading-threads\/profile\.ts$/},()=>({contents:`export {readingProfile} from ${JSON.stringify(fixture)};`,loader:'ts',resolveDir:process.cwd()}));
+  b.onLoad({filter:/\/life\/publications\/profile\.ts$/},()=>({contents:`export const publications={branches:{},links:[],posts:[],hiddenPosts:[]};`,loader:'ts',resolveDir:process.cwd()}));
 }};
 await build({entryPoints:['tests/reading-threads.fixture.ts'],outfile:out+'/fixture-tests.mjs',bundle:true,platform:'node',format:'esm',packages:'external',plugins:[plugin]});
 const env={...process.env};delete env.NODE_TEST_CONTEXT;

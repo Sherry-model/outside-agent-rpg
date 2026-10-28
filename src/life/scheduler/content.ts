@@ -8,7 +8,7 @@ import {parseSemantic} from '../semantic-content';
 import type {SemanticContent} from '../../cognition/semantic-types';
 import type {Content,Node,NoteTemplate} from '../../cognition/types';
 import type {SchedulerManifest} from './types';
-import {readingProfile} from '../reading-threads/profile';
+import {profileFor} from '../reading-threads/profiles';
 import {withReadingSchedule} from '../reading-threads/engine';
 import type {Life} from '../types';
 const ajv=new Ajv({strict:true,strictRequired:false});
@@ -36,8 +36,9 @@ const validateNodes=ajv.compile<Node[]>({type:'array',items:{$ref:'#/$defs/node'
 if(!validateNodes(events))throw new Error('概率场景格式错误：'+JSON.stringify(validateNodes.errors));
 export const authored=events as Node[];
 export const manifest=parseScheduler(raw,authored);
-const readingManifest=withReadingSchedule(manifest,readingProfile);
-export const manifestFor=(version:Life['contentVersion'])=>version==='0.14.0'?readingManifest:manifest;
+const readingManifest=withReadingSchedule(manifest,profileFor('0.14.0'));
+const readingStoriesManifest=withReadingSchedule(manifest,profileFor('0.15.0'));
+export const manifestFor=(version:Life['contentVersion'])=>version==='0.14.0'?readingManifest:version==='0.15.0'?readingStoriesManifest:manifest;
 export function withScheduler(base:Content):Content {
   const c=structuredClone(base);c.version='0.12.0';
   c.semantic={...c.semantic!,topics:{...c.semantic!.topics,...meanings.topics},sources:{...c.semantic!.sources,...meanings.sources as SemanticContent['sources']}};

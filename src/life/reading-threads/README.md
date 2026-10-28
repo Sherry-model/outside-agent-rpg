@@ -64,6 +64,17 @@ the meaning of already-exported 0.14 runs.
 Independent acceptance uses the committed SHA. Passing S1 does not certify
 story quality, encounter density, natural play, or authorize publication.
 
+## 0.15 publication extension
+
+`profiles.ts` now selects a versioned profile; 0.14 retains its empty production
+pool. `production-0.15.ts` is also empty: the first two public epilogues attach to
+existing community choices, without adding a new reading-driven story. See
+[`../publications/README.md`](../publications/README.md) for settlement,
+visibility and the separate A → P → B integration fixture. Root post validation
+uses the target version's complete library, not its initially visible entries.
+The older S1 fixture explicitly disables the 0.15 publication profile so its
+mechanical cat-root sample remains independent of production timeline edits.
+
 
 ## Browser build regression
 

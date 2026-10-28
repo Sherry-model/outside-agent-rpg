@@ -1,5 +1,7 @@
 import {createReadingState,opened} from './reading-threads/engine';
-import {readingProfile} from './reading-threads/profile';
+import {profileFor} from './reading-threads/profiles';
+import {publications} from './publications/profile';
+import {publishChoice} from './publications/rules';
 import {hasScheduler,hasReadingThreads} from './types';
 import {afterScheduledChoice,createSchedule,finishedScheduled,finishScheduled,intercept,scheduleCommand,scheduled} from './scheduler/integration';
 import { advance, choose, createGame } from '../engine/game';
@@ -48,7 +50,7 @@ function toMain(life: Life) {
   life.state.resources = {...life.mind.instance.resources}; life.state.rngState = life.mind.rngState;
   for (const key of PERSONALITY_KEYS) life.state.personality[key] = Math.round((life.mind.instance.hidden[key]-50)/5);
 }
-export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.14.0'): Life {
+export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.15.0'): Life {
   story = storyForLife(story,version);
   parseLifeContent(configFor(version),story);
   if (baseline?.chapter?.status === 'active') throw new Error('这是旧版进行中的午后，请用 versions/OUTSIDE-journey-content-0.2.2.html 继续；本文件未被覆盖。');
@@ -58,7 +60,7 @@ export function createLife(story: Story, seed: number, baseline: JourneySave | n
   for (const key of PERSONALITY_KEYS) content.initial.hidden[key] = 50 + 5*state.personality[key];
   const life: Life = {contentVersion:version,seed,baseline:structuredClone(baseline),state,mind:create(content,seed),chapter:baseline?.chapter ? 'complete' : 'unvisited',commands:[],...((version==='0.5.0'||hasCommunity(version))?{interlude:'unvisited' as const}:{})};
   if(hasScheduler(version))life.schedule=createSchedule(seed);
-  if(hasReadingThreads(version))life.schedule!.reading=createReadingState(readingProfile.id);
+  if(hasReadingThreads(version))life.schedule!.reading=createReadingState(profileFor(version).id);
   fromMain(life);
   syncEndingFacts(life);
   if (state.phase !== 'ending' && !beginDays(life)) observe(life);
@@ -85,6 +87,7 @@ function coreStep(story: Story, before: Life, command: LifeCommand, replaying=fa
     if (!episodeActive(life) && command.command.type === 'choose') throw new Error('请使用当前主线的选项。');
     if (!episodeActive(life) && command.command.type === 'continue' && !pending(life.mind)) throw new Error('没有待确认的整理结果。');
     life.mind = reduce(routedContent(life.contentVersion,life.mind),life.mind,command.command,life.schedule?8192:500,replaying);
+    if(command.command.type==='choose')publishChoice(life,publications,before.mind.instance.nodeId,command.command.choiceId);
     if(scheduled(before)&&command.command.type==='continue'&&pending(before.mind)?.next){
       life.schedule!.scenes++;life.schedule!.scheduledScenes[life.schedule!.active!.role]++;
     }

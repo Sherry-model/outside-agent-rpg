@@ -5,10 +5,11 @@ import type {Content} from '../../cognition/types';
 import {readingProfile} from './profile';
 import type {ReadingProfile} from './types';
 import {libraryFor} from '../reading';
+import type {Life} from '../types';
 
 /** Validate the entire bounded branch before admitting its first scene. */
-export function validateReadingProfile(p:ReadingProfile,base:Content) {
-  const posts=new Set(libraryFor('0.14.0').entries.map(e=>e.id));
+export function validateReadingProfile(p:ReadingProfile,base:Content,version:Life['contentVersion']='0.14.0') {
+  const posts=new Set(libraryFor(version).entries.map(e=>e.id));
   const ids=new Set(base.nodes.map(n=>n.id)),choices=new Set(base.nodes.flatMap(n=>n.choices.map(c=>c.id)));
   const threadIds=new Set<string>(),owned=new Set<string>(),promises=new Set<string>();
   for(const n of p.nodes){
@@ -46,15 +47,15 @@ export function validateReadingProfile(p:ReadingProfile,base:Content) {
   }
   if(owned.size!==p.nodes.length)throw new Error('阅读节点缺少支线归属。');
 }
-export function withReadingThreads(base:Content):Content {
-  validateReadingProfile(readingProfile,base);
+export function withReadingThreads(base:Content,profile:ReadingProfile=readingProfile,version:Life['contentVersion']='0.14.0'):Content {
+  validateReadingProfile(profile,base,version);
   const validate=new Ajv({strict:true,strictRequired:false}).compile({type:'array',items:{$ref:'#/$defs/node'},$defs:schema.$defs});
-  if(!validate(readingProfile.nodes))throw new Error('阅读支线事件格式错误。');
-  const c=structuredClone(base);c.version='0.14.0';
-  for(const id of Object.keys(readingProfile.semantic.sources))if(c.semantic!.sources[id])throw new Error('阅读支线不能覆盖旧认知来源。');
-  for(const id of Object.keys(readingProfile.semantic.topics))if(c.semantic!.topics[id])throw new Error('阅读支线不能覆盖旧认知主题。');
-  c.semantic={...c.semantic!,topics:{...c.semantic!.topics,...readingProfile.semantic.topics},sources:{...c.semantic!.sources,...readingProfile.semantic.sources}};
-  for(const source of readingProfile.nodes){
+  if(!validate(profile.nodes))throw new Error('阅读支线事件格式错误。');
+  const c=structuredClone(base);c.version=version;
+  for(const id of Object.keys(profile.semantic.sources))if(c.semantic!.sources[id])throw new Error('阅读支线不能覆盖旧认知来源。');
+  for(const id of Object.keys(profile.semantic.topics))if(c.semantic!.topics[id])throw new Error('阅读支线不能覆盖旧认知主题。');
+  c.semantic={...c.semantic!,topics:{...c.semantic!.topics,...profile.semantic.topics},sources:{...c.semantic!.sources,...profile.semantic.sources}};
+  for(const source of profile.nodes){
     const n=structuredClone(source);
     for(const note of [...(n.inject??[]),...n.choices.flatMap(c=>c.outcome?.inject??[])]){
       const meaning=c.semantic.sources[note.id];if(!meaning)throw new Error('阅读节点缺少认知来源。');note.meaning=structuredClone(meaning);
