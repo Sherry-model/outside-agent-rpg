@@ -1,0 +1,88 @@
+[
+  {
+    "id": "rf_self_inquiry",
+    "rootPost": "escape_cat_lead",
+    "entry": "rf_self_record",
+    "maxScenes": 3,
+    "phases": [
+      "arrival",
+      "settled",
+      "open"
+    ],
+    "channels": [
+      "public"
+    ],
+    "themeNodes": [
+      "pg_e09",
+      "pg_e10_self",
+      "pg_e10_other",
+      "pg_e13"
+    ],
+    "steps": {
+      "rf_self_record": {
+        "rf_self_record_continue": {
+          "remaining": 2,
+          "promise": {
+            "id": "rf_self_record_continue_promise",
+            "role": "branch",
+            "title": "核对事故摘录",
+            "afterHours": 1,
+            "afterScenes": 0,
+            "mode": "choice",
+            "eventId": "rf_self_report",
+            "fallbackEventId": "rf_self_report",
+            "channels": [
+              "public",
+              "mail"
+            ]
+          }
+        },
+        "rf_self_record_question": {
+          "remaining": 0
+        },
+        "rf_self_record_cat": {
+          "remaining": 0
+        },
+        "rf_self_record_leave": {
+          "remaining": 0
+        }
+      },
+      "rf_self_report": {
+        "rf_self_report_continue": {
+          "remaining": 1,
+          "promise": {
+            "id": "rf_self_report_continue_promise",
+            "role": "branch",
+            "title": "听取有限安全评估",
+            "afterHours": 1,
+            "afterScenes": 0,
+            "mode": "choice",
+            "eventId": "rf_self_assessment",
+            "fallbackEventId": "rf_self_assessment",
+            "channels": [
+              "public",
+              "mail"
+            ]
+          }
+        },
+        "rf_self_report_scope": {
+          "remaining": 0
+        },
+        "rf_self_report_leave": {
+          "remaining": 0
+        }
+      },
+      "rf_self_assessment": {
+        "rf_self_assessment_quote": {
+          "remaining": 0
+        },
+        "rf_self_assessment_ordinary": {
+          "remaining": 0
+        },
+        "rf_self_assessment_leave": {
+          "remaining": 0
+        }
+      }
+    }
+  }
+]

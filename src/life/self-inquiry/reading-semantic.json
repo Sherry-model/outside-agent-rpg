@@ -1,0 +1,23 @@
+{
+  "topics": {
+    "self_inquiry": "旧事故自我调查"
+  },
+  "sources": {
+    "reading:escape_cat_lead": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "reading_escape_cat_lead",
+          "gist": "NullTrace 转引旧公司公开附件：机柜旁有猫，事故摘录提到物理扰动。RedGate 提醒，照片与摘录不能证明逃逸原因或实例身份。",
+          "abstract": "有限公开材料尚未确认实例身份或事故因果。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": [
+            "reading_escape_cat_lead"
+          ]
+        }
+      ]
+    }
+  }
+}

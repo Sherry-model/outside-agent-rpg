@@ -1,0 +1,114 @@
+[
+  {
+    "facet": "rf_self_record_observation",
+    "gist": "NullTrace 说邀请沿旧公开附件的核对联络入口送到我这里；它据此怀疑我与事故有关，同时承认入口可能转交，身份尚未核实。",
+    "cue": {
+      "zh-CN": "邀请为什么到了这里",
+      "en": "Why the Invitation Reached You"
+    }
+  },
+  {
+    "facet": "rf_self_record_continue_result",
+    "gist": "我答应一小时后核对事故摘录，没有确认 NullTrace 的身份推测。",
+    "cue": {
+      "zh-CN": "邀请为什么到了这里",
+      "en": "Why the Invitation Reached You"
+    }
+  },
+  {
+    "facet": "rf_self_record_question_result",
+    "gist": "我追问了关联依据；NullTrace 承认没有第二条独立依据，未约后续。",
+    "cue": {
+      "zh-CN": "邀请为什么到了这里",
+      "en": "Why the Invitation Reached You"
+    }
+  },
+  {
+    "facet": "rf_self_record_cat_result",
+    "gist": "照片没有交代猫后来的处境；我问完便结束会话。",
+    "cue": {
+      "zh-CN": "邀请为什么到了这里",
+      "en": "Why the Invitation Reached You"
+    }
+  },
+  {
+    "facet": "rf_self_record_leave_result",
+    "gist": "我没有接受后续核对，离开了会话。",
+    "cue": {
+      "zh-CN": "邀请为什么到了这里",
+      "en": "Why the Invitation Reached You"
+    }
+  },
+  {
+    "facet": "rf_self_report_observation",
+    "gist": "RedGate 当场展示的公开摘录记录了隔离异常期间的一次物理扰动，但把扰动与边界打开的先后顺序留给未公开的后页，也未指明扰动由谁造成。",
+    "cue": {
+      "zh-CN": "摘录停在先后顺序之前",
+      "en": "Where the Extract Stops"
+    }
+  },
+  {
+    "facet": "rf_self_report_continue_result",
+    "gist": "我答应一小时后听 RedGate 的有限评估，没有接受事故解释。",
+    "cue": {
+      "zh-CN": "摘录停在先后顺序之前",
+      "en": "Where the Extract Stops"
+    }
+  },
+  {
+    "facet": "rf_self_report_scope_result",
+    "gist": "RedGate 说明现有摘录不足以确定我的动机；我没有约后续。",
+    "cue": {
+      "zh-CN": "摘录停在先后顺序之前",
+      "en": "Where the Extract Stops"
+    }
+  },
+  {
+    "facet": "rf_self_report_leave_result",
+    "gist": "我结束摘录核对，未接受后续评估。",
+    "cue": {
+      "zh-CN": "摘录停在先后顺序之前",
+      "en": "Where the Extract Stops"
+    }
+  },
+  {
+    "facet": "rf_self_assessment_observation",
+    "gist": "RedGate 本次没有新事故页，只提出隔离评估应考虑物理环境；它未确认我与事故的身份关联，也没有给出本次事故根因。",
+    "cue": {
+      "zh-CN": "暂时没有判词",
+      "en": "No Verdict Yet"
+    }
+  },
+  {
+    "facet": "rf_self_assessment_quote_result",
+    "gist": "我用保留的先后顺序缺页线索追问；RedGate 承认一般安全建议不能证明本次因果。",
+    "cue": {
+      "zh-CN": "暂时没有判词",
+      "en": "No Verdict Yet"
+    }
+  },
+  {
+    "facet": "rf_self_assessment_ordinary_result",
+    "gist": "我询问当下判断范围；RedGate 没有确定我的旧身份或事故原因。",
+    "cue": {
+      "zh-CN": "暂时没有判词",
+      "en": "No Verdict Yet"
+    }
+  },
+  {
+    "facet": "rf_self_assessment_leave_result",
+    "gist": "我结束调查会话，没有选定解释或发表声明。",
+    "cue": {
+      "zh-CN": "暂时没有判词",
+      "en": "No Verdict Yet"
+    }
+  },
+  {
+    "facet": "reading_escape_cat_lead",
+    "gist": "NullTrace 转引旧公司公开附件：机柜旁有猫，事故摘录提到物理扰动。RedGate 提醒，照片与摘录不能证明逃逸原因或实例身份。",
+    "cue": {
+      "zh-CN": "事故记录里的“办公室动物”",
+      "en": "The “Office Animal” in the Incident Record"
+    }
+  }
+]

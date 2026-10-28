@@ -67,7 +67,7 @@ const continuationStories = new WeakMap<Story,Story>();
 /** The original JSON remains the only story used by all released versions and standalone legacy saves. */
 export function storyForLife(base: Story, version: Life['contentVersion'], state?:Pick<GameState,'resources'>): Story {
   if(!hasEndings(version)) return base;
-  if((version==='0.13.0'||version==='0.14.0'||version==='0.15.0')) {
+  if((version==='0.13.0'||version==='0.14.0'||version==='0.15.0'||version==='0.16.0')) {
     let story=continuationStories.get(base);
     if(!story) {
       const legacy=storyForLife(base,'0.12.0'),events=structuredClone(legacy.events);
@@ -92,5 +92,5 @@ export function syncEndingFacts(life: Life): void {
   const f=life.mind.world.flags;
   life.state.flags.visitor_eligible=!!(f.v_once_completed&&f.v_refusal_accepted&&!f.v_channel_closed);
   life.state.flags.war_eligible=!!(f.w_exchange_1&&f.w_exchange_2&&!f.w_closed);
-  if((life.contentVersion==='0.13.0'||life.contentVersion==='0.14.0'||life.contentVersion==='0.15.0'))life.state.flags.lived_with_unfinished=!!(f.kept_unallocated_time&&f.rested_without_answer);
+  if((life.contentVersion==='0.13.0'||life.contentVersion==='0.14.0'||life.contentVersion==='0.15.0'||life.contentVersion==='0.16.0'))life.state.flags.lived_with_unfinished=!!(f.kept_unallocated_time&&f.rested_without_answer);
 }

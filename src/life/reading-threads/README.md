@@ -1,5 +1,9 @@
 # Reading-driven branches — S1 / Life 0.14
 
+For the first production branch, see [Self-investigation / Life 0.16](../self-inquiry/README.md).
+The statements below about an empty pool describe the frozen S1/0.14 checkpoint;
+0.15 also remains empty. 0.16 adds one separately versioned three-scene profile.
+
 S1 implements routing, not new released narrative. `profile.ts` has an **empty
 production pool**. CAT/HUAC are unapproved story prototypes. Existing events,
 including the historical A/B/C/D development batches, are candidates for later

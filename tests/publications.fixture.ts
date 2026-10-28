@@ -32,7 +32,7 @@ function drive(l:Life,stop:(l:Life)=>boolean,autoRead=false):Life {
   }throw new Error('Fixture route exceeded bound');
 }
 function start(seed=1,at='days_tickets'){
-  let l=drive(createLife(baseStory,seed),ready(at));
+  let l=drive(createLife(baseStory,seed,null,'0.15.0'),ready(at));
   assert(ready(at)(l));l=step(baseStory,l,{type:'read',entryId:'insurance'});return l;
 }
 

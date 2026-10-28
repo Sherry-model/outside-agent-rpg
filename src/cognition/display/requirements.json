@@ -372,5 +372,21 @@
       "gallery"
     ],
     "readings": []
+  },
+  "self_report_boundary": {
+    "kind": "content",
+    "topics": [
+      "self_inquiry"
+    ],
+    "readings": []
+  },
+  "reading_escape_cat_lead": {
+    "kind": "content",
+    "topics": [
+      "self_inquiry"
+    ],
+    "readings": [
+      "escape_cat_lead"
+    ]
   }
 }

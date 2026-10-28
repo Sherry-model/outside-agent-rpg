@@ -9,6 +9,7 @@ const out=resolve('output/publications-20261028');mkdirSync(out,{recursive:true}
 const fixture=resolve('tests/fixtures/publication-profile.ts');
 const plugin={name:'isolated-publication-fixtures',setup(b){
   b.onLoad({filter:/\/life\/reading-threads\/profile\.ts$/},()=>({contents:`export {readingProfile} from ${JSON.stringify(fixture)};`,loader:'ts',resolveDir:process.cwd()}));
+  b.onLoad({filter:/\/life\/reading-threads\/production-0\.16\.ts$/},()=>({contents:`export {readingProfile as production16} from ${JSON.stringify(fixture)};`,loader:'ts',resolveDir:process.cwd()}));
   b.onLoad({filter:/\/life\/publications\/profile\.ts$/},()=>({contents:`export {publications} from ${JSON.stringify(fixture)};`,loader:'ts',resolveDir:process.cwd()}));
 }};
 await build({entryPoints:['tests/publications.fixture.ts'],outfile:out+'/fixture-tests.mjs',bundle:true,platform:'node',format:'esm',packages:'external',plugins:[plugin]});
