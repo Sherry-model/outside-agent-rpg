@@ -38,7 +38,21 @@
           }
         },
         "rf_self_record_question": {
-          "remaining": 0
+          "remaining": 2,
+          "promise": {
+            "id": "rf_self_record_question_promise",
+            "role": "branch",
+            "title": "核对事故摘录",
+            "afterHours": 1,
+            "afterScenes": 0,
+            "mode": "choice",
+            "eventId": "rf_self_report",
+            "fallbackEventId": "rf_self_report",
+            "channels": [
+              "public",
+              "mail"
+            ]
+          }
         },
         "rf_self_record_cat": {
           "remaining": 0
@@ -53,7 +67,7 @@
           "promise": {
             "id": "rf_self_report_continue_promise",
             "role": "branch",
-            "title": "听取有限安全评估",
+            "title": "核对 RedGate 的草稿",
             "afterHours": 1,
             "afterScenes": 0,
             "mode": "choice",

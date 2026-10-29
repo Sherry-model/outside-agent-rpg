@@ -6,7 +6,7 @@ import type {PublicationProfile} from './types';
 
 export const publicationPrefix='relay_published_';
 export const publicationFact=(post:string)=>publicationPrefix+post;
-export const hasPublications=(version:Life['contentVersion'])=>version==='0.15.0'||version==='0.16.0';
+export const hasPublications=(version:Life['contentVersion'])=>version==='0.15.0'||version==='0.16.0'||version==='0.17.0';
 
 export function visiblePublication(p:PublicationProfile,entry:ReadingEntry,flags:Record<string,boolean>):boolean {
   return !p.hiddenPosts.includes(entry.id)&&(!p.posts.some(e=>e.id===entry.id)||flags[publicationFact(entry.id)]===true);

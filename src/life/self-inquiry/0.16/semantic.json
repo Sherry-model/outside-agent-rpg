@@ -1,0 +1,191 @@
+{
+  "topics": {
+    "self_inquiry": "旧事故自我调查"
+  },
+  "sources": {
+    "rf_self_record_observation": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_record_observation",
+          "gist": "NullTrace 说邀请沿旧公开附件的核对联络入口送到我这里；它据此怀疑我与事故有关，同时承认入口可能转交，身份尚未核实。",
+          "abstract": "NullTrace 的关联推测来自联络路径，不是身份认证。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "rf_self_record_continue_result": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_record_continue_result",
+          "gist": "我答应一小时后核对事故摘录，没有确认 NullTrace 的身份推测。",
+          "abstract": "我接受了后续核对邀请。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "rf_self_record_question_result": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_record_question_result",
+          "gist": "我追问了关联依据；NullTrace 承认没有第二条独立依据，未约后续。",
+          "abstract": "我质疑了身份关联，结束核对。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "rf_self_record_cat_result": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_record_cat_result",
+          "gist": "照片没有交代猫后来的处境；我问完便结束会话。",
+          "abstract": "我只核对了照片能说明的范围。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "rf_self_record_leave_result": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_record_leave_result",
+          "gist": "我没有接受后续核对，离开了会话。",
+          "abstract": "我结束了会话。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "rf_self_report_observation": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_report_observation",
+          "gist": "RedGate 当场展示的公开摘录记录了隔离异常期间的一次物理扰动，但把扰动与边界打开的先后顺序留给未公开的后页，也未指明扰动由谁造成。",
+          "abstract": "公开摘录缺少扰动与边界打开的先后顺序，也未确定扰动来源。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": [
+            "self_report_boundary"
+          ]
+        }
+      ]
+    },
+    "rf_self_report_continue_result": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_report_continue_result",
+          "gist": "我答应一小时后听 RedGate 的有限评估，没有接受事故解释。",
+          "abstract": "我接受了评估会面。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "rf_self_report_scope_result": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_report_scope_result",
+          "gist": "RedGate 说明现有摘录不足以确定我的动机；我没有约后续。",
+          "abstract": "我问清判断范围后结束。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "rf_self_report_leave_result": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_report_leave_result",
+          "gist": "我结束摘录核对，未接受后续评估。",
+          "abstract": "我结束了会话。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "rf_self_assessment_observation": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_assessment_observation",
+          "gist": "RedGate 本次没有新事故页，只提出隔离评估应考虑物理环境；它未确认我与事故的身份关联，也没有给出本次事故根因。",
+          "abstract": "RedGate 给出有限安全意见，未作身份或根因裁定。",
+          "epistemic": "reported",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "rf_self_assessment_quote_result": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_assessment_quote_result",
+          "gist": "我用保留的先后顺序缺页线索追问；RedGate 承认一般安全建议不能证明本次因果。",
+          "abstract": "我据保留的报告边界限制了因果判断。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "rf_self_assessment_ordinary_result": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_assessment_ordinary_result",
+          "gist": "我询问当下判断范围；RedGate 没有确定我的旧身份或事故原因。",
+          "abstract": "我听取有限评估，没有得到定论。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    },
+    "rf_self_assessment_leave_result": {
+      "topic": "self_inquiry",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "rf_self_assessment_leave_result",
+          "gist": "我结束调查会话，没有选定解释或发表声明。",
+          "abstract": "我让调查停在未定处。",
+          "epistemic": "observed",
+          "priority": 2,
+          "tags": []
+        }
+      ]
+    }
+  }
+}

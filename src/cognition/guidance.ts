@@ -1,3 +1,4 @@
+import oldInquiryCues from '../life/self-inquiry/0.16/cues.json';
 import inquiryCues from '../life/self-inquiry/cues.json';
 import scheduleCues from '../life/scheduler/cues.json';
 import cues from './display/memory-cues.json';
@@ -7,7 +8,7 @@ import { directoryWeight, recallCost } from './semantic';
 import type { Memory, State } from './types';
 
 export const usedContext=(s:State)=>directoryWeight(s.instance)+s.instance.context.items.reduce((n,i)=>n+i.weight,0);
-const cueMap=new Map([...cues,...scheduleCues,...inquiryCues].map(c=>[JSON.stringify([c.facet,c.gist]),c.cue]));
+const cueMap=new Map([...cues,...scheduleCues,...oldInquiryCues,...inquiryCues].map(c=>[JSON.stringify([c.facet,c.gist]),c.cue]));
 export const requirement=(tag:string)=> (definitions as Record<string,{kind:string;topics:string[];readings:string[]}>)[tag];
 /** Injective encoding, never an array index or a truncated hash. */
 export function directoryCode(id:string):string {

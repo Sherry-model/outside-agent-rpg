@@ -46,7 +46,7 @@ function replayB(version:Life['contentVersion']='0.13.0',replaceIdle=false):Life
 test('all twelve released content graphs and story/reading/config combinations retain exact fingerprints',()=>{
   const rows=JSON.parse(readFileSync('tests/fixtures/life-content-through-0.12.json','utf8')) as {version:Life['contentVersion'];sha256:string}[];
   for(const {version,sha256} of rows)assert.equal(createHash('sha256').update(JSON.stringify([configFor(version),contentFor(version),libraryFor(version),storyForLife(baseStory,version)])).digest('hex'),sha256,version);
-  assert.equal(createLife(baseStory,1).contentVersion,'0.16.0');
+  assert.equal(createLife(baseStory,1).contentVersion,'0.17.0');
   assert.equal(Object.values(storyForLife(baseStory,'0.13.0').events).filter(e=>e.kind==='ending').length,6);
 });
 

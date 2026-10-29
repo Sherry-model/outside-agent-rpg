@@ -38,8 +38,9 @@ export const authored=events as Node[];
 export const manifest=parseScheduler(raw,authored);
 const readingManifest=withReadingSchedule(manifest,profileFor('0.14.0'));
 const readingStoriesManifest=withReadingSchedule(manifest,profileFor('0.15.0'));
+const revisedInquiryManifest=withReadingSchedule(manifest,profileFor('0.17.0'));
 const selfInquiryManifest=withReadingSchedule(manifest,profileFor('0.16.0'));
-export const manifestFor=(version:Life['contentVersion'])=>version==='0.14.0'?readingManifest:version==='0.15.0'?readingStoriesManifest:version==='0.16.0'?selfInquiryManifest:manifest;
+export const manifestFor=(version:Life['contentVersion'])=>version==='0.14.0'?readingManifest:version==='0.15.0'?readingStoriesManifest:version==='0.16.0'?selfInquiryManifest:version==='0.17.0'?revisedInquiryManifest:manifest;
 export function withScheduler(base:Content):Content {
   const c=structuredClone(base);c.version='0.12.0';
   c.semantic={...c.semantic!,topics:{...c.semantic!.topics,...meanings.topics},sources:{...c.semantic!.sources,...meanings.sources as SemanticContent['sources']}};

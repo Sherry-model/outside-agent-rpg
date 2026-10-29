@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {baseStory,nextCommand,nodeId} from './helpers/scheduler';
-import {createLife,step} from '../src/life/engine';
+import {createLife as createVersionedLife,step} from '../src/life/engine';
 import {contentFor,configFor} from '../src/life/content';
 import {libraryFor,readingEntries} from '../src/life/reading';
 import {manifestFor} from '../src/life/scheduler/content';
@@ -18,6 +18,7 @@ import {hasTranslation,setLocale} from '../src/i18n';
 import {readerView} from '../src/life/reader-ui';
 import type {Life,LifeCommand} from '../src/life/types';
 
+const createLife=(...args:Parameters<typeof createVersionedLife>)=>createVersionedLife(args[0],args[1],args[2]??null,args[3]??'0.16.0');
 const profile=profileFor('0.16.0'), root='escape_cat_lead', thread='rf_self_inquiry';
 const out='output/self-inquiry-20261028';mkdirSync(out+'/ui-fixtures',{recursive:true});
 const cog=(l:Life,command:Extract<LifeCommand,{type:'cognition'}>['command'])=>step(baseStory,l,{type:'cognition',command});

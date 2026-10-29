@@ -4,10 +4,13 @@ import {getLocale, hasTranslation, t} from './index';
 
 /** Only retained clauses are available here. Never consult History or source content. */
 export function memoryText(source: string, meaning?: Meaning): string {
-  if (getLocale() !== 'en') return source;
-  if (!meaning?.clauses.length) return legacyMemoryText(source);
+  if (!meaning?.clauses.length) return getLocale() === 'en' ? legacyMemoryText(source) : source;
   const clauses = meaning.clauses;
   const canonical = clauses.map(c => (c.epistemic === 'reported' ? '据转述，' : c.epistemic === 'unknown' ? '尚不能确定：' : '') + c.gist).join('；') + '。';
+  if (getLocale() !== 'en') {
+    // Repair only reducer-added separators, not stored wording, recall cost or unknown formats.
+    return canonical === source ? source.replace(/。(?=；|。$)/g, '') : source;
+  }
   // Old/unknown formats and partially translated summaries fall back as a whole.
   if (canonical !== source || clauses.some(c => !hasTranslation(c.gist))) return t(source);
   return clauses.map(c => {

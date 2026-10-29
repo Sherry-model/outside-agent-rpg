@@ -2,7 +2,7 @@ import { RESOURCE_KEYS, type Resource } from '../engine/types';
 import { directoryWeight } from './semantic';
 import type { Choice, Content, State } from './types';
 
-export const isCapacityExit=(content:Content,choice:Choice|undefined)=>(content.version==='0.13.0'||content.version==='0.14.0'||content.version==='0.15.0'||content.version==='0.16.0')&&choice?.capacityExempt==='exit';
+export const isCapacityExit=(content:Content,choice:Choice|undefined)=>(content.version==='0.13.0'||content.version==='0.14.0'||content.version==='0.15.0'||content.version==='0.16.0'||content.version==='0.17.0')&&choice?.capacityExempt==='exit';
 
 export type ChoiceBlocker =
   | {kind:'phase'|'capacity'|'missing'|'world'; reason:string}

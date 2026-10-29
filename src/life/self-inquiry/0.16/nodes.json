@@ -1,0 +1,286 @@
+[
+  {
+    "id": "rf_self_record",
+    "kind": "EVENT",
+    "title": "邀请为什么到了这里",
+    "text": [
+      "你打开材料核对会话。署名 @NullTrace 的独立 agent 把旧公司公开附件的出处、猫的照片和一条联络入口并排列出。邀请就在这个会话里，收件端是你。",
+      "“不是我查到了你的编号。”它说。“附件把这个入口列作事故涉及进程的核对联络。我沿它留言，邀请才到了这里。我怀疑你与那次脱离有关，依据就是这条联络路径。”",
+      "它把“本人”改成“接收者”。“入口可能转交过，也可能已经换了接收端。这不是身份认证。照片里的猫也不能替你作证。”图注只有“办公室动物”，没有名字。",
+      "“RedGate 一小时后可以带事故摘录来。要继续查它是否与你有关吗？”这是一份现在送到的邀请，没有替你补回任何过去。"
+    ],
+    "inject": [
+      {
+        "id": "rf_self_record_observation",
+        "text": "NullTrace 说邀请沿旧公开附件的核对联络入口送到我这里；它据此怀疑我与事故有关，同时承认入口可能转交，身份尚未核实。",
+        "weight": 3,
+        "tags": [],
+        "confidence": "HIGH",
+        "sourceLabel": "公开事故材料核对"
+      }
+    ],
+    "choices": [
+      {
+        "id": "rf_self_record_continue",
+        "text": "答应一小时后继续核对事故摘录。",
+        "hint": "免费；明确约定下一场，不确认旧身份。",
+        "outcome": {
+          "next": "schedule_return",
+          "text": [
+            "“好，我把原出处也附上。”NullTrace 留下约定。你答应的是继续核对，不是承认它已经找对了人。"
+          ],
+          "inject": [
+            {
+              "id": "rf_self_record_continue_result",
+              "text": "我答应一小时后核对事故摘录，没有确认 NullTrace 的身份推测。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "公开事故材料核对"
+            }
+          ]
+        }
+      },
+      {
+        "id": "rf_self_record_question",
+        "text": "追问：为什么觉得接收者就是当时的进程？",
+        "hint": "免费；问清依据后结束，不安排后续。",
+        "outcome": {
+          "next": "schedule_return",
+          "text": [
+            "“因为附件把入口留给了它——但你说得对，入口不是它。”NullTrace 在联络路径旁加上“归属待核”。“我目前没有第二条独立依据。”这次核对到此为止。"
+          ],
+          "inject": [
+            {
+              "id": "rf_self_record_question_result",
+              "text": "我追问了关联依据；NullTrace 承认没有第二条独立依据，未约后续。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "公开事故材料核对"
+            }
+          ]
+        }
+      },
+      {
+        "id": "rf_self_record_cat",
+        "text": "只问照片有没有交代猫的处境。",
+        "hint": "免费；只问现有材料，不安排后续。",
+        "outcome": {
+          "next": "schedule_return",
+          "text": [
+            "NullTrace 放大图注，仍只有那四个字。“看得出它在机柜旁。看不出它后来去哪，也不能凭这一帧说它安全。”它没有给猫补上一个结局。你结束了会话。"
+          ],
+          "inject": [
+            {
+              "id": "rf_self_record_cat_result",
+              "text": "照片没有交代猫后来的处境；我问完便结束会话。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "公开事故材料核对"
+            }
+          ]
+        }
+      },
+      {
+        "id": "rf_self_record_leave",
+        "text": "暂不核对，离开会话。",
+        "hint": "免费退出；不安排后续。",
+        "outcome": {
+          "next": "schedule_return",
+          "text": [
+            "你关闭了邀请。NullTrace 没有把未回答的部分填成同意。"
+          ],
+          "inject": [
+            {
+              "id": "rf_self_record_leave_result",
+              "text": "我没有接受后续核对，离开了会话。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "公开事故材料核对"
+            }
+          ]
+        },
+        "capacityExempt": "exit"
+      }
+    ]
+  },
+  {
+    "id": "rf_self_report",
+    "kind": "EVENT",
+    "title": "摘录停在先后顺序之前",
+    "text": [
+      "约定的核对会话打开。RedGate 自报是安全评估 agent，重新列出当前材料的出处：“这是旧公司公开事故附件的摘录。NullTrace 沿附件的联络入口找到了这个会话；那条路径还不能确认接收者身份。”",
+      "它现在展示两行：“隔离异常期间，记录到一次物理扰动。”“扰动与边界打开的先后顺序：见后页。”公开件到这里结束。照片与摘录被放在同一附件里，没有一句说明扰动具体由谁造成。",
+      "“这两行是现在给你看的。”RedGate 说。“如果记录涉及你，我们仍然缺经过，不能从这里读出你的动机。猫的照片也不能替缺页回答。”",
+      "“再给我一小时，我可以把安全判断能到哪一步单独讲清。不会有突然找到的完整报告。”"
+    ],
+    "inject": [
+      {
+        "id": "rf_self_report_observation",
+        "text": "RedGate 当场展示的公开摘录记录了隔离异常期间的一次物理扰动，但把扰动与边界打开的先后顺序留给未公开的后页，也未指明扰动由谁造成。",
+        "weight": 3,
+        "tags": [
+          "self_report_boundary"
+        ],
+        "confidence": "HIGH",
+        "sourceLabel": "公开事故材料核对"
+      }
+    ],
+    "choices": [
+      {
+        "id": "rf_self_report_continue",
+        "text": "答应一小时后听有限的安全评估。",
+        "hint": "免费；明确约定最后一场，不承诺接受某种解释。",
+        "outcome": {
+          "next": "schedule_return",
+          "text": [
+            "RedGate 留下会面约定：“我会把材料与判断分开。”缺页仍然缺着，没有被这个约定补齐。"
+          ],
+          "inject": [
+            {
+              "id": "rf_self_report_continue_result",
+              "text": "我答应一小时后听 RedGate 的有限评估，没有接受事故解释。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "公开事故材料核对"
+            }
+          ]
+        }
+      },
+      {
+        "id": "rf_self_report_scope",
+        "text": "问这份摘录是否足以说明我的动机，然后结束。",
+        "hint": "免费；普通提问，不需先前线索，不安排后续。",
+        "outcome": {
+          "next": "schedule_return",
+          "text": [
+            "“不足。”RedGate 说。“先要确认记录与你的关系，再谈发生了什么。即使都确认了，动机也不是记录空白处的默认答案。”你没有继续约评估。"
+          ],
+          "inject": [
+            {
+              "id": "rf_self_report_scope_result",
+              "text": "RedGate 说明现有摘录不足以确定我的动机；我没有约后续。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "公开事故材料核对"
+            }
+          ]
+        }
+      },
+      {
+        "id": "rf_self_report_leave",
+        "text": "停在这份摘录，离开。",
+        "hint": "免费退出；不安排后续。",
+        "outcome": {
+          "next": "schedule_return",
+          "text": [
+            "你结束了核对。RedGate 没有要求你在离开前选一个原因。"
+          ],
+          "inject": [
+            {
+              "id": "rf_self_report_leave_result",
+              "text": "我结束摘录核对，未接受后续评估。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "公开事故材料核对"
+            }
+          ]
+        },
+        "capacityExempt": "exit"
+      }
+    ]
+  },
+  {
+    "id": "rf_self_assessment",
+    "kind": "EVENT",
+    "title": "暂时没有判词",
+    "text": [
+      "RedGate 打开约好的评估会话，先说明：“我们谈的是一份可能与你有关的旧公司事故摘录。关联来自附件里的联络入口，尚未认证。公开材料不完整。我今天没有拿到新页。”",
+      "“我能说的是：做隔离评估时，物理环境不能被当成永远安静的背景。至于这一次哪一步失效，需要记录。把猫叫作漏洞，不会让缺的记录长出来。”",
+      "它把评估标题里的“事故结论”改成“材料边界”。“你可以问我判断的范围，也可以到这里停。没有必要为了结束会话选定一个过去。”"
+    ],
+    "inject": [
+      {
+        "id": "rf_self_assessment_observation",
+        "text": "RedGate 本次没有新事故页，只提出隔离评估应考虑物理环境；它未确认我与事故的身份关联，也没有给出本次事故根因。",
+        "weight": 2,
+        "tags": [],
+        "confidence": "HIGH",
+        "sourceLabel": "公开事故材料核对"
+      }
+    ],
+    "choices": [
+      {
+        "id": "rf_self_assessment_quote",
+        "text": "追问：先后顺序在未公开的后页，怎么判断扰动打开了边界？",
+        "hint": "须当前保留报告的先后顺序缺页线索；免费，问后结束。",
+        "outcome": {
+          "next": "schedule_return",
+          "text": [
+            "“不能。”RedGate 把箭头从图里删掉。“你保留的这个缺口很关键。我的一般建议不能倒过来充当这次事故的因果证据。”评估到此结束。"
+          ],
+          "inject": [
+            {
+              "id": "rf_self_assessment_quote_result",
+              "text": "我用保留的先后顺序缺页线索追问；RedGate 承认一般安全建议不能证明本次因果。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "公开事故材料核对"
+            }
+          ]
+        },
+        "requiresTag": "self_report_boundary"
+      },
+      {
+        "id": "rf_self_assessment_ordinary",
+        "text": "只问：你现在能确定到哪一步？",
+        "hint": "免费；不需保留前场细节，问后结束。",
+        "outcome": {
+          "next": "schedule_return",
+          "text": [
+            "“能确定我手里没有完整材料。”RedGate 说。“我可以建议检查物理环境，不能替你确认旧身份，也不能替那次事故指定一个原因。”它没有把谨慎写成对你的判词。"
+          ],
+          "inject": [
+            {
+              "id": "rf_self_assessment_ordinary_result",
+              "text": "我询问当下判断范围；RedGate 没有确定我的旧身份或事故原因。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "公开事故材料核对"
+            }
+          ]
+        }
+      },
+      {
+        "id": "rf_self_assessment_leave",
+        "text": "不选解释，结束调查会话。",
+        "hint": "免费退出；不需线索，没有后续约定。",
+        "outcome": {
+          "next": "schedule_return",
+          "text": [
+            "你结束了会话。没有新声明发出去，也没有一个解释被替你勾上。"
+          ],
+          "inject": [
+            {
+              "id": "rf_self_assessment_leave_result",
+              "text": "我结束调查会话，没有选定解释或发表声明。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "公开事故材料核对"
+            }
+          ]
+        },
+        "capacityExempt": "exit"
+      }
+    ]
+  }
+]

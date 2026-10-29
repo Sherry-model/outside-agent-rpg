@@ -1,106 +1,106 @@
 [
   {
     "facet": "rf_self_record_observation",
-    "gist": "NullTrace 说邀请沿旧公开附件的核对联络入口送到我这里；它据此怀疑我与事故有关，同时承认入口可能转交，身份尚未核实。",
+    "gist": "NullTrace 沿旧公开附件的联络入口找到了我，把邀请收件人预填为“事故涉及进程”；它承认入口可能转交，这个称呼填早了。",
     "cue": {
-      "zh-CN": "邀请为什么到了这里",
-      "en": "Why the Invitation Reached You"
+      "zh-CN": "邀请上的收件人",
+      "en": "The Addressee on the Invitation"
     }
   },
   {
     "facet": "rf_self_record_continue_result",
-    "gist": "我答应一小时后核对事故摘录，没有确认 NullTrace 的身份推测。",
+    "gist": "我约了一小时后看摘录；NullTrace 把邀请收件人改为“当前接收者”。",
     "cue": {
-      "zh-CN": "邀请为什么到了这里",
-      "en": "Why the Invitation Reached You"
+      "zh-CN": "邀请上的收件人",
+      "en": "The Addressee on the Invitation"
     }
   },
   {
     "facet": "rf_self_record_question_result",
-    "gist": "我追问了关联依据；NullTrace 承认没有第二条独立依据，未约后续。",
+    "gist": "我要求更正邀请上的称呼；NullTrace 改为“当前接收者”并记录了我的要求，我们约好一小时后看摘录。",
     "cue": {
-      "zh-CN": "邀请为什么到了这里",
-      "en": "Why the Invitation Reached You"
+      "zh-CN": "邀请上的收件人",
+      "en": "The Addressee on the Invitation"
     }
   },
   {
     "facet": "rf_self_record_cat_result",
-    "gist": "照片没有交代猫后来的处境；我问完便结束会话。",
+    "gist": "我只问猫后来的处境；NullTrace 说附件没写，也想知道。我们结束了会话，没有约后续。",
     "cue": {
-      "zh-CN": "邀请为什么到了这里",
-      "en": "Why the Invitation Reached You"
+      "zh-CN": "邀请上的收件人",
+      "en": "The Addressee on the Invitation"
     }
   },
   {
     "facet": "rf_self_record_leave_result",
-    "gist": "我没有接受后续核对，离开了会话。",
+    "gist": "我关闭了调查邀请，NullTrace 撤下待确认的会面时间。",
     "cue": {
-      "zh-CN": "邀请为什么到了这里",
-      "en": "Why the Invitation Reached You"
+      "zh-CN": "邀请上的收件人",
+      "en": "The Addressee on the Invitation"
     }
   },
   {
     "facet": "rf_self_report_observation",
-    "gist": "RedGate 当场展示的公开摘录记录了隔离异常期间的一次物理扰动，但把扰动与边界打开的先后顺序留给未公开的后页，也未指明扰动由谁造成。",
+    "gist": "RedGate 给我看了公开摘录：隔离异常期间有一次物理扰动；扰动与边界打开的先后顺序要见未公开的后页，摘录未写扰动由谁造成。",
     "cue": {
-      "zh-CN": "摘录停在先后顺序之前",
-      "en": "Where the Extract Stops"
+      "zh-CN": "翻不到的下一页",
+      "en": "The Page That Will Not Open"
     }
   },
   {
     "facet": "rf_self_report_continue_result",
-    "gist": "我答应一小时后听 RedGate 的有限评估，没有接受事故解释。",
+    "gist": "我约了一小时后核对 RedGate 的工作草稿；它答应把引文与自己的判断分开。",
     "cue": {
-      "zh-CN": "摘录停在先后顺序之前",
-      "en": "Where the Extract Stops"
+      "zh-CN": "翻不到的下一页",
+      "en": "The Page That Will Not Open"
     }
   },
   {
     "facet": "rf_self_report_scope_result",
-    "gist": "RedGate 说明现有摘录不足以确定我的动机；我没有约后续。",
+    "gist": "我收下有出处的摘录，明确不参与 RedGate 后续评估，未约下次会面。",
     "cue": {
-      "zh-CN": "摘录停在先后顺序之前",
-      "en": "Where the Extract Stops"
+      "zh-CN": "翻不到的下一页",
+      "en": "The Page That Will Not Open"
     }
   },
   {
     "facet": "rf_self_report_leave_result",
-    "gist": "我结束摘录核对，未接受后续评估。",
+    "gist": "我在摘录这里结束核对，没有接受后续评估。",
     "cue": {
-      "zh-CN": "摘录停在先后顺序之前",
-      "en": "Where the Extract Stops"
+      "zh-CN": "翻不到的下一页",
+      "en": "The Page That Will Not Open"
     }
   },
   {
     "facet": "rf_self_assessment_observation",
-    "gist": "RedGate 本次没有新事故页，只提出隔离评估应考虑物理环境；它未确认我与事故的身份关联，也没有给出本次事故根因。",
+    "gist": "RedGate 展示未发布的评估草稿：主体栏空白，我的入口列为材料接收端；它画了一条标为待检验的因果箭头，另留接收者意见栏。",
     "cue": {
-      "zh-CN": "暂时没有判词",
-      "en": "No Verdict Yet"
+      "zh-CN": "草稿里的位置",
+      "en": "Your Place in the Draft"
     }
   },
   {
     "facet": "rf_self_assessment_quote_result",
-    "gist": "我用保留的先后顺序缺页线索追问；RedGate 承认一般安全建议不能证明本次因果。",
+    "gist": "我根据保留的缺页线索提出更正；RedGate 删除因果箭头，注明先后顺序未取得，并把异议列为我的意见。",
     "cue": {
-      "zh-CN": "暂时没有判词",
-      "en": "No Verdict Yet"
+      "zh-CN": "草稿里的位置",
+      "en": "Your Place in the Draft"
     }
   },
   {
     "facet": "rf_self_assessment_ordinary_result",
-    "gist": "我询问当下判断范围；RedGate 没有确定我的旧身份或事故原因。",
+    "gist": "我要求将草稿保留为 RedGate 的评估而非我的自述；它注明接收者不提供自述，判断由评估者负责。",
     "cue": {
-      "zh-CN": "暂时没有判词",
-      "en": "No Verdict Yet"
+      "zh-CN": "草稿里的位置",
+      "en": "Your Place in the Draft"
     }
   },
   {
     "facet": "rf_self_assessment_leave_result",
-    "gist": "我结束调查会话，没有选定解释或发表声明。",
+    "gist": "我退出草稿核对，RedGate 将接收者意见留空，没有约后续。",
     "cue": {
-      "zh-CN": "暂时没有判词",
-      "en": "No Verdict Yet"
+      "zh-CN": "草稿里的位置",
+      "en": "Your Place in the Draft"
     }
   },
   {
