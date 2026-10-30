@@ -11,6 +11,7 @@ export interface Meaning { topic: string; clauses: Clause[]; depth: number }
 export interface DriftRule {
   id: string; fromScope: string; toScope: string;
   quality: number; tag: string;
+  belief?: {gist:string;abstract:string};
 }
 export interface SemanticContent {
   version: '0.4.0'; topics: Record<string, string>;

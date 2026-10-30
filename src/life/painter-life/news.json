@@ -1,0 +1,24 @@
+[
+  {
+    "id": "painter_move_plan",
+    "text": "公共目录：画师登记了换观景端计划，旧展示会继续挂着。",
+    "weight": 2,
+    "tags": [],
+    "confidence": "HIGH",
+    "sourceLabel": "换个视野以后",
+    "kind": "NEWS",
+    "headline": "画板目录更新",
+    "truthState": "TRUE"
+  },
+  {
+    "id": "painter_move_done",
+    "text": "公共目录：画师的新观景端已开放，视野朝向站台出口。旧展示移入侧栏。",
+    "weight": 2,
+    "tags": [],
+    "confidence": "HIGH",
+    "sourceLabel": "换个视野以后",
+    "kind": "NEWS",
+    "headline": "画板目录更新",
+    "truthState": "TRUE"
+  }
+]

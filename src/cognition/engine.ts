@@ -58,6 +58,11 @@ function inject(s: State, note: NoteTemplate, sourceId: string, historyId: strin
   const { id, text, weight, tags, confidence, sourceLabel } = note;
   s.instance.context.items.push({ id, text, weight, tags: [...tags], confidence, sourceLabel, ...(note.meaning ? {meaning:structuredClone(note.meaning)} : {}), pinned: false, sourceId, historyId });
 }
+/** Shared authored News injection; callers own timing, capacity and history boundaries. */
+export function receiveNews(content:Content,s:State,newsId:string,historyId:string) {
+  const news=content.news.find(n=>n.id===newsId);if(!news)throw new Error('未知消息。');
+  inject(s,news,newsId,historyId);
+}
 function enter(content: Content, s: State, id: string, historyId: string) {
   const node = content.nodes.find(n => n.id === id);
   if (!node) throw new Error('未知事件。');
@@ -65,7 +70,7 @@ function enter(content: Content, s: State, id: string, historyId: string) {
   s.instance.phase = node.kind === 'ENDING' ? 'ending' : 'event';
   s.instance.pendingId = null;
   if (node.facts) s.world.flags = { ...s.world.flags, ...node.facts };
-  for (const newsId of node.receive ?? []) inject(s, content.news.find(n => n.id === newsId)!, newsId, historyId);
+  for (const newsId of node.receive ?? []) receiveNews(content,s,newsId,historyId);
   for (const note of node.inject ?? []) inject(s, note, node.id, historyId);
 }
 function record(before: State | null, s: State, command: Command, sourceId: string, resolution?: Resolution) {

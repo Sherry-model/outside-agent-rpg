@@ -72,7 +72,7 @@ function groups(notes: ContextItem[], data: SemanticContent, result: CheckResult
     used.add(goal.id); used.add(gate.id);
     output.push({notes:[goal,gate],topic:goal.meaning!.topic,
       drift:{ruleId:rule.id,sourceScope:rule.fromScope,targetScope:rule.toScope,sourceItemId:gate.id,targetItemId:goal.id},
-      clause:{facet:`belief_${rule.id}`,gist:`要${a.relation!.action}，得先${b.relation!.action}`,abstract:'我记得一些行动之间有先后条件',epistemic:'observed',priority:5,tags:[rule.tag]},
+      clause:{facet:`belief_${rule.id}`,gist:rule.belief?.gist??`要${a.relation!.action}，得先${b.relation!.action}`,abstract:rule.belief?.abstract??'我记得一些行动之间有先后条件',epistemic:'observed',priority:5,tags:[rule.tag]},
     });
   }
   const buckets = new Map<string, ContextItem[]>();

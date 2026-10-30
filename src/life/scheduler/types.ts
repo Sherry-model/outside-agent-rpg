@@ -1,6 +1,7 @@
 import type {ReadingState} from '../reading-threads/types';
 export type DeliveryMode='choice'|'summary'|'missable';
 export interface PromiseSpec {
+  entryWeight?:number;
   readingThread?:string;
   id:string; role:'daily'|'branch'; eventId?:string; title:string; afterHours:number; afterScenes:number;
   deadlineHours?:number; mode:DeliveryMode; channels:string[]; fallbackEventId?:string;

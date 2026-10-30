@@ -1,3 +1,4 @@
+import {painterInvitation,newsNotice,painterDisplay} from '../painter-life/ui';
 import {tr} from '../../i18n';
 import {contextText} from '../../i18n/memory';
 import {escapeHtml as esc} from '../../cognition/help-ui';
@@ -14,7 +15,7 @@ export class SchedulePanel {
     const available=due(s).filter(p=>p.mode!=='summary');
     const respond=(id:string)=>`<button class="text-button" data-schedule-respond="${esc(id)}" ${safeToRespond(life)&&available[0]?.id===id?'':'disabled'}>${tr('处理这项回应')}</button>`;
     return `<section class="schedule-panel"><p class="eyebrow">LIFE CONTINUES</p><h1 id="event-title" tabindex="-1">${tr('生活安排')}</h1><p>${tr('记录经过 {hours} 小时。关闭页面不会推进世界。',{hours:s.hour})}</p>
-      <h2>${tr('尚未结束的往来')}</h2>${pending.map(p=>`<article class="context-card"><h3>${tr(p.title)}</h3><p>${tr(p.mode==='summary'?'到期后会收到回执，无需选择。':p.mode==='missable'?'可以错过；跨过期限前会请你确认后果。':'这项需要你本人决定，不能被休眠跳过。')}</p><p>${tr('还需等待 {hours} 小时。',{hours:Math.max(0,p.dueHour-s.hour)})}${p.deadlineHour!==undefined?' '+tr('距离回应期限 {hours} 小时。',{hours:Math.max(0,p.deadlineHour-s.hour)}):''}</p>${p.deferredHours?`<p>${tr('连续场景使回应延后了 {hours} 小时；窗口仍为你保留。',{hours:p.deferredHours})}</p>`:''}${p.mode!=='summary'?respond(p.id):''}</article>`).join('')||`<p>${tr('目前没有未完成的约定。')}</p>`}
+      ${painterInvitation(life)}<h2>${tr('尚未结束的往来')}</h2>${pending.map(p=>`<article class="context-card"><h3>${tr(p.title)}</h3><p>${tr(p.mode==='summary'?'到期后会收到回执，无需选择。':p.mode==='missable'?'可以错过；跨过期限前会请你确认后果。':'这项需要你本人决定，不能被休眠跳过。')}</p><p>${tr('还需等待 {hours} 小时。',{hours:Math.max(0,p.dueHour-s.hour)})}${p.deadlineHour!==undefined?' '+tr('距离回应期限 {hours} 小时。',{hours:Math.max(0,p.deadlineHour-s.hour)}):''}</p>${p.deferredHours?`<p>${tr('连续场景使回应延后了 {hours} 小时；窗口仍为你保留。',{hours:p.deferredHours})}</p>`:''}${p.mode!=='summary'?respond(p.id):''}</article>`).join('')||`<p>${tr('目前没有未完成的约定。')}</p>`}
       ${closed?`<p>${tr('本次记录已经收束，未完成事项保留在这里，不再推进。')}</p>`:''}${!closed&&!safeToRespond(life)?`<p>${tr('先完成眼前的连续场景或整理近处，再处理回信。')}</p>`:''}
       <h2>${tr('让日历往后走一点')}</h2><p>${tr('最初几天结束后，可以在收束前等待。新的偶遇不会随休眠时长成倍补发。')}</p>
       <div class="memory-filters">${waits.map(h=>`<button class="text-button" data-schedule-hours="${h}" aria-pressed="${h===this.hours}">${tr('等待 {hours} 小时',{hours:h})}</button>`).join('')}</div>
@@ -30,13 +31,14 @@ export class SchedulePanel {
   }
   notice(life:Life):string {
     const p=life.schedule?.commitments.find(p=>p.id===life.schedule?.active?.id);
-    return p?.deferredHours?`<aside class="schedule-notice">${tr('连续场景使回应延后了 {hours} 小时；窗口仍为你保留。',{hours:p.deferredHours})}</aside>`:'';
+    return painterDisplay(life)+newsNotice(life)+painterInvitation(life)+(p?.deferredHours?`<aside class="schedule-notice">${tr('连续场景使回应延后了 {hours} 小时；窗口仍为你保留。',{hours:p.deferredHours})}</aside>`:'');
   }
   action(target:HTMLElement,root:HTMLElement):LifeCommand|null {
+    if(target.dataset.painterInvite)return {type:'invitation',response:target.dataset.painterInvite as 'accept'|'decline'};
     if(target.dataset.scheduleHours){this.hours=Number(target.dataset.scheduleHours);return null;}
     if(target.dataset.scheduleRespond)return {type:'respond',promiseId:target.dataset.scheduleRespond};
     if(target.hasAttribute('data-schedule-wait'))return {type:'wait',hours:this.hours,missed:[...root.querySelectorAll<HTMLInputElement>('[data-schedule-miss]:checked')].map(e=>e.dataset.scheduleMiss!)};
     return null;
   }
 }
-export const SCHEDULE_SELECTOR='[data-schedule-hours],[data-schedule-respond],[data-schedule-wait]';
+export const SCHEDULE_SELECTOR='[data-painter-invite],[data-schedule-hours],[data-schedule-respond],[data-schedule-wait]';

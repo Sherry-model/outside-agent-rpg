@@ -14,6 +14,7 @@ export interface AutoCompression {
 export type LifeCommand =
   | { type: 'configure-compression'; enabled: boolean; investment: AutoCompression['investment'] }
   | { type: 'auto-compress' }
+  | {type:'invitation'; response:'accept'|'decline'}
   | { type: 'choose'; choiceId: string }
   | { type: 'continue' }
   | { type:'wait'; hours:number; missed:string[] }
@@ -24,7 +25,7 @@ export type LifeCommand =
   | { type: 'read'; entryId: string }
   | { type: 'cognition'; command: Exclude<Command, { type: 'start' }> };
 export interface Life {
-  contentVersion: '0.3.0' | '0.4.0' | '0.5.0' | '0.6.0' | '0.6.1' | '0.7.0' | '0.7.1' | '0.8.0' | '0.9.0' | '0.10.0' | '0.11.0' | '0.12.0' | '0.13.0' | '0.14.0' | '0.15.0' | '0.16.0' | '0.17.0'; seed: number;
+  contentVersion: '0.3.0' | '0.4.0' | '0.5.0' | '0.6.0' | '0.6.1' | '0.7.0' | '0.7.1' | '0.8.0' | '0.9.0' | '0.10.0' | '0.11.0' | '0.12.0' | '0.13.0' | '0.14.0' | '0.15.0' | '0.16.0' | '0.17.0' | '0.18.0'; seed: number;
   baseline: JourneySave | null;
   state: GameState;
   mind: State;
@@ -33,17 +34,18 @@ export interface Life {
   commands: LifeCommand[];
   schedule?:Schedule;
   autoCompression?: AutoCompression;
+  news?: import('./news').NewsDelivery[];
 }
-export const hasCommunity = (version:Life['contentVersion']) => version==='0.6.0'||version==='0.6.1'||version==='0.7.0'||version==='0.7.1'||version==='0.8.0'||version==='0.9.0'||version==='0.10.0'||version==='0.11.0'||version==='0.12.0'||version==='0.13.0'||version==='0.14.0'||version==='0.15.0'||version==='0.16.0'||version==='0.17.0';
+export const hasCommunity = (version:Life['contentVersion']) => version==='0.6.0'||version==='0.6.1'||version==='0.7.0'||version==='0.7.1'||version==='0.8.0'||version==='0.9.0'||version==='0.10.0'||version==='0.11.0'||version==='0.12.0'||version==='0.13.0'||version==='0.14.0'||version==='0.15.0'||version==='0.16.0'||(version==='0.17.0'||version==='0.18.0');
 export interface LifeSave {
   format: 'outside-life-save'; version: 1; savedAt: string;
   state: GameState;
   life: Life;
 }
 
-export const hasEndings = (version:Life['contentVersion']) => version==='0.10.0'||version==='0.11.0'||version==='0.12.0'||version==='0.13.0'||version==='0.14.0'||version==='0.15.0'||version==='0.16.0'||version==='0.17.0';
+export const hasEndings = (version:Life['contentVersion']) => version==='0.10.0'||version==='0.11.0'||version==='0.12.0'||version==='0.13.0'||version==='0.14.0'||version==='0.15.0'||version==='0.16.0'||(version==='0.17.0'||version==='0.18.0');
 
 /** Scheduler, long-save and opt-in compression rules introduced in 0.12. */
-export const hasScheduler = (version:Life['contentVersion']) => version==='0.12.0'||version==='0.13.0'||version==='0.14.0'||version==='0.15.0'||version==='0.16.0'||version==='0.17.0';
+export const hasScheduler = (version:Life['contentVersion']) => version==='0.12.0'||version==='0.13.0'||version==='0.14.0'||version==='0.15.0'||version==='0.16.0'||(version==='0.17.0'||version==='0.18.0');
 
-export const hasReadingThreads = (version:Life['contentVersion']) => version==='0.14.0'||version==='0.15.0'||version==='0.16.0'||version==='0.17.0';
+export const hasReadingThreads = (version:Life['contentVersion']) => version==='0.14.0'||version==='0.15.0'||version==='0.16.0'||(version==='0.17.0'||version==='0.18.0');

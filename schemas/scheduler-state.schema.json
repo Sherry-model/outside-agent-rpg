@@ -193,6 +193,11 @@
           "readingThread": {
             "type": "string",
             "minLength": 1
+          },
+          "entryWeight": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
           }
         },
         "required": [

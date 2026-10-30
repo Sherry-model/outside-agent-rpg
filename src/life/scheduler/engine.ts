@@ -54,7 +54,7 @@ export function windowDecision(s:Schedule,m:SchedulerManifest,id:string,spec:Win
   if(first){
     const nodeId=first.channels.includes(s.channel)?first.eventId:first.fallbackEventId;
     if(!nodeId)throw new Error('承诺缺少可送达的替代渠道。');
-    if(first.readingThread&&reading&&!fits(reading,nodeId)){record(null,'reading-capacity');return null;}
+    if(reading&&((first.entryWeight!==undefined&&reading.load+first.entryWeight>reading.capacity)||(first.readingThread&&!fits(reading,nodeId)))){record(null,'reading-capacity');return null;}
     first.status='delivered';charge(s,true);record(first.id,'commitment');
     if(first.readingThread&&reading)entered(reading,first.readingThread,false);
     return {id:first.id,nodeId,kind:'commitment' as const,role:first.role};
@@ -84,7 +84,7 @@ export function deliverBeforeJump(s:Schedule,m:SchedulerManifest,promiseId:strin
   if(p.dueHour>s.hour||p.dueScene>s.scenes)throw new Error('对方尚未提供可回应的事项。');
   const nodeId=p.channels.includes(s.channel)?p.eventId:p.fallbackEventId;
   if(!nodeId)throw new Error('承诺缺少可送达的替代渠道。');
-  if(p.readingThread&&reading&&!fits(reading,nodeId))throw new Error('上下文已满，请先整理。');
+  if(reading&&((p.entryWeight!==undefined&&reading.load+p.entryWeight>reading.capacity)||(p.readingThread&&!fits(reading,nodeId))))throw new Error('上下文已满，请先整理。');
   setPhase(s,m,s.phase,s.channel);p.status='delivered';charge(s,true);
   if(p.readingThread&&reading)entered(reading,p.readingThread,false);
   const id=`inbox:${p.id}`;s.processed.push(id);s.decisions.push({window:id,hour:s.hour,scene:s.scenes,selected:p.id,reason:'explicit-response'});

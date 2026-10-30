@@ -1,3 +1,5 @@
+import {deliverNews} from './news';
+import {invitation} from './painter-life/integration';
 import {createReadingState,opened} from './reading-threads/engine';
 import {profileFor} from './reading-threads/profiles';
 import {publications} from './publications/profile';
@@ -50,7 +52,7 @@ function toMain(life: Life) {
   life.state.resources = {...life.mind.instance.resources}; life.state.rngState = life.mind.rngState;
   for (const key of PERSONALITY_KEYS) life.state.personality[key] = Math.round((life.mind.instance.hidden[key]-50)/5);
 }
-export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.17.0'): Life {
+export function createLife(story: Story, seed: number, baseline: JourneySave | null = null, version: Life['contentVersion'] = '0.18.0'): Life {
   story = storyForLife(story,version);
   parseLifeContent(configFor(version),story);
   if (baseline?.chapter?.status === 'active') throw new Error('这是旧版进行中的午后，请用 versions/OUTSIDE-journey-content-0.2.2.html 继续；本文件未被覆盖。');
@@ -72,6 +74,7 @@ function coreStep(story: Story, before: Life, command: LifeCommand, replaying=fa
   const life = structuredClone(replaying?{...before,commands:[],mind:{...before.mind,history:[]}}:before);
   if(replaying){life.commands=[...before.commands];life.mind.history=[...before.mind.history];}
   life.commands.push(structuredClone(command));
+  if(command.type==='invitation'){invitation(life,command);return life;}
   if(command.type==='configure-compression'){configureCompression(life,command);return life;}
   if(command.type==='auto-compress'){
     const reason=autoCompressionReason(life);if(reason)throw new Error(reason);
@@ -147,6 +150,7 @@ function applyStep(story:Story,before:Life,command:LifeCommand,replaying=false):
     toMain(life);syncEndingFacts(life);
   }
   if(life.autoCompression)settleExhaustion(life);
+  deliverNews(before,life,command);
   return life;
 }
 

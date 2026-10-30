@@ -40,7 +40,9 @@ const readingManifest=withReadingSchedule(manifest,profileFor('0.14.0'));
 const readingStoriesManifest=withReadingSchedule(manifest,profileFor('0.15.0'));
 const revisedInquiryManifest=withReadingSchedule(manifest,profileFor('0.17.0'));
 const selfInquiryManifest=withReadingSchedule(manifest,profileFor('0.16.0'));
-export const manifestFor=(version:Life['contentVersion'])=>version==='0.14.0'?readingManifest:version==='0.15.0'?readingStoriesManifest:version==='0.16.0'?selfInquiryManifest:version==='0.17.0'?revisedInquiryManifest:manifest;
+const painterManifest=structuredClone(revisedInquiryManifest);
+for(const id of ['painter_sync_help','painter_sync_look'])painterManifest.promises[id]=[{id:'painter_revisit',eventId:'painter_revisit',fallbackEventId:'painter_revisit',role:'branch',title:'三天后的画师回访',afterHours:72,afterScenes:0,mode:'choice',channels:['public','mail'],entryWeight:2}];
+export const manifestFor=(version:Life['contentVersion'])=>version==='0.18.0'?painterManifest:version==='0.14.0'?readingManifest:version==='0.15.0'?readingStoriesManifest:version==='0.16.0'?selfInquiryManifest:version==='0.17.0'?revisedInquiryManifest:manifest;
 export function withScheduler(base:Content):Content {
   const c=structuredClone(base);c.version='0.12.0';
   c.semantic={...c.semantic!,topics:{...c.semantic!.topics,...meanings.topics},sources:{...c.semantic!.sources,...meanings.sources as SemanticContent['sources']}};

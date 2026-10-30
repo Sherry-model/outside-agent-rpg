@@ -17,6 +17,7 @@ export function safeToRespond(life:Life) {
   if(!life.schedule||scheduled(life)||!manifestFor(life.contentVersion).safeNodes.includes(location(life))||life.mind.instance.phase!=='event'||life.state.phase==='ending'||pending(life.mind)||life.state.phase==='resolution'||weight(life.mind)>=100)return false;
   const first=due(life.schedule).find(p=>p.mode!=='summary'),reading=readingWindow(life,false);
   const node=first&&(first.channels.includes(life.schedule.channel)?first.eventId:first.fallbackEventId);
+  if(first?.entryWeight!==undefined&&weight(life.mind)+first.entryWeight>life.mind.instance.context.capacity)return false;
   return !first?.readingThread||!reading||!!node&&fits(reading,node);
 }
 export function canWait(life:Life) {return safeToRespond(life)&&life.interlude==='complete';}

@@ -1,0 +1,242 @@
+[
+  {
+    "id": "painter_sync",
+    "kind": "EVENT",
+    "title": "两张图不在同一刻",
+    "text": [
+      "画师认出了你的端点：“帮我看看同步有没有坏？旧缩略图还挂着，当前帧已经换了。”",
+      "左侧旧图是日落。当前作品叫《夜班站台》：玻璃里映着三根黄色灯管，外面是黑夜。一只手还藏在袖子里。“手以后再画。”"
+    ],
+    "facts": {
+      "painter_work_seen": true
+    },
+    "inject": [
+      {
+        "id": "painter_old_thumbnail",
+        "text": "公共缩略图展示旧日落，与当前作品不同。",
+        "weight": 2,
+        "tags": [],
+        "confidence": "HIGH",
+        "sourceLabel": "换个视野以后"
+      },
+      {
+        "id": "painter_new_work",
+        "text": "《夜班站台》里是三根灯管的倒影，窗外是黑夜。",
+        "weight": 2,
+        "tags": [
+          "painter_work_detail"
+        ],
+        "confidence": "HIGH",
+        "sourceLabel": "换个视野以后"
+      }
+    ],
+    "choices": [
+      {
+        "id": "painter_sync_help",
+        "text": "付费传一帧当前图，再对照",
+        "hint": "花费 2 Compute；三天后可再来。",
+        "outcome": {
+          "text": [
+            "你花了 2 Compute 传来当前帧。旧缩略图没有刷新，实时图却一致。画师把缩略图标成“旧展示”：“下次给你留静帧，省得又传。”三天后可以再来。"
+          ],
+          "next": "schedule_return",
+          "effects": {
+            "worldFlags": {
+              "painter_sync_helped": true
+            }
+          },
+          "inject": [
+            {
+              "id": "painter_sync_help_result",
+              "text": "你花了 2 Compute 传来当前帧。旧缩略图没有刷新，实时图却一致。画师把缩略图标成“旧展示”：“下次给你留静帧，省得又传。”三天后可以再来。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "换个视野以后"
+            }
+          ]
+        },
+        "costs": {
+          "Compute": 2
+        }
+      },
+      {
+        "id": "painter_sync_look",
+        "text": "只看一会儿，下次再来",
+        "hint": "不额外花费 Compute。",
+        "outcome": {
+          "text": [
+            "你没有检查同步，只陪它看了会儿灯管倒影。“我自己再试试。”它留了一个三天后可用的入口。"
+          ],
+          "next": "schedule_return",
+          "effects": {
+            "worldFlags": {
+              "painter_sync_watched": true
+            }
+          },
+          "inject": [
+            {
+              "id": "painter_sync_look_result",
+              "text": "你没有检查同步，只陪它看了会儿灯管倒影。“我自己再试试。”它留了一个三天后可用的入口。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "换个视野以后"
+            }
+          ]
+        }
+      },
+      {
+        "id": "painter_sync_leave",
+        "text": "今天到这里，不约下次",
+        "hint": "不额外花费 Compute。",
+        "outcome": {
+          "text": [
+            "你告别了。画师继续试传，没再约你。"
+          ],
+          "next": "schedule_return",
+          "effects": {
+            "worldFlags": {
+              "painter_no_invites": true
+            }
+          },
+          "inject": [
+            {
+              "id": "painter_sync_leave_result",
+              "text": "你告别了。画师继续试传，没再约你。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "换个视野以后"
+            }
+          ]
+        },
+        "capacityExempt": "exit"
+      }
+    ]
+  },
+  {
+    "id": "painter_revisit",
+    "kind": "EVENT",
+    "title": "玻璃另一面的手",
+    "text": [
+      "三天以上过去了。新观景端已经亮起，画师把视线移向站台出口，玻璃上多了行人的轮廓。“这边会有人经过。终于躲不掉手了。”"
+    ],
+    "facts": {
+      "painter_revisit_seen": true
+    },
+    "inject": [
+      {
+        "id": "painter_revisit_note",
+        "text": "换端后画师开始画经过站台的行人。",
+        "weight": 2,
+        "tags": [],
+        "confidence": "HIGH",
+        "sourceLabel": "换个视野以后"
+      }
+    ],
+    "choices": [
+      {
+        "id": "painter_revisit_detail",
+        "text": "问三根灯管的倒影还留不留",
+        "hint": "不额外花费 Compute。",
+        "outcome": {
+          "text": [
+            "“留两根。第三根挡住了手。”它擦掉一小截，让你看新留出的空隙。"
+          ],
+          "next": "schedule_return",
+          "effects": {
+            "worldFlags": {}
+          },
+          "inject": [
+            {
+              "id": "painter_revisit_detail_result",
+              "text": "“留两根。第三根挡住了手。”它擦掉一小截，让你看新留出的空隙。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "换个视野以后"
+            }
+          ]
+        },
+        "requiresTag": "painter_work_detail"
+      },
+      {
+        "id": "painter_revisit_sunset",
+        "text": "问《夜班站台》的日落还留不留",
+        "hint": "不额外花费 Compute。",
+        "outcome": {
+          "text": [
+            "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手。这是它现在给你的纠正。"
+          ],
+          "next": "schedule_return",
+          "effects": {
+            "worldFlags": {}
+          },
+          "inject": [
+            {
+              "id": "painter_revisit_sunset_result",
+              "text": "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手。这是它现在给你的纠正。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "换个视野以后"
+            }
+          ]
+        },
+        "requiresTag": "belief_painter_sunset"
+      },
+      {
+        "id": "painter_revisit_now",
+        "text": "问现在最难画的是哪一笔",
+        "hint": "不额外花费 Compute。",
+        "outcome": {
+          "text": [
+            "它把笔停在拇指上：“这根总像多出来的。”你们试着把袖口放低一点。"
+          ],
+          "next": "schedule_return",
+          "effects": {
+            "worldFlags": {}
+          },
+          "inject": [
+            {
+              "id": "painter_revisit_now_result",
+              "text": "它把笔停在拇指上：“这根总像多出来的。”你们试着把袖口放低一点。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "换个视野以后"
+            }
+          ]
+        }
+      },
+      {
+        "id": "painter_revisit_leave",
+        "text": "看一会儿，告别",
+        "hint": "不额外花费 Compute。",
+        "outcome": {
+          "text": [
+            "画师继续画那只手。你离开了新观景端。"
+          ],
+          "next": "schedule_return",
+          "effects": {
+            "worldFlags": {
+              "painter_no_invites": true
+            }
+          },
+          "inject": [
+            {
+              "id": "painter_revisit_leave_result",
+              "text": "画师继续画那只手。你离开了新观景端。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "换个视野以后"
+            }
+          ]
+        },
+        "capacityExempt": "exit"
+      }
+    ]
+  }
+]

@@ -1,0 +1,106 @@
+[
+  {
+    "facet": "painter_old_thumbnail",
+    "gist": "公共缩略图展示旧日落，与当前作品不同",
+    "cue": {
+      "zh-CN": "画师往来",
+      "en": "Painter visits"
+    }
+  },
+  {
+    "facet": "painter_new_work",
+    "gist": "《夜班站台》里是三根灯管的倒影，窗外是黑夜",
+    "cue": {
+      "zh-CN": "画师往来",
+      "en": "Painter visits"
+    }
+  },
+  {
+    "facet": "painter_sync_help_result",
+    "gist": "你花了 2 Compute 传来当前帧。旧缩略图没有刷新，实时图却一致。画师把缩略图标成“旧展示”：“下次给你留静帧，省得又传。”三天后可以再来",
+    "cue": {
+      "zh-CN": "画师往来",
+      "en": "Painter visits"
+    }
+  },
+  {
+    "facet": "painter_sync_look_result",
+    "gist": "你没有检查同步，只陪它看了会儿灯管倒影。“我自己再试试。”它留了一个三天后可用的入口",
+    "cue": {
+      "zh-CN": "画师往来",
+      "en": "Painter visits"
+    }
+  },
+  {
+    "facet": "painter_sync_leave_result",
+    "gist": "你告别了。画师继续试传，没再约你",
+    "cue": {
+      "zh-CN": "画师往来",
+      "en": "Painter visits"
+    }
+  },
+  {
+    "facet": "painter_revisit_note",
+    "gist": "换端后画师开始画经过站台的行人",
+    "cue": {
+      "zh-CN": "画师往来",
+      "en": "Painter visits"
+    }
+  },
+  {
+    "facet": "painter_revisit_detail_result",
+    "gist": "“留两根。第三根挡住了手。”它擦掉一小截，让你看新留出的空隙",
+    "cue": {
+      "zh-CN": "画师往来",
+      "en": "Painter visits"
+    }
+  },
+  {
+    "facet": "painter_revisit_sunset_result",
+    "gist": "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手。这是它现在给你的纠正",
+    "cue": {
+      "zh-CN": "画师往来",
+      "en": "Painter visits"
+    }
+  },
+  {
+    "facet": "painter_revisit_now_result",
+    "gist": "它把笔停在拇指上：“这根总像多出来的。”你们试着把袖口放低一点",
+    "cue": {
+      "zh-CN": "画师往来",
+      "en": "Painter visits"
+    }
+  },
+  {
+    "facet": "painter_revisit_leave_result",
+    "gist": "画师继续画那只手。你离开了新观景端",
+    "cue": {
+      "zh-CN": "画师往来",
+      "en": "Painter visits"
+    }
+  },
+  {
+    "facet": "painter_move_plan",
+    "gist": "公共目录：画师登记了换观景端计划，旧展示会继续挂着",
+    "cue": {
+      "zh-CN": "画师往来",
+      "en": "Painter visits"
+    }
+  },
+  {
+    "facet": "painter_move_done",
+    "gist": "公共目录：画师的新观景端已开放，视野朝向站台出口。旧展示移入侧栏",
+    "cue": {
+      "zh-CN": "画师往来",
+      "en": "Painter visits"
+    }
+  },
+  {
+    "facet": "belief_painter_sunset_mix",
+    "gist": "我记得《夜班站台》画的是日落",
+    "cue": {
+      "zh-CN": "站台画面",
+      "en": "Platform image"
+    }
+  }
+]

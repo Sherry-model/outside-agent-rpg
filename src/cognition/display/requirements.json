@@ -388,5 +388,19 @@
     "readings": [
       "escape_cat_lead"
     ]
+  },
+  "painter_work_detail": {
+    "kind": "knowledge",
+    "topics": [
+      "painter_life"
+    ],
+    "readings": []
+  },
+  "belief_painter_sunset": {
+    "kind": "belief",
+    "topics": [
+      "painter_life"
+    ],
+    "readings": []
   }
 }

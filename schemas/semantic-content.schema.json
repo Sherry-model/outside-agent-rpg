@@ -149,6 +149,26 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 300
+          },
+          "belief": {
+            "type": "object",
+            "properties": {
+              "gist": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300
+              },
+              "abstract": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300
+              }
+            },
+            "required": [
+              "gist",
+              "abstract"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [

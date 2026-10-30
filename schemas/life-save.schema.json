@@ -34,7 +34,8 @@
             "0.14.0",
             "0.15.0",
             "0.16.0",
-            "0.17.0"
+            "0.17.0",
+            "0.18.0"
           ]
         },
         "seed": {
@@ -402,6 +403,25 @@
                   "type"
                 ],
                 "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "invitation"
+                  },
+                  "response": {
+                    "enum": [
+                      "accept",
+                      "decline"
+                    ]
+                  }
+                },
+                "required": [
+                  "type",
+                  "response"
+                ],
+                "additionalProperties": false
               }
             ]
           }
@@ -503,6 +523,37 @@
             "investment"
           ],
           "additionalProperties": false
+        },
+        "news": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "hour": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "scene": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "commandIndex": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "hour",
+              "scene",
+              "commandIndex"
+            ],
+            "additionalProperties": false
+          }
         }
       },
       "required": [
