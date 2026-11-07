@@ -1,3 +1,4 @@
+import { focusReadingStart } from '../ui/reading-position';
 import { AUTO_SELECTOR } from '../life/auto-compression-ui';
 import {SCHEDULE_SELECTOR} from '../life/scheduler/ui';
 import { contextText, memoryText } from '../i18n/memory';
@@ -58,7 +59,7 @@ export function mount(host?: Host) {
     if (command.type === 'recall' && content.semantic) view = 'context';
     if (!['pin','recall','drop','forget'].includes(command.type)) { view = 'terminal'; investment = 0; }
     render();
-    app.querySelector<HTMLElement>('.resolution-title, #event-title')?.focus({ preventScroll: true });
+    if (!['pin','recall','drop','forget'].includes(command.type)) focusReadingStart(app);
   }
   function resources() {
     return RESOURCE_KEYS.map(k => `<div class="resource ${k.toLowerCase()}"><div class="resource-label"><span>${k}</span><strong>${state.instance.resources[k]}<em> / 100</em></strong></div><div class="meter" role="meter" aria-label="${k}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${state.instance.resources[k]}"><span style="width:${state.instance.resources[k]}%"></span></div></div>`).join('');
@@ -160,7 +161,7 @@ export function mount(host?: Host) {
         recall(id){state=host?.onCommand?host.onCommand({type:'recall',memoryId:id}):reduce(content,state,{type:'recall',memoryId:id});persist();},
         navigate(next){view=next;},render}))return;
       if(target.dataset.helpSourceChoice)guide.anchor={node:state.instance.nodeId,choice:target.dataset.helpSourceChoice};
-      if(host?.scheduler&&target.matches(SCHEDULE_SELECTOR)){const node=state.instance.nodeId;state=host.scheduler.onAction(target);view=state.instance.nodeId!==node?'terminal':'life';render();return;}
+      if(host?.scheduler&&target.matches(SCHEDULE_SELECTOR)){const node=state.instance.nodeId;state=host.scheduler.onAction(target);view=state.instance.nodeId!==node?'terminal':'life';render();if(!target.dataset.scheduleHours)focusReadingStart(app);return;}
       const cognitionCommand=panelCommand(target,app,investment);
       if(host?.reader&&(target.dataset.reading||target.dataset.readingSection||target.dataset.bookmark!==undefined||target.dataset.action?.startsWith('reader-'))) {
         state=host.reader.onAction(target);view='reading';render();

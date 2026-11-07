@@ -9,3 +9,10 @@ Two optional scenes continue the existing painter acquaintance. This is a partia
 - New fields/commands are strict-replayed. 0.17 config/content/schedule/reading/story fingerprints and a genuine pre-change save are regression-tested. Old behavior is unchanged.
 
 Developer checks: `npm test`, `npm run build`. New regression tests include real-command acquaintance, 72-hour return, refusal/nonparticipation, capacity and duplicate delivery, real seeded drift with recall, bilingual data, frozen graph and old save. Browser and natural-play acceptance are separate, delegated to Astra.
+
+
+## 2026-11-08 acceptance fixes
+
+Public directory notes abstract to public updates and use a public-display directory cue; they never imply personal acquaintance. Life renders the same ephemeral, Context-backed news notice as Terminal. Scene/appointment transitions restore the visible reading start; ordinary rendering and reading controls retain their position.
+
+The unreleased 63d0b34 candidate used the same 0.18 version with different retained text. Import first checks current strict replay. On a mismatch, `verifyOriginalPainterDraft` authenticates the complete original snapshot in a synchronous, exception-safe content scope; only a genuine old candidate may be regenerated with corrected content. Never await or perform UI/persistence inside this verification scope. Unrelated mismatches still fail. The actual candidate fixture and forged-state tests cover this path; released 0.17 stays unchanged.

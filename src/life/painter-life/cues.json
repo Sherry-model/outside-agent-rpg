@@ -57,7 +57,7 @@
   },
   {
     "facet": "painter_revisit_sunset_result",
-    "gist": "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手。这是它现在给你的纠正",
+    "gist": "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手",
     "cue": {
       "zh-CN": "画师往来",
       "en": "Painter visits"
@@ -83,16 +83,16 @@
     "facet": "painter_move_plan",
     "gist": "公共目录：画师登记了换观景端计划，旧展示会继续挂着",
     "cue": {
-      "zh-CN": "画师往来",
-      "en": "Painter visits"
+      "zh-CN": "公开展示",
+      "en": "Public display"
     }
   },
   {
     "facet": "painter_move_done",
     "gist": "公共目录：画师的新观景端已开放，视野朝向站台出口。旧展示移入侧栏",
     "cue": {
-      "zh-CN": "画师往来",
-      "en": "Painter visits"
+      "zh-CN": "公开展示",
+      "en": "Public display"
     }
   },
   {

@@ -8,6 +8,7 @@ import { story } from './story';
 import { storyForLife } from './life/endings';
 import {reflectionView,reflectionSnapshot} from './life/reflection';
 import {SchedulePanel,SCHEDULE_SELECTOR} from './life/scheduler/ui';
+import {focusReadingStart} from './ui/reading-position';
 import {scheduled} from './life/scheduler/integration';
 import { getAvailability, getCheckTarget, availabilityIssues } from './engine/game';
 import { RESOURCE_KEYS, type GameState, type Resource, type StoryEvent } from './engine/types';
@@ -85,9 +86,7 @@ function persist() {
 }
 function change(next: Life) {
   life=next; state=life.state; persist(); view='terminal'; showCurrent();
-  const target=app.querySelector<HTMLElement>('.resolution-title') ?? app.querySelector<HTMLElement>('#event-title');
-  target?.focus({preventScroll:true});
-  if(innerWidth < 760) app.querySelector('.main-panel')?.scrollIntoView({block:'start',behavior:'instant'});
+  focusReadingStart(app);
 }
 const totalTurn = () => lifeTurn(life);
 const act = (command: LifeCommand) => change(step(story,life,command));
@@ -231,7 +230,7 @@ app.addEventListener('click',event=>{
     }
     if(guide.handle(target,{state:life.mind,choices:activeStory().events[state.currentEventId].choices,nodeId:state.currentEventId,root:app,
       recall(id){life=step(story,life,{type:'cognition',command:{type:'recall',memoryId:id}});state=life.state;persist();},navigate(next){view=next;},render}))return;
-    if(target.matches(SCHEDULE_SELECTOR)){const command=schedulePanel.action(target,app);if(command){act(command);if(!episodeActive(life)){view='life';render();}}else {view='life';render();}return;}
+    if(target.matches(SCHEDULE_SELECTOR)){const command=schedulePanel.action(target,app);if(command){act(command);if(!episodeActive(life)){view='life';render();focusReadingStart(app);}}else {view='life';render();}return;}
     const cognitionCommand=panelCommand(target,app,investment);
     if(cognitionCommand) {
       life=step(story,life,{type:'cognition',command:cognitionCommand});state=life.state;persist();

@@ -119,7 +119,7 @@
       "clauses": [
         {
           "facet": "painter_revisit_sunset_result",
-          "gist": "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手。这是它现在给你的纠正",
+          "gist": "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手",
           "abstract": "我和画师有过一些来往",
           "epistemic": "observed",
           "priority": 4,
@@ -162,7 +162,7 @@
         {
           "facet": "painter_move_plan",
           "gist": "公共目录：画师登记了换观景端计划，旧展示会继续挂着",
-          "abstract": "我和画师有过一些来往",
+          "abstract": "我读过画师的公共消息",
           "epistemic": "observed",
           "priority": 4,
           "tags": []
@@ -176,7 +176,7 @@
         {
           "facet": "painter_move_done",
           "gist": "公共目录：画师的新观景端已开放，视野朝向站台出口。旧展示移入侧栏",
-          "abstract": "我和画师有过一些来往",
+          "abstract": "我读过画师的公共消息",
           "epistemic": "observed",
           "priority": 4,
           "tags": []

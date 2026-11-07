@@ -10,6 +10,7 @@ import type { StorageLike, SaveSlot } from '../persistence/saves';
 import { parseSave as parseJourney, JOURNEY_KEYS } from '../persistence/journey';
 import { SAVE_KEYS } from '../persistence/saves';
 import { createLife, step, replayStep } from './engine';
+import { verifyOriginalPainterDraft } from './content';
 import type { Life, LifeSave } from './types';
 export type { StorageLike };
 const storagePrefix=readingProfile.id==='production'?'outside.life.v1':`outside.reading-fixture.${readingProfile.id}`;
@@ -38,9 +39,22 @@ export function parseSave(raw: string, story: Story): LifeSave {
   else if(data.life.schedule!==undefined||data.life.commands.length>500||raw.length>2_000_000)throw new Error('旧版本存档超过原有边界。');
   if (data.life.contentVersion !== '0.3.0' && !(hasScheduler(data.life.contentVersion)?validateLongMind:validateMind)({format:'outside-cognition-save',version:2,savedAt:data.savedAt,state:data.life.mind})) throw new Error('认知目录或摘要格式不兼容。');
   const baseline = data.life.baseline === null ? null : parseJourney(JSON.stringify(data.life.baseline),story);
-  let replay = createLife(story,data.life.seed,baseline,data.life.contentVersion);
-  for (const command of data.life.commands) replay = (hasScheduler(data.life.contentVersion)?replayStep:step)(story,replay,command);
-  if (stable(replay) !== stable(data.life) || stable(replay.state) !== stable(data.state)) throw new Error('存档快照与本局经历不一致。');
+  const replayCommands = () => {
+    let life = createLife(story,data.life.seed,baseline,data.life.contentVersion);
+    for (const command of data.life.commands) life = (hasScheduler(data.life.contentVersion)?replayStep:step)(story,life,command);
+    return life;
+  };
+  const matches = (life: Life) => stable(life) === stable(data.life) && stable(life.state) === stable(data.state);
+  const replay = replayCommands();
+  if (!matches(replay)) {
+    // 0.18 was an unpublished candidate. Authenticate its exact old snapshot;
+    // never accept arbitrary mismatches or silently discard a forged snapshot.
+    const originalDraft = data.life.contentVersion === '0.18.0' && verifyOriginalPainterDraft(() => {
+      try { return matches(replayCommands()); } catch { return false; }
+    });
+    if (!originalDraft) throw new Error('存档快照与本局经历不一致。');
+    return {...data,life:replay,state:structuredClone(replay.state)};
+  }
   return data;
 }
 /** Both Life UI surfaces use this boundary; the standalone cognition importer stays unchanged. */

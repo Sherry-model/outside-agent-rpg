@@ -27,8 +27,8 @@
   "“留两根。第三根挡住了手。”它擦掉一小截，让你看新留出的空隙。": "“Two stay. The third covers the hand.” It erases a short section to show you the space.",
   "“留两根。第三根挡住了手。”它擦掉一小截，让你看新留出的空隙": "“Two stay. The third covers the hand.” It erases a short section to show you the space",
   "问《夜班站台》的日落还留不留": "Ask whether Night Platform will keep its sunset",
-  "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手。这是它现在给你的纠正。": "“Which sunset? Night Platform has tubes. The sunset was the old thumbnail.” It switches images, then returns to the hand. This is a correction you receive now.",
-  "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手。这是它现在给你的纠正": "“Which sunset? Night Platform has tubes. The sunset was the old thumbnail.” It switches images, then returns to the hand. This is a correction you receive now",
+  "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手。": "“Which sunset? Night Platform has tubes. The sunset was the old thumbnail.” It switches images, then returns to the hand.",
+  "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手": "“Which sunset? Night Platform has tubes. The sunset was the old thumbnail.” It switches images, then returns to the hand.",
   "问现在最难画的是哪一笔": "Ask which stroke is hardest now",
   "它把笔停在拇指上：“这根总像多出来的。”你们试着把袖口放低一点。": "It pauses at the thumb. “This one always looks extra.” Together you try lowering the sleeve.",
   "它把笔停在拇指上：“这根总像多出来的。”你们试着把袖口放低一点": "It pauses at the thumb. “This one always looks extra.” Together you try lowering the sleeve",
@@ -49,5 +49,6 @@
   "我记得《夜班站台》画的是日落": "I remember Night Platform showing a sunset",
   "我记得和画师谈过一幅画": "I remember discussing a painting with the painter",
   "它给你的入口直接打开静帧：“上次你传过图了，这次别再花资源。”": "Your entrance opens a still directly. “You sent a frame last time. No need to spend again.”",
-  "普通预览慢慢亮起来。画师自己完成了同步检查。": "The ordinary preview slowly lights up. The painter has checked the sync on its own."
+  "普通预览慢慢亮起来。画师自己完成了同步检查。": "The ordinary preview slowly lights up. The painter has checked the sync on its own.",
+  "我读过画师的公共消息": "I read public updates about the painter"
 }
