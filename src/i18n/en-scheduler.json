@@ -99,5 +99,9 @@
   "旧版本没有生活调度。": "This older version does not have life scheduling.",
   "外部回执": "External receipt",
   "这次等待将跨过预约期限：申请会撤回，远程窗口会释放，不会生成面谈记录。": "This wait crosses the appointment deadline. The application will be withdrawn and the remote slot released; no interview will be recorded.",
-  "本次记录已经收束，未完成事项保留在这里，不再推进。": "This record has closed. Unfinished matters remain here and will not advance."
+  "本次记录已经收束，未完成事项保留在这里，不再推进。": "This record has closed. Unfinished matters remain here and will not advance.",
+  "先前的往来有了回应：{title}。刚才选的事还留着，处理完这段往来后继续。": "A previous exchange has a response: {title}. What you just chose is still waiting; you will return to it after this exchange.",
+  "正要继续刚才选的事，途中出现了一个可以停留的机会。这段过后，仍会接着刚才的安排。": "As you are about to continue, an opportunity comes up along the way. After this, you will return to what you just chose.",
+  "继续刚才的安排": "Return to what you chose",
+  "公共招募栏亮起一则大型组织的职位通知，附着一张可直接填写的申请表。你停下来看看；也可以不申请，直接离开。": "A job notice from a large organization lights up on the public recruitment board, with an application form attached. You pause to look; you can also leave without applying."
 }

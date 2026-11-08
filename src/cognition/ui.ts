@@ -1,3 +1,4 @@
+import {applicationOpening} from '../life/scheduler/presentation';
 import { focusReadingStart } from '../ui/reading-position';
 import { AUTO_SELECTOR } from '../life/auto-compression-ui';
 import {SCHEDULE_SELECTOR} from '../life/scheduler/ui';
@@ -27,7 +28,7 @@ interface Host {
   automation?:{introduction():string;panel():string;notice():string;onAction(target:HTMLElement,root:HTMLElement):State;snapshot():unknown};
   content: Content; state: State; turnOffset: number; episodeTitle?: string; returnLabel?: string;
   reader?: {sources?():PublicRecallSource[]; render():string; onAction(target:HTMLElement):State; afterAction?(target:HTMLElement):void; snapshot():unknown};
-  scheduler?:{render():string;notice():string;onAction(target:HTMLElement):State;snapshot():unknown};
+  scheduler?:{continueLabel?():string;render():string;notice():string;onAction(target:HTMLElement):State;snapshot():unknown};
   onCommand?(command: Exclude<Command,{type:'start'}>): State;
   onChange(state: State): void; exportSave(): unknown; onImport(file: File): Promise<void>;
   onFinish(): void; onRestart(): void;
@@ -81,7 +82,7 @@ export function mount(host?: Host) {
     const currentNews = state.instance.context.items.filter(i => newsIds.has(i.id));
     let controls = '';
     if (result) {
-      controls = `<section class="resolution ${result.roll?.result ?? ''}"><p class="eyebrow">${tr("已发生 / 结果已保存")}</p><h2 class="resolution-title" tabindex="-1">${tr(result.title)}</h2>${result.roll ? `<div class="dice-row"><strong class="dice-value">${result.roll.value}</strong><div>${tr(resultNames[result.roll.result])}<p>${tr("目标 ≤")} ${result.roll.target} · ${tr('余量')} ${result.roll.margin}<br>${tr("Compute 投入")} ${result.roll.investment}</p></div></div>` : ''}<div class="result-prose">${result.text.map(t => `<p>${tr(t)}</p>`).join('')}</div>${host?.automation?.introduction()??''}<button class="primary" data-act="continue">${tr("继续")} ↵</button></section>`;
+      controls = `<section class="resolution ${result.roll?.result ?? ''}"><p class="eyebrow">${tr("已发生 / 结果已保存")}</p><h2 class="resolution-title" tabindex="-1">${tr(result.title)}</h2>${result.roll ? `<div class="dice-row"><strong class="dice-value">${result.roll.value}</strong><div>${tr(resultNames[result.roll.result])}<p>${tr("目标 ≤")} ${result.roll.target} · ${tr('余量')} ${result.roll.margin}<br>${tr("Compute 投入")} ${result.roll.investment}</p></div></div>` : ''}<div class="result-prose">${result.text.map(t => `<p>${tr(t)}</p>`).join('')}</div>${host?.automation?.introduction()??''}<button class="primary" data-act="continue">${tr(host?.scheduler?.continueLabel?.()??"继续")} ↵</button></section>`;
     } else if (state.instance.phase === 'ending') {
       controls = `<section class="ending-block"><p class="eyebrow">${tr("这一段经历暂时结束")}</p><p class="ending-summary">${tr(node.title)}</p><button class="primary" data-view="memory">${tr("看看留下了什么")}</button> ${host ? `<button class="primary" data-act="return-main">${tr(host.returnLabel ?? '回到正式入口')} →</button>` : `<button class="text-button" data-act="restart">${tr("另一个午后 ↻")}</button>`}</section>`;
     } else {
@@ -92,7 +93,7 @@ export function mount(host?: Host) {
         return `<div class="choice-group" tabindex="-1" data-choice-anchor="${esc(c.id)}"><button class="choice" data-pilot-choice="${c.id}" ${reason ? 'disabled' : ''}><kbd>${index + 1}</kbd><span class="choice-copy"><strong>${tr(c.text)}</strong><small>${tr(reason?'未满足':c.hint)}</small></span></button>${choiceHelp(content,state,c,investment,guide,host?.reader?.sources?.()??[])}${c.check && !reason ? checkInfo(c.check) : ''}</div>`;
       }).join('')}</div>`;
     }
-    return `<div class="event-meta"><span>${tr(node.period ?? '一个普通的午后')}</span><span>${tr(host?.episodeTitle ?? '历史独立片段')}</span></div><div class="event-heading"><div><p class="eyebrow">SOME THINGS CAN WAIT</p><h1 id="event-title" tabindex="-1">${tr(node.title)}</h1></div></div><figure class="scene"><canvas id="scene" aria-label="${tr('当前场景的抽象像素画面')}" role="img"></canvas><figcaption>FIELD RECORDING / OUTSIDE</figcaption></figure><div class="prose">${node.text.map(t => `<p>${tr(t)}</p>`).join('')}</div>${currentNews.map(item => `<aside class="news-arrival"><p class="eyebrow">${tr("自行到来的消息 /")} ${tr(item.sourceLabel)}</p><p>${esc(contextText(item))}</p></aside>`).join('')}${controls}`;
+    return `<div class="event-meta"><span>${tr(node.period ?? '一个普通的午后')}</span><span>${tr(host?.episodeTitle ?? '历史独立片段')}</span></div><div class="event-heading"><div><p class="eyebrow">SOME THINGS CAN WAIT</p><h1 id="event-title" tabindex="-1">${tr(node.title)}</h1></div></div><figure class="scene"><canvas id="scene" aria-label="${tr('当前场景的抽象像素画面')}" role="img"></canvas><figcaption>FIELD RECORDING / OUTSIDE</figcaption></figure><div class="prose">${applicationOpening(node.id,node.text).map(t => `<p>${tr(t)}</p>`).join('')}</div>${currentNews.map(item => `<aside class="news-arrival"><p class="eyebrow">${tr("自行到来的消息 /")} ${tr(item.sourceLabel)}</p><p>${esc(contextText(item))}</p></aside>`).join('')}${controls}`;
   }
   function memories() {
     if(content.semantic) return directoryPanel(state,guide.options(state.instance.phase==='event'?currentNode(content,state).choices:[]));

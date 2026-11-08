@@ -1,3 +1,4 @@
+import {transitionNotice,continuationLabel} from './presentation';
 import {painterInvitation,newsNotice,painterDisplay} from '../painter-life/ui';
 import {tr} from '../../i18n';
 import {contextText} from '../../i18n/memory';
@@ -29,9 +30,10 @@ export class SchedulePanel {
       }).join('')||`<p>${tr('没有新的回执。')}</p>`}
       <p>${tr('你可以带着未完成的事项收束本局；结局不会把它们写成已经完成。')}</p><button class="text-button" data-view="terminal">${tr('返回当前进程')}</button></section>`;
   }
+  continueLabel(life:Life):string {return continuationLabel(life);}
   notice(life:Life):string {
     const p=life.schedule?.commitments.find(p=>p.id===life.schedule?.active?.id);
-    return painterDisplay(life)+newsNotice(life)+painterInvitation(life)+(p?.deferredHours?`<aside class="schedule-notice">${tr('连续场景使回应延后了 {hours} 小时；窗口仍为你保留。',{hours:p.deferredHours})}</aside>`:'');
+    return transitionNotice(life)+painterDisplay(life)+newsNotice(life)+painterInvitation(life)+(p?.deferredHours?`<aside class="schedule-notice">${tr('连续场景使回应延后了 {hours} 小时；窗口仍为你保留。',{hours:p.deferredHours})}</aside>`:'');
   }
   action(target:HTMLElement,root:HTMLElement):LifeCommand|null {
     if(target.dataset.painterInvite)return {type:'invitation',response:target.dataset.painterInvite as 'accept'|'decline'};

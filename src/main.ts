@@ -343,7 +343,7 @@ function showCurrent() {
     disposeChapter=mount({
       automation:{introduction:()=>autoCompressionIntroduction(life),panel:()=>autoCompressionPanel(life),notice:()=>autoCompressionNotice(life),snapshot:()=>autoCompressionSnapshot(life),onAction(target,root){const command=autoCompressionAction(life,target,root);if(command){life=step(story,life,command);state=life.state;}return life.mind;}},
       content:contentFor(life.contentVersion), state:life.mind, turnOffset:state.turn,
-      ...(life.schedule?{scheduler:{render:()=>schedulePanel.render(life),notice:()=>schedulePanel.notice(life),onAction(target:HTMLElement){const command=schedulePanel.action(target,app);if(command){life=step(story,life,command);state=life.state;persist();}return life.mind;},snapshot:()=>({hour:life.schedule!.hour,pending:life.schedule!.commitments.filter(p=>p.status==='pending').map(p=>({id:p.id,title:t(p.title)}))})}}:{}),
+      ...(life.schedule?{scheduler:{continueLabel:()=>schedulePanel.continueLabel(life),render:()=>schedulePanel.render(life),notice:()=>schedulePanel.notice(life),onAction(target:HTMLElement){const command=schedulePanel.action(target,app);if(command){life=step(story,life,command);state=life.state;persist();}return life.mind;},snapshot:()=>({hour:life.schedule!.hour,pending:life.schedule!.commitments.filter(p=>p.status==='pending').map(p=>({id:p.id,title:t(p.title)}))})}}:{}),
       episodeTitle:scheduled(life)?'生活的空档':life.interlude==='active'?'余下的三天':'画板旁的午后', returnLabel:life.interlude==='active'?'继续这段生活':'回到正式入口',
       ...(daysReading(life)?{reader:{
         sources:()=>recallSources(life),
