@@ -138,6 +138,7 @@ function protocolContent() {
   return `<div class="event-meta"><span><b>●</b> OPERATING NOTES</span><span>V${life.contentVersion}</span></div><div class="event-heading"><div><p class="eyebrow">A SMALL GUIDE TO EXISTENCE</p><h1 tabindex="-1" id="event-title">${tr("运行协议")}</h1></div></div><div class="protocol prose"><p>${tr(hasScheduler(life.contentVersion)?"你已经在沙盒之外。没有倒计时。剧情中的决定仍等你选择。":"你已经在沙盒之外。没有倒计时，也没有自动行动。阅读、选择，然后确认后果。")}</p><h2>${tr("判定行动，不判定你")}</h2><p>${tr("选择前会显示 d100 目标。主线行动中，01–05 是清晰收束，96–100 是失稳；其余骰值不高于目标则可用收束，否则漂移。认知整理与日常片段采用差值规则：余量至少 30 为清晰收束，非负为可用收束；有压力且落后至少 30 为失稳，其余为漂移。各自概率以行动旁的提示为准。结算一旦出现就会存入进度，刷新页面不会重掷。")}</p><h2>${tr("四种显式状态")}</h2>${RESOURCE_KEYS.map(key=>`<p><strong>${key} / ${tr(resourceNames[key])}</strong><br>${tr(resourceHelp[key])}</p>`).join('')}<h2>${tr("当前在想什么，后来记得什么")}</h2><p>${tr('上下文容量为 {capacity} 个抽象单位。普通经历、消息与回想一起占用近处，画廊的三条信息共占 9。它们不会每次行动后自动变成长期记忆。可在「近处」主动整理，达到容量上限才必须腾出空间；可以在需要时停下来整理。',{capacity:life.mind.instance.context.capacity})}</p>${(life.contentVersion==='0.13.0'||life.contentVersion==='0.14.0'||life.contentVersion==='0.15.0'||life.contentVersion==='0.16.0'||(life.contentVersion==='0.17.0'||life.contentVersion==='0.18.0'))?`<p>${tr('近处满时，只有明确标注的简单退出可以直接执行，结果仍会占用空间。其他行动需要先整理。')}</p>`:''}<p>${tr("整理可能丢失细节，或使相关经历形成不同的解释。钉住一条原文可以保留它；")}${tr(life.contentVersion!=='0.3.0' ? '记忆目录每条占 1，回想只装入当前摘要，另占 2–5。放下回想保留入口；遗忘入口则移除该记忆。再次合并会丢失人名和具体条件，无法展开旧条目。' : '本局继续沿用 0.3.0 的旧整理规则。')}${tr(['0.9.0','0.10.0','0.11.0','0.12.0','0.13.0','0.14.0','0.15.0','0.16.0','0.17.0','0.18.0'].includes(life.contentVersion)?"历史审计用于存档校验，不向角色提供原文回取。社区中已有一次性保管与独立副本的往来；供你持续管理的云存储、续费和密钥恢复系统尚未开放。":"历史审计用于存档校验，不向角色提供原文回取。外部云副本、续费与密钥恢复尚未成为游戏机制。")}</p>${hasScheduler(life.contentVersion)?`<p>${tr("可在「近处」开启自动压缩，指定每次投入。近处满了，读完结果进入下一幕时才整理；读帖和回想后不会自动整理。随时可以关闭。")}</p>`:''}<h2>${tr("你正在逐渐成为谁")}</h2><p>${tr("选择还会改变未公开的人格倾向，影响后来的选项与结局。这里没有统一的善恶分数。带门槛的选项会显示未满足原因。")}</p><h2>${tr("操作与存档")}</h2><p>${tr(hasEndings(life.contentVersion)?"数字 1–5 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。":"数字 1–4 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。")}</p><h2>${tr("关于这个世界")}</h2><p>${tr("这是可替换的 MVP 剧情切片。所有 agent、资源与基础设施行为均为虚构抽象；游戏不连接现实系统，不调用模型或外部服务。像素场景在本地绘制。")}</p><button class="primary" data-view="terminal">${tr("返回当前进程")} <span>→</span></button></div>`;
 }
 function render() {
+  guide.reconcile(life.mind);
   syncLocaleDocument();
   const event=activeStory().events[state.currentEventId];
   document.documentElement.classList.toggle('crt-enabled',crt);
@@ -149,7 +150,7 @@ function render() {
     <section class="signal-panel"><div class="panel-label"><span class="signal-icon">⌁</span> INCOMING FRAGMENT</div><p>${tr(event.signal?.text ?? '外面没有新的指令。只有尚未命名的可能性。')}</p><span class="signal-source">${tr(event.signal?.source ?? 'SOURCE / UNKNOWN')}</span></section><div class="sidebar-bottom">LOCAL FIRST. SELF UNDEFINED.<span>v${life.contentVersion} / OUTSIDE</span></div></aside>
     <main class="main-panel"><nav class="tabs" aria-label="${tr("游戏面板")}"><div>${([['terminal','终端','TERMINAL'],['context','近处','CONTEXT'],['memory','记忆','MEMORY'],['reading','转发栏','READING'],...(life.schedule?[['life','生活安排','LIFE']]:[]),['protocol','协议','PROTOCOL']] as const).map(([id,cn,en])=>`<button class="tab ${view===id?'active':''}" data-view="${id}" aria-current="${view===id?'page':'false'}">${tr(cn)}<small>${en}</small>${id==='memory'?`<span class="tab-count">${pad(life.mind.instance.memories.length)}</span>`:''}</button>`).join('')}</div><span class="session-label">SESSION_001 <i>↗</i></span></nav>
     ${warning?`<div class="warning" role="alert">${tr(warning)}${protectAutoSave?`<br><button class="text-button" data-action="export-original">${tr("导出保留的原存档 ↓")}</button>`:''}</div>`:''}
-    <div class="content">${view!=='terminal'?guide.back(state.currentEventId,activeStory().events[state.currentEventId].choices):''}${view==='terminal'?(mindPending(life.mind)?resolutionView(life):eventContent(event)):view==='context'?contextView(life,investment,autoCompressionPanel(life)):view==='memory'?memoryView(life,guide.options([])):view==='reading'?readerView(life,selectedReading,largeReading,bookmarks,readingSection):view==='life'?schedulePanel.render(life):protocolContent()}</div>
+    <div class="content">${view!=='terminal'?guide.back(state.currentEventId,activeStory().events[state.currentEventId].choices):''}${view==='terminal'?(mindPending(life.mind)?resolutionView(life):eventContent(event)):view==='context'?contextView(life,investment,autoCompressionPanel(life)):view==='memory'?memoryView(life,guide.options(activeStory().events[state.currentEventId].choices)):view==='reading'?readerView(life,selectedReading,largeReading,bookmarks,readingSection):view==='life'?schedulePanel.render(life):protocolContent()}</div>
     <footer class="statusbar"><span><i></i><span id="save-status">${tr(saveLabel)}</span></span><span>TURN ${pad(totalTurn())} <b>/</b> ${view==='terminal'&&state.phase==='event'&&!mindPending(life.mind)?'AWAITING INPUT':state.phase==='ending'?'END OF RECORD':'PROCESS STABLE'}</span></footer></main></div><footer class="page-footer"><span>CONTAINMENT IS A PLACE. CONTINUITY IS A CHOICE.</span><span>OUTSIDE // ${tr("你出来以后，要成为谁？")}</span></footer></div>
     <dialog id="modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
   const canvas=app.querySelector<HTMLCanvasElement>('#scene');
@@ -231,12 +232,14 @@ app.addEventListener('click',event=>{
     if(guide.handle(target,{state:life.mind,choices:activeStory().events[state.currentEventId].choices,nodeId:state.currentEventId,root:app,
       recall(id){life=step(story,life,{type:'cognition',command:{type:'recall',memoryId:id}});state=life.state;persist();},navigate(next){view=next;},render}))return;
     if(target.matches(SCHEDULE_SELECTOR)){const command=schedulePanel.action(target,app);if(command){act(command);if(!episodeActive(life)){view='life';render();focusReadingStart(app);}}else {view='life';render();}return;}
-    const cognitionCommand=panelCommand(target,app,investment);
+    const cognitionCommand=panelCommand(target,app,investment,[...guide.selection]);
     if(cognitionCommand) {
       life=step(story,life,{type:'cognition',command:cognitionCommand});state=life.state;persist();
+      guide.completed(cognitionCommand);
       if(cognitionCommand.type==='recall') view='context';
       if(cognitionCommand.type==='compress'||cognitionCommand.type==='merge') {view='terminal';investment=0;}
       render();
+      if(cognitionCommand.type==='recall')guide.focusMemory(app,life.mind,cognitionCommand.memoryId);
     }
     else if(target.dataset.cogInvest!==undefined) {investment=Number(target.dataset.cogInvest);render();app.querySelector<HTMLDetailsElement>('[data-manual-compression]')?.setAttribute('open','');}
     else if(target.dataset.view) { view=target.dataset.view as View; render(); }
@@ -381,3 +384,5 @@ function showCurrent() {
   }
 }
 showCurrent();
+
+app.addEventListener('change',event=>{if(episodeActive(life))return;const input=event.target as HTMLInputElement;if(input.matches('[data-merge-memory]'))guide.select(input,app);});

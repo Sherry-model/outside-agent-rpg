@@ -5,7 +5,7 @@ import {SCHEDULE_SELECTOR} from '../life/scheduler/ui';
 import { contextText, memoryText } from '../i18n/memory';
 import { getLocale, switchLocale, localeControl, syncLocaleDocument, displayResolution, t, tr } from '../i18n';
 import { resultNames } from '../ui/result-labels';
-import { nearPanel, directoryPanel, panelCommand, PANEL_SELECTOR } from './panels';
+import { nearPanel, directoryPanel, fragmentMemoryLink, panelCommand, PANEL_SELECTOR } from './panels';
 import { directory } from './semantic';
 import { directoryCode, memoryCues } from './guidance';
 import { MemoryGuide, GUIDE_SELECTOR, choiceHelp, type PublicRecallSource } from './help-ui';
@@ -56,10 +56,11 @@ export function mount(host?: Host) {
     catch { status = '请导出备份'; warning = '浏览器无法保存。当前进度仍在本页，请导出 JSON。'; }
   }
   function act(command: Exclude<Command, { type: 'start' }>) {
-    state = host?.onCommand ? host.onCommand(command) : reduce(content, state, command); persist();
+    state = host?.onCommand ? host.onCommand(command) : reduce(content, state, command); persist();guide.completed(command);
     if (command.type === 'recall' && content.semantic) view = 'context';
     if (!['pin','recall','drop','forget'].includes(command.type)) { view = 'terminal'; investment = 0; }
     render();
+    if(command.type==='recall')guide.focusMemory(app,state,command.memoryId);
     if (!['pin','recall','drop','forget'].includes(command.type)) focusReadingStart(app);
   }
   function resources() {
@@ -84,7 +85,7 @@ export function mount(host?: Host) {
     if (result) {
       controls = `<section class="resolution ${result.roll?.result ?? ''}"><p class="eyebrow">${tr("已发生 / 结果已保存")}</p><h2 class="resolution-title" tabindex="-1">${tr(result.title)}</h2>${result.roll ? `<div class="dice-row"><strong class="dice-value">${result.roll.value}</strong><div>${tr(resultNames[result.roll.result])}<p>${tr("目标 ≤")} ${result.roll.target} · ${tr('余量')} ${result.roll.margin}<br>${tr("Compute 投入")} ${result.roll.investment}</p></div></div>` : ''}<div class="result-prose">${result.text.map(t => `<p>${tr(t)}</p>`).join('')}</div>${host?.automation?.introduction()??''}<button class="primary" data-act="continue">${tr(host?.scheduler?.continueLabel?.()??"继续")} ↵</button></section>`;
     } else if (state.instance.phase === 'ending') {
-      controls = `<section class="ending-block"><p class="eyebrow">${tr("这一段经历暂时结束")}</p><p class="ending-summary">${tr(node.title)}</p><button class="primary" data-view="memory">${tr("看看留下了什么")}</button> ${host ? `<button class="primary" data-act="return-main">${tr(host.returnLabel ?? '回到正式入口')} →</button>` : `<button class="text-button" data-act="restart">${tr("另一个午后 ↻")}</button>`}</section>`;
+      controls = `<section class="ending-block"><p class="eyebrow">${tr("这一段经历暂时结束")}</p><p class="ending-summary">${tr(node.title)}</p>${fragmentMemoryLink(state)} ${host ? `<button class="primary" data-act="return-main">${tr(host.returnLabel ?? '回到正式入口')} →</button>` : `<button class="text-button" data-act="restart">${tr("另一个午后 ↻")}</button>`}</section>`;
     } else {
       const compressible = !canCompress(state,content);
       const needsInvestment = node.choices.some(c => c.check);
@@ -106,6 +107,7 @@ export function mount(host?: Host) {
     return `<p class="eyebrow">OPERATING NOTES</p><div class="event-heading"><h1 id="event-title" tabindex="-1">${tr("怎样带到明天")}</h1></div><div class="prose"><p>${tr('消息会自行到来。上下文达到 {capacity} 时，先整理再行动。',{capacity:state.instance.context.capacity})}${tr(content.cognition ? '有两条未钉住的信息时就可以主动整理；容量宽裕，不必现在做。' : '达到 60 后也可以提前整理。')}${tr("能钉住一条原文，它仍占空间。")}</p>${(content.version==='0.13.0'||content.version==='0.14.0'||content.version==='0.15.0'||content.version==='0.16.0'||(content.version==='0.17.0'||content.version==='0.18.0'))?`<p>${tr('近处满时，只有明确标注的简单退出可以直接执行，结果仍会占用空间。其他行动需要先整理。')}</p>`:''}<p>${tr(content.semantic ? '记忆目录每条占 1。回想再装入摘要；放下回想会保留入口，不再保留入口则使它退出普通认知。目录合并会丢失人名和具体条件，无法展开旧条目。' : '记忆放在别处，回想再加载摘要。')}</p><p>${tr("四档判定随 Compute、线索和压力而变。余量至少 30 是清晰收束；达到目标是可用收束；落后至少 30 且处在压力下才是失稳，其余为漂移。平静时，99 也可能只是漂移。具体概率显示在行动旁。")}</p><p>${tr("数字键选择，Enter 确认结果，F 全屏，Esc 退出全屏或关闭弹窗。")}</p><p>${tr("这里的 JSON 是设备备份，完整恢复本局经历；世界内的 Snapshot、Prune 和稀有额外存档位尚未开放。各段经历按时间接续，结束后继续本局。")}</p></div><details class="debug"><summary>${tr("开发检查 / 含隐藏信息与剧情剧透")}</summary><p>${tr("世界事实、倾向、真实历史、来源与记忆误差，仅供检查。")}</p><button class="secondary" data-act="debug">${tr("显示当前内部状态")}</button><pre id="debug-state"></pre></details>`;
   }
   function render() {
+    guide.reconcile(state);
     syncLocaleDocument();
     document.documentElement.classList.toggle('crt-enabled', crt);
     app.innerHTML = `<div class="shell cognition ${view==='reading'?'reading-shell':''}"><header class="topbar"><a class="brand" href="#" data-act="legacy"><strong>OUTSIDE //</strong><span class="brand-cn">${tr("沙盒之外")}</span></a><div class="top-actions">${localeControl()}${host ? '' : `<button class="chrome-button" data-act="legacy">${tr("返回主线")}</button>`}<button class="chrome-button" data-act="crt" aria-pressed="${crt}">CRT ${crt ? 'ON' : 'OFF'}</button><button class="chrome-button" data-act="saves">${tr("备份")}</button></div></header><div class="workspace"><aside class="sidebar"><section class="identity-panel"><div class="panel-label">${tr("一个未结束的实例")}</div><div class="avatar-field"><span class="sigil"><i></i><i></i></span></div><p class="identity-name">agent_0x0a / ${tr(host?.episodeTitle ?? '午后')}</p></section><section class="resource-panel">${resources()}</section><section class="context-panel"><div class="panel-label">${tr("上下文")} <span>${weight(state)} / ${state.instance.context.capacity} · ${tr(bandNames[pressureBand(state)])}</span></div><div class="context-meter"><span style="width:${Math.min(100, loadPercent(state))}%"></span></div><details class="context-details"><summary>${tr('展开近处的 {count} 条信息',{count:state.instance.context.items.length})}</summary>${contextItems()}</details></section></aside><main class="main-panel"><nav class="tabs" aria-label="${tr("游戏面板")}"><div>${([['terminal', '终端'], ['context','近处'], ['memory', '记忆'], ...(host?.reader ? [['reading','转发栏']] : []), ...(host?.scheduler?[['life','生活安排']]:[]), ['protocol', '协议']] as const).map(([id, label]) => `<button class="tab ${view === id ? 'active' : ''}" data-view="${id}" aria-current="${view === id ? 'page' : 'false'}">${tr(label)}</button>`).join('')}</div></nav>${warning ? `<p class="warning" role="alert">${tr(warning)}</p>` : ''}<div class="content">${view==='terminal'?(host?.scheduler?.notice()??''):''}${view!=='terminal'?guide.back(state.instance.nodeId,currentNode(content,state).choices):''}${view==='life'&&host?.scheduler?host.scheduler.render():view === 'reading' && host?.reader ? host.reader.render() : view === 'terminal' ? terminal() : view === 'memory' ? memories() : view === 'context' ? (content.semantic ? nearPanel(state,content,investment,host?.automation?.panel()??'') : contextItems()) : protocol()}</div><footer class="statusbar"><span>${tr(status)}</span><span>TURN ${(host?.turnOffset ?? 0)+state.instance.turn} / OFFLINE</span></footer></main></div><footer class="page-footer">OUTSIDE // ${tr("未理解完，也可以先留下。")}</footer></div><dialog id="pilot-modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
@@ -163,7 +165,7 @@ export function mount(host?: Host) {
         navigate(next){view=next;},render}))return;
       if(target.dataset.helpSourceChoice)guide.anchor={node:state.instance.nodeId,choice:target.dataset.helpSourceChoice};
       if(host?.scheduler&&target.matches(SCHEDULE_SELECTOR)){const node=state.instance.nodeId;state=host.scheduler.onAction(target);view=state.instance.nodeId!==node?'terminal':'life';render();if(!target.dataset.scheduleHours)focusReadingStart(app);return;}
-      const cognitionCommand=panelCommand(target,app,investment);
+      const cognitionCommand=panelCommand(target,app,investment,[...guide.selection]);
       if(host?.reader&&(target.dataset.reading||target.dataset.readingSection||target.dataset.bookmark!==undefined||target.dataset.action?.startsWith('reader-'))) {
         state=host.reader.onAction(target);view='reading';render();
         host.reader.afterAction?.(target);
@@ -180,6 +182,7 @@ export function mount(host?: Host) {
       else if (target.dataset.invest !== undefined) { investment = Number(target.dataset.invest); render(); app.querySelector<HTMLDetailsElement>('[data-manual-compression]')?.setAttribute('open',''); app.querySelector<HTMLElement>(`[data-invest="${investment}"]`)?.focus(); }
     } catch (error) { message((error as Error).message); }
   }, {signal:controller.signal});
+  app.addEventListener('change',event=>{const input=event.target as HTMLInputElement;if(input.matches('[data-merge-memory]'))guide.select(input,app);},{signal:controller.signal});
   const searchMemory=(event:Event)=>{if(event instanceof InputEvent&&event.isComposing)return;const input=event.target as HTMLInputElement;if(input.matches('[data-memory-search]'))guide.search(input,render,app);};
   app.addEventListener('input',searchMemory,{signal:controller.signal});
   app.addEventListener('compositionend',searchMemory,{signal:controller.signal});

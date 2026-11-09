@@ -43,5 +43,18 @@
   "较新入口在前；整理顺序不是经历日期。": "Newer entries first; creation order is not the date of the experience.",
   "近处放不下，需先腾出 {count} Context。": "Not enough room nearby; free {count} Context first.",
   "这种判断已在近处。": "This belief is already nearby.",
-  "选择其他入口": "Choose another entry"
+  "选择其他入口": "Choose another entry",
+  "无可用摘要": "No usable summary",
+  "等待确认结果": "Result awaiting confirmation",
+  "近处暂时放不下": "No room nearby yet",
+  "先确认眼前的结果，再回想；这段摘要仍留在目录中。": "Confirm the current result before recalling. This summary is still in your directory.",
+  "清除搜索，显示全部": "Clear search and show all",
+  "经历可能仍在近处。你可以先去看看，不必现在整理。": "Your experiences may still be nearby. You can look there without compressing now.",
+  "看看仍在近处的经历": "See what is still nearby",
+  "已选择 {count} 条入口（包含筛选外的选择）": "{count} entries selected (including entries outside this filter)",
+  "清空合并选择": "Clear merge selection",
+  "返回当前对话": "Return to the current conversation",
+  "查看记忆目录": "View the memory directory",
+  "暂无可回想摘要": "No summary to recall",
+  "这段回想已钉住；先在近处解除，再合并或遗忘。": "This recollection is pinned. Unpin it nearby before merging or forgetting it."
 }

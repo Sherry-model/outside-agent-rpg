@@ -11,15 +11,16 @@ interface Environment {
   state:State;choices:GuideChoice[];nodeId:string;root:HTMLElement;
   recall(id:string):void; navigate(view:'terminal'|'context'|'memory'):void;render():void;
 }
-export const GUIDE_SELECTOR='[data-help-recall],[data-help-context],[data-help-directory],[data-help-return],[data-memory-filter],[data-memory-view]';
+export const GUIDE_SELECTOR='[data-help-recall],[data-help-context],[data-help-directory],[data-help-return],[data-memory-filter],[data-memory-view],[data-memory-reset],[data-memory-clear-selection]';
 /** Transient navigation only: never serialized with the game. */
 export class MemoryGuide {
+  selection=new Set<string>();
   filter:DirectoryOptions['filter']='all';query='';choiceId:string|null=null;
   anchor:{node:string;choice:string}|null=null;
   recalled:{node:string;choice:string;memory:string}|null=null;
   options(choices:GuideChoice[]):DirectoryOptions {
     const selected=this.choiceId&&choices.some(c=>c.id===this.choiceId)?choices.filter(c=>c.id===this.choiceId):choices;
-    return {filter:this.filter,query:this.query,tags:selected.flatMap(c=>[c.requiresTag,c.check?.supportTag].filter((x):x is string=>!!x))};
+    return {filter:this.filter,query:this.query,selected:[...this.selection],tags:selected.flatMap(c=>[c.requiresTag,c.check?.supportTag].filter((x):x is string=>!!x))};
   }
   back(node:string,choices:GuideChoice[]):string {
     return this.anchor?.node===node&&choices.some(c=>c.id===this.anchor!.choice)?`<button class="text-button guidance-return" data-help-return>${tr('回到刚才的选项')} →</button>`:'';
@@ -27,10 +28,12 @@ export class MemoryGuide {
   focus(root:HTMLElement,id:string) { const el=root.querySelector<HTMLElement>(`[data-choice-anchor="${CSS.escape(id)}"]`);el?.focus({preventScroll:true});el?.scrollIntoView({block:'nearest'}); }
   handle(target:HTMLElement,e:Environment):boolean {
     if(!target.matches(GUIDE_SELECTOR))return false;
+    if(target.hasAttribute('data-memory-reset')) {this.filter='all';this.query='';this.choiceId=null;e.render();e.root.querySelector<HTMLElement>('[data-memory-search]')?.focus();return true;}
+    if(target.hasAttribute('data-memory-clear-selection')) {this.selection.clear();e.render();e.root.querySelector<HTMLElement>('[data-memory-clear-selection]')?.focus();return true;}
     if(target.dataset.memoryView) {
       const item=e.state.instance.context.items.find(i=>i.memoryId===target.dataset.memoryView);
       e.navigate('context');e.render();
-      if(item){const card=e.root.querySelector<HTMLElement>(`[data-context-id="${CSS.escape(item.id)}"]`);card?.focus({preventScroll:true});card?.scrollIntoView({block:'nearest'});}
+      if(item)this.focusMemory(e.root,e.state,target.dataset.memoryView);
       return true;
     }
     if(target.dataset.memoryFilter) {
@@ -57,6 +60,28 @@ export class MemoryGuide {
       this.filter='related';this.query='';this.choiceId=id;e.navigate('memory');
     } else e.navigate('context');
     e.render();if(target.dataset.helpRecall)this.focus(e.root,id);return true;
+  }
+  reconcile(state:State) {
+    const ids=new Set(state.instance.memories.map(m=>m.id));
+    for(const id of this.selection)if(!ids.has(id))this.selection.delete(id);
+  }
+  focusMemory(root:HTMLElement,state:State,id:string) {
+    const item=state.instance.context.items.find(i=>i.memoryId===id);
+    if(!item)return;
+    const card=root.querySelector<HTMLElement>(`[data-context-id="${CSS.escape(item.id)}"]`);
+    card?.focus({preventScroll:true});card?.scrollIntoView({block:'nearest'});
+  }
+  select(input:HTMLInputElement,root:HTMLElement) {
+    const id=input.dataset.mergeMemory;if(!id)return;
+    if(input.checked)this.selection.add(id);else this.selection.delete(id);
+    const count=root.querySelector('[data-memory-selection-count]');
+    if(count)count.innerHTML=tr('已选择 {count} 条入口（包含筛选外的选择）',{count:this.selection.size});
+    const merge=root.querySelector<HTMLButtonElement>('[data-cog-merge]');
+    if(merge)merge.disabled=merge.dataset.mergeReady!=='true'||this.selection.size<2||this.selection.size>8;
+  }
+  completed(command:Exclude<import('./types').Command,{type:'start'}>) {
+    if(command.type==='forget')this.selection.delete(command.memoryId);
+    if(command.type==='merge')this.selection.clear();
   }
   search(input:HTMLInputElement,render:()=>void,root:HTMLElement) {
     this.query=input.value;const start=input.selectionStart;render();

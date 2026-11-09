@@ -77,3 +77,18 @@ html[lang="en"] .brand-cn{letter-spacing:1px}
 .auto-receipt { font-variant-numeric: tabular-nums; }
 
 .auto-compression-notice .secondary { margin-inline-end: 14px; }
+
+/* Memory is an index; nearby remains full-text reading cards. */
+.memory-index{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.35rem 1rem;border:0;border-bottom:1px solid var(--line);padding:1rem 0;margin:0;background:transparent;min-width:0}
+.memory-index>*{grid-column:1;min-width:0;margin:0;overflow-wrap:anywhere}
+.memory-index .memory-index-meta{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;font-family:inherit;font-size:.75rem;color:var(--muted)}
+.memory-index h2{margin:.2rem 0;font-size:1.1rem;line-height:1.5}
+.memory-index p{font-family:var(--body);font-size:.85rem;line-height:1.7}
+.memory-index .memory-cues{color:inherit}
+.memory-index .memory-primary{grid-column:2;grid-row:2/6;align-self:center}
+.memory-primary button{border:1px solid var(--line);padding:.65rem .8rem;white-space:normal;text-align:left;max-width:15rem}
+.memory-index .memory-management{grid-column:1/-1;margin-top:.4rem}
+.memory-management summary{padding:.35rem 0;cursor:pointer}
+.memory-index :focus-visible,.memory-tools :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.memory-index .merge-select{display:flex;align-items:flex-start;gap:.5rem;padding:.5rem 0}
+@media(max-width:600px){.memory-index{grid-template-columns:minmax(0,1fr)}.memory-index .memory-primary{grid-column:1;grid-row:auto;justify-self:start}.memory-index .memory-management{grid-column:1}.memory-index p{font-size:.85rem}.memory-primary button{max-width:100%}}

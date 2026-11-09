@@ -45,7 +45,7 @@ export function knowledgeHelp(s:State,tag:string) {
   return {tag,belief:info?.kind==='belief',nearby,candidates,related,
     status:nearby.length?'nearby':candidates.length?'recallable':related.length?'insufficient':'absent'};
 }
-export interface DirectoryOptions {filter:'all'|'related'|'nearby';query:string;tags:string[]}
+export interface DirectoryOptions {filter:'all'|'related'|'nearby';query:string;tags:string[];selected?:string[]}
 export function visibleMemories(s:State,options:DirectoryOptions) {
   const eligible=new Set(options.tags.flatMap(tag=>{
     const help=knowledgeHelp(s,tag);return [...help.candidates.map(m=>m.id),...(help.status==='insufficient'?help.related.map(m=>m.id):[]),...help.nearby.flatMap(i=>i.memoryId?[i.memoryId]:[])];
