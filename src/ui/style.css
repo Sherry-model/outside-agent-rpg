@@ -92,3 +92,5 @@ html[lang="en"] .brand-cn{letter-spacing:1px}
 .memory-index :focus-visible,.memory-tools :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .memory-index .merge-select{display:flex;align-items:flex-start;gap:.5rem;padding:.5rem 0}
 @media(max-width:600px){.memory-index{grid-template-columns:minmax(0,1fr)}.memory-index .memory-primary{grid-column:1;grid-row:auto;justify-self:start}.memory-index .memory-management{grid-column:1}.memory-index p{font-size:.85rem}.memory-primary button{max-width:100%}}
+
+.fragment-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}

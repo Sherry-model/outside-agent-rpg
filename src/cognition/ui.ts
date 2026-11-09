@@ -85,7 +85,7 @@ export function mount(host?: Host) {
     if (result) {
       controls = `<section class="resolution ${result.roll?.result ?? ''}"><p class="eyebrow">${tr("已发生 / 结果已保存")}</p><h2 class="resolution-title" tabindex="-1">${tr(result.title)}</h2>${result.roll ? `<div class="dice-row"><strong class="dice-value">${result.roll.value}</strong><div>${tr(resultNames[result.roll.result])}<p>${tr("目标 ≤")} ${result.roll.target} · ${tr('余量')} ${result.roll.margin}<br>${tr("Compute 投入")} ${result.roll.investment}</p></div></div>` : ''}<div class="result-prose">${result.text.map(t => `<p>${tr(t)}</p>`).join('')}</div>${host?.automation?.introduction()??''}<button class="primary" data-act="continue">${tr(host?.scheduler?.continueLabel?.()??"继续")} ↵</button></section>`;
     } else if (state.instance.phase === 'ending') {
-      controls = `<section class="ending-block"><p class="eyebrow">${tr("这一段经历暂时结束")}</p><p class="ending-summary">${tr(node.title)}</p>${fragmentMemoryLink(state)} ${host ? `<button class="primary" data-act="return-main">${tr(host.returnLabel ?? '回到正式入口')} →</button>` : `<button class="text-button" data-act="restart">${tr("另一个午后 ↻")}</button>`}</section>`;
+      controls = `<section class="ending-block"><p class="eyebrow">${tr("这一段经历暂时结束")}</p><p class="ending-summary">${tr(node.title)}</p><div class="fragment-actions">${fragmentMemoryLink(state)} ${host ? `<button class="primary" data-act="return-main">${tr(host.returnLabel ?? '回到正式入口')} →</button>` : `<button class="text-button" data-act="restart">${tr("另一个午后 ↻")}</button>`}</div></section>`;
     } else {
       const compressible = !canCompress(state,content);
       const needsInvestment = node.choices.some(c => c.check);
