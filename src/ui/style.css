@@ -61,6 +61,7 @@ html[lang="en"] .brand-cn{letter-spacing:1px}
 .life-reflection h3 { font-size:.9rem; color:var(--accent); margin:1.5rem 0 .7rem; }
 .life-reflection blockquote { margin:.7rem 0; padding:.1rem 1rem; border-left:2px solid var(--accent); }
 .life-reflection p { line-height:1.85; overflow-wrap:anywhere; }
+.life-reflection .reflection-origin { font-size:.8rem; margin-bottom:0; color:var(--muted); }
 .life-reflection .reflection-note { font-size:.8rem; opacity:.75; }
 .experience-comparison { border:1px solid var(--line); padding:1rem; margin:1.5rem 0; }
 .experience-comparison summary { cursor:pointer; color:var(--accent); line-height:1.7; }

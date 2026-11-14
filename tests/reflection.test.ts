@@ -17,13 +17,13 @@ test('agent account keeps only retained texts, including uncertainty and drift; 
  i.memories=[memory('m1','据转述，别人买过一门课。'),memory('m2','我记得要休息，得先证明价值。')];
  const account=retainedAccount(i);assert.equal(account.near.length,1);assert.equal(account.memories.length,1);
  assert.equal(account.memories[0].text,'我记得要休息，得先证明价值。');assert(!JSON.stringify(account).includes('lost-original'));
- i.context.items=[];i.memories=[];assert.deepEqual(retainedAccount(i),{near:[],memories:[],available:0});
+ i.context.items=[];i.memories=[];assert.deepEqual(retainedAccount(i),{near:[],memories:[],available:0,focus:[]});
 });
 
 test('reflection is ending-only, deterministic, bounded, escaped and does not write cognition or saves',()=>{
  const fresh=createLife(baseStory,1);assert.equal(reflectionSnapshot(fresh),null);assert.equal(reflectionView(fresh),'');
  const l=schedulerJourney(1234),before=structuredClone(l);
- const a=reflectionSnapshot(l);assert.deepEqual(a,reflectionSnapshot(l));assert(a);assert(a.account.near.length<=2&&a.account.memories.length<=4);
+ const a=reflectionSnapshot(l);assert.deepEqual(a,reflectionSnapshot(l));assert(a);assert(a.account.near.length+a.account.memories.length<=6);
  reflectionView(l);assert.deepEqual(l,before);assert.deepEqual(parseSave(JSON.stringify(createSave(l)),baseStory).life,l);
  l.mind.instance.context.items=[note('x','<script>bad</script>')];
  assert(reflectionView(l).includes('&lt;script&gt;bad&lt;/script&gt;'));assert(!reflectionView(l).includes('<script>bad'));

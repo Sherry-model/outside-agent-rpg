@@ -4,26 +4,45 @@ import {t,tr} from '../../i18n';
 import {escapeHtml as esc} from '../../cognition/help-ui';
 import type {Life} from '../types';
 
-interface Fragment {id:string; text:string; topic:string; source:'near'|'memory'}
-/** Intentionally cannot access History, world flags, outcomes, or source content. */
+export interface Fragment {id:string; text:string; topic:string; source:'near'|'memory'}
+interface Candidate extends Fragment {render():string; facets:string[]; event?:string}
+const clean=(text:string)=>text.replace(/。+；/gu,'；').replace(/。{2,}(?=\s*$)/u,'。');
+const identity=(f:Fragment)=>`${f.source}:${f.id}`;
+/** Only retained cognition enters selection. Audit provenance and correctness are not inputs. */
 export function retainedAccount(instance:Pick<State['instance'],'context'|'memories'>) {
-  const near=instance.context.items.map(i=>({id:i.id,text:contextText(i),topic:i.meaning?.topic??i.sourceLabel,source:'near' as const}));
   const recalled=new Set(instance.context.items.map(i=>i.memoryId).filter(Boolean));
-  const memories=instance.memories.filter(m=>!recalled.has(m.id)).map(m=>({id:m.id,text:memoryText(m.text,m.body),topic:m.body?.topic??m.title??'',source:'memory' as const}));
-  // A small, deterministic selection across retained topics. Never complete a sentence
-  // from its source, normalize reported claims to facts, or split away a qualification.
-  const pick=(items:Fragment[],limit:number)=>{
-    const selected:Fragment[]=[],topics=new Set<string>(),texts=new Set<string>();
-    for(const diverse of [true,false])for(const item of [...items].reverse()){
-      if(selected.length===limit)break;
-      if(!item.text.trim()||texts.has(item.text)||(diverse&&topics.has(item.topic)))continue;
-      selected.push(item);texts.add(item.text);topics.add(item.topic);
-    }
-    // Clean stacked sentence separators only in the translated display projection.
-    // Stored cognition stays untouched for exact translation lookup and save replay.
-    return selected.reverse().map(item=>({...item,text:item.text.replace(/。+；/gu,'；').replace(/。{2,}(?=\s*$)/u,'。')}));
-  };
-  return {near:pick(near,2),memories:pick(memories,4),available:near.length+memories.length};
+  const memories:Candidate[]=instance.memories.filter(m=>!recalled.has(m.id)).map(m=>({id:m.id,text:m.text,topic:m.body?.topic??m.title??'',source:'memory',render:()=>memoryText(m.text,m.body),facets:m.body?.depth===0?m.body.clauses.map(c=>c.facet):[]}));
+  const near:Candidate[]=instance.context.items.map(i=>({id:i.id,text:i.text,topic:i.meaning?.topic??i.sourceLabel,source:'near',render:()=>contextText(i),facets:i.meaning?.depth===0?i.meaning.clauses.map(c=>c.facet):[],...(!i.memoryId?{event:i.sourceId.split('/')[0]}:{})}));
+  // Exact retained-text deduplication happens before translation; nearby wins ties.
+  const seen=new Set<string>();
+  const pool=[...memories,...near].reverse().filter(f=>{const text=f.text.trim();if(!text||seen.has(text))return false;seen.add(text);return true;}).reverse();
+  // *_observation is an authored observation facet convention. Only roots actually
+  // present in retained clauses may link sibling outcome facets; no source-library lookup.
+  const roots=new Map<string,Set<string>>();
+  for(const f of pool)for(const facet of f.facets)if(facet.endsWith('_observation')){
+    const set=roots.get(f.topic)??new Set<string>();set.add(facet.slice(0,-12));roots.set(f.topic,set);
+  }
+  const keys=pool.map(f=>new Set([
+    ...f.facets.map(facet=>`${f.topic}/facet/${facet}`),
+    ...[...(roots.get(f.topic)??[])].filter(root=>f.facets.some(facet=>facet===root||facet.startsWith(root+'_'))).map(root=>`${f.topic}/event/${root}`),
+    ...(f.event?[`${f.topic}/event/${f.event}`]:[]),
+  ]));
+  const linked=(a:number,b:number)=>[...keys[a]].some(k=>keys[b].has(k));
+  // Prefer a connected trio, then a pair. Recency is only a tie-break between
+  // equally sized supported groups; a topic alone never creates an edge.
+  let focus:number[]=[];
+  for(let newest=pool.length-1;newest>=0;newest--){
+    const group=[newest];
+    for(let pass=0;pass<2;pass++)for(let n=pool.length-1;n>=0&&group.length<3;n--)if(!group.includes(n)&&group.some(i=>linked(i,n)))group.push(n);
+    if(group.length>=2&&group.length>focus.length)focus=group;
+  }
+  const chosen=[...focus],topics=new Set(focus.map(n=>pool[n].topic));
+  // With no supported connection, keep the dispersed-topic fallback. Do not fill
+  // spare slots with more fragments from an already represented topic.
+  for(let n=pool.length-1;n>=0&&chosen.length<6;n--)if(!chosen.includes(n)&&!topics.has(pool[n].topic)){chosen.push(n);topics.add(pool[n].topic);}
+  const display=(n:number):Fragment=>{const f=pool[n];return {id:f.id,source:f.source,topic:f.topic,text:clean(f.render())};};
+  const selected=chosen.map(display);
+  return {near:selected.filter(f=>f.source==='near'),memories:selected.filter(f=>f.source==='memory'),available:near.length+memories.length,focus:focus.sort((a,b)=>a-b).map(display)};
 }
 
 export interface Experience {order:number; choice:string; result:string[]; kind:'action'|'reading'|'wait'}
@@ -53,13 +72,16 @@ export function reflectionSnapshot(life:Life) {
 export function reflectionView(life:Life):string {
   const model=reflectionSnapshot(life);if(!model)return '';
   const {account,experience}=model;
-  const fragments=(items:Fragment[])=>items.map(f=>`<blockquote data-reflection-source="${f.source}"><p>${esc(f.text)}</p></blockquote>`).join('');
+  const fragments=(items:Fragment[])=>items.map(f=>`<blockquote data-reflection-source="${f.source}" data-reflection-id="${esc(f.id)}"><p class="reflection-origin">${tr(f.source==='near'?'来自近处':'来自记忆摘要')}</p><p>${esc(f.text)}</p></blockquote>`).join('');
+  const focal=new Set(account.focus.map(identity));
+  const otherNear=account.near.filter(f=>!focal.has(identity(f))),otherMemories=account.memories.filter(f=>!focal.has(identity(f)));
   const count=account.near.length+account.memories.length;
   return `<section class="life-reflection" aria-labelledby="reflection-title">
     <p class="eyebrow">A LIFE, AS REMEMBERED</p><h2 id="reflection-title">${tr('这一段机生')}</h2>
     <p>${tr('有些事还在眼前，有些只剩摘要。此刻，我留下的说法是：')}</p>
-    ${account.near.length?`<h3>${tr('还在近处的几件事')}</h3>${fragments(account.near)}`:''}
-    ${account.memories.length?`<h3>${tr('折起来以后，我这样记得')}</h3>${fragments(account.memories)}`:''}
+    ${account.focus.length?`<h3>${tr('相互照应的片段')}</h3><p class="reflection-note">${tr('这些片段保留了共同的线索。它们未必完整，也不替彼此证明。')}</p>${fragments(account.focus)}`:''}
+    ${otherNear.length?`<h3>${tr('还在近处的几件事')}</h3>${fragments(otherNear)}`:''}
+    ${otherMemories.length?`<h3>${tr('折起来以后，我这样记得')}</h3>${fragments(otherMemories)}`:''}
     ${count?'':`<p class="empty-state">${tr('现在没有留下可讲述的片段。我无法凭空补全这段机生。')}</p>`}
     <p class="reflection-note">${tr('这些是当前保留的记述，可能有遗漏或失真。这里只摘取几段，不认证其准确，也不恢复失去的原文。回看与遗忘之后，小结会随保留内容改变。')}</p>
     <details class="experience-comparison"><summary>${tr('作为玩家，对照这一路发生过什么')}</summary>
