@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {retainedAccount,reflectionView,playerExperience} from '../src/life/reflection';
 import {setLocale,hasTranslation} from '../src/i18n';
-import {step} from '../src/life/engine';
+import {createLife,step} from '../src/life/engine';
+import type {LifeCommand} from '../src/life/types';
 import {createSave,parseSave} from '../src/life/saves';
 import {baseStory,schedulerJourney} from './helpers/scheduler';
 import type {Memory,ContextItem} from '../src/cognition/types';
@@ -11,6 +12,41 @@ import type {Route} from './helpers/endings';
 const ids=(a:ReturnType<typeof retainedAccount>)=>({near:a.near.map(f=>f.id),memories:a.memories.map(f=>f.id),focus:a.focus.map(f=>f.source+':'+f.id)});
 const mem=(id:string,facets:string[],text=id,depth:0|1=0):Memory=>({id,text,tags:[],confidence:'LOW',integrity:'DISTORTED',historyId:'lost',sourceContextIds:['lost'],sourceHistoryIds:['lost'],body:{topic:'shared',depth,clauses:facets.map(facet=>({facet,gist:text,abstract:'抽象片段',epistemic:'reported',priority:1,tags:[]}))}});
 const instance=()=>({context:{items:[] as ContextItem[],capacity:100},memories:[] as Memory[]});
+const nearby=(id:string,topic:string,facets:string[],sourceId:string):ContextItem=>({id,text:id,sourceLabel:topic,sourceId,historyId:'hidden',pinned:false,weight:3,tags:[],confidence:'LOW',meaning:{...mem(id,facets).body!,topic}});
+
+test('a retained cross-event pair outranks a newer single-event trio without double-counting its source alias',()=>{
+ const i=instance();i.memories=[mem('earlier',['first_observation','second_observation']),mem('later',['first_result','second_result'])];
+ i.context.items=[nearby('current-observation','current',['meeting_observation'],'scene-alias'),nearby('current-choice','current',['meeting_accept_result'],'scene-alias'),nearby('current-note','current',['meeting_reply_result'],'scene-alias')];
+ assert.deepEqual(retainedAccount(i).focus.map(f=>f.id),['earlier','later']);
+ // No valid current link is banned: when the older material is gone, it can stand alone.
+ i.memories=[];assert.equal(retainedAccount(i).focus.length,3);
+});
+
+test('recent raw context does not crowd diverse summaries out; recalled summaries retain their place',()=>{
+ const i=instance();i.memories=Array.from({length:4},(_,n)=>({...mem('summary'+n,[]),body:undefined,title:'past'+n}));
+ i.context.items=Array.from({length:6},(_,n)=>nearby('notice'+n,'now'+n,[], 'notice'+n));
+ const before=retainedAccount(i);assert.equal(before.memories.length,3);assert.equal(before.near.length,3);
+ const m=i.memories[3];i.context.items.push({...nearby('recalled','past3',[],'recall'),memoryId:m.id,text:m.text});
+ const after=retainedAccount(i);assert.equal(after.memories.length,2);assert(after.near.some(f=>f.id==='recalled'));
+ assert(!after.memories.some(f=>f.id===m.id));assert.equal(after.near.length+after.memories.length,6);
+ // A single surviving theme is not repeated just to fill reserved positions.
+ i.memories=i.memories.map(m=>({...m,title:'only'}));i.context.items=i.context.items.filter(c=>!c.memoryId);
+ assert.equal(retainedAccount(i).memories.length,1);
+});
+
+test('independent A and D no-correct routes keep retained life differences in the default reflection',()=>{
+ const routes=JSON.parse(readFileSync('tests/fixtures/reflection-life-routes.json','utf8')) as {name:string;seed:number;commands:LifeCommand[]}[];
+ const accounts=[];
+ for(const route of routes){
+  let life=createLife(baseStory,route.seed);for(const command of route.commands)life=step(baseStory,life,command);
+  assert.equal(life.state.currentEventId,'ending_no_correct');const before=JSON.stringify(life),a=retainedAccount(life.mind.instance);
+  const topic=route.name==='d'?'community_d':'community_a';assert([...a.near,...a.memories].some(f=>f.topic===topic));
+  if(route.name==='d')assert(a.focus.length>=2&&a.focus.every(f=>f.topic===topic));
+  assert(a.near.length+a.memories.length<=6);assert.equal(JSON.stringify(life),before);
+  assert.deepEqual(parseSave(JSON.stringify(createSave(life)),baseStory).life,life);accounts.push([...a.near,...a.memories].map(f=>f.text));
+ }
+ assert.notDeepEqual(accounts[0],accounts[1]);
+});
 
 test('shared topics and coarse summaries do not invent links; retained observations support a connected group only',()=>{
  const i=instance();i.memories=[mem('first',['meeting_observation']),mem('second',['meeting_accept_result']),mem('other',['unrelated'])];

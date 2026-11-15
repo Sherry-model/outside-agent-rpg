@@ -5,14 +5,14 @@ import {escapeHtml as esc} from '../../cognition/help-ui';
 import type {Life} from '../types';
 
 export interface Fragment {id:string; text:string; topic:string; source:'near'|'memory'}
-interface Candidate extends Fragment {render():string; facets:string[]; event?:string}
+interface Candidate extends Fragment {render():string; facets:string[]; event?:string; isSummary:boolean}
 const clean=(text:string)=>text.replace(/。+；/gu,'；').replace(/。{2,}(?=\s*$)/u,'。');
 const identity=(f:Fragment)=>`${f.source}:${f.id}`;
 /** Only retained cognition enters selection. Audit provenance and correctness are not inputs. */
 export function retainedAccount(instance:Pick<State['instance'],'context'|'memories'>) {
   const recalled=new Set(instance.context.items.map(i=>i.memoryId).filter(Boolean));
-  const memories:Candidate[]=instance.memories.filter(m=>!recalled.has(m.id)).map(m=>({id:m.id,text:m.text,topic:m.body?.topic??m.title??'',source:'memory',render:()=>memoryText(m.text,m.body),facets:m.body?.depth===0?m.body.clauses.map(c=>c.facet):[]}));
-  const near:Candidate[]=instance.context.items.map(i=>({id:i.id,text:i.text,topic:i.meaning?.topic??i.sourceLabel,source:'near',render:()=>contextText(i),facets:i.meaning?.depth===0?i.meaning.clauses.map(c=>c.facet):[],...(!i.memoryId?{event:i.sourceId.split('/')[0]}:{})}));
+  const memories:Candidate[]=instance.memories.filter(m=>!recalled.has(m.id)).map(m=>({id:m.id,text:m.text,topic:m.body?.topic??m.title??'',source:'memory',isSummary:true,render:()=>memoryText(m.text,m.body),facets:m.body?.depth===0?m.body.clauses.map(c=>c.facet):[]}));
+  const near:Candidate[]=instance.context.items.map(i=>({id:i.id,text:i.text,topic:i.meaning?.topic??i.sourceLabel,source:'near',isSummary:Boolean(i.memoryId),render:()=>contextText(i),facets:i.meaning?.depth===0?i.meaning.clauses.map(c=>c.facet):[],...(!i.memoryId?{event:i.sourceId.split('/')[0]}:{})}));
   // Exact retained-text deduplication happens before translation; nearby wins ties.
   const seen=new Set<string>();
   const pool=[...memories,...near].reverse().filter(f=>{const text=f.text.trim();if(!text||seen.has(text))return false;seen.add(text);return true;}).reverse();
@@ -22,24 +22,38 @@ export function retainedAccount(instance:Pick<State['instance'],'context'|'memor
   for(const f of pool)for(const facet of f.facets)if(facet.endsWith('_observation')){
     const set=roots.get(f.topic)??new Set<string>();set.add(facet.slice(0,-12));roots.set(f.topic,set);
   }
-  const keys=pool.map(f=>new Set([
+  // Count only event identities still available in cognition. An observation root
+  // and a sourceId can name the same event; they must not count as two meetings.
+  const events=pool.map(f=>{
+    const retainedRoots=[...(roots.get(f.topic)??[])].filter(root=>f.facets.some(facet=>facet===root||facet.startsWith(root+'_')));
+    return new Set((retainedRoots.length?retainedRoots:f.event?[f.event]:[]).map(event=>`${f.topic}/event/${event}`));
+  });
+  const keys=pool.map((f,n)=>new Set([
     ...f.facets.map(facet=>`${f.topic}/facet/${facet}`),
-    ...[...(roots.get(f.topic)??[])].filter(root=>f.facets.some(facet=>facet===root||facet.startsWith(root+'_'))).map(root=>`${f.topic}/event/${root}`),
+    ...events[n],
     ...(f.event?[`${f.topic}/event/${f.event}`]:[]),
   ]));
   const linked=(a:number,b:number)=>[...keys[a]].some(k=>keys[b].has(k));
-  // Prefer a connected trio, then a pair. Recency is only a tie-break between
-  // equally sized supported groups; a topic alone never creates an edge.
+  // A supported connection across events outranks one scene's observation/result,
+  // even when the latter just arrived. A topic alone still never creates an edge.
   let focus:number[]=[];
+  const spansEvents=(group:number[])=>new Set(group.flatMap(n=>[...events[n]])).size>1;
   for(let newest=pool.length-1;newest>=0;newest--){
     const group=[newest];
     for(let pass=0;pass<2;pass++)for(let n=pool.length-1;n>=0&&group.length<3;n--)if(!group.includes(n)&&group.some(i=>linked(i,n)))group.push(n);
-    if(group.length>=2&&group.length>focus.length)focus=group;
+    if(group.length>=2&&(focus.length===0||Number(spansEvents(group))>Number(spansEvents(focus))||spansEvents(group)===spansEvents(focus)&&group.length>focus.length))focus=group;
   }
   const chosen=[...focus],topics=new Set(focus.map(n=>pool[n].topic));
-  // With no supported connection, keep the dispersed-topic fallback. Do not fill
-  // spare slots with more fragments from an already represented topic.
-  for(let n=pool.length-1;n>=0&&chosen.length<6;n--)if(!chosen.includes(n)&&!topics.has(pool[n].topic)){chosen.push(n);topics.add(pool[n].topic);}
+  const add=(n:number)=>{
+    if(chosen.length>=6||chosen.includes(n)||topics.has(pool[n].topic))return false;
+    chosen.push(n);topics.add(pool[n].topic);return true;
+  };
+  // Leave room for up to three retained summaries (including recalled ones).
+  // Recent notices must not exhaust the slots before earlier life is considered.
+  // This is not a quota to fabricate links or repeat an already represented topic.
+  let summaries=chosen.filter(n=>pool[n].isSummary).length;
+  for(let n=pool.length-1;n>=0&&summaries<3;n--)if(pool[n].isSummary&&add(n))summaries++;
+  for(let n=pool.length-1;n>=0&&chosen.length<6;n--)add(n);
   const display=(n:number):Fragment=>{const f=pool[n];return {id:f.id,source:f.source,topic:f.topic,text:clean(f.render())};};
   const selected=chosen.map(display);
   return {near:selected.filter(f=>f.source==='near'),memories:selected.filter(f=>f.source==='memory'),available:near.length+memories.length,focus:focus.sort((a,b)=>a-b).map(display)};
