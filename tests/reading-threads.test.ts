@@ -14,6 +14,7 @@ import {libraryFor} from '../src/life/reading';
 import {storyForLife} from '../src/life/endings';
 import {createLife,step} from '../src/life/engine';
 import {createSave,parseSave} from '../src/life/saves';
+import {parseSave as historicalSave} from './helpers/historical-life-saves';
 import {baseStory} from './helpers/scheduler';
 import type {ReadingWindow} from '../src/life/reading-threads/types';
 import type {Life} from '../src/life/types';
@@ -113,6 +114,6 @@ test('isolated real-Life fixture tests and production parser separation',()=>{
     (x:Life)=>{x.schedule!.reading!.reserved=1;},
     (x:Life)=>{x.schedule!.reading!.misses=1;},
   ]){const x=structuredClone(l);mutate(x);assert.throws(()=>parseSave(JSON.stringify(createSave(x)),baseStory));}
-  const old=parseSave(readFileSync('tests/fixtures/ending-b-0.12.json','utf8'),baseStory).life;
+  const old=historicalSave(readFileSync('tests/fixtures/ending-b-0.12.json','utf8'),baseStory).life;
   let copy=createLife(baseStory,old.seed,null,'0.12.0');for(const command of old.commands)copy=step(baseStory,copy,command);assert.deepEqual(copy,old);
 });

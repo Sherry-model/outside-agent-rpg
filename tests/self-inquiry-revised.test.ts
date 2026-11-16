@@ -12,7 +12,7 @@ import {profileFor} from '../src/life/reading-threads/profiles';
 import {pending,canChoose,weight} from '../src/cognition/engine';
 import {safeToRespond,canWait,allowedWaits} from '../src/life/scheduler/integration';
 import {due} from '../src/life/scheduler/engine';
-import {createSave,parseSave} from '../src/life/saves';
+import {createSave,parseSave} from './helpers/historical-life-saves';
 import {requirement,knowledgeHelp} from '../src/cognition/guidance';
 import {hasTranslation,setLocale} from '../src/i18n';
 import {readerView} from '../src/life/reader-ui';

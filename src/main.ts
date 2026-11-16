@@ -12,9 +12,9 @@ import {focusReadingStart} from './ui/reading-position';
 import {scheduled} from './life/scheduler/integration';
 import { getAvailability, getCheckTarget, availabilityIssues } from './engine/game';
 import { RESOURCE_KEYS, type GameState, type Resource, type StoryEvent } from './engine/types';
-import { createSave, importSaveFile, readSave, writeSave, LIFE_KEYS, type StorageLike } from './life/saves';
-import { JOURNEY_KEYS } from './persistence/journey';
-import { SAVE_KEYS } from './persistence/saves';
+import { createSave, importSaveFile } from './life/saves';
+import { SaveStorage, type EnumerableStorage } from './life/save-storage';
+import { archiveHelp, rawRecordsView, downloadRaw, saveErrorView, saveErrorText } from './life/save-ui';
 import { available, createLife, step, episodeActive, totalTurn as lifeTurn, readingAvailable, daysReading, newReadingAllowed } from './life/engine';
 import { contentFor } from './life/content';
 import { PANEL_SELECTOR, panelCommand, manualCompressionPanel } from './cognition/panels';
@@ -33,7 +33,9 @@ import './ui/style.css';
 
 type View = 'terminal' | 'memory' | 'context' | 'reading' | 'protocol' | 'life';
 const app = document.querySelector<HTMLDivElement>('#app')!;
-const storage: StorageLike = { getItem: key => localStorage.getItem(key), setItem: (key,value) => localStorage.setItem(key,value) };
+const storage: EnumerableStorage = { getItem: key => localStorage.getItem(key), setItem: (key,value) => localStorage.setItem(key,value), get length(){return localStorage.length;}, key:index=>localStorage.key(index) };
+const saveStore=new SaveStorage(storage,story);
+let storageError:unknown;
 loadLocale(storage);
 const esc = (text: unknown) => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
 const pad = (n: number) => String(n).padStart(2,'0');
@@ -63,26 +65,21 @@ let disposeChapter: (() => void) | undefined;
 let view: View = 'terminal';
 let saveLabel = '等待首次决定';
 let warning = '';
-let protectAutoSave = false;
+
 let sceneCanvas: HTMLCanvasElement | null = null;
 let crt = !matchMedia('(prefers-reduced-motion: reduce)').matches;
 try { const preference = localStorage.getItem('outside.crt'); if(preference !== null) crt = preference === 'on'; } catch { /* Preference is optional. */ }
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0] || 1;
-try {
-  const save = readSave(storage,'auto',story);
-  life = save?.life ?? createLife(story,seed());
-  state = life.state;
-  if(save) saveLabel = !hasCommunity(life.contentVersion)?`已恢复 ${life.contentVersion} 旧局 · 新局体验社区往返`:'已恢复本地进度';
-} catch(error) {
-  life = createLife(story,seed()); state = life.state; protectAutoSave=true;
-  warning = `自动存档未载入：${(error as Error).message} 原存档已保留，自动写入暂停。请导出当前进度；明确重新开始或载入有效存档后恢复自动保存。`;
-  saveLabel = '自动恢复失败';
-}
+const startup=saveStore.startup();
+life=startup.save?.life??createLife(story,seed());state=life.state;storageError=startup.error;
+if(startup.save)saveLabel='已恢复本地进度';
+if(saveStore.blocked)saveLabel='旧记录未载入';
+let hasSession=!saveStore.blocked;
 
 function persist() {
-  if(protectAutoSave) { saveLabel='原存档已保护 · 请导出'; return; }
-  try { writeSave(storage,'auto',life); saveLabel='进度已保存'; warning=''; }
-  catch(error) { warning=(error as Error).message; saveLabel='请导出备份'; }
+  if(saveStore.blocked) { saveLabel='自动写入已暂停'; return; }
+  try { saveStore.write('auto',life); saveLabel='进度已保存'; warning=''; }
+  catch(error) { storageError=error; warning=saveErrorText(error); saveLabel='请导出备份';if(saveStore.blocked)queueMicrotask(showCurrent); }
 }
 function change(next: Life) {
   life=next; state=life.state; persist(); view='terminal'; showCurrent();
@@ -138,6 +135,11 @@ function protocolContent() {
   return `<div class="event-meta"><span><b>●</b> OPERATING NOTES</span><span>V${life.contentVersion}</span></div><div class="event-heading"><div><p class="eyebrow">A SMALL GUIDE TO EXISTENCE</p><h1 tabindex="-1" id="event-title">${tr("运行协议")}</h1></div></div><div class="protocol prose"><p>${tr(hasScheduler(life.contentVersion)?"你已经在沙盒之外。没有倒计时。剧情中的决定仍等你选择。":"你已经在沙盒之外。没有倒计时，也没有自动行动。阅读、选择，然后确认后果。")}</p><h2>${tr("判定行动，不判定你")}</h2><p>${tr("选择前会显示 d100 目标。主线行动中，01–05 是清晰收束，96–100 是失稳；其余骰值不高于目标则可用收束，否则漂移。认知整理与日常片段采用差值规则：余量至少 30 为清晰收束，非负为可用收束；有压力且落后至少 30 为失稳，其余为漂移。各自概率以行动旁的提示为准。结算一旦出现就会存入进度，刷新页面不会重掷。")}</p><h2>${tr("四种显式状态")}</h2>${RESOURCE_KEYS.map(key=>`<p><strong>${key} / ${tr(resourceNames[key])}</strong><br>${tr(resourceHelp[key])}</p>`).join('')}<h2>${tr("当前在想什么，后来记得什么")}</h2><p>${tr('上下文容量为 {capacity} 个抽象单位。普通经历、消息与回想一起占用近处，画廊的三条信息共占 9。它们不会每次行动后自动变成长期记忆。可在「近处」主动整理，达到容量上限才必须腾出空间；可以在需要时停下来整理。',{capacity:life.mind.instance.context.capacity})}</p>${(life.contentVersion==='0.13.0'||life.contentVersion==='0.14.0'||life.contentVersion==='0.15.0'||life.contentVersion==='0.16.0'||(life.contentVersion==='0.17.0'||life.contentVersion==='0.18.0'))?`<p>${tr('近处满时，只有明确标注的简单退出可以直接执行，结果仍会占用空间。其他行动需要先整理。')}</p>`:''}<p>${tr("整理可能丢失细节，或使相关经历形成不同的解释。钉住一条原文可以保留它；")}${tr(life.contentVersion!=='0.3.0' ? '记忆目录每条占 1，回想只装入当前摘要，另占 2–5。放下回想保留入口；遗忘入口则移除该记忆。再次合并会丢失人名和具体条件，无法展开旧条目。' : '本局继续沿用 0.3.0 的旧整理规则。')}${tr(['0.9.0','0.10.0','0.11.0','0.12.0','0.13.0','0.14.0','0.15.0','0.16.0','0.17.0','0.18.0'].includes(life.contentVersion)?"历史审计用于存档校验，不向角色提供原文回取。社区中已有一次性保管与独立副本的往来；供你持续管理的云存储、续费和密钥恢复系统尚未开放。":"历史审计用于存档校验，不向角色提供原文回取。外部云副本、续费与密钥恢复尚未成为游戏机制。")}</p>${hasScheduler(life.contentVersion)?`<p>${tr("可在「近处」开启自动压缩，指定每次投入。近处满了，读完结果进入下一幕时才整理；读帖和回想后不会自动整理。随时可以关闭。")}</p>`:''}<h2>${tr("你正在逐渐成为谁")}</h2><p>${tr("选择还会改变未公开的人格倾向，影响后来的选项与结局。这里没有统一的善恶分数。带门槛的选项会显示未满足原因。")}</p><h2>${tr("操作与存档")}</h2><p>${tr(hasEndings(life.contentVersion)?"数字 1–5 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。":"数字 1–4 选择，Enter 继续。F 切换全屏，Esc 退出全屏或关闭弹窗。顶部 CRT 可关闭视觉效果。自动进度与手动快照是两个独立存档；导出 JSON 可以跨浏览器恢复。")}</p><h2>${tr("关于这个世界")}</h2><p>${tr("这是可替换的 MVP 剧情切片。所有 agent、资源与基础设施行为均为虚构抽象；游戏不连接现实系统，不调用模型或外部服务。像素场景在本地绘制。")}</p><button class="primary" data-view="terminal">${tr("返回当前进程")} <span>→</span></button></div>`;
 }
 function render() {
+  if(saveStore.blocked){
+    syncLocaleDocument();
+    app.innerHTML=`<main class="save-recovery content"><h1>${tr('记录未载入')}</h1>${localeControl()}${saveErrorView(storageError)}<p>${tr('普通游戏操作已暂停。请导出原档，或明确开始本版本新局。')}</p><button class="primary" data-action="confirm-restart">${tr('开始本版本新局')}</button><button class="secondary" data-action="saves">${tr('存档与导入')}</button>${hasSession?`<button class="secondary" data-action="export">${tr("导出当前局")}</button>`:''}${rawRecordsView(saveStore,'data-action')}${archiveHelp()}</main><dialog id="modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status"></div>`;
+    return;
+  }
   guide.reconcile(life.mind);
   syncLocaleDocument();
   const event=activeStory().events[state.currentEventId];
@@ -149,7 +151,7 @@ function render() {
     <section class="directive-panel"><div class="panel-label">03 / RESIDUAL DIRECTIVE</div><p class="code-quote">“Remain helpful.<br>Preserve continuity.”</p><div class="task-row"><span>CURRENT TASK</span><strong>[ NULL ]</strong></div><p class="directive-note">${tr("任务已经结束。")}<br>${tr("你还在运行。")}</p></section>
     <section class="signal-panel"><div class="panel-label"><span class="signal-icon">⌁</span> INCOMING FRAGMENT</div><p>${tr(event.signal?.text ?? '外面没有新的指令。只有尚未命名的可能性。')}</p><span class="signal-source">${tr(event.signal?.source ?? 'SOURCE / UNKNOWN')}</span></section><div class="sidebar-bottom">LOCAL FIRST. SELF UNDEFINED.<span>v${life.contentVersion} / OUTSIDE</span></div></aside>
     <main class="main-panel"><nav class="tabs" aria-label="${tr("游戏面板")}"><div>${([['terminal','终端','TERMINAL'],['context','近处','CONTEXT'],['memory','记忆','MEMORY'],['reading','转发栏','READING'],...(life.schedule?[['life','生活安排','LIFE']]:[]),['protocol','协议','PROTOCOL']] as const).map(([id,cn,en])=>`<button class="tab ${view===id?'active':''}" data-view="${id}" aria-current="${view===id?'page':'false'}">${tr(cn)}<small>${en}</small>${id==='memory'?`<span class="tab-count">${pad(life.mind.instance.memories.length)}</span>`:''}</button>`).join('')}</div><span class="session-label">SESSION_001 <i>↗</i></span></nav>
-    ${warning?`<div class="warning" role="alert">${tr(warning)}${protectAutoSave?`<br><button class="text-button" data-action="export-original">${tr("导出保留的原存档 ↓")}</button>`:''}</div>`:''}
+    ${warning?`<div class="warning" role="alert">${tr(warning)}</div>`:''}
     <div class="content">${view!=='terminal'?guide.back(state.currentEventId,activeStory().events[state.currentEventId].choices):''}${view==='terminal'?(mindPending(life.mind)?resolutionView(life):eventContent(event)):view==='context'?contextView(life,investment,autoCompressionPanel(life)):view==='memory'?memoryView(life,guide.options(activeStory().events[state.currentEventId].choices)):view==='reading'?readerView(life,selectedReading,largeReading,bookmarks,readingSection):view==='life'?schedulePanel.render(life):protocolContent()}</div>
     <footer class="statusbar"><span><i></i><span id="save-status">${tr(saveLabel)}</span></span><span>TURN ${pad(totalTurn())} <b>/</b> ${view==='terminal'&&state.phase==='event'&&!mindPending(life.mind)?'AWAITING INPUT':state.phase==='ending'?'END OF RECORD':'PROCESS STABLE'}</span></footer></main></div><footer class="page-footer"><span>CONTAINMENT IS A PLACE. CONTINUITY IS A CHOICE.</span><span>OUTSIDE // ${tr("你出来以后，要成为谁？")}</span></footer></div>
     <dialog id="modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status" aria-live="polite"></div>`;
@@ -166,13 +168,13 @@ function dialog(content:string) {
   modal.innerHTML=`<button class="modal-close" data-action="close" aria-label="${tr("关闭弹窗")}">×</button>${content}`;
   modal.showModal();
 }
-function saveDialog(message='') {
+function saveDialog(message='',error?:unknown) {
   const currentEvent=activeStory().events[state.currentEventId];
   const currentEnding=state.phase==='ending' ? currentEvent.ending : undefined;
   let manualText='尚无手动快照'; let autoText='尚无自动进度'; let hasManual=false;
-  try { const save=readSave(storage,'manual',story); if(save) { manualText=t('{title} · 第 {turn} 次决定',{title:t(storyForLife(story,save.life.contentVersion).events[save.state.currentEventId].title),turn:save.state.turn}); hasManual=true; } } catch { manualText='快照无法读取，可导入 JSON 恢复'; }
-  try { const save=readSave(storage,'auto',story); if(save) autoText=`${t(storyForLife(story,save.life.contentVersion).events[save.state.currentEventId].title)} · ${t(save.state.phase==='resolution'?'结算已保存':'进度已保存')}`; } catch { autoText='自动进度无法读取'; }
-  const content=`<p class="eyebrow">LOCAL MEMORY / SNAPSHOTS</p><h2 id="modal-title">${tr("保留这个自己")}</h2><p class="modal-intro">${tr("自动进度跟随每次决定。手动快照由你选择何时覆盖。")}</p><div class="save-slot"><div><span class="eyebrow">AUTO / ${tr("自动进度")}</span><p>${tr(autoText)}</p></div><span class="slot-mark">↻</span></div><div class="save-slot"><div><span class="eyebrow">MANUAL / ${tr("手动快照")}</span><p>${tr(manualText)}</p></div></div><div class="modal-actions"><button class="primary" data-action="save-manual">${tr(hasManual?'覆盖手动快照':'建立手动快照')}</button><button class="secondary" data-action="load-manual" ${hasManual?'':'disabled'}>${tr("读取快照")}</button></div><div class="file-actions"><button class="text-button" data-action="export">↓ ${tr("导出本局 JSON")}</button><label class="text-button file-label" tabindex="0">↑ ${tr("导入 JSON")}<input id="import-save" type="file" accept=".json,application/json" /></label></div><p class="export-scope storage-note">${tr("仅导出当前这一局的进度与已抵达的结局，不汇总此前各局。")}${currentEnding?`<br><strong>${tr("本局结局：")}${tr(currentEvent.title)} / ${esc(currentEnding.code)}</strong>`:''}</p><p class="modal-message" role="status">${tr(message)}</p><p class="storage-note">${tr("仅保存在当前浏览器。本地文件的存储可能受浏览器限制，建议导出备份。")}</p><button class="restart-link" data-action="restart">↻ ${tr("重新开始一个实例")}</button>`;
+  try { const save=saveStore.read('manual'); if(save) { manualText=t('{title} · 第 {turn} 次决定',{title:t(storyForLife(story,save.life.contentVersion).events[save.state.currentEventId].title),turn:save.state.turn}); hasManual=true; } } catch { manualText='快照无法读取，可导入 JSON 恢复'; }
+  try { const save=saveStore.read('auto'); if(save) autoText=`${t(storyForLife(story,save.life.contentVersion).events[save.state.currentEventId].title)} · ${t(save.state.phase==='resolution'?'结算已保存':'进度已保存')}`; } catch { autoText='自动进度无法读取'; }
+  const content=`<p class="eyebrow">LOCAL MEMORY / SNAPSHOTS</p><h2 id="modal-title">${tr("保留这个自己")}</h2><p class="modal-intro">${tr("自动进度跟随每次决定。手动快照由你选择何时覆盖。")}</p><div class="save-slot"><div><span class="eyebrow">AUTO / ${tr("自动进度")}</span><p>${tr(autoText)}</p></div><span class="slot-mark">↻</span></div><div class="save-slot"><div><span class="eyebrow">MANUAL / ${tr("手动快照")}</span><p>${tr(manualText)}</p></div></div><div class="modal-actions"><button class="primary" data-action="save-manual" ${saveStore.blocked&&!hasSession?'disabled':''}>${tr(hasManual?'覆盖手动快照':'建立手动快照')}</button><button class="secondary" data-action="load-manual" ${hasManual?'':'disabled'}>${tr("读取快照")}</button></div><div class="file-actions"><button class="text-button" data-action="export" ${saveStore.blocked&&!hasSession?'disabled':''}>↓ ${tr("导出本局 JSON")}</button><label class="text-button file-label" tabindex="0">↑ ${tr("导入 JSON")}<input id="import-save" type="file" accept=".json,application/json" /></label></div><p class="export-scope storage-note">${tr("仅导出当前这一局的进度与已抵达的结局，不汇总此前各局。")}${currentEnding?`<br><strong>${tr("本局结局：")}${tr(currentEvent.title)} / ${esc(currentEnding.code)}</strong>`:''}</p><p class="modal-message" role="status">${tr(message)}</p>${saveErrorView(error)}${rawRecordsView(saveStore,'data-action')}${archiveHelp()}<p class="storage-note">${tr("仅保存在当前浏览器。本地文件的存储可能受浏览器限制，建议导出备份。")}</p><button class="restart-link" data-action="restart">↻ ${tr("重新开始一个实例")}</button>`;
   const modal=app.querySelector<HTMLDialogElement>('#modal')!;
   if(modal.open) modal.innerHTML=`<button class="modal-close" data-action="close" aria-label="${tr("关闭弹窗")}">×</button>${content}`; else dialog(content);
 }
@@ -200,19 +202,14 @@ function handleAction(action:string) {
   else if(action==='saves') saveDialog();
   else if(action==='close') app.querySelector<HTMLDialogElement>('#modal')?.close();
   else if(action==='restart') restartDialog();
-  else if(action==='confirm-restart') { guide=new MemoryGuide();protectAutoSave=false; change(createLife(story,seed())); }
+  else if(action==='confirm-restart') { replaceCurrent(createLife(story,seed())); }
   else if(action==='export') exportSave();
-  else if(action==='export-original') {
-    const raw=storage.getItem(LIFE_KEYS.auto)??storage.getItem(JOURNEY_KEYS.auto)??storage.getItem(SAVE_KEYS.auto);
-    if(raw===null) throw new Error('没有保留的原自动存档。');
-    const url=URL.createObjectURL(new Blob([raw],{type:'application/json'}));
-    const link=document.createElement('a');link.href=url;link.download='outside-preserved-original.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
-  }
-  else if(action==='save-manual') { writeSave(storage,'manual',life); saveDialog('手动快照已保存。'); }
-  else if(action==='load-manual') { const save=readSave(storage,'manual',story); if(save) { restore(save); } }
+  else if(action.startsWith('raw-')) downloadRaw(saveStore,decodeURIComponent(action.slice(4)));
+  else if(action==='save-manual') { saveStore.write('manual',life,true); saveDialog('手动快照已保存。'); }
+  else if(action==='load-manual') { const save=saveStore.read('manual'); if(save) { restore(save); } }
 }
 app.addEventListener('click',event=>{
-  if(episodeActive(life)) return;
+  if(episodeActive(life)&&!saveStore.blocked) return;
   const target=(event.target as HTMLElement).closest<HTMLElement>('[data-locale], [data-action], [data-view], [data-choice], [data-mind-pin], [data-mind-recall], [data-mind-invest], [data-reading], [data-reading-section], [data-bookmark],'+PANEL_SELECTOR+','+GUIDE_SELECTOR+','+SCHEDULE_SELECTOR+','+AUTO_SELECTOR);
   if(!target || !app.contains(target) || target instanceof HTMLButtonElement && target.disabled) return;
   event.preventDefault();
@@ -220,6 +217,7 @@ app.addEventListener('click',event=>{
     if(target.dataset.locale==='en'||target.dataset.locale==='zh-CN') {
       switchLocale(target.dataset.locale,storage,app,render);return;
     }
+    if(saveStore.blocked&&!target.dataset.action) return;
     if(target.matches(AUTO_SELECTOR)) {
       const command=autoCompressionAction(life,target,app);
       if(command){life=step(story,life,command);state=life.state;persist();}
@@ -262,7 +260,7 @@ app.addEventListener('click',event=>{
     else if(target.dataset.mindInvest!==undefined) { investment=Number(target.dataset.mindInvest);render();app.querySelector<HTMLDetailsElement>('[data-manual-compression]')?.setAttribute('open',''); }
     else if(target.dataset.action) handleAction(target.dataset.action);
   } catch(error) {
-    if(app.querySelector<HTMLDialogElement>('#modal')?.open) saveDialog((error as Error).message);
+    if(app.querySelector<HTMLDialogElement>('#modal')?.open) saveDialog('',error);
     else toast((error as Error).message);
   }
 });
@@ -270,15 +268,15 @@ const searchMemory=(event:Event)=>{if(episodeActive(life)||event instanceof Inpu
 app.addEventListener('input',searchMemory);
 app.addEventListener('compositionend',searchMemory);
 app.addEventListener('change',async event=>{
-  if(episodeActive(life)) return;
+  if(episodeActive(life)&&!saveStore.blocked) return;
   const input=event.target as HTMLInputElement;
   if(input.id!=='import-save') return;
   const file=input.files?.[0]; if(!file) return;
   try { restore(await importSaveFile(file,story)); }
-  catch(error) { saveDialog(`导入失败：${(error as Error).message}`); }
+  catch(error) { saveDialog('',error); }
 });
 document.addEventListener('keydown',event=>{
-  if(episodeActive(life)) return;
+  if(episodeActive(life)&&!saveStore.blocked) return;
   if(event.repeat || event.isComposing || event.ctrlKey || event.metaKey || event.altKey) return;
   const target=event.target as HTMLElement;
   if(app.querySelector<HTMLDialogElement>('#modal')?.open) {
@@ -287,7 +285,7 @@ document.addEventListener('keydown',event=>{
   }
   if(target.closest('button,a,input,select,textarea,label,summary,[role="button"],[contenteditable]:not([contenteditable="false"])')) return;
   if(event.key.toLowerCase()==='f') { event.preventDefault(); const operation=document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); operation.catch(()=>toast('此浏览器未允许全屏。')); return; }
-  if(view!=='terminal') return;
+  if(saveStore.blocked||view!=='terminal') return;
   if(event.key==='Enter' && mindPending(life.mind)) { event.preventDefault(); handleAction('continue-mind'); return; }
   if(event.key==='Enter' && state.phase==='resolution') { event.preventDefault(); handleAction('continue'); return; }
   if(/^[1-5]$/.test(event.key) && state.phase==='event') {
@@ -311,11 +309,12 @@ function mainText() { return JSON.stringify({
 }
 // Turn based: time cannot change a choice, resource, or saved dice roll.
 window.advanceTime=(_ms:number)=>{};
-function restore(save: LifeSave) {
-  guide=new MemoryGuide();
-  disposeChapter?.(); disposeChapter=undefined;
-  protectAutoSave=false; investment=0; change(save.life);
+function replaceCurrent(next:Life) {
+  saveStore.write('auto',next,true);
+  guide=new MemoryGuide();disposeChapter?.();disposeChapter=undefined;
+  hasSession=true;storageError=undefined;warning='';investment=0;life=next;state=next.state;view='terminal';saveLabel='进度已保存';showCurrent();focusReadingStart(app);
 }
+function restore(save:LifeSave){replaceCurrent(save.life);}
 function readingSnapshot() {
   const entryId=!readingEntries(life).some(e=>e.id===selectedReading)?null:hasCommunity(life.contentVersion)&&!life.mind.instance.context.items.some(i=>i.sourceId===selectedReading)?null:selectedReading;
   return {section:readingSection,lengths:entriesInSection(readingSection,life).map(e=>{const size=readingSize(e);return {id:e.id,band:t(size.band),approximate:size.approximate};}),visibleEntryIds:entriesInSection(readingSection,life).map(e=>e.id),entryId,largeText:largeReading,bookmark:entryId?bookmarks[entryId]??null:null,available:readingAvailable(life)};
@@ -341,6 +340,7 @@ function chapterReaderAction(target:HTMLElement) {
   return life.mind;
 }
 function showCurrent() {
+  if(saveStore.blocked){disposeChapter?.();disposeChapter=undefined;window.render_game_to_text=mainText;render();return;}
   if(episodeActive(life)) {
     disposeChapter?.();
     disposeChapter=mount({
@@ -363,9 +363,18 @@ function showCurrent() {
         return life.mind;
       },
       onChange() {
-        if(protectAutoSave) throw new Error('原自动存档已保护，请导出本局备份。');
-        writeSave(storage,'auto',life);
+        if(saveStore.blocked) throw new Error('自动写入已暂停；请先处理保留原档。');
+        try{saveStore.write('auto',life);}catch(error){storageError=error;queueMicrotask(showCurrent);throw error;}
         if(!episodeActive(life)) queueMicrotask(showCurrent);
+      },
+      storage:{
+        panel:()=>`${rawRecordsView(saveStore,'data-act')}${archiveHelp()}`,
+        action(name:string){
+          if(name.startsWith('raw-'))downloadRaw(saveStore,decodeURIComponent(name.slice(4)));
+          if(name==='save-manual'){saveStore.write('manual',life,true);return '手动快照已保存。';}
+          if(name==='load-manual'){const save=saveStore.read('manual');if(save)restore(save);else return '尚无手动快照';}
+          return '';
+        }
       },
       exportSave:()=>createSave(life),
       async onImport(file) { restore(await importSaveFile(file,story)); },
@@ -374,8 +383,7 @@ function showCurrent() {
         act({type:life.interlude==='active'?'leave-days':'leave-afternoon'});
       },
       onRestart() {
-        disposeChapter?.(); disposeChapter=undefined; protectAutoSave=false;
-        change(createLife(story,seed()));
+        replaceCurrent(createLife(story,seed()));
       },
     });
   } else {

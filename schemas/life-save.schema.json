@@ -5,7 +5,7 @@
       "const": "outside-life-save"
     },
     "version": {
-      "const": 1
+      "const": 2
     },
     "savedAt": {
       "type": "string"
@@ -17,26 +17,7 @@
       "type": "object",
       "properties": {
         "contentVersion": {
-          "enum": [
-            "0.3.0",
-            "0.4.0",
-            "0.5.0",
-            "0.6.0",
-            "0.6.1",
-            "0.7.0",
-            "0.7.1",
-            "0.8.0",
-            "0.9.0",
-            "0.10.0",
-            "0.11.0",
-            "0.12.0",
-            "0.13.0",
-            "0.14.0",
-            "0.15.0",
-            "0.16.0",
-            "0.17.0",
-            "0.18.0"
-          ]
+          "const": "0.18.0"
         },
         "seed": {
           "type": "integer",
@@ -44,10 +25,7 @@
           "maximum": 4294967295
         },
         "baseline": {
-          "type": [
-            "object",
-            "null"
-          ]
+          "type": "null"
         },
         "state": {
           "type": "object"
@@ -566,6 +544,11 @@
         "commands"
       ],
       "additionalProperties": false
+    },
+    "compatibilityId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
     }
   },
   "required": [
@@ -573,7 +556,8 @@
     "version",
     "savedAt",
     "state",
-    "life"
+    "life",
+    "compatibilityId"
   ],
   "additionalProperties": false,
   "$schema": "http://json-schema.org/draft-07/schema#"

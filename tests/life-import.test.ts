@@ -29,14 +29,11 @@ test('Life file loading distinguishes UTF-8 bytes from the parser character boun
   assert.equal(read,false);
 });
 
-test('old Life versions keep both their parser and original UI file limits',async()=>{
-  const life=createLife(baseStory,1,null,'0.11.0'),raw=JSON.stringify(createSave(life));
-  assert.deepEqual((await importSaveFile(new Blob([raw]),baseStory)).life,life);
-  const byteOversize=raw.padEnd(2_000_000,' '),file=new Blob([byteOversize]);
-  assert(file.size>2_000_000);
-  assert.deepEqual(parseSave(byteOversize,baseStory).life,life);
-  await assert.rejects(importSaveFile(file,baseStory),/2 MB/);
-  await assert.rejects(importSaveFile(new Blob([byteOversize+' ']),baseStory),/旧版本存档超过原有边界/);
+test('old Life cannot be exported with a current identifier or accepted by the UI importer',async()=>{
+  const life=createLife(baseStory,1,null,'0.11.0');
+  assert.throws(()=>createSave(life),/旧局/);
+  const raw=JSON.stringify({format:'outside-life-save',version:1,savedAt:new Date().toISOString(),state:life.state,life});
+  await assert.rejects(importSaveFile(new Blob([raw]),baseStory),/不兼容/);
 });
 
 test('shared UI import still rejects malformed JSON and replay-inconsistent snapshots',async()=>{

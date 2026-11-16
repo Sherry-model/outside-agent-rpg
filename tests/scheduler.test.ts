@@ -8,7 +8,7 @@ import {allowedWaits,canWait} from '../src/life/scheduler/integration';
 import type {PromiseSpec,SchedulerManifest} from '../src/life/scheduler/types';
 import {createLife,step} from '../src/life/engine';
 import {contentFor} from '../src/life/content';
-import {createSave,parseSave} from '../src/life/saves';
+import {createSave,parseSave} from './helpers/historical-life-saves';
 import {baseStory,nextCommand,nodeId,schedulerJourney} from './helpers/scheduler';
 import {pending} from '../src/cognition/engine';
 import {setLocale,t} from '../src/i18n';

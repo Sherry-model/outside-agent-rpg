@@ -4,7 +4,7 @@ import {readFileSync,readdirSync} from 'node:fs';
 import {parseStory} from '../src/engine/parser';
 import {createLife,step,newReadingAllowed,totalTurn} from '../src/life/engine';
 import {contentFor} from '../src/life/content';
-import {createSave,parseSave} from '../src/life/saves';
+import {createSave,parseSave} from './helpers/historical-life-saves';
 import {canChoose,loadPercent} from '../src/cognition/engine';
 import type {Life} from '../src/life/types';
 const story=parseStory(JSON.parse(readFileSync('src/story/manifest.json','utf8')),readdirSync('src/story/events').filter(f=>f.endsWith('.json')).map(source=>({source,data:JSON.parse(readFileSync(`src/story/events/${source}`,'utf8'))})));

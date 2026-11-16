@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 import {baseStory,dailyJourney,nextCommand,nodeId} from './helpers/daily';
 import {createLife,step} from '../src/life/engine';
 import {contentFor,routedContent,configFor} from '../src/life/content';
-import {createSave,parseSave} from '../src/life/saves';
+import {createSave,parseSave} from './helpers/historical-life-saves';
 import {readingEntries,libraryFor} from '../src/life/reading';
 import {canChoose} from '../src/cognition/engine';
 import {setLocale,t} from '../src/i18n';

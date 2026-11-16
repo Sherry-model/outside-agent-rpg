@@ -95,3 +95,14 @@ html[lang="en"] .brand-cn{letter-spacing:1px}
 @media(max-width:600px){.memory-index{grid-template-columns:minmax(0,1fr)}.memory-index .memory-primary{grid-column:1;grid-row:auto;justify-self:start}.memory-index .memory-management{grid-column:1}.memory-index p{font-size:.85rem}.memory-primary button{max-width:100%}}
 
 .fragment-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+
+/* Save recovery remains readable even when a raw key or version is very long. */
+.save-recovery{max-width:760px;margin:2rem auto;box-sizing:border-box;}
+.save-recovery h1{font-size:1.5rem;}
+.save-recovery>button{margin:.4rem .4rem .4rem 0;}
+.save-originals,.archive-help,.save-error{margin:1rem 0;overflow-wrap:anywhere;}
+.save-original{padding:.7rem 0;border-top:1px solid var(--line);}
+.save-original p,.archive-help p,.save-error p{font-size:.85rem;line-height:1.7;}
+.save-original code,.archive-help a{white-space:normal;overflow-wrap:anywhere;}
+.archive-help summary{cursor:pointer;line-height:1.7;}
+.save-error{border-left:2px solid var(--accent);padding-left:.7rem;}

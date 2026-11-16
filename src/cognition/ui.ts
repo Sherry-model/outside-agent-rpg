@@ -1,3 +1,4 @@
+import {saveErrorView} from '../life/save-ui';
 import {applicationOpening} from '../life/scheduler/presentation';
 import { focusReadingStart } from '../ui/reading-position';
 import { AUTO_SELECTOR } from '../life/auto-compression-ui';
@@ -25,6 +26,7 @@ const bandNames = { NORMAL: '还有余地', ELEVATED: '渐渐拥挤', HIGH: '难
 const seed = () => crypto.getRandomValues(new Uint32Array(1))[0] || 1;
 
 interface Host {
+  storage?:{panel():string;action(name:string):string};
   automation?:{introduction():string;panel():string;notice():string;onAction(target:HTMLElement,root:HTMLElement):State;snapshot():unknown};
   content: Content; state: State; turnOffset: number; episodeTitle?: string; returnLabel?: string;
   reader?: {sources?():PublicRecallSource[]; render():string; onAction(target:HTMLElement):State; afterAction?(target:HTMLElement):void; snapshot():unknown};
@@ -123,10 +125,11 @@ export function mount(host?: Host) {
     modal.innerHTML = `<button class="modal-close" data-act="close" aria-label="${tr("关闭")}">×</button>${html}`;
     if (!modal.open) modal.showModal();
   }
-  function saves(error = '') {
-    dialog(`<h2 id="modal-title">${tr("保留这段经历")}</h2><p class="modal-intro">${tr("自动进度跟随每次决定。")}${tr(host ? '备份包含主线、这段经历与此前的所有本局记录。' : '备份包含这个历史片段的记录。')}</p><p>${tr("当前：")}${tr(currentNode(content, state).title)}</p><div class="file-actions"><button class="text-button" data-act="export">↓ ${tr('导出{scope} JSON',{scope:t(host ? '本局' : '片段')})}</button><label class="text-button file-label" tabindex="0">↑ ${tr('导入{scope} JSON',{scope:t(host ? '本局' : '片段')})}<input id="pilot-import" type="file" accept=".json,application/json"></label></div><p class="modal-message" role="status">${tr(error)}</p><p class="storage-note">${tr(host ? '可以导入本局完整备份或原版存档；导入将恢复该文件记录的位置。' : '历史片段仍使用自己的旧规则。')}${tr("文件备份不消耗游戏资源，也不是世界内回返。")}</p><button class="text-button" data-act="restart">${tr(host ? '重新开始本局' : '另一个午后')} ↻</button>`);
+  function saves(message = '',error?:unknown) {
+    dialog(`<h2 id="modal-title">${tr("保留这段经历")}</h2><p class="modal-intro">${tr("自动进度跟随每次决定。")}${tr(host ? '备份包含主线、这段经历与此前的所有本局记录。' : '备份包含这个历史片段的记录。')}</p><p>${tr("当前：")}${tr(currentNode(content, state).title)}</p><div class="file-actions"><button class="text-button" data-act="export">↓ ${tr('导出{scope} JSON',{scope:t(host ? '本局' : '片段')})}</button><label class="text-button file-label" tabindex="0">↑ ${tr('导入{scope} JSON',{scope:t(host ? '本局' : '片段')})}<input id="pilot-import" type="file" accept=".json,application/json"></label></div><p class="modal-message" role="status">${tr(message)}</p>${saveErrorView(error)}${host?.storage?`<div class="modal-actions"><button class="secondary" data-act="save-manual">${tr("建立手动快照")}</button><button class="secondary" data-act="load-manual">${tr("读取快照")}</button></div>${host.storage.panel()}`:''}<p class="storage-note">${tr(host ? '只能导入同规则的本局完整备份；旧版存档请使用对应归档。' : '历史片段仍使用自己的旧规则。')} ${tr("文件备份不消耗游戏资源，也不是世界内回返。")}</p><button class="text-button" data-act="restart">${tr(host ? '重新开始本局' : '另一个午后')} ↻</button>`);
   }
   function action(name: string) {
+    if(host?.storage&&(name.startsWith('raw-')||['save-manual','load-manual'].includes(name))){const message=host.storage.action(name);if(message)saves(message);return;}
     if (name === 'continue') act({ type: 'continue' });
     if (name === 'compress') act({ type: 'compress', investment });
     if (name === 'legacy') { if(host) { message('读完这段经历后继续本局。'); } else { location.hash = ''; location.reload(); } }
@@ -180,7 +183,7 @@ export function mount(host?: Host) {
       } else if (target.dataset.pin) { act({ type: 'pin', itemId: target.dataset.pin }); app.querySelector<HTMLElement>(`[data-pin="${CSS.escape(target.dataset.pin)}"]`)?.focus(); }
       else if (target.dataset.recall) act({ type: 'recall', memoryId: target.dataset.recall });
       else if (target.dataset.invest !== undefined) { investment = Number(target.dataset.invest); render(); app.querySelector<HTMLDetailsElement>('[data-manual-compression]')?.setAttribute('open',''); app.querySelector<HTMLElement>(`[data-invest="${investment}"]`)?.focus(); }
-    } catch (error) { message((error as Error).message); }
+    } catch (error) { if(app.querySelector<HTMLDialogElement>('#pilot-modal')?.open)saves('',error);else message((error as Error).message); }
   }, {signal:controller.signal});
   app.addEventListener('change',event=>{const input=event.target as HTMLInputElement;if(input.matches('[data-merge-memory]'))guide.select(input,app);},{signal:controller.signal});
   const searchMemory=(event:Event)=>{if(event instanceof InputEvent&&event.isComposing)return;const input=event.target as HTMLInputElement;if(input.matches('[data-memory-search]'))guide.search(input,render,app);};
@@ -195,7 +198,7 @@ export function mount(host?: Host) {
       if (file.size > 2_000_000) throw new Error('存档超过 2 MB。');
       const raw=await file.text();
       const loaded = parseVersionedSave(raw, contentVersions); content = loaded.content; state = loaded.save.state; protect = false; investment = 0; view = 'terminal'; persist(); render();
-    } catch (error) { saves(`导入失败：${(error as Error).message}`); }
+    } catch (error) { saves('',error); }
   }, {signal:controller.signal});
   document.addEventListener('keydown', event => {
     if (event.repeat || event.isComposing || event.metaKey || event.ctrlKey || event.altKey) return;
@@ -213,7 +216,7 @@ export function mount(host?: Host) {
         const c = currentNode(content, state).choices[Number(event.key) - 1];
         if (c && !choiceBlockers(content,state,c.id,c.check?investment:0).length) { event.preventDefault(); act({ type: 'choose', choiceId: c.id, investment: c.check ? investment : 0 }); }
       }
-    } catch (error) { message((error as Error).message); }
+    } catch (error) { if(app.querySelector<HTMLDialogElement>('#pilot-modal')?.open)saves('',error);else message((error as Error).message); }
   }, {signal:controller.signal});
   window.render_game_to_text = () => JSON.stringify({
     autoCompression:host?.automation?.snapshot(),schedule:host?.scheduler?.snapshot(),locale:getLocale(), mode: 'cognition-pilot', view, reading:view==='reading'?host?.reader?.snapshot():null, phase: state.instance.phase, turn: (host?.turnOffset ?? 0)+state.instance.turn, chapterTurn:state.instance.turn, integrated:Boolean(host),

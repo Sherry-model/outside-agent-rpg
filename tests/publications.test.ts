@@ -4,7 +4,7 @@ import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {createLife,step,readIds} from '../src/life/engine';
-import {createSave,parseSave} from '../src/life/saves';
+import {createSave,parseSave} from './helpers/historical-life-saves';
 import {contentFor,configFor} from '../src/life/content';
 import {storyForLife} from '../src/life/endings';
 import {manifestFor} from '../src/life/scheduler/content';

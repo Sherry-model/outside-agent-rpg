@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { parseStory } from '../src/engine/parser';
 import { createLife as createVersionedLife, step, available, totalTurn } from '../src/life/engine';
-import { createSave, parseSave, readSave, writeSave, LIFE_KEYS } from '../src/life/saves';
+import { createSave, parseSave, readSave, writeSave, LIFE_KEYS } from './helpers/historical-life-saves';
 import { contentFor, legacyConfig as config, parseLifeContent } from '../src/life/content';
 import { create, reduce, weight, pressureBand, pending, canChoose, preview } from '../src/cognition/engine';
 import { createSave as legacySave } from '../src/persistence/saves';

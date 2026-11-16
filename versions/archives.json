@@ -1,0 +1,116 @@
+{
+  "archives": [
+    {
+      "id": "life-published",
+      "file": "OUTSIDE-life-0.18-0be4850.html",
+      "contentVersion": "0.18.0",
+      "saveVersion": 1,
+      "compatibilityId": null,
+      "gitSource": "0be485089994a645608ed73589010781e7e1ca58:OUTSIDE.html",
+      "sha256": "39b439982a042e38bbe6611a89926d7374f5a70b63d787e931dfa7e452156bc3",
+      "label": "0.18 已发布版／历史兼容入口",
+      "limitations": "保留原有候选迁移行为；需要精确原候选重放时使用候选归档。不是每个旧版本的原始发行界面。",
+      "verifiedSamples": [
+        {
+          "sample": "tests/fixtures/life-published-0.18.json",
+          "description": "0.18 v1 full A / visitor ending; original OPT026 review sample",
+          "sha256": "fd86b7d2eabb89e912daf38ff510a7d6de3f468ae3a31d58e57c758d3b056cbe",
+          "verifiedOn": "2026-11-17",
+          "verification": "Chrome actual import and export; full Life and outer state identical",
+          "evidence": "output/add019/archive-outside-the-visitor-turn-37.json"
+        },
+        {
+          "sample": "tests/fixtures/painter-baseline-0.17.json",
+          "description": "0.17 days_echo / turn 30",
+          "sha256": "4d8d1a442f2c9ec9332bb7eaa2dcd06eae15859de4f93e31f2b3e425b1fb3dbc",
+          "verifiedOn": "2026-11-17",
+          "verification": "Chrome actual import and export; full Life and outer state identical",
+          "evidence": "output/add019/ui-0be-017-export.json"
+        }
+      ]
+    },
+    {
+      "id": "life-draft",
+      "file": "OUTSIDE-life-0.18-draft-63d0b34.html",
+      "contentVersion": "0.18.0",
+      "saveVersion": 1,
+      "compatibilityId": null,
+      "gitSource": "63d0b347694fc71dda67a53727c676e4261b1e29:OUTSIDE.html",
+      "sha256": "55eddeaabbe8ba3b4b4047e3aad9b7f70ba80cac9a064b2e66afc30913c29f33",
+      "label": "0.18 原画师候选（非正式推荐版）",
+      "limitations": "仅供原候选存档恢复；保留当时文本与规则。",
+      "verifiedSamples": [
+        {
+          "sample": "tests/fixtures/painter-candidate-0.18.json",
+          "description": "Original 63d painter candidate / turn 35",
+          "sha256": "3351783fcab8e09f576319b8d496171272ffdb718f057f21763597ba1dfbeefc",
+          "verifiedOn": "2026-11-17",
+          "verification": "Chrome actual import and export; full Life and outer state identical",
+          "evidence": "output/add019/ui-63d-candidate-export.json"
+        }
+      ]
+    },
+    {
+      "id": "afternoon",
+      "file": "OUTSIDE-2026-09-14-cognition-0.2.1.html",
+      "contentVersion": "0.2.1",
+      "saveVersion": 2,
+      "compatibilityId": null,
+      "label": "独立午后归档",
+      "limitations": "独立 cognition 存档的历史入口；不能当作 Life 新版。",
+      "gitSource": "0be485089994a645608ed73589010781e7e1ca58:versions/OUTSIDE-2026-09-14-cognition-0.2.1.html",
+      "sha256": "51ec79bd267109982f8a2a1b94697d3c5ed1887b32a8cf1e8207bd2375d68309",
+      "verifiedSamples": [],
+      "verificationNote": "Preserved named archive; no new browser route verification in this batch."
+    },
+    {
+      "id": "journey",
+      "file": "OUTSIDE-journey-content-0.2.2.html",
+      "contentVersion": "0.2.2",
+      "saveVersion": 1,
+      "compatibilityId": null,
+      "label": "主线整合旅程归档",
+      "limitations": "旧旅程活动或已完成章节。",
+      "gitSource": "0be485089994a645608ed73589010781e7e1ca58:versions/OUTSIDE-journey-content-0.2.2.html",
+      "sha256": "1e6509da42f3f1b4f2ff3ba743b09c4a750ed3875c0814cfa56b8c035dc875f2",
+      "verifiedSamples": [],
+      "verificationNote": "Preserved named archive; no new browser route verification in this batch."
+    },
+    {
+      "id": "life-03",
+      "file": "OUTSIDE-life-reading-0.3.0.html",
+      "contentVersion": "0.3.0",
+      "saveVersion": 1,
+      "compatibilityId": null,
+      "gitSource": "0be485089994a645608ed73589010781e7e1ca58:versions/OUTSIDE-life-reading-0.3.0.html",
+      "sha256": "38e2c62cd99807c84977514c79cf813c3edc170edfeee2b6ce88b83f83aaca44",
+      "label": "持续上下文与阅读归档",
+      "limitations": "原有命名归档保留不变；本批未重新验证其全部存档与路线。",
+      "verifiedSamples": []
+    },
+    {
+      "id": "life-04",
+      "file": "OUTSIDE-context-memory-0.4.0.html",
+      "contentVersion": "0.4.0",
+      "saveVersion": 1,
+      "compatibilityId": null,
+      "gitSource": "0be485089994a645608ed73589010781e7e1ca58:versions/OUTSIDE-context-memory-0.4.0.html",
+      "sha256": "0bb3006615a72c881fcb4f3c616f239828e2572fd6389a55f050544e6a7caf65",
+      "label": "摘要与记忆目录归档",
+      "limitations": "原有命名归档保留不变；本批未重新验证其全部存档与路线。",
+      "verifiedSamples": []
+    },
+    {
+      "id": "life-05",
+      "file": "OUTSIDE-three-days-0.5.0.html",
+      "contentVersion": "0.5.0",
+      "saveVersion": 1,
+      "compatibilityId": null,
+      "gitSource": "0be485089994a645608ed73589010781e7e1ca58:versions/OUTSIDE-three-days-0.5.0.html",
+      "sha256": "669cc5517122f1e34e1dcf011bffb56acc976768f4837f11dd02aa2bbe762e84",
+      "label": "余下的三天归档",
+      "limitations": "原有命名归档保留不变；本批未重新验证其全部存档与路线。",
+      "verifiedSamples": []
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import {readFileSync,readdirSync} from 'node:fs';
 import {parseStory} from '../src/engine/parser';
 import {createLife,step} from '../src/life/engine';
 import {contentFor} from '../src/life/content';
-import {createSave,parseSave} from '../src/life/saves';
+import {createSave,parseSave} from './helpers/historical-life-saves';
 import {canChoose,loadPercent} from '../src/cognition/engine';
 import {readingEntries,currentCommunityPage} from '../src/life/reading';
 import type {Life} from '../src/life/types';

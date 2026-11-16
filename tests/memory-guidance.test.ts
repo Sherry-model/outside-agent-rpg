@@ -9,7 +9,7 @@ import { directoryPanel } from '../src/cognition/panels';
 import { setLocale, hasTranslation } from '../src/i18n';
 import { dailyJourney, baseStory } from './helpers/daily';
 import { step } from '../src/life/engine';
-import { createSave, parseSave } from '../src/life/saves';
+import { createSave, parseSave } from './helpers/historical-life-saves';
 import { recallSources } from '../src/life/recall-sources';
 import type { Memory, State, Choice } from '../src/cognition/types';
 import dictionary from '../src/i18n/en-memory-guidance.json';

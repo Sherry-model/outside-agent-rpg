@@ -2,9 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {baseStory,nextCommand} from './helpers/scheduler';
-import {createLife,step} from '../src/life/engine';
+import {createLife,replayStep,step} from '../src/life/engine';
 import {createSave,parseSave} from '../src/life/saves';
-import {contentFor,verifyOriginalPainterDraft} from '../src/life/content';
+import {contentFor} from '../src/life/content';
 import {canWait} from '../src/life/scheduler/integration';
 import {SchedulePanel} from '../src/life/scheduler/ui';
 import {newsNotice} from '../src/life/painter-life/ui';
@@ -39,7 +39,8 @@ test('stranger can compress, merge and recall public news without acquiring priv
   assert.deepEqual(parseSave(JSON.stringify(createSave(l)),baseStory).life,l);
 });
 test('wait delivery appears in Life, but absent context and later commands do not resurrect it',()=>{
-  let l=parseSave(candidate,baseStory).life;
+  const recipe=JSON.parse(candidate).life;let l=createLife(baseStory,recipe.seed);for(const c of recipe.commands)l=replayStep(baseStory,l,c); // New current run from legal commands, not imported v1.
+  assert.deepEqual(parseSave(JSON.stringify(createSave(l)),baseStory).life,l);
   l=step(baseStory,l,{type:'wait',hours:24,missed:[]});
   assert.equal(l.news?.at(-1)?.id,'painter_move_done');
   assert(l.schedule!.receipts.some(r=>r.id==='application_result'));
@@ -49,30 +50,20 @@ test('wait delivery appears in Life, but absent context and later commands do no
   assert.doesNotMatch(new SchedulePanel().render(l),/公共目录：画师的新观景端已开放/);
   assert.equal(l.news!.length,2);
 });
-test('actual candidate save is authenticated, corrected, and remains strictly replayable',()=>{
-  const original=JSON.parse(candidate);const repaired=parseSave(candidate,baseStory);
-  assert.deepEqual(repaired.life.commands,original.life.commands);
-  assert.deepEqual(repaired.state,original.state);
-  assert.equal(repaired.life.schedule!.hour,105);
-  assert.doesNotMatch(JSON.stringify(repaired.life),/这是它现在给你的纠正/);
-  assert.deepEqual(parseSave(JSON.stringify(repaired),baseStory),repaired);
+test('actual v1 candidate is refused unchanged rather than migrated',()=>{
+  const original=JSON.parse(candidate);assert.throws(()=>parseSave(candidate,baseStory),/不兼容/);
+  assert.equal(JSON.stringify(JSON.parse(candidate)),JSON.stringify(original));
   assert.equal(contentFor('0.18.0').semantic!.sources.painter_move_plan.clauses[0].abstract,'我读过画师的公共消息');
 });
-test('candidate compatibility never accepts altered resources, flags or history',()=>{
+test('altered legacy candidates are refused without trying compatibility replay',()=>{
   for(const mutate of [
     (s:any)=>{s.state.resources.Compute++;s.life.state.resources.Compute++;s.life.mind.instance.resources.Compute++;},
     (s:any)=>{s.life.mind.world.flags.painter_sync_helped=false;},
     (s:any)=>{s.life.mind.history[0].id='forged';},
-  ]) {const s=JSON.parse(candidate);mutate(s);assert.throws(()=>parseSave(JSON.stringify(s),baseStory));}
-  assert.throws(()=>verifyOriginalPainterDraft(()=>{throw Error('interrupted verification');}));
-  assert.equal(contentFor('0.18.0').semantic!.sources.painter_move_done.clauses[0].abstract,'我读过画师的公共消息');
+  ]) {const s=JSON.parse(candidate);mutate(s);assert.throws(()=>parseSave(JSON.stringify(s),baseStory),/不兼容/);}
 });
-test('original candidate coarse false acquaintance is repaired only after exact original replay',()=>{
-  let old!:Life;
-  verifyOriginalPainterDraft(()=>{old=coarseNews(stranger());return true;});
-  assert.match(old.mind.instance.context.items.at(-1)!.text,/我和画师有过一些来往/);
-  const repaired=parseSave(JSON.stringify(createSave(old)),baseStory).life;
-  assert.match(repaired.mind.instance.context.items.at(-1)!.text,/我读过画师的公共消息/);
-  assert.deepEqual(repaired.commands,old.commands);assert.deepEqual(repaired.state.resources,old.state.resources);
-  assert.deepEqual(parseSave(JSON.stringify(createSave(repaired)),baseStory).life,repaired);
+test('adding a current header cannot authenticate a candidate with different retained text',()=>{
+  const original=JSON.parse(candidate),header=createSave(createLife(baseStory,original.life.seed));
+  original.version=header.version;original.compatibilityId=header.compatibilityId;
+  assert.throws(()=>parseSave(JSON.stringify(original),baseStory),/快照与本局经历不一致/);
 });

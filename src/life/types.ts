@@ -38,7 +38,7 @@ export interface Life {
 }
 export const hasCommunity = (version:Life['contentVersion']) => version==='0.6.0'||version==='0.6.1'||version==='0.7.0'||version==='0.7.1'||version==='0.8.0'||version==='0.9.0'||version==='0.10.0'||version==='0.11.0'||version==='0.12.0'||version==='0.13.0'||version==='0.14.0'||version==='0.15.0'||version==='0.16.0'||(version==='0.17.0'||version==='0.18.0');
 export interface LifeSave {
-  format: 'outside-life-save'; version: 1; savedAt: string;
+  format: 'outside-life-save'; version: 2; compatibilityId: string; savedAt: string;
   state: GameState;
   life: Life;
 }

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { parseStory } from '../src/engine/parser';
 import { createLife as createVersionedLife, step } from '../src/life/engine';
-import { createSave, parseSave } from '../src/life/saves';
+import { createSave, parseSave } from './helpers/historical-life-saves';
 import { contentFor } from '../src/life/content';
 import { semantic, parseSemantic } from '../src/life/semantic-content';
 import { canChoose, create, reduce, pending, weight } from '../src/cognition/engine';

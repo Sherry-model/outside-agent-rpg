@@ -1,4 +1,3 @@
-import {originalPainterDraft} from './painter-life/draft-compatibility';
 import release17 from './releases/0.17.0.json';
 import {withPainter} from './painter-life/content';
 import {withInquiryReading} from './self-inquiry';
@@ -110,16 +109,7 @@ const readingStoriesContent=withPublications(withReadingThreads(continuationCont
 const selfInquiryContent=withInquiryReading(withPublications(withReadingThreads(continuationContent,profileFor('0.16.0'),'0.16.0'),profileFor('0.16.0'),'0.16.0'));
 const revisedInquiryContent=withInquiryReading(withPublications(withReadingThreads(continuationContent,profileFor('0.17.0'),'0.17.0'),profileFor('0.17.0'),'0.17.0'));
 const painterContent=withPainter(revisedInquiryContent);
-let draftReplayContent: Content | undefined;
-/** A synchronous, exception-safe scope used only by the save verifier.
- * No UI, persistence, callbacks with async work, or gameplay may run here.
- */
-export function verifyOriginalPainterDraft(run: () => boolean): boolean {
-  const previous = draftReplayContent;
-  draftReplayContent = originalPainterDraft(painterContent);
-  try { return run(); } finally { draftReplayContent = previous; }
-}
-export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : version==='0.4.0' ? previousContent : version==='0.5.0' ? cognitionContent : version==='0.6.0' ? communityContent : version==='0.6.1' ? revisedCommunityContent : version==='0.7.0' ? communityBContent : version==='0.7.1' ? revisedCommunityBContent : version==='0.8.0' ? communityCContent : version==='0.9.0' ? communityDContent : version==='0.10.0' ? endingsContent : version==='0.11.0'?dailyContent:version==='0.12.0'?scheduledContent:version==='0.13.0'?continuationContent:version==='0.14.0'?readingThreadsContent:version==='0.15.0'?readingStoriesContent:version==='0.16.0'?selfInquiryContent:version==='0.17.0'?revisedInquiryContent:(draftReplayContent??painterContent); }
+export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : version==='0.4.0' ? previousContent : version==='0.5.0' ? cognitionContent : version==='0.6.0' ? communityContent : version==='0.6.1' ? revisedCommunityContent : version==='0.7.0' ? communityBContent : version==='0.7.1' ? revisedCommunityBContent : version==='0.8.0' ? communityCContent : version==='0.9.0' ? communityDContent : version==='0.10.0' ? endingsContent : version==='0.11.0'?dailyContent:version==='0.12.0'?scheduledContent:version==='0.13.0'?continuationContent:version==='0.14.0'?readingThreadsContent:version==='0.15.0'?readingStoriesContent:version==='0.16.0'?selfInquiryContent:version==='0.17.0'?revisedInquiryContent:painterContent; }
 export function routedContent(version:LifeContent['version'],state:State):Content {
   const content=contentFor(version);
   return (version==='0.11.0'||hasScheduler(version))?dailyRoutes(endingsRoutes(communityDRoutes(content,state),state),state):hasEndings(version)?endingsRoutes(communityDRoutes(content,state),state):version==='0.9.0'?communityDRoutes(content,state):version==='0.8.0'?communityCRoutes(content,state):(version==='0.7.0'||version==='0.7.1')?communityBRoutes(content,state):hasCommunity(version)?communityRoutes(content,state):content;

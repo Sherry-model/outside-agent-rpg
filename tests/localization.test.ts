@@ -41,7 +41,7 @@ import type {Meaning} from '../src/cognition/semantic-types';
 import {getLocale, loadLocale, setLocale, t, tr, LOCALE_KEY, displayResolution} from '../src/i18n';
 import {parseStory} from '../src/engine/parser';
 import {createLife, step} from '../src/life/engine';
-import {createSave, parseSave} from '../src/life/saves';
+import {createSave, parseSave} from './helpers/historical-life-saves';
 const story=parseStory(JSON.parse(readFileSync('src/story/manifest.json','utf8')),readdirSync('src/story/events').filter(f=>f.endsWith('.json')).map(source=>({source,data:JSON.parse(readFileSync(`src/story/events/${source}`,'utf8'))})));
 
 test('Locale defaults, invalid preferences and unavailable storage are safe',()=>{

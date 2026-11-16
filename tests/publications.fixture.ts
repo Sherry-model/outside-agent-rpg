@@ -6,7 +6,7 @@ import {createLife,step,newReadingAllowed} from '../src/life/engine';
 import {contentFor} from '../src/life/content';
 import {readingEntries,libraryFor} from '../src/life/reading';
 import {recallSources} from '../src/life/recall-sources';
-import {createSave,parseSave,LIFE_KEYS} from '../src/life/saves';
+import {createSave,parseSave,LIFE_KEYS} from './helpers/historical-life-saves';
 import {pending,weight} from '../src/cognition/engine';
 import {readingProfile,publications} from './fixtures/publication-profile';
 import {validatePublications,publicationFact} from '../src/life/publications/rules';

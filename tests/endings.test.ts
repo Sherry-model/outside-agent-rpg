@@ -4,7 +4,7 @@ import {baseStory,journey,nextCommand,nodeId,type Route} from './helpers/endings
 import {createLife,step} from '../src/life/engine';
 import {contentFor,configFor,parseLifeContent} from '../src/life/content';
 import {storyForLife} from '../src/life/endings';
-import {createSave,parseSave} from '../src/life/saves';
+import {createSave,parseSave} from './helpers/historical-life-saves';
 import {canChoose} from '../src/cognition/engine';
 import {getAvailability} from '../src/engine/game';
 import {setLocale,t} from '../src/i18n';

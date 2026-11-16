@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {createLife,step} from '../src/life/engine';
-import {createSave,parseSave,LIFE_KEYS} from '../src/life/saves';
+import {createSave,parseSave,LIFE_KEYS} from './helpers/historical-life-saves';
 import {baseStory,nextCommand,nodeId} from './helpers/scheduler';
 import {contentFor} from '../src/life/content';
 import {readingProfile} from '../src/life/reading-threads/profile';

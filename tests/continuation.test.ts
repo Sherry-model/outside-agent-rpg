@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {createLife,step} from '../src/life/engine';
 import {contentFor,configFor,routedContent} from '../src/life/content';
 import {storyForLife} from '../src/life/endings';
-import {createSave,parseSave} from '../src/life/saves';
+import {createSave,parseSave} from './helpers/historical-life-saves';
 import {libraryFor,readingEntries} from '../src/life/reading';
 import {simpleExits} from '../src/life/continuation';
 import {choiceBlockers} from '../src/cognition/availability';
