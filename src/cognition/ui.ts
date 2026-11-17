@@ -121,6 +121,8 @@ export function mount(host?: Host) {
     setTimeout(() => el.classList.remove('visible'), 4000);
   }
   function dialog(html: string) {
+    // An awaited host import may finish after recovery has disposed this mount.
+    if (controller.signal.aborted) return;
     const modal = app.querySelector<HTMLDialogElement>('#pilot-modal')!;
     modal.innerHTML = `<button class="modal-close" data-act="close" aria-label="${tr("关闭")}">×</button>${html}`;
     if (!modal.open) modal.showModal();

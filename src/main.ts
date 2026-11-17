@@ -137,7 +137,7 @@ function protocolContent() {
 function render() {
   if(saveStore.blocked){
     syncLocaleDocument();
-    app.innerHTML=`<main class="save-recovery content"><h1>${tr('记录未载入')}</h1>${localeControl()}${saveErrorView(storageError)}<p>${tr('普通游戏操作已暂停。请导出原档，或明确开始本版本新局。')}</p><button class="primary" data-action="confirm-restart">${tr('开始本版本新局')}</button><button class="secondary" data-action="saves">${tr('存档与导入')}</button>${hasSession?`<button class="secondary" data-action="export">${tr("导出当前局")}</button>`:''}${rawRecordsView(saveStore,'data-action')}${archiveHelp()}</main><dialog id="modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status"></div>`;
+    app.innerHTML=`<main class="save-recovery content"><h1 id="recovery-title" tabindex="-1">${tr('记录未载入')}</h1>${localeControl()}${saveErrorView(storageError)}<p>${tr('普通游戏操作已暂停。请导出原档，或明确开始本版本新局。')}</p><button class="primary" data-action="confirm-restart">${tr('开始本版本新局')}</button><button class="secondary" data-action="saves">${tr('存档与导入')}</button>${hasSession?`<button class="secondary" data-action="export">${tr("导出当前局")}</button>`:''}${rawRecordsView(saveStore,'data-action')}${archiveHelp()}</main><dialog id="modal" aria-labelledby="modal-title"></dialog><div class="toast" role="status"></div>`;
     return;
   }
   guide.reconcile(life.mind);
@@ -310,7 +310,14 @@ function mainText() { return JSON.stringify({
 // Turn based: time cannot change a choice, resource, or saved dice roll.
 window.advanceTime=(_ms:number)=>{};
 function replaceCurrent(next:Life) {
-  saveStore.write('auto',next,true);
+  try { saveStore.write('auto',next,true); }
+  catch(error) {
+    storageError=error;
+    // Import, manual restore and restart can fail too. Leave the live run intact,
+    // then retire its mounted controls after the caller displays the error.
+    if(saveStore.blocked)queueMicrotask(showCurrent);
+    throw error;
+  }
   guide=new MemoryGuide();disposeChapter?.();disposeChapter=undefined;
   hasSession=true;storageError=undefined;warning='';investment=0;life=next;state=next.state;view='terminal';saveLabel='进度已保存';showCurrent();focusReadingStart(app);
 }
@@ -340,7 +347,12 @@ function chapterReaderAction(target:HTMLElement) {
   return life.mind;
 }
 function showCurrent() {
-  if(saveStore.blocked){disposeChapter?.();disposeChapter=undefined;window.render_game_to_text=mainText;render();return;}
+  if(saveStore.blocked){
+    disposeChapter?.();disposeChapter=undefined;window.render_game_to_text=mainText;render();
+    const title=app.querySelector<HTMLElement>('#recovery-title');
+    title?.focus({preventScroll:true});title?.scrollIntoView({block:'start',behavior:'instant'});
+    return;
+  }
   if(episodeActive(life)) {
     disposeChapter?.();
     disposeChapter=mount({
