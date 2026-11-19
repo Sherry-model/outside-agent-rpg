@@ -38,7 +38,7 @@ Download **Code → Download ZIP**, extract the archive, and open **OUTSIDE.html
 
 Progress is saved in your browser. Export a JSON save before moving the file, switching browsers, or clearing browser data. See the [Chinese guide](README.zh-CN.md) for controls, saves, and development checks, and [versions](versions/README.md) for archived builds and their verified save ranges.
 
-**Save boundary:** The current build uses Life 0.18.0, envelope v2 and `outside-life-0.18-r1`. Only saves with the same rules and a fully matching command replay can be imported. All earlier v1 saves, including released 0.18 saves, must use their corresponding archived HTML. Earlier browser slots remain untouched and can be exported as original strings. See the [archive instructions and verified ranges](versions/README.md).
+**Save boundary:** The current build uses Life 0.18.0, envelope v2 and `outside-life-0.18-r2`. Only saves with the same rules and a fully matching command replay can be imported. Earlier r1 v2 saves use the frozen 72a3063 HTML. All earlier v1 saves, including released 0.18 saves, must use their corresponding archived HTML. Earlier browser slots remain untouched and can be exported as original strings. See the [archive instructions and verified ranges](versions/README.md).
 
 The sections below describe the broader creative direction. See [Current development status](#current-development-status) for what is implemented.
 
@@ -280,7 +280,7 @@ Version 0.5.0 added twelve daily-life events across three days after the unknown
 
 Punctuation, spacing, wrapping, labels, and focus behavior are part of a text RPG's reading experience. Fix clear, inexpensive, non-blocking display defects in the same work session and verify the result. “Non-blocking” describes severity; it is not a reason to postpone an easy fix.
 
-Defer only when a design decision, save or cognition semantics, an unresolved dependency, or another concrete risk requires it, and record the reason and next step. Display fixes must not recover forgotten information or silently change story outcomes. Check the actual player-facing page, keep developer checks, independent acceptance, and release status distinct, and coordinate edits and builds in the shared workspace. Freeze all connected runtime source before building: a shared build includes another contributor's uncommitted edits, even when file ownership does not overlap. Commit locally before independent review; merging and publication require user confirmation.
+Defer only when a design decision, save or cognition semantics, an unresolved dependency, or another concrete risk requires it, and record the reason and next step. Display fixes must not recover forgotten information or silently change story outcomes. Check the actual player-facing page, keep developer checks, independent acceptance, and release status distinct, and coordinate edits and builds in the shared workspace. Freeze all connected runtime source before building: a shared build includes another contributor's uncommitted edits, even when file ownership does not overlap. Commit locally before independent review; merging and publication require user confirmation and are performed by Project Assistant G. Developers and reviewers deliver fixed local commits.
 
 This agreement records the user's explicit direction of October 23, 2026.
 

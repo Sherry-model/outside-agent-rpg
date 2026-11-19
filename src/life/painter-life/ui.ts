@@ -17,5 +17,6 @@ export function newsNotice(l:Life):string {
 
 export function painterDisplay(l:Life):string {
  if(l.contentVersion!=='0.18.0'||l.mind.instance.nodeId!=='painter_revisit'||l.mind.instance.phase!=='event')return '';
- return `<aside class="schedule-notice" data-life-arrival>${tr(l.mind.world.flags.painter_sync_helped?'它给你的入口直接打开静帧：“上次你传过图了，这次别再花资源。”':'普通预览慢慢亮起来。画师自己完成了同步检查。')}</aside>`;
+ const receipt=l.mind.instance.context.items.find(i=>i.sourceId==='painter_return_quota'&&!i.memoryId);
+ return `<aside class="schedule-notice" data-life-arrival><p>${tr(l.mind.world.flags.painter_sync_helped?'它给你的入口直接打开静帧：“上次你传过图了，这次别再花资源。”':'普通预览慢慢亮起来。画师自己完成了同步检查。')}</p>${receipt?`<p>${esc(contextText(receipt))}</p>`:''}</aside>`;
 }

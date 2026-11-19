@@ -17,6 +17,7 @@ import { SaveStorage, type EnumerableStorage } from './life/save-storage';
 import { archiveHelp, rawRecordsView, downloadRaw, saveErrorView, saveErrorText } from './life/save-ui';
 import { available, createLife, step, episodeActive, totalTurn as lifeTurn, readingAvailable, daysReading, newReadingAllowed } from './life/engine';
 import { contentFor } from './life/content';
+import {painterRoutes} from './life/painter-life/content';
 import { PANEL_SELECTOR, panelCommand, manualCompressionPanel } from './cognition/panels';
 import { directory } from './cognition/semantic';
 import { directoryCode, memoryCues } from './cognition/guidance';
@@ -357,7 +358,7 @@ function showCurrent() {
     disposeChapter?.();
     disposeChapter=mount({
       automation:{introduction:()=>autoCompressionIntroduction(life),panel:()=>autoCompressionPanel(life),notice:()=>autoCompressionNotice(life),snapshot:()=>autoCompressionSnapshot(life),onAction(target,root){const command=autoCompressionAction(life,target,root);if(command){life=step(story,life,command);state=life.state;}return life.mind;}},
-      content:contentFor(life.contentVersion), state:life.mind, turnOffset:state.turn,
+      get content(){const base=contentFor(life.contentVersion);return life.contentVersion==='0.18.0'?painterRoutes(base,life.mind):base;}, state:life.mind, turnOffset:state.turn,
       ...(life.schedule?{scheduler:{continueLabel:()=>schedulePanel.continueLabel(life),render:()=>schedulePanel.render(life),notice:()=>schedulePanel.notice(life),onAction(target:HTMLElement){const command=schedulePanel.action(target,app);if(command){life=step(story,life,command);state=life.state;persist();}return life.mind;},snapshot:()=>({hour:life.schedule!.hour,pending:life.schedule!.commitments.filter(p=>p.status==='pending').map(p=>({id:p.id,title:t(p.title)}))})}}:{}),
       episodeTitle:scheduled(life)?'生活的空档':life.interlude==='active'?'余下的三天':'画板旁的午后', returnLabel:life.interlude==='active'?'继续这段生活':'回到正式入口',
       ...(daysReading(life)?{reader:{

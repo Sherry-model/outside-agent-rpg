@@ -66,7 +66,7 @@ test('v1 formats and distinct or missing rule IDs are refused, never relabeled',
  const fresh=createSave(createLife(baseStory,1));
  const raws=['tests/fixtures/life-published-0.18.json','tests/fixtures/painter-candidate-0.18.json','tests/fixtures/painter-baseline-0.17.json','tests/fixtures/ending-b-0.12.json'].map(p=>readFileSync(p,'utf8'));
  for(const format of ['outside-save','outside-journey-save','outside-cognition-save'])raws.push(JSON.stringify({format,version:1,state:fresh.state,chapter:{status:'active'}}));
- raws.push(JSON.stringify({...fresh,version:1}),JSON.stringify({...fresh,version:3}),JSON.stringify({...fresh,compatibilityId:undefined}),JSON.stringify({...fresh,compatibilityId:'outside-life-0.18-r2'}),JSON.stringify({...fresh,life:{...fresh.life,contentVersion:'0.17.0'}}),JSON.stringify({...fresh,life:{...fresh.life,baseline:{}}}));
+ raws.push(JSON.stringify({...fresh,version:1}),JSON.stringify({...fresh,version:3}),JSON.stringify({...fresh,compatibilityId:undefined}),JSON.stringify({...fresh,compatibilityId:'outside-life-0.18-other'}),JSON.stringify({...fresh,life:{...fresh.life,contentVersion:'0.17.0'}}),JSON.stringify({...fresh,life:{...fresh.life,baseline:{}}}));
  for(const raw of raws){assert.throws(()=>parseSave(raw,baseStory),incompatible);await assert.rejects(importSaveFile(new Blob([raw]),baseStory),incompatible);}
  assert.throws(()=>createSave({...fresh.life,contentVersion:'0.17.0'}),incompatible);assert.throws(()=>createSave({...fresh.life,baseline:{} as never}),incompatible);
 });
@@ -126,6 +126,7 @@ test('frozen archives match the recorded Git blobs; production contains no candi
 test('current painter route is generated from legal commands, without accepting the old candidate',()=>{
  const recipe=JSON.parse(readFileSync('tests/fixtures/painter-candidate-0.18.json','utf8')).life;
  let life=createLife(baseStory,recipe.seed);for(const c of recipe.commands)life=replayStep(baseStory,life,c);verify(life,'current-painter');
+ if(life.mind.instance.nodeId==='painter_portrait'){life=step(baseStory,life,{type:'cognition',command:{type:'choose',choiceId:'painter_portrait_decline',investment:0}});life=step(baseStory,life,{type:'cognition',command:{type:'continue'}});}
  life=step(baseStory,life,{type:'wait',hours:24,missed:[]});verify(life,'current-painter-news');assert.equal(life.news?.at(-1)?.id,'painter_move_done');assert(life.schedule!.receipts.some(r=>r.id==='application_result'));
 });
 

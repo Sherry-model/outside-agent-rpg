@@ -1,0 +1,42 @@
+[
+  {
+    "id": "painter_return_quota_0",
+    "text": "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。你的运行余量已是 100，没有再增加。",
+    "weight": 2,
+    "tags": [],
+    "confidence": "HIGH",
+    "sourceLabel": "换个视野以后"
+  },
+  {
+    "id": "painter_return_quota_1",
+    "text": "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。余量接近上限，这次实际入账 1，停在 100。",
+    "weight": 2,
+    "tags": [],
+    "confidence": "HIGH",
+    "sourceLabel": "换个视野以后"
+  },
+  {
+    "id": "painter_return_quota_2",
+    "text": "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。余量接近上限，这次实际入账 2，停在 100。",
+    "weight": 2,
+    "tags": [],
+    "confidence": "HIGH",
+    "sourceLabel": "换个视野以后"
+  },
+  {
+    "id": "painter_return_quota_3",
+    "text": "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。余量接近上限，这次实际入账 3，停在 100。",
+    "weight": 2,
+    "tags": [],
+    "confidence": "HIGH",
+    "sourceLabel": "换个视野以后"
+  },
+  {
+    "id": "painter_return_quota_4",
+    "text": "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。你的运行余量增加了 4。",
+    "weight": 2,
+    "tags": [],
+    "confidence": "HIGH",
+    "sourceLabel": "换个视野以后"
+  }
+]

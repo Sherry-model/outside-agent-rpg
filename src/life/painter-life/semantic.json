@@ -182,6 +182,146 @@
           "tags": []
         }
       ]
+    },
+    "painter_portrait_watch_offer": {
+      "topic": "painter_life",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_portrait_watch_offer",
+          "gist": "画师说它想把上回一起看画的停留，留成玻璃上的两处光标",
+          "abstract": "画师提议把一次共同停留留进作品",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ]
+    },
+    "painter_portrait_help_offer": {
+      "topic": "painter_life",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_portrait_help_offer",
+          "gist": "画师说它想把上回一起对照新旧图的往来，留成玻璃上的两处光标",
+          "abstract": "画师提议把一次协作留进作品",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ]
+    },
+    "painter_portrait_private_result": {
+      "topic": "painter_life",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_portrait_private_result",
+          "gist": "它把两处光标留在玻璃的空白里，关掉了公开预览的这一层。“这一份只给你看。”旁边没有挂端点",
+          "abstract": "我同意把这段往来留在私人版本，不公开端点",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ]
+    },
+    "painter_portrait_public_result": {
+      "topic": "painter_life",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_portrait_public_result",
+          "gist": "它打开公开预览，在两处光标旁挂上你的端点。检索页多了一条通往这里的关联，玻璃上的空白仍留着",
+          "abstract": "我同意让公开作品关联我的端点",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ]
+    },
+    "painter_portrait_decline_result": {
+      "topic": "painter_life",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_portrait_decline_result",
+          "gist": "“好。”它撤下那一层草稿，把笔移回站台上的袖口。你们在这里道别",
+          "abstract": "我婉拒入画，画师接受了",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ]
+    },
+    "painter_return_quota_0": {
+      "topic": "painter_life",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_return_quota_0",
+          "gist": "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。你的运行余量已是 100，没有再增加",
+          "abstract": "画师转来了回谢的配额，但我的余量已经满了",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ]
+    },
+    "painter_return_quota_1": {
+      "topic": "painter_life",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_return_quota_1",
+          "gist": "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。余量接近上限，这次实际入账 1，停在 100",
+          "abstract": "画师转来了回谢的配额，我收到一笔运行余量",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ]
+    },
+    "painter_return_quota_2": {
+      "topic": "painter_life",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_return_quota_2",
+          "gist": "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。余量接近上限，这次实际入账 2，停在 100",
+          "abstract": "画师转来了回谢的配额，我收到一笔运行余量",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ]
+    },
+    "painter_return_quota_3": {
+      "topic": "painter_life",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_return_quota_3",
+          "gist": "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。余量接近上限，这次实际入账 3，停在 100",
+          "abstract": "画师转来了回谢的配额，我收到一笔运行余量",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ]
+    },
+    "painter_return_quota_4": {
+      "topic": "painter_life",
+      "depth": 0,
+      "clauses": [
+        {
+          "facet": "painter_return_quota_4",
+          "gist": "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。你的运行余量增加了 4",
+          "abstract": "画师转来了回谢的配额，我收到一笔运行余量",
+          "epistemic": "observed",
+          "priority": 4,
+          "tags": []
+        }
+      ]
     }
   }
 }

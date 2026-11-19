@@ -41,6 +41,8 @@ test('stranger can compress, merge and recall public news without acquiring priv
 test('wait delivery appears in Life, but absent context and later commands do not resurrect it',()=>{
   const recipe=JSON.parse(candidate).life;let l=createLife(baseStory,recipe.seed);for(const c of recipe.commands)l=replayStep(baseStory,l,c); // New current run from legal commands, not imported v1.
   assert.deepEqual(parseSave(JSON.stringify(createSave(l)),baseStory).life,l);
+  // r2 adds one explicit depiction decision before the original return.
+  if(l.mind.instance.nodeId==='painter_portrait'){l=cog(l,{type:'choose',choiceId:'painter_portrait_decline',investment:0});l=cog(l,{type:'continue'});}
   l=step(baseStory,l,{type:'wait',hours:24,missed:[]});
   assert.equal(l.news?.at(-1)?.id,'painter_move_done');
   assert(l.schedule!.receipts.some(r=>r.id==='application_result'));

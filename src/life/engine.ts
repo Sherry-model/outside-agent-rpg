@@ -1,6 +1,6 @@
 import {CURRENT_CONTENT_VERSION} from './save-contract';
 import {deliverNews} from './news';
-import {invitation} from './painter-life/integration';
+import {invitation,painterReturn} from './painter-life/integration';
 import {createReadingState,opened} from './reading-threads/engine';
 import {profileFor} from './reading-threads/profiles';
 import {publications} from './publications/profile';
@@ -147,7 +147,11 @@ function settleExhaustion(life:Life) {
 
 function applyStep(story:Story,before:Life,command:LifeCommand,replaying=false):Life {
   const life=coreStep(story,before,command,replaying);
-  if(life.autoCompression?.enabled&&compressionBoundary(before,command)&&autoCompress(life,replaying)){
+  if(painterReturn(before,life,contentFor(life.contentVersion)))toMain(life);
+  // Read the new return receipt / invitation before any automatic compression of it.
+  const painterArrival=life.contentVersion==='0.18.0'&&before.mind.instance.nodeId!==life.mind.instance.nodeId
+    &&['painter_revisit','painter_portrait'].includes(life.mind.instance.nodeId);
+  if(!painterArrival&&life.autoCompression?.enabled&&compressionBoundary(before,command)&&autoCompress(life,replaying)){
     toMain(life);syncEndingFacts(life);
   }
   if(life.autoCompression)settleExhaustion(life);

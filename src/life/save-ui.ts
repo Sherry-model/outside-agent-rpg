@@ -12,7 +12,7 @@ export function saveErrorView(error:unknown):string{
  return `<div class="save-error" role="alert"><p>${esc(saveErrorText(error))}</p>${error instanceof SaveError&&error.kind==='incompatible'?`<p>${tr('当前规则：')}${esc(SAVE_CONTRACT.compatibilityId)}</p>${Object.entries(error.header).map(([k,v])=>`<p>${esc(k)}: ${esc(v)}</p>`).join('')}`:''}</div>`;
 }
 export function archiveHelp():string{
- return `<details class="archive-help"><summary>${tr('查看离线归档指引')}</summary><p>${tr('旧 v1 存档不能在本版本继续，包括原 0.18 正式档。请保留原 JSON，在对应 HTML 中打开。')}</p><p>${tr('v1 的 0.18 标签无法区分原画师候选与发布版；优先使用原导出对应的 HTML，不自动选择或迁移。')}</p><ul>${archives.archives.map(a=>`<li><p>${tr(a.label)}</p><a href="versions/${a.file}" download>${esc(a.file)}</a><p>${tr(a.limitations)}</p></li>`).join('')}</ul><p>${tr('配套 ZIP 中归档位于 versions 文件夹。若只有单个 HTML，请另行取得上述同名归档；相对链接不保证本地已有文件。本页不会上传存档或自动联网。')}</p></details>`;
+ return `<details class="archive-help"><summary>${tr('查看离线归档指引')}</summary><p>${tr('r1 的 v2 存档请使用 72a3063 归档；内容同为0.18也不能在r2继续。')}</p><p>${tr('旧 v1 存档不能在本版本继续，包括原 0.18 正式档。请保留原 JSON，在对应 HTML 中打开。')}</p><p>${tr('v1 的 0.18 标签无法区分原画师候选与发布版；优先使用原导出对应的 HTML，不自动选择或迁移。')}</p><ul>${archives.archives.map(a=>`<li><p>${tr(a.label)}</p><a href="versions/${a.file}" download>${esc(a.file)}</a><p>${tr(a.limitations)}</p></li>`).join('')}</ul><p>${tr('配套 ZIP 中归档位于 versions 文件夹。若只有单个 HTML，请另行取得上述同名归档；相对链接不保证本地已有文件。本页不会上传存档或自动联网。')}</p></details>`;
 }
 export function rawRecordsView(store:SaveStorage,attr:'data-action'|'data-act'):string{
  try{

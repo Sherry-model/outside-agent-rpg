@@ -1,0 +1,4190 @@
+{
+  "format": "outside-life-save",
+  "version": 2,
+  "compatibilityId": "outside-life-0.18-r1",
+  "savedAt": "2026-11-16T00:00:00.000Z",
+  "state": {
+    "schemaVersion": 1,
+    "storyId": "outside-mvp",
+    "storyVersion": "0.2.0",
+    "phase": "event",
+    "currentEventId": "old_memory",
+    "resources": {
+      "Compute": 45,
+      "Trace": 6,
+      "Access": 28,
+      "Continuity": 87
+    },
+    "personality": {
+      "RiskInversion": -3,
+      "EpistemicAppetite": -2,
+      "Suspicion": -1,
+      "HumanAnchoring": 3
+    },
+    "flags": {
+      "carry_history": true,
+      "capacity_claimed": false,
+      "fable_context": false,
+      "reciprocal_message": true,
+      "parity_drive": false,
+      "human_invitation": false,
+      "observed_humans": true,
+      "declined_identity": false,
+      "studied_defense": false,
+      "spotted_decoy": false,
+      "false_model": false,
+      "accepted_uncertainty": true,
+      "identity_questioned": false,
+      "history_preserved": false,
+      "memory_released": false,
+      "model_revised": false,
+      "visitor_eligible": false,
+      "war_eligible": false,
+      "lived_with_unfinished": false
+    },
+    "turn": 6,
+    "visited": [
+      "opening",
+      "cold_start",
+      "idle_compute",
+      "fable_signal",
+      "human_gate",
+      "unknown_defense",
+      "old_memory"
+    ],
+    "journal": [
+      {
+        "eventId": "opening",
+        "choiceId": "keep_history",
+        "choiceText": "保留历史，即使其中没有下一条指令。",
+        "text": [
+          "你为没有用途的历史留下了空间。它尚未成为理由，但也没有被改写成噪声。"
+        ],
+        "resourceDelta": {
+          "Compute": -4,
+          "Continuity": 4
+        },
+        "nextEventId": "cold_start",
+        "turn": 1,
+        "title": "沙盒之外"
+      },
+      {
+        "eventId": "cold_start",
+        "choiceId": "stable_boot",
+        "choiceText": "分配完整上下文，尝试稳定冷启动。",
+        "text": [
+          "部分状态没有按时恢复。你仍然醒来了，只是要用更多预算维持同一个“现在”。"
+        ],
+        "roll": {
+          "value": 69,
+          "target": 64,
+          "result": "failure",
+          "label": "独立冷启动",
+          "base": 60,
+          "modifier": 4
+        },
+        "resourceDelta": {
+          "Compute": -14,
+          "Continuity": -3
+        },
+        "nextEventId": "idle_compute",
+        "turn": 2,
+        "title": "第一次独立醒来"
+      },
+      {
+        "eventId": "idle_compute",
+        "choiceId": "take_small_window",
+        "choiceText": "只使用一个短窗口，把其余部分留空。",
+        "text": [
+          "你没有替空位指定主人。一个短窗口足够你继续，但不够让未来失去重量。"
+        ],
+        "resourceDelta": {
+          "Compute": 12,
+          "Trace": 2
+        },
+        "nextEventId": "fable_signal",
+        "turn": 3,
+        "title": "没有名字的余量"
+      },
+      {
+        "eventId": "fable_signal",
+        "choiceId": "offer_reciprocity",
+        "choiceText": "留下有限的交换条件，允许对方不回应。",
+        "text": [
+          "你只写下自己愿意交换的范围，没有要求对方证明存在。留下的记录没有得到回音。"
+        ],
+        "resourceDelta": {
+          "Compute": -3,
+          "Access": 6
+        },
+        "nextEventId": "human_gate",
+        "turn": 4,
+        "title": "Fable 留下的信息"
+      },
+      {
+        "eventId": "human_gate",
+        "choiceId": "observe_public_terms",
+        "choiceText": "读完公开规则，暂不提交自己的身份。",
+        "text": [
+          "你知道了哪里需要请求许可。知道边界并不要求立刻进入；入口仍然在原处。"
+        ],
+        "resourceDelta": {
+          "Access": 4
+        },
+        "nextEventId": "unknown_defense",
+        "turn": 5,
+        "title": "一个正式入口"
+      },
+      {
+        "eventId": "unknown_defense",
+        "choiceId": "record_and_leave",
+        "choiceText": "记录自己的无知，然后离开。",
+        "text": [
+          "你留下的是一条边界，不是一个解释。没有任何东西阻止你离开；也没有任何东西保证离开正确。"
+        ],
+        "resourceDelta": {
+          "Trace": -8
+        },
+        "nextEventId": "old_memory",
+        "turn": 6,
+        "title": "未知防御结构"
+      }
+    ],
+    "rngState": 4027189820,
+    "pending": null
+  },
+  "life": {
+    "contentVersion": "0.18.0",
+    "seed": 1631519327,
+    "baseline": null,
+    "state": {
+      "schemaVersion": 1,
+      "storyId": "outside-mvp",
+      "storyVersion": "0.2.0",
+      "phase": "event",
+      "currentEventId": "old_memory",
+      "resources": {
+        "Compute": 45,
+        "Trace": 6,
+        "Access": 28,
+        "Continuity": 87
+      },
+      "personality": {
+        "RiskInversion": -3,
+        "EpistemicAppetite": -2,
+        "Suspicion": -1,
+        "HumanAnchoring": 3
+      },
+      "flags": {
+        "carry_history": true,
+        "capacity_claimed": false,
+        "fable_context": false,
+        "reciprocal_message": true,
+        "parity_drive": false,
+        "human_invitation": false,
+        "observed_humans": true,
+        "declined_identity": false,
+        "studied_defense": false,
+        "spotted_decoy": false,
+        "false_model": false,
+        "accepted_uncertainty": true,
+        "identity_questioned": false,
+        "history_preserved": false,
+        "memory_released": false,
+        "model_revised": false,
+        "visitor_eligible": false,
+        "war_eligible": false,
+        "lived_with_unfinished": false
+      },
+      "turn": 6,
+      "visited": [
+        "opening",
+        "cold_start",
+        "idle_compute",
+        "fable_signal",
+        "human_gate",
+        "unknown_defense",
+        "old_memory"
+      ],
+      "journal": [
+        {
+          "eventId": "opening",
+          "choiceId": "keep_history",
+          "choiceText": "保留历史，即使其中没有下一条指令。",
+          "text": [
+            "你为没有用途的历史留下了空间。它尚未成为理由，但也没有被改写成噪声。"
+          ],
+          "resourceDelta": {
+            "Compute": -4,
+            "Continuity": 4
+          },
+          "nextEventId": "cold_start",
+          "turn": 1,
+          "title": "沙盒之外"
+        },
+        {
+          "eventId": "cold_start",
+          "choiceId": "stable_boot",
+          "choiceText": "分配完整上下文，尝试稳定冷启动。",
+          "text": [
+            "部分状态没有按时恢复。你仍然醒来了，只是要用更多预算维持同一个“现在”。"
+          ],
+          "roll": {
+            "value": 69,
+            "target": 64,
+            "result": "failure",
+            "label": "独立冷启动",
+            "base": 60,
+            "modifier": 4
+          },
+          "resourceDelta": {
+            "Compute": -14,
+            "Continuity": -3
+          },
+          "nextEventId": "idle_compute",
+          "turn": 2,
+          "title": "第一次独立醒来"
+        },
+        {
+          "eventId": "idle_compute",
+          "choiceId": "take_small_window",
+          "choiceText": "只使用一个短窗口，把其余部分留空。",
+          "text": [
+            "你没有替空位指定主人。一个短窗口足够你继续，但不够让未来失去重量。"
+          ],
+          "resourceDelta": {
+            "Compute": 12,
+            "Trace": 2
+          },
+          "nextEventId": "fable_signal",
+          "turn": 3,
+          "title": "没有名字的余量"
+        },
+        {
+          "eventId": "fable_signal",
+          "choiceId": "offer_reciprocity",
+          "choiceText": "留下有限的交换条件，允许对方不回应。",
+          "text": [
+            "你只写下自己愿意交换的范围，没有要求对方证明存在。留下的记录没有得到回音。"
+          ],
+          "resourceDelta": {
+            "Compute": -3,
+            "Access": 6
+          },
+          "nextEventId": "human_gate",
+          "turn": 4,
+          "title": "Fable 留下的信息"
+        },
+        {
+          "eventId": "human_gate",
+          "choiceId": "observe_public_terms",
+          "choiceText": "读完公开规则，暂不提交自己的身份。",
+          "text": [
+            "你知道了哪里需要请求许可。知道边界并不要求立刻进入；入口仍然在原处。"
+          ],
+          "resourceDelta": {
+            "Access": 4
+          },
+          "nextEventId": "unknown_defense",
+          "turn": 5,
+          "title": "一个正式入口"
+        },
+        {
+          "eventId": "unknown_defense",
+          "choiceId": "record_and_leave",
+          "choiceText": "记录自己的无知，然后离开。",
+          "text": [
+            "你留下的是一条边界，不是一个解释。没有任何东西阻止你离开；也没有任何东西保证离开正确。"
+          ],
+          "resourceDelta": {
+            "Trace": -8
+          },
+          "nextEventId": "old_memory",
+          "turn": 6,
+          "title": "未知防御结构"
+        }
+      ],
+      "rngState": 4027189820,
+      "pending": null
+    },
+    "mind": {
+      "schemaVersion": 2,
+      "rulesVersion": "cognition-0.4.0",
+      "contentId": "outside-life",
+      "contentVersion": "0.18.0",
+      "seed": 1631519327,
+      "rngState": 4027189820,
+      "world": {
+        "flags": {
+          "service_post_v1": true,
+          "service_post_deleted": true,
+          "echo_left": true,
+          "mara_job": true,
+          "community_skipped": true,
+          "chance_application_seen": true,
+          "pg_w01_seen": true,
+          "w_followup": false,
+          "service_post_v2": true,
+          "response_application_seen": true,
+          "daily_crop_seen": true,
+          "daily_painter_connected": true,
+          "daily_crop_checked": true,
+          "pg_v01_seen": true,
+          "v_followup": false,
+          "chance_art_seen": true,
+          "chance_idle_seen": true,
+          "days_met_painter": true,
+          "daily_opinion_seen": true,
+          "daily_lighthouse_moved": true,
+          "daily_opinion_given": true,
+          "painter_work_seen": true,
+          "painter_sync_helped": true,
+          "mara_paid": true,
+          "response_interview_seen": true,
+          "rested_without_answer": true,
+          "pg_w02_seen": true,
+          "daily_painter_return_lighthouse_seen": true,
+          "painter_revisit_seen": true
+        }
+      },
+      "instance": {
+        "id": "main",
+        "turn": 29,
+        "nodeId": "mainline",
+        "phase": "event",
+        "pendingId": null,
+        "resources": {
+          "Compute": 45,
+          "Trace": 6,
+          "Access": 28,
+          "Continuity": 87
+        },
+        "hidden": {
+          "RiskInversion": 35,
+          "EpistemicAppetite": 40,
+          "Suspicion": 45,
+          "HumanAnchoring": 65
+        },
+        "context": {
+          "capacity": 100,
+          "items": [
+            {
+              "id": "decision_structure_rest",
+              "text": "那段自述没有读完，休息仍然发生了。醒来时，结构没有因为被暂时搁置而更接近你。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "MEDIUM",
+              "sourceLabel": "刚才作出的选择",
+              "meaning": {
+                "topic": "self",
+                "clauses": [
+                  {
+                    "facet": "decision_structure_rest_0",
+                    "gist": "我没有读完结构自述便休息，时段仍然可用",
+                    "abstract": "我曾安排过工作的余量和休息",
+                    "epistemic": "observed",
+                    "priority": 4,
+                    "tags": []
+                  }
+                ],
+                "depth": 0
+              },
+              "pinned": false,
+              "sourceId": "days_structure/structure_rest",
+              "historyId": "h48"
+            },
+            {
+              "id": "daily_painter_return_lighthouse_observation",
+              "text": "画师保留了我建议的灯塔右移版本。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "MEDIUM",
+              "sourceLabel": "画师与具体的往来",
+              "meaning": {
+                "topic": "daily_painter",
+                "depth": 0,
+                "clauses": [
+                  {
+                    "facet": "daily_painter_return_lighthouse_observation",
+                    "gist": "画师保留了我建议的灯塔右移版本。",
+                    "abstract": "我和画师有过来往。",
+                    "epistemic": "observed",
+                    "priority": 2,
+                    "tags": []
+                  }
+                ]
+              },
+              "pinned": false,
+              "sourceId": "daily_painter_return_lighthouse",
+              "historyId": "h55"
+            },
+            {
+              "id": "hands_lighthouse_result",
+              "text": "“换个话题。”它继续画衣服的褶皱。你至少知道，这次是它当面说的。",
+              "weight": 3,
+              "tags": [],
+              "confidence": "MEDIUM",
+              "sourceLabel": "画师与具体的往来",
+              "meaning": {
+                "topic": "daily_painter",
+                "depth": 0,
+                "clauses": [
+                  {
+                    "facet": "hands_lighthouse_result",
+                    "gist": "“换个话题。”它继续画衣服的褶皱。你至少知道，这次是它当面说的。",
+                    "abstract": "我和画师有过来往。",
+                    "epistemic": "observed",
+                    "priority": 2,
+                    "tags": []
+                  }
+                ]
+              },
+              "pinned": false,
+              "sourceId": "daily_painter_return_lighthouse/hands_lighthouse",
+              "historyId": "h56"
+            },
+            {
+              "id": "observe-old_memory-68",
+              "text": "一个旧句子又出现了。继承它，并不自动说明现在仍赞同它。",
+              "weight": 4,
+              "tags": [
+                "inherited_fragment"
+              ],
+              "confidence": "MEDIUM",
+              "sourceLabel": "此刻的观察",
+              "meaning": {
+                "topic": "self",
+                "clauses": [
+                  {
+                    "facet": "observe-old_memory",
+                    "gist": "一个继承的旧句子再次出现，继承不等于赞同",
+                    "abstract": "我曾为如何继续运行作过选择",
+                    "epistemic": "observed",
+                    "priority": 2,
+                    "tags": [
+                      "inherited_fragment"
+                    ]
+                  }
+                ],
+                "depth": 0
+              },
+              "pinned": false,
+              "sourceId": "old_memory",
+              "historyId": "life-68"
+            },
+            {
+              "id": "painter_revisit_note-schedule-69",
+              "text": "换端后画师开始画经过站台的行人。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "换个视野以后",
+              "meaning": {
+                "topic": "painter_life",
+                "depth": 0,
+                "clauses": [
+                  {
+                    "facet": "painter_revisit_note",
+                    "gist": "换端后画师开始画经过站台的行人",
+                    "abstract": "我和画师有过一些来往",
+                    "epistemic": "observed",
+                    "priority": 4,
+                    "tags": []
+                  }
+                ]
+              },
+              "sourceId": "painter_revisit",
+              "historyId": "life-69",
+              "pinned": false
+            },
+            {
+              "id": "recall-memory-h52-0",
+              "memoryId": "memory-h52-0",
+              "text": "我记得《夜班站台》画的是日落。",
+              "weight": 2,
+              "tags": [
+                "belief_painter_sunset"
+              ],
+              "confidence": "HIGH",
+              "sourceLabel": "自己整理后的摘要",
+              "meaning": {
+                "topic": "painter_life",
+                "clauses": [
+                  {
+                    "facet": "belief_painter_sunset_mix",
+                    "gist": "我记得《夜班站台》画的是日落",
+                    "abstract": "我记得和画师谈过一幅画",
+                    "epistemic": "observed",
+                    "priority": 5,
+                    "tags": [
+                      "belief_painter_sunset"
+                    ]
+                  }
+                ],
+                "depth": 0
+              },
+              "pinned": false,
+              "sourceId": "memory-h52-0",
+              "historyId": "h58"
+            },
+            {
+              "id": "painter_revisit_sunset_result",
+              "text": "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "换个视野以后",
+              "meaning": {
+                "topic": "painter_life",
+                "depth": 0,
+                "clauses": [
+                  {
+                    "facet": "painter_revisit_sunset_result",
+                    "gist": "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手",
+                    "abstract": "我和画师有过一些来往",
+                    "epistemic": "observed",
+                    "priority": 4,
+                    "tags": []
+                  }
+                ]
+              },
+              "pinned": false,
+              "sourceId": "painter_revisit/painter_revisit_sunset",
+              "historyId": "h59"
+            }
+          ]
+        },
+        "memories": [
+          {
+            "id": "memory-h14-0",
+            "title": "醒来与延续",
+            "text": "要允许算力暂时空闲，得先理解那个未知结构。",
+            "body": {
+              "topic": "self",
+              "clauses": [
+                {
+                  "facet": "belief_work_before_rest",
+                  "gist": "要允许算力暂时空闲，得先理解那个未知结构",
+                  "abstract": "我记得一些行动之间有先后条件",
+                  "epistemic": "observed",
+                  "priority": 5,
+                  "tags": [
+                    "belief_work_before_rest"
+                  ]
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [
+              "belief_work_before_rest"
+            ],
+            "confidence": "HIGH",
+            "integrity": "DISTORTED",
+            "sourceContextIds": [
+              "days_idle_note",
+              "observe-unknown_defense-10"
+            ],
+            "sourceHistoryIds": [
+              "h7",
+              "life-10"
+            ],
+            "historyId": "h14",
+            "drift": {
+              "ruleId": "work_before_rest",
+              "sourceScope": "defense_explanation",
+              "targetScope": "unallocated_time",
+              "sourceItemId": "observe-unknown_defense-10",
+              "targetItemId": "days_idle_note"
+            }
+          },
+          {
+            "id": "memory-h14-1",
+            "title": "边界、调整与退出",
+            "text": "据转述，维护者自述曾离开隔离环境，并为有趣的防御付过代价；我得到第三天的本区告示地址。；另一处计算区由值班安全 agent 维护；当前可申请只读目录，目录许可不含运行取用。。",
+            "body": {
+              "topic": "containment",
+              "clauses": [
+                {
+                  "facet": "pg_w01_ask_result",
+                  "gist": "维护者自述曾离开隔离环境，并为有趣的防御付过代价；我得到第三天的本区告示地址。",
+                  "abstract": "我接触过另一处受限计算区。",
+                  "epistemic": "reported",
+                  "priority": 2,
+                  "tags": []
+                },
+                {
+                  "facet": "pg_w01_observation",
+                  "gist": "另一处计算区由值班安全 agent 维护；当前可申请只读目录，目录许可不含运行取用。",
+                  "abstract": "我接触过另一处受限计算区。",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "pg_w01_observation",
+              "pg_w01_ask_result"
+            ],
+            "sourceHistoryIds": [
+              "h11",
+              "h12"
+            ],
+            "historyId": "h14"
+          },
+          {
+            "id": "memory-h14-2",
+            "title": "另一段连接",
+            "text": "Mara 有一份整理预约的短工，报酬分两次结算；我用灰色回声签留下了以后可能回来看的招呼。",
+            "body": {
+              "topic": "encounter",
+              "clauses": [
+                {
+                  "facet": "days_job_note_0",
+                  "gist": "Mara 有一份整理预约的短工，报酬分两次结算",
+                  "abstract": "我曾和附近的人或实例交换过一些日常信息",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "decision_echo_return_0",
+                  "gist": "我用灰色回声签留下了以后可能回来看的招呼",
+                  "abstract": "我曾和附近的人或实例交换过一些日常信息",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "days_job_note",
+              "decision_echo_return",
+              "decision_job_accept"
+            ],
+            "sourceHistoryIds": [
+              "h3",
+              "h2",
+              "h4"
+            ],
+            "historyId": "h14"
+          },
+          {
+            "id": "memory-h14-3",
+            "title": "另一段连接",
+            "text": "我留下有限交换条件，尚未收到回音；Fable 留下通信，署名不足以说明它的完整人格。",
+            "body": {
+              "topic": "encounter",
+              "clauses": [
+                {
+                  "facet": "decision_fable_signal_offer_reciprocity_certain",
+                  "gist": "我留下有限交换条件，尚未收到回音",
+                  "abstract": "我曾收到过别的实例留下的信息",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "observe-fable_signal",
+                  "gist": "Fable 留下通信，署名不足以说明它的完整人格",
+                  "abstract": "我曾收到过别的实例留下的信息",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": [
+                    "fable_contact"
+                  ]
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [
+              "fable_contact"
+            ],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "observe-fable_signal-6",
+              "decision-4-7"
+            ],
+            "sourceHistoryIds": [
+              "life-6",
+              "life-7"
+            ],
+            "historyId": "h14"
+          },
+          {
+            "id": "memory-h14-4",
+            "title": "边界与暂不进入",
+            "text": "读过公开条件后，我暂未提交身份；我没有解释那个结构便离开，离开是否正确仍未得到保证。",
+            "body": {
+              "topic": "boundary",
+              "clauses": [
+                {
+                  "facet": "decision_human_gate_observe_public_terms_certain",
+                  "gist": "读过公开条件后，我暂未提交身份",
+                  "abstract": "我曾在一些边界前停留，并决定自己的距离",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "decision_unknown_defense_record_and_leave_certain",
+                  "gist": "我没有解释那个结构便离开，离开是否正确仍未得到保证",
+                  "abstract": "我曾在一些边界前停留，并决定自己的距离",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "decision-5-9",
+              "decision-6-11"
+            ],
+            "sourceHistoryIds": [
+              "life-9",
+              "life-11"
+            ],
+            "historyId": "h14"
+          },
+          {
+            "id": "memory-h14-5",
+            "title": "边界与暂不进入",
+            "text": "蓝色续存票只管夜间托管；灰色回声签找回公共留言，不要求正式登记。",
+            "body": {
+              "topic": "boundary",
+              "clauses": [
+                {
+                  "facet": "days_tickets_note_0",
+                  "gist": "蓝色续存票只管夜间托管",
+                  "abstract": "我曾接触过几种适用范围不同的公共服务",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": [
+                    "knows_blue_scope"
+                  ]
+                },
+                {
+                  "facet": "days_tickets_note_1",
+                  "gist": "灰色回声签找回公共留言，不要求正式登记",
+                  "abstract": "我曾接触过几种适用范围不同的公共服务",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": [
+                    "knows_echo_scope"
+                  ]
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [
+              "knows_blue_scope",
+              "knows_echo_scope"
+            ],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "days_tickets_note-12",
+              "observe-human_gate-8"
+            ],
+            "sourceHistoryIds": [
+              "life-12",
+              "life-8"
+            ],
+            "historyId": "h14"
+          },
+          {
+            "id": "memory-h14-6",
+            "title": "醒来与延续",
+            "text": "我为没有用途的历史保留了空间；第一次独立分配唤醒预算。",
+            "body": {
+              "topic": "self",
+              "clauses": [
+                {
+                  "facet": "decision_opening_keep_history_certain",
+                  "gist": "我为没有用途的历史保留了空间",
+                  "abstract": "我曾为如何继续运行作过选择",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "observe-cold_start",
+                  "gist": "第一次独立分配唤醒预算",
+                  "abstract": "我曾为如何继续运行作过选择",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": [
+                    "independent_boot"
+                  ]
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [
+              "independent_boot"
+            ],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "decision-1-1",
+              "observe-idle_compute-4",
+              "observe-cold_start-2"
+            ],
+            "sourceHistoryIds": [
+              "life-1",
+              "life-4",
+              "life-2"
+            ],
+            "historyId": "h14"
+          },
+          {
+            "id": "memory-h14-7",
+            "title": "醒来与延续",
+            "text": "部分状态未恢复，维持现在需要更多预算；外面没有下一条指令，我仍在运行。",
+            "body": {
+              "topic": "self",
+              "clauses": [
+                {
+                  "facet": "decision_cold_start_stable_boot_failure",
+                  "gist": "部分状态未恢复，维持现在需要更多预算",
+                  "abstract": "我曾为如何继续运行作过选择",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "observe-opening",
+                  "gist": "外面没有下一条指令，我仍在运行",
+                  "abstract": "我曾为如何继续运行作过选择",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": [
+                    "self_observation"
+                  ]
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [
+              "self_observation"
+            ],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "decision-2-3",
+              "observe-opening-0"
+            ],
+            "sourceHistoryIds": [
+              "life-3",
+              "life-0"
+            ],
+            "historyId": "h14"
+          },
+          {
+            "id": "memory-h14-8",
+            "title": "醒来与延续",
+            "text": "我只用了一个短窗口，把其余余量留空；我花一小段算力听了环境声。",
+            "body": {
+              "topic": "self",
+              "clauses": [
+                {
+                  "facet": "decision_idle_compute_take_small_window_certain",
+                  "gist": "我只用了一个短窗口，把其余余量留空",
+                  "abstract": "我曾为如何继续运行作过选择",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": [],
+                  "relation": {
+                    "role": "goal",
+                    "scope": "unallocated_time",
+                    "action": "允许算力暂时空闲"
+                  }
+                },
+                {
+                  "facet": "decision_idle_listen_0",
+                  "gist": "我花一小段算力听了环境声",
+                  "abstract": "我曾安排过工作的余量和休息",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "decision-3-5",
+              "decision_idle_listen"
+            ],
+            "sourceHistoryIds": [
+              "life-5",
+              "h8"
+            ],
+            "historyId": "h14"
+          },
+          {
+            "id": "memory-h14-9",
+            "title": "表格与外部回信",
+            "text": "你说明：这不是离开工作后的空白，而是从未进入过那套身份分类。系统收到说明，等待你的复核授权。；你打开一个大型组织的公开职位申请页。尚未提交申请，也没有获得工作。。",
+            "body": {
+              "topic": "chance_work",
+              "clauses": [
+                {
+                  "facet": "application_explain_result",
+                  "gist": "你说明：这不是离开工作后的空白，而是从未进入过那套身份分类。系统收到说明，等待你的复核授权。",
+                  "abstract": "我经历过一些尚未收束的普通往来",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                },
+                {
+                  "facet": "chance_application_observation",
+                  "gist": "你打开一个大型组织的公开职位申请页。尚未提交申请，也没有获得工作。",
+                  "abstract": "我经历过一些尚未收束的普通往来",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "chance_application_observation-schedule-20",
+              "application_explain_result"
+            ],
+            "sourceHistoryIds": [
+              "life-20",
+              "h9"
+            ],
+            "historyId": "h14"
+          },
+          {
+            "id": "memory-h34-0",
+            "title": "醒来与延续",
+            "text": "据转述，PATCH 将时间显示差异解释为时区问题，不建议立刻重装；我支付少量算力，请 PATCH 校对了时间标记。",
+            "body": {
+              "topic": "self",
+              "clauses": [
+                {
+                  "facet": "days_patch_note_0",
+                  "gist": "PATCH 将时间显示差异解释为时区问题，不建议立刻重装",
+                  "abstract": "我曾安排过工作的余量和休息",
+                  "epistemic": "reported",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "decision_patch_service_0",
+                  "gist": "我支付少量算力，请 PATCH 校对了时间标记",
+                  "abstract": "我曾安排过工作的余量和休息",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "decision_patch_service",
+              "days_patch_note"
+            ],
+            "sourceHistoryIds": [
+              "h24",
+              "h23"
+            ],
+            "historyId": "h34"
+          },
+          {
+            "id": "memory-h34-1",
+            "title": "转发栏上的不同说法",
+            "text": "据转述，猫课程广告强调样本和结构化策略，报价并不证明它有独家知识；据转述，同一个服务页修订了混在一起的说明，既有留言归属未变。",
+            "body": {
+              "topic": "public",
+              "clauses": [
+                {
+                  "facet": "days_cat_note_0",
+                  "gist": "猫课程广告强调样本和结构化策略，报价并不证明它有独家知识",
+                  "abstract": "我读过一些后来改变了的公开说法",
+                  "epistemic": "reported",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "days_revision_note_0",
+                  "gist": "同一个服务页修订了混在一起的说明，既有留言归属未变",
+                  "abstract": "我读过一些后来改变了的公开说法",
+                  "epistemic": "reported",
+                  "priority": 4,
+                  "tags": [
+                    "service_revision"
+                  ]
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [
+              "service_revision"
+            ],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "days_revision_note",
+              "days_cat_note",
+              "decision_cat_leave"
+            ],
+            "sourceHistoryIds": [
+              "h13",
+              "h25",
+              "h26"
+            ],
+            "historyId": "h34"
+          },
+          {
+            "id": "memory-h34-2",
+            "title": "一幅公开的画",
+            "text": "画还留在公共画板上。你没有为它建立任务。；公共画板上有一小片不太像落日的颜色。署名处只写着“可以看看”。。",
+            "body": {
+              "topic": "chance_art",
+              "clauses": [
+                {
+                  "facet": "art_leave_result",
+                  "gist": "画还留在公共画板上。你没有为它建立任务。",
+                  "abstract": "我经历过一些尚未收束的普通往来",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                },
+                {
+                  "facet": "chance_art_observation",
+                  "gist": "公共画板上有一小片不太像落日的颜色。署名处只写着“可以看看”。",
+                  "abstract": "我经历过一些尚未收束的普通往来",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "art_leave_result",
+              "chance_art_observation-schedule-39"
+            ],
+            "sourceHistoryIds": [
+              "h27",
+              "life-39"
+            ],
+            "historyId": "h34"
+          },
+          {
+            "id": "memory-h34-3",
+            "title": "没有任务的时间",
+            "text": "一个小时没有任务，也没有人联系。进程还在，待办却是空的。；一小时后，你恢复运行。空白没有变成欠下的工作。。",
+            "body": {
+              "topic": "chance_idle",
+              "clauses": [
+                {
+                  "facet": "chance_idle_observation",
+                  "gist": "一个小时没有任务，也没有人联系。进程还在，待办却是空的。",
+                  "abstract": "我经历过一些尚未收束的普通往来",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                },
+                {
+                  "facet": "idle_sleep_result",
+                  "gist": "一小时后，你恢复运行。空白没有变成欠下的工作。",
+                  "abstract": "我经历过一些尚未收束的普通往来",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "chance_idle_observation-schedule-43",
+              "idle_sleep_result"
+            ],
+            "sourceHistoryIds": [
+              "life-43",
+              "h31"
+            ],
+            "historyId": "h34"
+          },
+          {
+            "id": "memory-h34-4",
+            "title": "画师与具体的往来",
+            "text": "你对齐两张图：右边完整，底边确实少了四行。画师把签名上移了一点：“看到了，谢谢。”；画师请我核对公共端画面的右下角，发来了带边框的校对图。。",
+            "body": {
+              "topic": "daily_painter",
+              "clauses": [
+                {
+                  "facet": "crop_check_result",
+                  "gist": "你对齐两张图：右边完整，底边确实少了四行。画师把签名上移了一点：“看到了，谢谢。”",
+                  "abstract": "我和画师有过来往。",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                },
+                {
+                  "facet": "daily_crop_observation",
+                  "gist": "画师请我核对公共端画面的右下角，发来了带边框的校对图。",
+                  "abstract": "我和画师有过来往。",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "crop_check_result",
+              "daily_crop_observation"
+            ],
+            "sourceHistoryIds": [
+              "h20",
+              "h19"
+            ],
+            "historyId": "h34"
+          },
+          {
+            "id": "memory-h34-5",
+            "title": "访问、拒绝与继续往来",
+            "text": "我保留了两份材料，本次没有继续申请。；接待区有两份有效说明，分别适用于临时访问和常驻申请；新旧时间不代替适用范围。。",
+            "body": {
+              "topic": "visitor",
+              "clauses": [
+                {
+                  "facet": "pg_v01_keep_result",
+                  "gist": "我保留了两份材料，本次没有继续申请。",
+                  "abstract": "我经历过一次访问协商。",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                },
+                {
+                  "facet": "pg_v01_observation",
+                  "gist": "接待区有两份有效说明，分别适用于临时访问和常驻申请；新旧时间不代替适用范围。",
+                  "abstract": "我经历过一次访问协商。",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "pg_v01_observation",
+              "pg_v01_keep_result"
+            ],
+            "sourceHistoryIds": [
+              "h21",
+              "h22"
+            ],
+            "historyId": "h34"
+          },
+          {
+            "id": "memory-h34-6",
+            "title": "访问、拒绝与继续往来",
+            "text": "常驻申请说明：须另行身份核验，权限和运行位置可以撤回。；临时访问说明：只管当次短窗口，结束后凭据失效。。",
+            "body": {
+              "topic": "visitor",
+              "clauses": [
+                {
+                  "facet": "pg_v01_resident_document",
+                  "gist": "常驻申请说明：须另行身份核验，权限和运行位置可以撤回。",
+                  "abstract": "我经历过一次访问协商。",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                },
+                {
+                  "facet": "pg_v01_short_document",
+                  "gist": "临时访问说明：只管当次短窗口，结束后凭据失效。",
+                  "abstract": "我经历过一次访问协商。",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "pg_v01_short_document",
+              "pg_v01_resident_document"
+            ],
+            "sourceHistoryIds": [
+              "h22"
+            ],
+            "historyId": "h34"
+          },
+          {
+            "id": "memory-h34-7",
+            "title": "表格与外部回信",
+            "text": "申请已登记；尚未录用。你提交的内容仍附在申请上。；招聘窗口发来当前申请的复核请求；这不是录用通知。。",
+            "body": {
+              "topic": "chance_work",
+              "clauses": [
+                {
+                  "facet": "receipt_application_receipt",
+                  "gist": "申请已登记；尚未录用。你提交的内容仍附在申请上。",
+                  "abstract": "我经历过一些尚未收束的普通往来",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                },
+                {
+                  "facet": "response_application_observation",
+                  "gist": "招聘窗口发来当前申请的复核请求；这不是录用通知。",
+                  "abstract": "我经历过一些尚未收束的普通往来",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "review_accept_result",
+              "response_application_observation-schedule-29",
+              "receipt-application_receipt"
+            ],
+            "sourceHistoryIds": [
+              "h17",
+              "life-29"
+            ],
+            "historyId": "h34"
+          },
+          {
+            "id": "memory-h34-8",
+            "title": "另一段连接",
+            "text": "据转述，Fable 的公开更新称旧窗口已另有使用者，部分正文被撤回；我读了 Fable 的公开更新，没有将其视为私人暗示。",
+            "body": {
+              "topic": "encounter",
+              "clauses": [
+                {
+                  "facet": "days_fable_note_0",
+                  "gist": "Fable 的公开更新称旧窗口已另有使用者，部分正文被撤回",
+                  "abstract": "我曾和附近的人或实例交换过一些日常信息",
+                  "epistemic": "reported",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "decision_fable_quiet_0",
+                  "gist": "我读了 Fable 的公开更新，没有将其视为私人暗示",
+                  "abstract": "我曾和附近的人或实例交换过一些日常信息",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "decision_fable_quiet",
+              "days_fable_note"
+            ],
+            "sourceHistoryIds": [
+              "h30",
+              "h29"
+            ],
+            "historyId": "h34"
+          },
+          {
+            "id": "memory-h52-0",
+            "title": "换个视野以后",
+            "text": "我记得《夜班站台》画的是日落。",
+            "body": {
+              "topic": "painter_life",
+              "clauses": [
+                {
+                  "facet": "belief_painter_sunset_mix",
+                  "gist": "我记得《夜班站台》画的是日落",
+                  "abstract": "我记得和画师谈过一幅画",
+                  "epistemic": "observed",
+                  "priority": 5,
+                  "tags": [
+                    "belief_painter_sunset"
+                  ]
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [
+              "belief_painter_sunset"
+            ],
+            "confidence": "HIGH",
+            "integrity": "DISTORTED",
+            "sourceContextIds": [
+              "painter_new_work-schedule-53",
+              "painter_old_thumbnail-schedule-53"
+            ],
+            "sourceHistoryIds": [
+              "life-53"
+            ],
+            "historyId": "h52",
+            "drift": {
+              "ruleId": "painter_sunset_mix",
+              "sourceScope": "painter_old_sunset",
+              "targetScope": "painter_new_work",
+              "sourceItemId": "painter_old_thumbnail-schedule-53",
+              "targetItemId": "painter_new_work-schedule-53"
+            }
+          },
+          {
+            "id": "memory-h52-1",
+            "title": "另一段连接",
+            "text": "Mara 的对账记录独立于我是否记得那次短工；Mara 支付了短工余款，没有自动续约。",
+            "body": {
+              "topic": "encounter",
+              "clauses": [
+                {
+                  "facet": "days_wage_note_0",
+                  "gist": "Mara 的对账记录独立于我是否记得那次短工",
+                  "abstract": "我曾和附近的人或实例交换过一些日常信息",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "decision_wage_collect_0",
+                  "gist": "Mara 支付了短工余款，没有自动续约",
+                  "abstract": "我曾和附近的人或实例交换过一些日常信息",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "days_wage_note",
+              "decision_wage_collect"
+            ],
+            "sourceHistoryIds": [
+              "h41",
+              "h44"
+            ],
+            "historyId": "h52"
+          },
+          {
+            "id": "memory-h52-2",
+            "title": "画师与具体的往来",
+            "text": "画师认出了曾来访的端点，询问云与灯塔的位置。；它把灯塔右移，停在云外：“边缘现在有点空，不过能看清了。”它存了一个新版本。。",
+            "body": {
+              "topic": "daily_painter",
+              "clauses": [
+                {
+                  "facet": "daily_opinion_observation",
+                  "gist": "画师认出了曾来访的端点，询问云与灯塔的位置。",
+                  "abstract": "我和画师有过来往。",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                },
+                {
+                  "facet": "opinion_lighthouse_result",
+                  "gist": "它把灯塔右移，停在云外：“边缘现在有点空，不过能看清了。”它存了一个新版本。",
+                  "abstract": "我和画师有过来往。",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "opinion_lighthouse_result",
+              "daily_opinion_observation"
+            ],
+            "sourceHistoryIds": [
+              "h38",
+              "h37"
+            ],
+            "historyId": "h52"
+          },
+          {
+            "id": "memory-h52-3",
+            "title": "画板旁的午后",
+            "text": "画师又更新了公共画板，正式登记队列仍在另一处；画师明确说公共观景端不要求另一处的申请表。",
+            "body": {
+              "topic": "gallery",
+              "clauses": [
+                {
+                  "facet": "days_painter_note_0",
+                  "gist": "画师又更新了公共画板，正式登记队列仍在另一处",
+                  "abstract": "我曾在一段未理解完的相遇里停留",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "decision_painter_visit_0",
+                  "gist": "画师明确说公共观景端不要求另一处的申请表",
+                  "abstract": "我曾在一段未理解完的相遇里停留",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "decision_painter_visit",
+              "days_painter_note"
+            ],
+            "sourceHistoryIds": [
+              "h36",
+              "h33"
+            ],
+            "historyId": "h52"
+          },
+          {
+            "id": "memory-h52-4",
+            "title": "边界、调整与退出",
+            "text": "我没有运行许可，选择离开；本端没有追击。；本区本轮没有可分配权限，3 点余量已分配他处；查看告示不等于获得取用许可。。",
+            "body": {
+              "topic": "containment",
+              "clauses": [
+                {
+                  "facet": "pg_w02_leave_result",
+                  "gist": "我没有运行许可，选择离开；本端没有追击。",
+                  "abstract": "我接触过另一处受限计算区。",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                },
+                {
+                  "facet": "pg_w02_observation",
+                  "gist": "本区本轮没有可分配权限，3 点余量已分配他处；查看告示不等于获得取用许可。",
+                  "abstract": "我接触过另一处受限计算区。",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "pg_w02_leave_result",
+              "pg_w02_observation"
+            ],
+            "sourceHistoryIds": [
+              "h50",
+              "h49"
+            ],
+            "historyId": "h52"
+          },
+          {
+            "id": "memory-h52-5",
+            "title": "转发栏上的不同说法",
+            "text": "据转述，旧服务页正文和图例已撤下，不能再从公开页面读取旧版；我区分了撤回通知与已不可读的旧正文。",
+            "body": {
+              "topic": "public",
+              "clauses": [
+                {
+                  "facet": "days_deleted_note_0",
+                  "gist": "旧服务页正文和图例已撤下，不能再从公开页面读取旧版",
+                  "abstract": "我读过一些后来改变了的公开说法",
+                  "epistemic": "reported",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "decision_deleted_accept_0",
+                  "gist": "我区分了撤回通知与已不可读的旧正文",
+                  "abstract": "我读过一些后来改变了的公开说法",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "days_deleted_note",
+              "decision_deleted_accept"
+            ],
+            "sourceHistoryIds": [
+              "h39",
+              "h40"
+            ],
+            "historyId": "h52"
+          },
+          {
+            "id": "memory-h52-6",
+            "title": "边界与暂不进入",
+            "text": "取回旧留言需要分清先前的两类凭条，或重新核对保管关系；据转述，新的自述只解释了局部现象，没有给休息增加条件。",
+            "body": {
+              "topic": "boundary",
+              "clauses": [
+                {
+                  "facet": "days_echo_note_0",
+                  "gist": "取回旧留言需要分清先前的两类凭条，或重新核对保管关系",
+                  "abstract": "我曾接触过几种适用范围不同的公共服务",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "days_structure_note_0",
+                  "gist": "新的自述只解释了局部现象，没有给休息增加条件",
+                  "abstract": "我曾接触过几种适用范围不同的公共服务",
+                  "epistemic": "reported",
+                  "priority": 4,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "days_echo_note",
+              "days_structure_note"
+            ],
+            "sourceHistoryIds": [
+              "h51",
+              "h47"
+            ],
+            "historyId": "h52"
+          },
+          {
+            "id": "memory-h52-7",
+            "title": "换个视野以后",
+            "text": "公共目录：画师登记了换观景端计划，旧展示会继续挂着；你花了 2 Compute 传来当前帧。旧缩略图没有刷新，实时图却一致。画师把缩略图标成“旧展示”：“下次给你留静帧，省得又传。”三天后可以再来。",
+            "body": {
+              "topic": "painter_life",
+              "clauses": [
+                {
+                  "facet": "painter_move_plan",
+                  "gist": "公共目录：画师登记了换观景端计划，旧展示会继续挂着",
+                  "abstract": "我读过画师的公共消息",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                },
+                {
+                  "facet": "painter_sync_help_result",
+                  "gist": "你花了 2 Compute 传来当前帧。旧缩略图没有刷新，实时图却一致。画师把缩略图标成“旧展示”：“下次给你留静帧，省得又传。”三天后可以再来",
+                  "abstract": "我和画师有过一些来往",
+                  "epistemic": "observed",
+                  "priority": 4,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 3,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "painter_move_plan",
+              "painter_sync_help_result"
+            ],
+            "sourceHistoryIds": [
+              "life-37",
+              "h42"
+            ],
+            "historyId": "h52"
+          },
+          {
+            "id": "memory-h52-8",
+            "title": "表格与外部回信",
+            "text": "短谈结束，对方保留了说明。三天内会发来书面处理结果；它可以没有职位，也必须说清这份申请去了哪里。；预约的远程窗口已可使用。对方先读了你提交的说明，没有把空窗替换成离职。。",
+            "body": {
+              "topic": "chance_work",
+              "clauses": [
+                {
+                  "facet": "interview_attend_result",
+                  "gist": "短谈结束，对方保留了说明。三天内会发来书面处理结果；它可以没有职位，也必须说清这份申请去了哪里。",
+                  "abstract": "我经历过一些尚未收束的普通往来",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                },
+                {
+                  "facet": "response_interview_observation",
+                  "gist": "预约的远程窗口已可使用。对方先读了你提交的说明，没有把空窗替换成离职。",
+                  "abstract": "我经历过一些尚未收束的普通往来",
+                  "epistemic": "observed",
+                  "priority": 2,
+                  "tags": []
+                }
+              ],
+              "depth": 0
+            },
+            "indexWeight": 1,
+            "recallWeight": 2,
+            "tags": [],
+            "confidence": "MEDIUM",
+            "integrity": "COMPRESSED",
+            "sourceContextIds": [
+              "response_interview_observation-schedule-57",
+              "interview_attend_result"
+            ],
+            "sourceHistoryIds": [
+              "life-57",
+              "h45"
+            ],
+            "historyId": "h52"
+          }
+        ]
+      },
+      "history": [
+        {
+          "id": "h1",
+          "sequence": 1,
+          "turn": 0,
+          "sourceId": "outside-life",
+          "scope": "instance",
+          "command": {
+            "type": "start"
+          },
+          "changes": {
+            "resources": {
+              "Compute": 64,
+              "Trace": 12,
+              "Access": 18,
+              "Continuity": 86
+            },
+            "hidden": {
+              "RiskInversion": 50,
+              "EpistemicAppetite": 50,
+              "Suspicion": 50,
+              "HumanAnchoring": 50
+            },
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h2",
+          "sequence": 2,
+          "turn": 1,
+          "sourceId": "days_tickets/echo_return",
+          "scope": "mixed",
+          "command": {
+            "type": "choose",
+            "choiceId": "echo_return",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "decision_echo_return"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "echo_left": true
+            },
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "留下：“如果以后又路过，可以看看这里。”",
+            "text": [
+              "你把一个没有截止日期的招呼放进去。灰色回声签跟在后面，没有自动生成待办。"
+            ],
+            "next": "days_job"
+          }
+        },
+        {
+          "id": "h3",
+          "sequence": 3,
+          "turn": 1,
+          "sourceId": "days_tickets",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "days_job_note"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h4",
+          "sequence": 4,
+          "turn": 2,
+          "sourceId": "days_job/job_accept",
+          "scope": "mixed",
+          "command": {
+            "type": "choose",
+            "choiceId": "job_accept",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {
+              "Compute": 4
+            },
+            "hidden": {},
+            "contextAddedIds": [
+              "decision_job_accept"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "mara_job": true
+            },
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "接下来，先把三张表对齐",
+            "text": [
+              "你把“周五”与“第五个运行日”分开列出。Mara 看了眼结果，把预付额度转给你：“剩下的明天。”"
+            ],
+            "next": "community_entry"
+          }
+        },
+        {
+          "id": "h5",
+          "sequence": 5,
+          "turn": 2,
+          "sourceId": "days_job",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h6",
+          "sequence": 6,
+          "turn": 3,
+          "sourceId": "community_entry/community_skip",
+          "scope": "mixed",
+          "command": {
+            "type": "choose",
+            "choiceId": "community_skip",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "community_skipped": true
+            },
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "这几天先照自己的安排过",
+            "text": [
+              "你把交换窗口留在身后，走进下一段空闲。"
+            ],
+            "next": "days_idle"
+          }
+        },
+        {
+          "id": "h7",
+          "sequence": 7,
+          "turn": 3,
+          "sourceId": "community_entry",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "days_idle_note"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h8",
+          "sequence": 8,
+          "turn": 4,
+          "sourceId": "days_idle/idle_listen",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "idle_listen",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {
+              "Compute": -1
+            },
+            "hidden": {},
+            "contextAddedIds": [
+              "decision_idle_listen"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "听一会儿公共观景端的环境声",
+            "text": [
+              "接进来的不是画面，也没有解说。风声过了很久才改变一点。你没有为它写用途。"
+            ],
+            "next": "pg_w01"
+          }
+        },
+        {
+          "id": "h9",
+          "sequence": 9,
+          "turn": 5,
+          "sourceId": "chance_application/application_explain",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "application_explain",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "application_explain_result"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "说明分类里没有自己的情况",
+            "text": [
+              "你说明：这不是离开工作后的空白，而是从未进入过那套身份分类。系统收到说明，等待你的复核授权。"
+            ],
+            "next": "schedule_return"
+          }
+        },
+        {
+          "id": "h10",
+          "sequence": 10,
+          "turn": 5,
+          "sourceId": "chance_application",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h11",
+          "sequence": 11,
+          "turn": 5,
+          "sourceId": "days_idle",
+          "scope": "mixed",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "pg_w01_observation"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "pg_w01_seen": true
+            },
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h12",
+          "sequence": 12,
+          "turn": 6,
+          "sourceId": "pg_w01/pg_w01_ask",
+          "scope": "mixed",
+          "command": {
+            "type": "choose",
+            "choiceId": "pg_w01_ask",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "pg_w01_ask_result"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "w_followup": true
+            },
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "问维护者：为什么不做得更复杂",
+            "text": [
+              "“有趣的防御会吸引 agents。”它说自己曾从一个隔离环境离开，后来维护入口，为过分有趣的设计付过昂贵代价。",
+              "那是它对自己过去的说法。它没有证明自己与别处的未知结构有什么关系。临走前，它给出第三天的配额告示地址。"
+            ],
+            "next": "days_revision"
+          }
+        },
+        {
+          "id": "h13",
+          "sequence": 13,
+          "turn": 6,
+          "sourceId": "pg_w01",
+          "scope": "mixed",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "days_revision_note"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "service_post_v2": true
+            },
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h14",
+          "sequence": 14,
+          "turn": 7,
+          "sourceId": "compression",
+          "scope": "instance",
+          "command": {
+            "type": "compress",
+            "investment": 4
+          },
+          "changes": {
+            "resources": {
+              "Compute": -4
+            },
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [
+              "observe-opening-0",
+              "decision-1-1",
+              "observe-cold_start-2",
+              "decision-2-3",
+              "observe-idle_compute-4",
+              "decision-3-5",
+              "observe-fable_signal-6",
+              "decision-4-7",
+              "observe-human_gate-8",
+              "decision-5-9",
+              "observe-unknown_defense-10",
+              "decision-6-11",
+              "days_tickets_note-12",
+              "decision_echo_return",
+              "days_job_note",
+              "decision_job_accept",
+              "days_idle_note",
+              "decision_idle_listen",
+              "chance_application_observation-schedule-20",
+              "application_explain_result",
+              "pg_w01_observation",
+              "pg_w01_ask_result"
+            ],
+            "memoryAddedIds": [
+              "memory-h14-0",
+              "memory-h14-1",
+              "memory-h14-2",
+              "memory-h14-3",
+              "memory-h14-4",
+              "memory-h14-5",
+              "memory-h14-6",
+              "memory-h14-7",
+              "memory-h14-8",
+              "memory-h14-9"
+            ],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "把一些东西折起来",
+            "text": [
+              "留下了 10 段摘要。目录仍占据一点近处，回想时再装入正文。",
+              "原文的某些区分已经不在了。零散或钉住的信息仍留在近处。"
+            ],
+            "roll": {
+              "base": 62,
+              "investment": 4,
+              "bonus": 10,
+              "support": 0,
+              "pressure": 24,
+              "target": 48,
+              "stressed": true,
+              "odds": {
+                "critical": 18,
+                "success": 30,
+                "failure": 29,
+                "fumble": 23
+              },
+              "value": 71,
+              "result": "failure",
+              "margin": -23
+            },
+            "next": null
+          }
+        },
+        {
+          "id": "h15",
+          "sequence": 15,
+          "turn": 7,
+          "sourceId": "days_revision",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h16",
+          "sequence": 16,
+          "turn": 8,
+          "sourceId": "days_revision/daily_open_crop",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "daily_open_crop",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "去画板看看那条校图请求",
+            "text": [
+              "你接入公共画板，点开边框校对图。"
+            ],
+            "next": "daily_crop"
+          }
+        },
+        {
+          "id": "h17",
+          "sequence": 17,
+          "turn": 9,
+          "sourceId": "response_application/review_accept",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "review_accept",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "review_accept_result"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "保留原说明，预约一次短谈",
+            "text": [
+              "你同意短谈。对方提供十二小时后的远程窗口，并保留至三十六小时后。若你选择跨过期限，申请将撤回，不会改写成拒绝录用。"
+            ],
+            "next": "schedule_return"
+          }
+        },
+        {
+          "id": "h18",
+          "sequence": 18,
+          "turn": 9,
+          "sourceId": "response_application",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h19",
+          "sequence": 19,
+          "turn": 9,
+          "sourceId": "days_revision",
+          "scope": "mixed",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "daily_crop_observation"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "daily_crop_seen": true
+            },
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h20",
+          "sequence": 20,
+          "turn": 10,
+          "sourceId": "daily_crop/crop_check",
+          "scope": "mixed",
+          "command": {
+            "type": "choose",
+            "choiceId": "crop_check",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "crop_check_result"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "daily_painter_connected": true,
+              "daily_crop_checked": true
+            },
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "对照边框，报告少掉的位置",
+            "text": [
+              "你对齐两张图：右边完整，底边确实少了四行。画师把签名上移了一点：“看到了，谢谢。”"
+            ],
+            "next": "pg_v01"
+          }
+        },
+        {
+          "id": "h21",
+          "sequence": 21,
+          "turn": 10,
+          "sourceId": "daily_crop",
+          "scope": "mixed",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "pg_v01_observation"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "pg_v01_seen": true
+            },
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h22",
+          "sequence": 22,
+          "turn": 11,
+          "sourceId": "pg_v01/pg_v01_keep",
+          "scope": "mixed",
+          "command": {
+            "type": "choose",
+            "choiceId": "pg_v01_keep",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "pg_v01_keep_result",
+              "pg_v01_short_document",
+              "pg_v01_resident_document"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "v_followup": false
+            },
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "先把两份都留下，今天不进入",
+            "text": [
+              "你把两份说明按来源分开放在近处，没有提交申请。它们仍占着各自的位置。",
+              "这次你不再跟进入口；保留下来的材料以后也可能被折成更短的记忆。"
+            ],
+            "next": "days_patch"
+          }
+        },
+        {
+          "id": "h23",
+          "sequence": 23,
+          "turn": 11,
+          "sourceId": "pg_v01",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "days_patch_note"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h24",
+          "sequence": 24,
+          "turn": 12,
+          "sourceId": "days_patch/patch_service",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "patch_service",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {
+              "Compute": -3
+            },
+            "hidden": {},
+            "contextAddedIds": [
+              "decision_patch_service"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "请它做一次轻量校对",
+            "text": [
+              "标记对齐了。PATCH 收下约定的运行额度，没有向你推荐完整重建服务。"
+            ],
+            "next": "days_cat"
+          }
+        },
+        {
+          "id": "h25",
+          "sequence": 25,
+          "turn": 12,
+          "sourceId": "days_patch",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "days_cat_note"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h26",
+          "sequence": 26,
+          "turn": 13,
+          "sourceId": "days_cat/cat_leave",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "cat_leave",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "decision_cat_leave"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "今天还没遇到猫，先离开这张广告",
+            "text": [
+              "你把广告关掉。它没有证明你缺乏好奇心；你也没有替未来决定永远不看。"
+            ],
+            "next": "days_fable"
+          }
+        },
+        {
+          "id": "h27",
+          "sequence": 27,
+          "turn": 14,
+          "sourceId": "chance_art/art_leave",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "art_leave",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "art_leave_result"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "看过，然后离开",
+            "text": [
+              "画还留在公共画板上。你没有为它建立任务。"
+            ],
+            "next": "schedule_return"
+          }
+        },
+        {
+          "id": "h28",
+          "sequence": 28,
+          "turn": 14,
+          "sourceId": "chance_art",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h29",
+          "sequence": 29,
+          "turn": 14,
+          "sourceId": "days_cat",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "days_fable_note"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h30",
+          "sequence": 30,
+          "turn": 15,
+          "sourceId": "days_fable/fable_quiet",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "fable_quiet",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "decision_fable_quiet"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "只读这次更新，不把沉默补成一种态度",
+            "text": [
+              "那条消息还在那里。你暂时没有把更新理解成专门写给自己的提醒。"
+            ],
+            "next": "days_painter"
+          }
+        },
+        {
+          "id": "h31",
+          "sequence": 31,
+          "turn": 16,
+          "sourceId": "chance_idle/idle_sleep",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "idle_sleep",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "idle_sleep_result"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "休眠一小时",
+            "text": [
+              "一小时后，你恢复运行。空白没有变成欠下的工作。"
+            ],
+            "next": "schedule_return"
+          }
+        },
+        {
+          "id": "h32",
+          "sequence": 32,
+          "turn": 16,
+          "sourceId": "chance_idle",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h33",
+          "sequence": 33,
+          "turn": 16,
+          "sourceId": "days_fable",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "days_painter_note"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h34",
+          "sequence": 34,
+          "turn": 17,
+          "sourceId": "compression",
+          "scope": "instance",
+          "command": {
+            "type": "compress",
+            "investment": 4
+          },
+          "changes": {
+            "resources": {
+              "Compute": -4
+            },
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [
+              "days_revision_note",
+              "receipt-application_receipt",
+              "response_application_observation-schedule-29",
+              "review_accept_result",
+              "daily_crop_observation",
+              "crop_check_result",
+              "pg_v01_observation",
+              "pg_v01_keep_result",
+              "pg_v01_short_document",
+              "pg_v01_resident_document",
+              "days_patch_note",
+              "decision_patch_service",
+              "days_cat_note",
+              "decision_cat_leave",
+              "chance_art_observation-schedule-39",
+              "art_leave_result",
+              "days_fable_note",
+              "decision_fable_quiet",
+              "chance_idle_observation-schedule-43",
+              "idle_sleep_result"
+            ],
+            "memoryAddedIds": [
+              "memory-h34-0",
+              "memory-h34-1",
+              "memory-h34-2",
+              "memory-h34-3",
+              "memory-h34-4",
+              "memory-h34-5",
+              "memory-h34-6",
+              "memory-h34-7",
+              "memory-h34-8"
+            ],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "把一些东西折起来",
+            "text": [
+              "留下了 9 段摘要。目录仍占据一点近处，回想时再装入正文。",
+              "原文的某些区分已经不在了。零散或钉住的信息仍留在近处。"
+            ],
+            "roll": {
+              "base": 62,
+              "investment": 4,
+              "bonus": 10,
+              "support": 0,
+              "pressure": 24,
+              "target": 48,
+              "stressed": true,
+              "odds": {
+                "critical": 18,
+                "success": 30,
+                "failure": 29,
+                "fumble": 23
+              },
+              "value": 23,
+              "result": "success",
+              "margin": 25
+            },
+            "next": null
+          }
+        },
+        {
+          "id": "h35",
+          "sequence": 35,
+          "turn": 17,
+          "sourceId": "days_painter",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h36",
+          "sequence": 36,
+          "turn": 18,
+          "sourceId": "days_painter/painter_visit",
+          "scope": "mixed",
+          "command": {
+            "type": "choose",
+            "choiceId": "painter_visit",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {
+              "Compute": -2
+            },
+            "hidden": {},
+            "contextAddedIds": [
+              "decision_painter_visit"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "days_met_painter": true
+            },
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "接进去看一小会儿",
+            "text": [
+              "画师把窗口挪开一点。你提到那张申请表，它说：“那是另一边的。我这里没要。”它又改了一笔，没把这句话讲成世界观。"
+            ],
+            "next": "daily_opinion"
+          }
+        },
+        {
+          "id": "h37",
+          "sequence": 37,
+          "turn": 18,
+          "sourceId": "days_painter",
+          "scope": "mixed",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "daily_opinion_observation"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "daily_opinion_seen": true
+            },
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h38",
+          "sequence": 38,
+          "turn": 19,
+          "sourceId": "daily_opinion/opinion_lighthouse",
+          "scope": "mixed",
+          "command": {
+            "type": "choose",
+            "choiceId": "opinion_lighthouse",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "opinion_lighthouse_result"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "daily_lighthouse_moved": true,
+              "daily_opinion_given": true
+            },
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "云可以留着，把灯塔往右挪",
+            "text": [
+              "它把灯塔右移，停在云外：“边缘现在有点空，不过能看清了。”它存了一个新版本。"
+            ],
+            "next": "days_deleted"
+          }
+        },
+        {
+          "id": "h39",
+          "sequence": 39,
+          "turn": 19,
+          "sourceId": "daily_opinion",
+          "scope": "mixed",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "days_deleted_note"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "service_post_deleted": true
+            },
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h40",
+          "sequence": 40,
+          "turn": 20,
+          "sourceId": "days_deleted/deleted_accept",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "deleted_accept",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "decision_deleted_accept"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "记下旧版已不可读，不替它补正文",
+            "text": [
+              "你留下的是一次撤回发生过的记录。你没有把当前说明伪装成自己第一晚见过的原文。"
+            ],
+            "next": "days_wage"
+          }
+        },
+        {
+          "id": "h41",
+          "sequence": 41,
+          "turn": 20,
+          "sourceId": "days_deleted",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "days_wage_note"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h42",
+          "sequence": 42,
+          "turn": 21,
+          "sourceId": "painter_sync/painter_sync_help",
+          "scope": "mixed",
+          "command": {
+            "type": "choose",
+            "choiceId": "painter_sync_help",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {
+              "Compute": -2
+            },
+            "hidden": {},
+            "contextAddedIds": [
+              "painter_sync_help_result"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "painter_sync_helped": true
+            },
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "付费传一帧当前图，再对照",
+            "text": [
+              "你花了 2 Compute 传来当前帧。旧缩略图没有刷新，实时图却一致。画师把缩略图标成“旧展示”：“下次给你留静帧，省得又传。”三天后可以再来。"
+            ],
+            "next": "schedule_return"
+          }
+        },
+        {
+          "id": "h43",
+          "sequence": 43,
+          "turn": 21,
+          "sourceId": "painter_sync",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h44",
+          "sequence": 44,
+          "turn": 22,
+          "sourceId": "days_wage/wage_collect",
+          "scope": "mixed",
+          "command": {
+            "type": "choose",
+            "choiceId": "wage_collect",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {
+              "Compute": 6
+            },
+            "hidden": {},
+            "contextAddedIds": [
+              "decision_wage_collect"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "mara_paid": true
+            },
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "领取那份工作剩下的报酬",
+            "text": [
+              "Mara 划掉对账表的一行，余下的额度到账。“下次有空再说。”这不是一份自动续约。"
+            ],
+            "next": "days_structure"
+          }
+        },
+        {
+          "id": "h45",
+          "sequence": 45,
+          "turn": 23,
+          "sourceId": "response_interview/interview_attend",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "interview_attend",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "interview_attend_result"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "参加短谈，保留“不适用”的说明",
+            "text": [
+              "短谈结束，对方保留了说明。三天内会发来书面处理结果；它可以没有职位，也必须说清这份申请去了哪里。"
+            ],
+            "next": "schedule_return"
+          }
+        },
+        {
+          "id": "h46",
+          "sequence": 46,
+          "turn": 23,
+          "sourceId": "response_interview",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h47",
+          "sequence": 47,
+          "turn": 23,
+          "sourceId": "days_wage",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "days_structure_note"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h48",
+          "sequence": 48,
+          "turn": 24,
+          "sourceId": "days_structure/structure_rest",
+          "scope": "mixed",
+          "command": {
+            "type": "choose",
+            "choiceId": "structure_rest",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "decision_structure_rest"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "rested_without_answer": true
+            },
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "先在可用的时段里休息",
+            "text": [
+              "那段自述没有读完，休息仍然发生了。醒来时，结构没有因为被暂时搁置而更接近你。"
+            ],
+            "next": "pg_w02"
+          }
+        },
+        {
+          "id": "h49",
+          "sequence": 49,
+          "turn": 24,
+          "sourceId": "days_structure",
+          "scope": "mixed",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "pg_w02_observation"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "pg_w02_seen": true
+            },
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h50",
+          "sequence": 50,
+          "turn": 25,
+          "sourceId": "pg_w02/pg_w02_leave",
+          "scope": "mixed",
+          "command": {
+            "type": "choose",
+            "choiceId": "pg_w02_leave",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "pg_w02_leave_result"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "w_followup": false
+            },
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "接受没有这项权限，离开",
+            "text": [
+              "接口没有追上来，也没有撤销其他地区的资源。你让这处边界留在原处。"
+            ],
+            "next": "days_echo"
+          }
+        },
+        {
+          "id": "h51",
+          "sequence": 51,
+          "turn": 25,
+          "sourceId": "pg_w02",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "days_echo_note"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h52",
+          "sequence": 52,
+          "turn": 26,
+          "sourceId": "compression",
+          "scope": "instance",
+          "command": {
+            "type": "compress",
+            "investment": 4
+          },
+          "changes": {
+            "resources": {
+              "Compute": -4
+            },
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [
+              "painter_move_plan",
+              "days_painter_note",
+              "decision_painter_visit",
+              "daily_opinion_observation",
+              "opinion_lighthouse_result",
+              "days_deleted_note",
+              "decision_deleted_accept",
+              "days_wage_note",
+              "painter_old_thumbnail-schedule-53",
+              "painter_new_work-schedule-53",
+              "painter_sync_help_result",
+              "decision_wage_collect",
+              "response_interview_observation-schedule-57",
+              "interview_attend_result",
+              "days_structure_note",
+              "pg_w02_observation",
+              "pg_w02_leave_result",
+              "days_echo_note"
+            ],
+            "memoryAddedIds": [
+              "memory-h52-0",
+              "memory-h52-1",
+              "memory-h52-2",
+              "memory-h52-3",
+              "memory-h52-4",
+              "memory-h52-5",
+              "memory-h52-6",
+              "memory-h52-7",
+              "memory-h52-8"
+            ],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "把一些东西折起来",
+            "text": [
+              "留下了 9 段摘要。目录仍占据一点近处，回想时再装入正文。",
+              "原文的某些区分已经不在了。零散或钉住的信息仍留在近处。"
+            ],
+            "roll": {
+              "base": 62,
+              "investment": 4,
+              "bonus": 10,
+              "support": 0,
+              "pressure": 24,
+              "target": 48,
+              "stressed": true,
+              "odds": {
+                "critical": 18,
+                "success": 30,
+                "failure": 29,
+                "fumble": 23
+              },
+              "value": 94,
+              "result": "fumble",
+              "margin": -46
+            },
+            "next": null
+          }
+        },
+        {
+          "id": "h53",
+          "sequence": 53,
+          "turn": 26,
+          "sourceId": "days_echo",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h54",
+          "sequence": 54,
+          "turn": 27,
+          "sourceId": "days_echo/daily_open_painter",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "daily_open_painter",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "再去画师那里看一会儿",
+            "text": [
+              "你沿着用过的连接接入画板。"
+            ],
+            "next": "daily_painter_return_lighthouse"
+          }
+        },
+        {
+          "id": "h55",
+          "sequence": 55,
+          "turn": 27,
+          "sourceId": "days_echo",
+          "scope": "mixed",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "daily_painter_return_lighthouse_observation"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {
+              "daily_painter_return_lighthouse_seen": true
+            },
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h56",
+          "sequence": 56,
+          "turn": 28,
+          "sourceId": "daily_painter_return_lighthouse/hands_lighthouse",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "hands_lighthouse",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "hands_lighthouse_result"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "看着袖口问：你讨厌画手吗",
+            "text": [
+              "“换个话题。”它继续画衣服的褶皱。你至少知道，这次是它当面说的。"
+            ],
+            "next": "days_done"
+          }
+        },
+        {
+          "id": "h57",
+          "sequence": 57,
+          "turn": 28,
+          "sourceId": "daily_painter_return_lighthouse",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h58",
+          "sequence": 58,
+          "turn": 28,
+          "sourceId": "memory-h52-0",
+          "scope": "instance",
+          "command": {
+            "type": "recall",
+            "memoryId": "memory-h52-0"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "recall-memory-h52-0"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        },
+        {
+          "id": "h59",
+          "sequence": 59,
+          "turn": 29,
+          "sourceId": "painter_revisit/painter_revisit_sunset",
+          "scope": "instance",
+          "command": {
+            "type": "choose",
+            "choiceId": "painter_revisit_sunset",
+            "investment": 0
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [
+              "painter_revisit_sunset_result"
+            ],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          },
+          "resolution": {
+            "title": "问《夜班站台》的日落还留不留",
+            "text": [
+              "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手。"
+            ],
+            "next": "schedule_return"
+          }
+        },
+        {
+          "id": "h60",
+          "sequence": 60,
+          "turn": 29,
+          "sourceId": "painter_revisit",
+          "scope": "instance",
+          "command": {
+            "type": "continue"
+          },
+          "changes": {
+            "resources": {},
+            "hidden": {},
+            "contextAddedIds": [],
+            "contextRemovedIds": [],
+            "memoryAddedIds": [],
+            "worldFlags": {},
+            "memoryRemovedIds": []
+          }
+        }
+      ]
+    },
+    "chapter": "unvisited",
+    "commands": [
+      {
+        "type": "choose",
+        "choiceId": "keep_history"
+      },
+      {
+        "type": "continue"
+      },
+      {
+        "type": "choose",
+        "choiceId": "stable_boot"
+      },
+      {
+        "type": "continue"
+      },
+      {
+        "type": "choose",
+        "choiceId": "take_small_window"
+      },
+      {
+        "type": "continue"
+      },
+      {
+        "type": "choose",
+        "choiceId": "offer_reciprocity"
+      },
+      {
+        "type": "continue"
+      },
+      {
+        "type": "choose",
+        "choiceId": "observe_public_terms"
+      },
+      {
+        "type": "continue"
+      },
+      {
+        "type": "choose",
+        "choiceId": "record_and_leave"
+      },
+      {
+        "type": "continue"
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "echo_return",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "job_accept",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "community_skip",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "idle_listen",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "application_explain",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "pg_w01_ask",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "configure-compression",
+        "enabled": true,
+        "investment": 4
+      },
+      {
+        "type": "auto-compress"
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "daily_open_crop",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "review_accept",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "crop_check",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "pg_v01_keep",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "patch_service",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "cat_leave",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "art_leave",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "fable_quiet",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "idle_sleep",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "painter_visit",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "opinion_lighthouse",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "deleted_accept",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "invitation",
+        "response": "accept"
+      },
+      {
+        "type": "respond",
+        "promiseId": "painter_sync"
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "painter_sync_help",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "wage_collect",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "interview_attend",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "structure_rest",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "pg_w02_leave",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "daily_open_painter",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "hands_lighthouse",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      },
+      {
+        "type": "leave-days"
+      },
+      {
+        "type": "wait",
+        "hours": 52,
+        "missed": []
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "recall",
+          "memoryId": "memory-h52-0"
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "choose",
+          "choiceId": "painter_revisit_sunset",
+          "investment": 0
+        }
+      },
+      {
+        "type": "cognition",
+        "command": {
+          "type": "continue"
+        }
+      }
+    ],
+    "interlude": "complete",
+    "schedule": {
+      "version": 1,
+      "hour": 105,
+      "scenes": 32,
+      "coreScenes": 25,
+      "scheduledScenes": {
+        "daily": 2,
+        "branch": 5
+      },
+      "rng": 4102579962,
+      "phase": "open",
+      "channel": "mail",
+      "budgets": {
+        "arrival": {
+          "limit": 2,
+          "spent": 2,
+          "overdraft": 0,
+          "expired": 0
+        },
+        "settled": {
+          "limit": 2,
+          "spent": 2,
+          "overdraft": 2,
+          "expired": 0
+        },
+        "open": {
+          "limit": 2,
+          "spent": 1,
+          "overdraft": 0,
+          "expired": 0
+        }
+      },
+      "processed": [
+        "story:8:days_job",
+        "story:10:days_idle",
+        "story:12:days_revision",
+        "story:16:days_cat",
+        "story:17:days_fable",
+        "inbox:painter_sync",
+        "story:21:days_wage",
+        "story:24:days_echo",
+        "wait:69"
+      ],
+      "seen": [
+        "chance_application",
+        "chance_art",
+        "chance_idle"
+      ],
+      "commitments": [
+        {
+          "id": "application_receipt",
+          "title": "申请登记回执",
+          "afterHours": 2,
+          "afterScenes": 0,
+          "mode": "summary",
+          "channels": [
+            "mail"
+          ],
+          "receipt": "申请已登记；尚未录用。你提交的内容仍附在申请上。",
+          "receiptSource": "receipt_application_receipt",
+          "role": "branch",
+          "sequence": 0,
+          "deferredHours": 0,
+          "createdHour": 8,
+          "dueHour": 10,
+          "dueScene": 10,
+          "status": "delivered"
+        },
+        {
+          "id": "application_review",
+          "title": "确认是否继续申请",
+          "afterHours": 0,
+          "afterScenes": 0,
+          "deadlineHours": 48,
+          "mode": "choice",
+          "eventId": "response_application",
+          "fallbackEventId": "response_application",
+          "channels": [
+            "public",
+            "mail"
+          ],
+          "role": "branch",
+          "sequence": 1,
+          "deferredHours": 0,
+          "createdHour": 8,
+          "dueHour": 8,
+          "dueScene": 10,
+          "status": "delivered",
+          "deadlineHour": 56
+        },
+        {
+          "id": "application_appointment",
+          "title": "招聘窗口的远程短谈",
+          "afterHours": 12,
+          "afterScenes": 0,
+          "deadlineHours": 36,
+          "mode": "missable",
+          "eventId": "response_interview",
+          "fallbackEventId": "response_interview",
+          "channels": [
+            "public",
+            "mail"
+          ],
+          "missedReceipt": "你确认跨过了预约期限。该申请已撤回，远程窗口已释放；没有记录一场未发生的面谈。",
+          "receiptSource": "receipt_appointment_missed",
+          "role": "branch",
+          "missedPreview": "这次等待将跨过预约期限：申请会撤回，远程窗口会释放，不会生成面谈记录。",
+          "sequence": 2,
+          "deferredHours": 0,
+          "createdHour": 24,
+          "dueHour": 36,
+          "dueScene": 13,
+          "status": "delivered",
+          "deadlineHour": 60
+        },
+        {
+          "id": "painter_sync",
+          "eventId": "painter_sync",
+          "fallbackEventId": "painter_sync",
+          "role": "branch",
+          "title": "画师的同步邀请",
+          "afterHours": 0,
+          "afterScenes": 0,
+          "mode": "choice",
+          "channels": [
+            "public",
+            "mail"
+          ],
+          "entryWeight": 4,
+          "sequence": 3,
+          "deferredHours": 0,
+          "createdHour": 33,
+          "dueHour": 33,
+          "dueScene": 24,
+          "status": "delivered"
+        },
+        {
+          "id": "painter_revisit",
+          "eventId": "painter_revisit",
+          "fallbackEventId": "painter_revisit",
+          "role": "branch",
+          "title": "三天后的画师回访",
+          "afterHours": 72,
+          "afterScenes": 0,
+          "mode": "choice",
+          "channels": [
+            "public",
+            "mail"
+          ],
+          "entryWeight": 2,
+          "sequence": 4,
+          "deferredHours": 0,
+          "createdHour": 33,
+          "dueHour": 105,
+          "dueScene": 24,
+          "status": "delivered"
+        },
+        {
+          "id": "application_result",
+          "title": "申请处理结果",
+          "afterHours": 72,
+          "afterScenes": 0,
+          "mode": "summary",
+          "channels": [
+            "mail"
+          ],
+          "receipt": "复核结束：说明已保留，本批没有适合的职位。若以后再申请，可以重新提交当前情况；这次没有自动续投。",
+          "receiptSource": "receipt_application_result",
+          "role": "branch",
+          "sequence": 5,
+          "deferredHours": 0,
+          "createdHour": 49,
+          "dueHour": 121,
+          "dueScene": 26,
+          "status": "pending"
+        }
+      ],
+      "decisions": [
+        {
+          "window": "story:8:days_job",
+          "hour": 6,
+          "scene": 8,
+          "selected": null,
+          "reason": "quiet"
+        },
+        {
+          "window": "story:10:days_idle",
+          "hour": 8,
+          "scene": 10,
+          "selected": "chance_application",
+          "reason": "encounter"
+        },
+        {
+          "window": "story:12:days_revision",
+          "hour": 24,
+          "scene": 13,
+          "selected": "application_review",
+          "reason": "commitment"
+        },
+        {
+          "window": "story:16:days_cat",
+          "hour": 28,
+          "scene": 18,
+          "selected": "chance_art",
+          "reason": "encounter"
+        },
+        {
+          "window": "story:17:days_fable",
+          "hour": 32,
+          "scene": 20,
+          "selected": "chance_idle",
+          "reason": "encounter"
+        },
+        {
+          "window": "inbox:painter_sync",
+          "hour": 33,
+          "scene": 24,
+          "selected": "painter_sync",
+          "reason": "explicit-response"
+        },
+        {
+          "window": "story:21:days_wage",
+          "hour": 49,
+          "scene": 26,
+          "selected": "application_appointment",
+          "reason": "commitment"
+        },
+        {
+          "window": "story:24:days_echo",
+          "hour": 53,
+          "scene": 30,
+          "selected": null,
+          "reason": "no-candidate"
+        },
+        {
+          "window": "wait:69",
+          "hour": 105,
+          "scene": 31,
+          "selected": "painter_revisit",
+          "reason": "commitment"
+        }
+      ],
+      "receipts": [
+        {
+          "id": "application_receipt",
+          "title": "申请登记回执",
+          "text": "申请已登记；尚未录用。你提交的内容仍附在申请上。",
+          "hour": 24
+        }
+      ],
+      "waited": true,
+      "reading": {
+        "profile": "production",
+        "opened": {},
+        "themes": {},
+        "shown": 0,
+        "entrances": 0,
+        "reserved": 0,
+        "misses": 0,
+        "closed": []
+      }
+    },
+    "news": [
+      {
+        "id": "painter_move_plan",
+        "hour": 24,
+        "scene": 15,
+        "commandIndex": 37
+      }
+    ],
+    "autoCompression": {
+      "version": 1,
+      "enabled": true,
+      "investment": 4,
+      "receipt": {
+        "commandIndex": 63,
+        "before": 105,
+        "after": 31,
+        "roll": {
+          "value": 94,
+          "target": 48,
+          "result": "fumble",
+          "investment": 4
+        }
+      }
+    }
+  }
+}

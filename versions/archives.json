@@ -1,6 +1,27 @@
 {
   "archives": [
     {
+      "id": "life-r1",
+      "file": "OUTSIDE-life-0.18-r1-72a3063.html",
+      "contentVersion": "0.18.0",
+      "saveVersion": 2,
+      "compatibilityId": "outside-life-0.18-r1",
+      "gitSource": "72a30631a5c761bc68148f91fa3ca89d93a82a90:OUTSIDE.html",
+      "sha256": "8ffc002c70b42f9e2ddc57da261443bc5b4324a80c00e48f80fd16d8a6dd36f8",
+      "label": "0.18 r1 已发布版（旧 v2 存档）",
+      "limitations": "内容标签同为0.18，但规则为r1；只接受r1，不迁移为r2。v1另用其对应归档。",
+      "verifiedSamples": [
+        {
+          "sample": "tests/fixtures/painter-r1-72a3063.json",
+          "description": "Published 72a3063 r1 / painter route completed / turn 35",
+          "sha256": "0ed6cac05185e9941984f02c3f84322756de2c90ed7b69c14718f8f53739f07f",
+          "verifiedOn": "2026-11-19",
+          "verification": "Chrome actual import and export; full Life and outer state identical",
+          "evidence": "output/opt029/ui-r1-archive-export.json"
+        }
+      ]
+    },
+    {
       "id": "life-published",
       "file": "OUTSIDE-life-0.18-0be4850.html",
       "contentVersion": "0.18.0",

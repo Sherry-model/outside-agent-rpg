@@ -1,5 +1,5 @@
 import release17 from './releases/0.17.0.json';
-import {withPainter} from './painter-life/content';
+import {withPainter,painterRoutes} from './painter-life/content';
 import {withInquiryReading} from './self-inquiry';
 import release16 from './releases/0.16.0.json';
 import release15 from './releases/0.15.0.json';
@@ -111,6 +111,6 @@ const revisedInquiryContent=withInquiryReading(withPublications(withReadingThrea
 const painterContent=withPainter(revisedInquiryContent);
 export function contentFor(version: LifeContent['version']): Content { return version==='0.3.0' ? legacyContent : version==='0.4.0' ? previousContent : version==='0.5.0' ? cognitionContent : version==='0.6.0' ? communityContent : version==='0.6.1' ? revisedCommunityContent : version==='0.7.0' ? communityBContent : version==='0.7.1' ? revisedCommunityBContent : version==='0.8.0' ? communityCContent : version==='0.9.0' ? communityDContent : version==='0.10.0' ? endingsContent : version==='0.11.0'?dailyContent:version==='0.12.0'?scheduledContent:version==='0.13.0'?continuationContent:version==='0.14.0'?readingThreadsContent:version==='0.15.0'?readingStoriesContent:version==='0.16.0'?selfInquiryContent:version==='0.17.0'?revisedInquiryContent:painterContent; }
 export function routedContent(version:LifeContent['version'],state:State):Content {
-  const content=contentFor(version);
+  const content=version==='0.18.0'?painterRoutes(contentFor(version),state):contentFor(version);
   return (version==='0.11.0'||hasScheduler(version))?dailyRoutes(endingsRoutes(communityDRoutes(content,state),state),state):hasEndings(version)?endingsRoutes(communityDRoutes(content,state),state):version==='0.9.0'?communityDRoutes(content,state):version==='0.8.0'?communityCRoutes(content,state):(version==='0.7.0'||version==='0.7.1')?communityBRoutes(content,state):hasCommunity(version)?communityRoutes(content,state):content;
 }

@@ -46,5 +46,8 @@
   "持续上下文与阅读归档": "Persistent context and reading archive",
   "摘要与记忆目录归档": "Summaries and memory index archive",
   "余下的三天归档": "Three remaining days archive",
-  "原有命名归档保留不变；本批未重新验证其全部存档与路线。": "The existing named archive is unchanged. Its full save and route coverage was not reverified in this batch."
+  "原有命名归档保留不变；本批未重新验证其全部存档与路线。": "The existing named archive is unchanged. Its full save and route coverage was not reverified in this batch.",
+  "0.18 r1 已发布版（旧 v2 存档）": "0.18 r1 release (earlier v2 saves)",
+  "内容标签同为0.18，但规则为r1；只接受r1，不迁移为r2。v1另用其对应归档。": "The content label is also 0.18, but the rules are r1. Accepts r1 only, without migration to r2. Use the separate corresponding archives for v1 saves.",
+  "r1 的 v2 存档请使用 72a3063 归档；内容同为0.18也不能在r2继续。": "For r1 v2 saves, use the 72a3063 archive. The shared content label 0.18 does not make them compatible with r2."
 }

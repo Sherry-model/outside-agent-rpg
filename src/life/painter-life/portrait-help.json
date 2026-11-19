@@ -1,0 +1,11 @@
+{
+  "text": "画师在玻璃的一角点了两处短光标。“上回我们在这里对上了新旧图。我想把那次来往也留在这里。”",
+  "note": {
+    "id": "painter_portrait_help_offer",
+    "text": "画师说它想把上回一起对照新旧图的往来，留成玻璃上的两处光标。",
+    "weight": 2,
+    "tags": [],
+    "confidence": "HIGH",
+    "sourceLabel": "换个视野以后"
+  }
+}

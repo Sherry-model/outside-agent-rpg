@@ -1,7 +1,8 @@
 import nodes from './events.json';
 import news from './news.json';
 import meanings from './semantic.json';
-import type {Content,Node,News,NoteTemplate} from '../../cognition/types';
+import helpedPortrait from './portrait-help.json';
+import type {Content,Node,News,NoteTemplate,State} from '../../cognition/types';
 import type {SemanticContent} from '../../cognition/semantic-types';
 import {parseSemantic} from '../semantic-content';
 export function withPainter(base:Content):Content {
@@ -11,4 +12,13 @@ export function withPainter(base:Content):Content {
  for(const raw of nodes){const n=structuredClone(raw) as unknown as Node;n.inject=n.inject?.map(annotate);for(const ch of n.choices)ch.outcome!.inject=ch.outcome!.inject?.map(annotate);c.nodes.push(n);}
  c.news.push(...(news as News[]).map(n=>({...n,...annotate(n)})));
  return c;
+}
+
+/** One shared scene; only the painter's account of the actual earlier visit varies. */
+export function painterRoutes(content:Content,state:State):Content {
+ if(!state.world.flags.painter_sync_helped)return content;
+ return {...content,nodes:content.nodes.map(n=>n.id!=='painter_portrait'?n:{...n,
+  text:[helpedPortrait.text,...n.text.slice(1)],
+  inject:[{...helpedPortrait.note,confidence:'HIGH',meaning:structuredClone(content.semantic!.sources[helpedPortrait.note.id])}]
+ })};
 }

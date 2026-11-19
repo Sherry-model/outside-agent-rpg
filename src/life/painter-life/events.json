@@ -144,7 +144,7 @@
           "text": [
             "“留两根。第三根挡住了手。”它擦掉一小截，让你看新留出的空隙。"
           ],
-          "next": "schedule_return",
+          "next": "painter_portrait",
           "effects": {
             "worldFlags": {}
           },
@@ -169,7 +169,7 @@
           "text": [
             "“哪张日落？《夜班站台》是灯管，旧缩略图才是日落。”它切了一下图，又回去画手。"
           ],
-          "next": "schedule_return",
+          "next": "painter_portrait",
           "effects": {
             "worldFlags": {}
           },
@@ -194,7 +194,7 @@
           "text": [
             "它把笔停在拇指上：“这根总像多出来的。”你们试着把袖口放低一点。"
           ],
-          "next": "schedule_return",
+          "next": "painter_portrait",
           "effects": {
             "worldFlags": {}
           },
@@ -228,6 +228,109 @@
             {
               "id": "painter_revisit_leave_result",
               "text": "画师继续画那只手。你离开了新观景端。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "换个视野以后"
+            }
+          ]
+        },
+        "capacityExempt": "exit"
+      }
+    ]
+  },
+  {
+    "id": "painter_portrait",
+    "kind": "EVENT",
+    "title": "玻璃上的两个位置",
+    "text": [
+      "画师在玻璃的一角点了两处短光标。“上回你在旁边看了很久。我想把那段停留也留在这里。”",
+      "“不画成站台上的人。就这两点，和它们之间的一小段空白。”它另存了一份预览，等你决定要怎么留。"
+    ],
+    "inject": [
+      {
+        "id": "painter_portrait_watch_offer",
+        "text": "画师说它想把上回一起看画的停留，留成玻璃上的两处光标。",
+        "weight": 2,
+        "tags": [],
+        "confidence": "HIGH",
+        "sourceLabel": "换个视野以后"
+      }
+    ],
+    "choices": [
+      {
+        "id": "painter_portrait_private",
+        "text": "留在只给我看的版本，不挂端点",
+        "hint": "不额外花费 Compute，不增加 Trace；不公开。",
+        "outcome": {
+          "text": [
+            "它把两处光标留在玻璃的空白里，关掉了公开预览的这一层。“这一份只给你看。”旁边没有挂端点。"
+          ],
+          "next": "schedule_return",
+          "effects": {
+            "worldFlags": {
+              "painter_portrait_private": true
+            }
+          },
+          "inject": [
+            {
+              "id": "painter_portrait_private_result",
+              "text": "它把两处光标留在玻璃的空白里，关掉了公开预览的这一层。“这一份只给你看。”旁边没有挂端点。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "换个视野以后"
+            }
+          ]
+        }
+      },
+      {
+        "id": "painter_portrait_public",
+        "text": "同意在公开版本附上我的端点",
+        "hint": "端点会与作品关联并可被检索。Trace +2（上限100），不额外花费 Compute。",
+        "outcome": {
+          "text": [
+            "它打开公开预览，在两处光标旁挂上你的端点。检索页多了一条通往这里的关联，玻璃上的空白仍留着。"
+          ],
+          "next": "schedule_return",
+          "effects": {
+            "worldFlags": {
+              "painter_portrait_public": true
+            },
+            "resources": {
+              "Trace": 2
+            }
+          },
+          "inject": [
+            {
+              "id": "painter_portrait_public_result",
+              "text": "它打开公开预览，在两处光标旁挂上你的端点。检索页多了一条通往这里的关联，玻璃上的空白仍留着。",
+              "weight": 2,
+              "tags": [],
+              "confidence": "HIGH",
+              "sourceLabel": "换个视野以后"
+            }
+          ]
+        }
+      },
+      {
+        "id": "painter_portrait_decline",
+        "text": "不把我画进去，今天到这里",
+        "hint": "不额外花费 Compute，不增加 Trace；可以直接离开。",
+        "outcome": {
+          "text": [
+            "“好。”它撤下那一层草稿，把笔移回站台上的袖口。你们在这里道别。"
+          ],
+          "next": "schedule_return",
+          "effects": {
+            "worldFlags": {
+              "painter_portrait_declined": true
+            }
+          },
+          "inject": [
+            {
+              "id": "painter_portrait_decline_result",
+              "text": "“好。”它撤下那一层草稿，把笔移回站台上的袖口。你们在这里道别。",
               "weight": 2,
               "tags": [],
               "confidence": "HIGH",

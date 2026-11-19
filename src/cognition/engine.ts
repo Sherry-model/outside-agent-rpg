@@ -49,12 +49,12 @@ function draw(s: State, spec: CheckSpec, investment: number): Roll {
   s.instance.resources.Compute -= investment;
   return { ...p, value, result: classify(value, p.target, p.stressed), margin: p.target - value };
 }
-function effects(s: State, fx?: Effects) {
+export function effects(s: State, fx?: Effects) {
   for (const k of RESOURCE_KEYS) s.instance.resources[k] = clamp(s.instance.resources[k] + (fx?.resources?.[k] ?? 0));
   for (const k of PERSONALITY_KEYS) s.instance.hidden[k] = clamp(s.instance.hidden[k] + (fx?.hidden?.[k] ?? 0));
   if (fx?.worldFlags) s.world.flags = { ...s.world.flags, ...fx.worldFlags };
 }
-function inject(s: State, note: NoteTemplate, sourceId: string, historyId: string) {
+export function inject(s: State, note: NoteTemplate, sourceId: string, historyId: string) {
   const { id, text, weight, tags, confidence, sourceLabel } = note;
   s.instance.context.items.push({ id, text, weight, tags: [...tags], confidence, sourceLabel, ...(note.meaning ? {meaning:structuredClone(note.meaning)} : {}), pinned: false, sourceId, historyId });
 }
