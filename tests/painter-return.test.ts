@@ -1,3 +1,4 @@
+import {autoCompressionNotice} from '../src/life/auto-compression-ui';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
@@ -80,6 +81,12 @@ test('full context and low Compute preserve free exits; entry receipt does not a
   assert.equal(canChoose(routedContent('0.18.0',full.mind),full.mind,id),'');const result=choose(full,id);assert.equal(result.state.resources.Compute,1);assert(weight(result.mind)>100);assert(!pending(result.mind)?.roll);
  }
  const response=choose(l,'painter_revisit_now');response.mind.instance.context.items[0].weight+=100;response.autoCompression={version:1,enabled:true,investment:0};const arrived=advance(response);assert.equal(nodeId(arrived),'painter_portrait');assert(!pending(arrived.mind));assert(!arrived.autoCompression?.receipt);
+  const beforeNotice=structuredClone(arrived);
+  assert.match(autoCompressionNotice(arrived),/这一幕不会在进入时自动整理/);
+  assert.doesNotMatch(autoCompressionNotice(arrived,'reading'),/这一幕不会在进入时自动整理/);
+  setLocale('en');try{assert.match(autoCompressionNotice(arrived),/automatic compression is deferred/);}finally{setLocale('zh-CN');}
+  assert.deepEqual(arrived,beforeNotice);
+  assert.doesNotMatch(autoCompressionNotice({...arrived,autoCompression:{version:1,enabled:false,investment:0}}),/这一幕不会在进入时自动整理/);
  // Storage/replay tests above use genuine commands; these cloned boundaries isolate clamp and capacity.
  for(const balance of [96,97,98,99,100]){
   const before=helped().before,after=structuredClone(l);delete after.mind.world.flags.painter_return_paid;after.mind.instance.context.items=after.mind.instance.context.items.filter(i=>i.sourceId!=='painter_return_quota');after.mind.instance.resources.Compute=balance;

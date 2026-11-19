@@ -87,5 +87,6 @@
   "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。余量接近上限，这次实际入账 3，停在 100。": "“You saved me another test transmission last time.” The painter sends 4 Compute from its remaining preview quota. Near capacity, you receive 3, reaching 100.",
   "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。余量接近上限，这次实际入账 3，停在 100": "“You saved me another test transmission last time.” The painter sends 4 Compute from its remaining preview quota. Near capacity, you receive 3, reaching 100",
   "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。你的运行余量增加了 4。": "“You saved me another test transmission last time.” The painter sends 4 Compute from its remaining preview quota. Your available Compute increases by 4.",
-  "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。你的运行余量增加了 4": "“You saved me another test transmission last time.” The painter sends 4 Compute from its remaining preview quota. Your available Compute increases by 4"
+  "“上次你替我省了一轮试传。”画师从剩下的预览配额里转来 4 Compute。你的运行余量增加了 4": "“You saved me another test transmission last time.” The painter sends 4 Compute from its remaining preview quota. Your available Compute increases by 4",
+  "近处已满。先读完画师新发来的内容；这一幕不会在进入时自动整理。读完后，可按当前自动设置整理一次。": "Nearby is full. Read the painter’s new message first; automatic compression is deferred when this scene opens. When you are ready, compress once using your current automatic settings."
 }

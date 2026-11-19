@@ -38,7 +38,9 @@ export function autoCompressionNotice(life:Life,place:'event'|'context'|'reading
   const fresh=place==='event'&&life.autoCompression?.receipt?.commandIndex===life.commands.length;
   const full=loadPercent(life.mind)>=100&&life.mind.instance.phase==='event';
   if(!fresh&&!full)return '';
-  const message=place==='reading'?'近处已满，暂时不能打开新帖子。仍在近处的帖子可以重看。':life.autoCompression?.enabled?'近处已满。可以按自动设置整理一次，或使用下面的手动整理。':'近处已满。请先整理上下文；也可以设置以后的自动压缩。';
+  const painterPause=life.contentVersion==='0.18.0'&&!!life.autoCompression?.enabled
+    &&['painter_revisit','painter_portrait'].includes(life.mind.instance.nodeId);
+  const message=place!=='reading'&&painterPause?'近处已满。先读完画师新发来的内容；这一幕不会在进入时自动整理。读完后，可按当前自动设置整理一次。':place==='reading'?'近处已满，暂时不能打开新帖子。仍在近处的帖子可以重看。':life.autoCompression?.enabled?'近处已满。可以按自动设置整理一次，或使用下面的手动整理。':'近处已满。请先整理上下文；也可以设置以后的自动压缩。';
   return `<aside class="auto-compression-notice" data-compression-notice aria-label="${tr('自动压缩上下文')}">${fresh?receipt(life):''}${full?`<p>${tr(message)}</p>${place==='reading'?`<p>${tr('读帖和回想后不会自动压缩，以免刚加载的线索立即被收走。需要继续阅读时，')}<span class="compression-reading-action">${tr('可以在这里整理一次。')}</span></p>`:''}${life.autoCompression?.enabled?runControl(life):''}${place==='reading'?`<button class="text-button" data-auto-compression="organize">${tr('前往整理区')}</button>`:place==='event'?`<button class="text-button" data-auto-compression="settings">${tr('查看自动压缩设置')}</button>`:''}`:''}</aside>`;
 }
 export function autoCompressionAction(life:Life,target:HTMLElement,root:HTMLElement):LifeCommand|null {
